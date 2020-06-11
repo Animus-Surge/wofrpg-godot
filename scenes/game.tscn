@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://godot-resources/player-frames.tres" type="SpriteFrames" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" type="Node2D" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="player"]
+position = Vector2( 664.807, 394.999 )
+frames = ExtResource( 1 )
+animation = "idle-body"
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="player"]
+position = Vector2( 664.807, 394.999 )
+frames = ExtResource( 1 )
+animation = "idle-body-shadow"
+
+[node name="AnimatedSprite3" type="AnimatedSprite" parent="player"]
+position = Vector2( 664.807, 394.999 )
+frames = ExtResource( 1 )
+animation = "idle-wings"
+
+[node name="AnimatedSprite4" type="AnimatedSprite" parent="player"]
+position = Vector2( 664.807, 394.999 )
+frames = ExtResource( 1 )
+animation = "idle-horns"
+
+[node name="AnimatedSprite5" type="AnimatedSprite" parent="player"]
+position = Vector2( 664.807, 394.999 )
+frames = ExtResource( 1 )
+animation = "idle-eyes"

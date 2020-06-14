@@ -1,32 +1,48 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://godot-resources/player-frames.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+height = 63.1467
 
 [node name="Node2D" type="Node2D"]
 
-[node name="player" type="Node2D" parent="."]
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 711.899, 331.784 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+maxSpeed = 200.0
+friction = 600.0
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="player"]
-position = Vector2( 664.807, 394.999 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
 animation = "idle-body"
 
-[node name="AnimatedSprite2" type="AnimatedSprite" parent="player"]
-position = Vector2( 664.807, 394.999 )
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="Player"]
+scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
 animation = "idle-body-shadow"
 
-[node name="AnimatedSprite3" type="AnimatedSprite" parent="player"]
-position = Vector2( 664.807, 394.999 )
+[node name="AnimatedSprite3" type="AnimatedSprite" parent="Player"]
+scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
 animation = "idle-wings"
 
-[node name="AnimatedSprite4" type="AnimatedSprite" parent="player"]
-position = Vector2( 664.807, 394.999 )
+[node name="AnimatedSprite4" type="AnimatedSprite" parent="Player"]
+scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
 animation = "idle-horns"
 
-[node name="AnimatedSprite5" type="AnimatedSprite" parent="player"]
-position = Vector2( 664.807, 394.999 )
+[node name="AnimatedSprite5" type="AnimatedSprite" parent="Player"]
+scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
 animation = "idle-eyes"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 45.2887, 42.9277 )
+rotation = 1.5708
+shape = SubResource( 1 )

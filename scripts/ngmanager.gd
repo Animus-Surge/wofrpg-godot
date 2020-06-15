@@ -27,6 +27,11 @@ func _pressed():
 	saveCharacter()
 	get_tree().change_scene("res://scenes/game.tscn")
 	
+	GVars.plrA = col1
+	GVars.plrB = col2
+	GVars.plrC = col3
+	GVars.plrD = col4
+	
 func saveCharacter():
 	var file = File.new()
 	file.open("user://" + charName + ".save", File.WRITE)

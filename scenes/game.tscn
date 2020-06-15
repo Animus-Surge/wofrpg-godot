@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://godot-resources/player-frames.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 [ext_resource path="res://scripts/Global.vs" type="Script" id=3]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=4]
+[ext_resource path="res://images/map-main-preview.png" type="Texture" id=5]
+[ext_resource path="res://godot-resources/bg-prim.tres" type="StyleBox" id=6]
 [ext_resource path="res://scripts/popup_handler.vs" type="Script" id=7]
 [ext_resource path="res://scripts/GVars.gd" type="Script" id=8]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=10]
@@ -17,49 +19,72 @@ script = ExtResource( 3 )
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource( 8 )
 
+[node name="map-main-preview" type="Sprite" parent="."]
+scale = Vector2( 8.16883, 6.80172 )
+texture = ExtResource( 5 )
+
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 615.899, 385.784 )
 script = ExtResource( 2 )
-maxSpeed = 200.0
-friction = 600.0
+maxSpeed = 400.0
+friction = 900.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
-animation = "idle-body"
+animation = "run-body"
 
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
-animation = "idle-body-shadow"
+animation = "run-body-shadow"
 
 [node name="AnimatedSprite3" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
-animation = "idle-wings"
+animation = "run-wings"
 
 [node name="AnimatedSprite4" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
-animation = "idle-horns"
+animation = "run-horns"
 
 [node name="AnimatedSprite5" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 0.3, 0.3 )
 frames = ExtResource( 1 )
-animation = "idle-eyes"
+animation = "run-eyes"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2( 45.2887, 42.9277 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
+[node name="UI" type="Control" parent="Player"]
+margin_left = -546.0
+margin_top = -307.0
+margin_right = 546.0
+margin_bottom = 307.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Player/UI"]
+margin_top = 361.0
+margin_right = 232.0
+margin_bottom = 614.0
+custom_styles/panel = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Panel" type="Panel" parent="Player"]
+pause_mode = 2
 visible = false
 self_modulate = Color( 0.647059, 0.647059, 0.647059, 1 )
-margin_left = -372.96
-margin_top = -243.147
-margin_right = 517.04
-margin_bottom = 256.853
+margin_left = -516.0
+margin_top = -264.0
+margin_right = 122.0
+margin_bottom = 34.0
 custom_styles/panel = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -79,10 +104,10 @@ __meta__ = {
 }
 
 [node name="Button2" type="Button" parent="Player/Panel"]
-margin_left = 686.631
-margin_top = 441.526
-margin_right = 832.631
-margin_bottom = 479.526
+margin_left = 49.0
+margin_top = 126.0
+margin_right = 195.0
+margin_bottom = 164.0
 custom_fonts/font = ExtResource( 4 )
 text = "Exit Game"
 script = ExtResource( 7 )
@@ -92,10 +117,10 @@ __meta__ = {
 }
 
 [node name="Button3" type="Button" parent="Player/Panel"]
-margin_left = 31.9178
-margin_top = 441.526
-margin_right = 318.918
-margin_bottom = 479.526
+margin_left = 49.0
+margin_top = 82.0
+margin_right = 336.0
+margin_bottom = 120.0
 custom_fonts/font = ExtResource( 4 )
 text = "Return to Main Menu"
 script = ExtResource( 7 )
@@ -103,3 +128,7 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "main"
 }
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+zoom = Vector2( 0.8, 0.8 )

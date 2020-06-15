@@ -22,6 +22,11 @@ boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0, 0.129412, 0.156863, 1 )
 config/icon="res://icon.png"
 
+[autoload]
+
+GVars="*res://scripts/GVars.gd"
+Scenemanager="*res://scripts/scenemanager.gd"
+
 [display]
 
 window/size/width=1366

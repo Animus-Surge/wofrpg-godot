@@ -17,3 +17,8 @@ func _physics_process(delta):
 		vel = vel.move_toward(Vector2.ZERO, friction * delta)
 	
 	move_and_slide(vel)
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_SPACE:
+			print("Attacking")

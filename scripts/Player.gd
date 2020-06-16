@@ -5,6 +5,8 @@ export (float) var friction = 10
 
 var vel = Vector2.ZERO
 
+signal pickUpItem(itemName, itemTexture)
+
 func _ready():
 	var colA = GVars.plrA
 	var colB = GVars.plrB

@@ -1,0 +1,9 @@
+{
+  "Dummy Item": {
+    "itemDesc": "Just a plain dummy item",
+    "itemID": 0,
+    "craftable": false,
+    "texture": "res://images/items/item-dummy.png",
+    "durability": -1
+  }
+}

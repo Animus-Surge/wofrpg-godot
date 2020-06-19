@@ -3,15 +3,21 @@ extends KinematicBody2D
 export (float) var maxSpeed = 100
 export (float) var friction = 10
 
-var vel = Vector2.ZERO
+onready var inventoryList = get_node("UI/Panel2/SlotContainer")
+var slots = Array()
 
-signal pickUpItem(itemName, itemTexture)
+var vel = Vector2.ZERO
 
 func _ready():
 	var colA = GVars.plrA
 	var colB = GVars.plrB
 	var colC = GVars.plrC
 	var colD = GVars.plrD
+	
+	slots = inventoryList.get_children()
+	
+	for slot in slots:
+		slot.clear()
 	
 	get_child(0).self_modulate = colA
 	get_child(1).self_modulate = colA
@@ -65,9 +71,18 @@ func _physics_process(delta):
 		get_child(3).play("idle-horns")
 		get_child(4).play("idle-eyes")
 	
-	move_and_slide(vel)
+	vel = move_and_slide(vel)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_SPACE:
 			print("Attacking") #play the attack animation (tail attack)
+
+var itemsInInventory = 0
+var maxItems = 40
+
+func pickUpItem(iname, texture, usage):
+	for slot in slots:
+		if !slot.item:
+			slot.addItem(iname, texture, usage)
+			break

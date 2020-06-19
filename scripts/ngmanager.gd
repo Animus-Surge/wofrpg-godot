@@ -1,9 +1,5 @@
-extends Button
+extends HBoxContainer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var charName: String
 var col1: Color
 var col2: Color
@@ -12,20 +8,18 @@ var col4: Color
 var col5: Color
 var tribes = []
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	graphic.self_modulate = Color.transparent
 
-func _pressed():
-	charName = get_parent().get_child(2).get_text()
-	col1 = get_parent().get_child(3).color
-	col2 = get_parent().get_child(4).color
-	col3 = get_parent().get_child(5).color
-	col4 = get_parent().get_child(6).color
-	for i in get_parent().get_child(7).get_child_count():
-		tribes.append(get_parent().get_child(7).get_child(i).pressed)
+func action():
+	charName = get_parent().get_node("name").get_text()
+	col1 = get_parent().get_node("body").color
+	col2 = get_parent().get_node("wings").color
+	col3 = get_parent().get_node("horns").color
+	col4 = get_parent().get_node("eyes").color
+	for i in get_parent().get_node("tribes_container").get_child_count():
+		tribes.append(get_parent().get_node("tribes_container").get_child(i).pressed)
 	saveCharacter()
-	get_tree().change_scene("res://scenes/game.tscn")
 	
 	GVars.plrA = col1
 	GVars.plrB = col2
@@ -35,7 +29,6 @@ func _pressed():
 func saveCharacter():
 	var file = File.new()
 	file.open("user://" + charName + ".save", File.WRITE)
-	print(file.get_path())
 	var info = {
 		"name": charName,
 		"tribes": tribes,
@@ -49,3 +42,24 @@ func saveCharacter():
 	}
 	file.store_line(to_json(info))
 	file.close()
+
+onready var graphic = get_node("TextureRect")
+
+onready var hover = preload("res://images/mmbutton-graphic.png")
+onready var click = preload("res://images/mmbutton-graphic-click.png")
+
+func _mouse_enter():
+	graphic.self_modulate = Color.white
+	graphic.texture = hover
+
+func _mouse_exit():
+	graphic.self_modulate = Color.transparent
+
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			graphic.texture = click
+			action()
+			get_tree().change_scene("res://scenes/possibility.tscn")
+	else:
+		graphic.texture = hover

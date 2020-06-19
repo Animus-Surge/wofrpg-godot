@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://godot-resources/player-frames.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -6,8 +6,10 @@
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=4]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=5]
 [ext_resource path="res://godot-resources/bg-prim.tres" type="StyleBox" id=6]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=7]
 [ext_resource path="res://scripts/GUIKeyManager.vs" type="Script" id=8]
 [ext_resource path="res://images/slot.png" type="Texture" id=9]
+[ext_resource path="res://scripts/slotHandler.gd" type="Script" id=10]
 
 [sub_resource type="CapsuleShape2D" id=1]
 height = 63.1467
@@ -112,865 +114,831 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="UI"]
 pause_mode = 1
+margin_left = -1.0
 margin_top = 361.0
-margin_right = 232.0
+margin_right = 231.0
 margin_bottom = 614.0
 custom_styles/panel = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inventory" type="Panel" parent="UI"]
-self_modulate = Color( 1, 0.760784, 0.760784, 1 )
-anchor_left = 0.748
+[node name="Panel2" type="Panel" parent="UI"]
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 0.18396
-margin_top = 5.0
-margin_right = -5.0
-margin_bottom = -15.0
+margin_left = -275.0
+margin_bottom = 361.0
 custom_styles/panel = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="VBoxContainer" parent="UI/Inventory"]
+[node name="SlotContainer" type="GridContainer" parent="UI/Panel2"]
+margin_left = 46.0
+margin_top = 67.0
+margin_right = 228.0
+margin_bottom = 351.0
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 27.0
-margin_top = 10.0
-margin_right = -38.0
-margin_bottom = -16.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="UI/Inventory/HBoxContainer"]
-margin_right = 205.0
+[node name="Slot2" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_right = 68.0
 margin_bottom = 32.0
-custom_fonts/font = ExtResource( 4 )
-text = "Inventorty"
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot3" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 32.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot4" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_right = 140.0
+margin_bottom = 32.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot5" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_right = 176.0
+margin_bottom = 32.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot6" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 36.0
+margin_right = 32.0
+margin_bottom = 68.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot6"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot7" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 36.0
+margin_right = 68.0
+margin_bottom = 68.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot7"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot8" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 36.0
+margin_right = 104.0
+margin_bottom = 68.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot9" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 36.0
+margin_right = 140.0
+margin_bottom = 68.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot10" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 36.0
+margin_right = 176.0
+margin_bottom = 68.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot10"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot11" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 72.0
+margin_right = 32.0
+margin_bottom = 104.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot11"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot12" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 72.0
+margin_right = 68.0
+margin_bottom = 104.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot12"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot13" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 72.0
+margin_right = 104.0
+margin_bottom = 104.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot13"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot14" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 72.0
+margin_right = 140.0
+margin_bottom = 104.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot14"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot15" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 72.0
+margin_right = 176.0
+margin_bottom = 104.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot15"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot16" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 108.0
+margin_right = 32.0
+margin_bottom = 140.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot16"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot17" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 108.0
+margin_right = 68.0
+margin_bottom = 140.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot17"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot18" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 108.0
+margin_right = 104.0
+margin_bottom = 140.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot18"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot19" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 108.0
+margin_right = 140.0
+margin_bottom = 140.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot19"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot20" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 108.0
+margin_right = 176.0
+margin_bottom = 140.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot20"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot21" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 144.0
+margin_right = 32.0
+margin_bottom = 176.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot21"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot22" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 144.0
+margin_right = 68.0
+margin_bottom = 176.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot22"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot23" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 144.0
+margin_right = 104.0
+margin_bottom = 176.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot23"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot24" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 144.0
+margin_right = 140.0
+margin_bottom = 176.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot24"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot25" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 144.0
+margin_right = 176.0
+margin_bottom = 176.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot25"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot26" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 180.0
+margin_right = 32.0
+margin_bottom = 212.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot26"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot27" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 180.0
+margin_right = 68.0
+margin_bottom = 212.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot27"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot28" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 180.0
+margin_right = 104.0
+margin_bottom = 212.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot28"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot29" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 180.0
+margin_right = 140.0
+margin_bottom = 212.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot29"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot30" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 180.0
+margin_right = 176.0
+margin_bottom = 212.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot30"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot31" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 216.0
+margin_right = 32.0
+margin_bottom = 248.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot31"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot32" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 216.0
+margin_right = 68.0
+margin_bottom = 248.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot32"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot33" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 216.0
+margin_right = 104.0
+margin_bottom = 248.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot33"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot34" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 216.0
+margin_right = 140.0
+margin_bottom = 248.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot34"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot35" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 216.0
+margin_right = 176.0
+margin_bottom = 248.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot35"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot36" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 252.0
+margin_right = 32.0
+margin_bottom = 284.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot36"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot37" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 36.0
+margin_top = 252.0
+margin_right = 68.0
+margin_bottom = 284.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot37"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot38" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 72.0
+margin_top = 252.0
+margin_right = 104.0
+margin_bottom = 284.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot38"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot39" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 108.0
+margin_top = 252.0
+margin_right = 140.0
+margin_bottom = 284.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot39"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot40" type="TextureRect" parent="UI/Panel2/SlotContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 144.0
+margin_top = 252.0
+margin_right = 176.0
+margin_bottom = 284.0
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Icon" type="TextureRect" parent="UI/Panel2/SlotContainer/Slot40"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Panel2"]
+margin_left = 98.0
+margin_top = 21.0
+margin_right = 170.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 7 )
+text = "Inventory"
 align = 1
-
-[node name="topMargin" type="Label" parent="UI/Inventory/HBoxContainer"]
-margin_top = 36.0
-margin_right = 205.0
-margin_bottom = 50.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Inventory/HBoxContainer"]
-margin_top = 54.0
-margin_right = 205.0
-margin_bottom = 568.0
-size_flags_vertical = 3
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 514.0
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer"]
-margin_right = 205.0
-margin_bottom = 514.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer"]
-margin_right = 205.0
-margin_bottom = 514.0
-size_flags_horizontal = 3
-
-[node name="GridContainer" type="GridContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 284.0
-columns = 5
-
-[node name="slot" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_right = 32.0
-margin_bottom = 32.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot2" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_right = 68.0
-margin_bottom = 32.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot2"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot2/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot3" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_right = 104.0
-margin_bottom = 32.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot3"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot3/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot4" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_right = 140.0
-margin_bottom = 32.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot4"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot4/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot5" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_right = 176.0
-margin_bottom = 32.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot5"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot5/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot6" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 36.0
-margin_right = 32.0
-margin_bottom = 68.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot6"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot6/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot7" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 36.0
-margin_right = 68.0
-margin_bottom = 68.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot7"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot7/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot8" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 36.0
-margin_right = 104.0
-margin_bottom = 68.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot8"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot8/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot9" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 36.0
-margin_right = 140.0
-margin_bottom = 68.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot9"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot9/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot10" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 36.0
-margin_right = 176.0
-margin_bottom = 68.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot10"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot10/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot11" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 72.0
-margin_right = 32.0
-margin_bottom = 104.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot11"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot11/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot12" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 72.0
-margin_right = 68.0
-margin_bottom = 104.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot12"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot12/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot13" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 72.0
-margin_right = 104.0
-margin_bottom = 104.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot13"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot13/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot14" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 72.0
-margin_right = 140.0
-margin_bottom = 104.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot14"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot14/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot15" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 72.0
-margin_right = 176.0
-margin_bottom = 104.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot15"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot15/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot16" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 108.0
-margin_right = 32.0
-margin_bottom = 140.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot16"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot16/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot17" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 108.0
-margin_right = 68.0
-margin_bottom = 140.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot17"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot17/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot18" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 108.0
-margin_right = 104.0
-margin_bottom = 140.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot18"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot18/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot19" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 108.0
-margin_right = 140.0
-margin_bottom = 140.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot19"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot19/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot20" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 108.0
-margin_right = 176.0
-margin_bottom = 140.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot20"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot20/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot21" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 144.0
-margin_right = 32.0
-margin_bottom = 176.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot21"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot21/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot22" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 144.0
-margin_right = 68.0
-margin_bottom = 176.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot22"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot22/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot23" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 144.0
-margin_right = 104.0
-margin_bottom = 176.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot23"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot23/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot24" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 144.0
-margin_right = 140.0
-margin_bottom = 176.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot24"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot24/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot25" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 144.0
-margin_right = 176.0
-margin_bottom = 176.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot25"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot25/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot26" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 180.0
-margin_right = 32.0
-margin_bottom = 212.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot26"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot26/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot27" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 180.0
-margin_right = 68.0
-margin_bottom = 212.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot27"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot27/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot28" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 180.0
-margin_right = 104.0
-margin_bottom = 212.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot28"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot28/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot29" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 180.0
-margin_right = 140.0
-margin_bottom = 212.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot29"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot29/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot30" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 180.0
-margin_right = 176.0
-margin_bottom = 212.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot30"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot30/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot31" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 216.0
-margin_right = 32.0
-margin_bottom = 248.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot31"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot31/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot32" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 216.0
-margin_right = 68.0
-margin_bottom = 248.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot32"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot32/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot33" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 216.0
-margin_right = 104.0
-margin_bottom = 248.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot33"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot33/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot34" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 216.0
-margin_right = 140.0
-margin_bottom = 248.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot34"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot34/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot35" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 216.0
-margin_right = 176.0
-margin_bottom = 248.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot35"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot35/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot36" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 252.0
-margin_right = 32.0
-margin_bottom = 284.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot36"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot36/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot37" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 36.0
-margin_top = 252.0
-margin_right = 68.0
-margin_bottom = 284.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot37"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot37/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot38" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 72.0
-margin_top = 252.0
-margin_right = 104.0
-margin_bottom = 284.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot38"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot38/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot39" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 108.0
-margin_top = 252.0
-margin_right = 140.0
-margin_bottom = 284.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot39"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot39/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="slot40" type="HBoxContainer" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 144.0
-margin_top = 252.0
-margin_right = 176.0
-margin_bottom = 284.0
-
-[node name="TextureRect" type="TextureRect" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot40"]
-self_modulate = Color( 1, 1, 1, 0.352941 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 9 )
-stretch_mode = 3
-
-[node name="icon" type="TextureButton" parent="UI/Inventory/HBoxContainer/VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer/GridContainer/slot40/TextureRect"]
-margin_right = 32.0
-margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+valign = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

@@ -1,11 +1,8 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://scripts/ngmanager.gd" type="Script" id=1]
+[ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
-[ext_resource path="res://godot-resources/btn-default.tres" type="StyleBox" id=3]
-[ext_resource path="res://godot-resources/btn-hover.tres" type="StyleBox" id=4]
-[ext_resource path="res://scripts/Button.vs" type="Script" id=5]
-[ext_resource path="res://godot-resources/btn-press.tres" type="StyleBox" id=6]
+[ext_resource path="res://scripts/mmbutton_handler.gd" type="Script" id=5]
 [ext_resource path="res://icon.png" type="Texture" id=7]
 [ext_resource path="res://godot-resources/prm-bg.tres" type="StyleBox" id=8]
 [ext_resource path="res://images/back-btn-pressed.png" type="Texture" id=9]
@@ -13,12 +10,9 @@
 [ext_resource path="res://images/back-btn.png" type="Texture" id=11]
 [ext_resource path="res://scripts/scenemanager.gd" type="Script" id=12]
 [ext_resource path="res://scripts/back.vs" type="Script" id=13]
-[ext_resource path="res://scripts/coloreditor.vs" type="Script" id=14]
-[ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=15]
-[ext_resource path="res://animations/reg/idle/base-horns/frame_0_delay-0.5s.png" type="Texture" id=16]
-[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=17]
-[ext_resource path="res://animations/reg/idle/base-wings/frame_0_delay-0.5s.png" type="Texture" id=18]
-[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=19]
+[ext_resource path="res://scripts/menuhandler.gd" type="Script" id=20]
+[ext_resource path="res://godot-resources/ls-bg.tres" type="StyleBox" id=21]
+[ext_resource path="res://images/mmbutton-graphic.png" type="Texture" id=22]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 12 )
@@ -27,6 +21,7 @@ script = ExtResource( 12 )
 margin_right = 1366.0
 margin_bottom = 768.0
 custom_styles/panel = ExtResource( 8 )
+script = ExtResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
@@ -39,103 +34,146 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="main-panel/Control"]
-margin_left = 52.0
-margin_top = 297.242
-margin_right = 388.0
-margin_bottom = 410.242
-focus_mode = 0
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/normal = ExtResource( 3 )
+[node name="HBoxContainer" type="HBoxContainer" parent="main-panel/Control"]
+margin_left = 1170.28
+margin_top = 580.975
+margin_right = 1347.28
+margin_bottom = 612.975
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "ng"
+}
+
+[node name="TextureRect" type="TextureRect" parent="main-panel/Control/HBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="main-panel/Control/HBoxContainer"]
+margin_left = 36.0
+margin_right = 177.0
+margin_bottom = 32.0
 custom_fonts/font = ExtResource( 2 )
 text = "New Game"
-align = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="main-panel/Control"]
+margin_left = 1170.28
+margin_top = 624.01
+margin_right = 1353.28
+margin_bottom = 656.01
 script = ExtResource( 5 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false,
-"_editor_description_": "ng-btn"
+"_editor_description_": "lg"
 }
 
-[node name="Button2" type="Button" parent="main-panel/Control"]
-margin_left = 52.0
-margin_top = 437.0
-margin_right = 388.0
-margin_bottom = 550.0
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/normal = ExtResource( 3 )
+[node name="TextureRect" type="TextureRect" parent="main-panel/Control/HBoxContainer2"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="main-panel/Control/HBoxContainer2"]
+margin_left = 36.0
+margin_right = 183.0
+margin_bottom = 32.0
 custom_fonts/font = ExtResource( 2 )
 text = "Load Game"
-align = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="main-panel/Control"]
+margin_left = 1170.28
+margin_top = 668.897
+margin_right = 1311.28
+margin_bottom = 700.897
 script = ExtResource( 5 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false,
-"_editor_description_": "lg-btn"
+"_editor_description_": "set"
 }
 
-[node name="Button3" type="Button" parent="main-panel/Control"]
-margin_left = 52.0
-margin_top = 571.229
-margin_right = 198.059
-margin_bottom = 684.229
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/normal = ExtResource( 3 )
-custom_fonts/font = ExtResource( 2 )
-text = "Close"
-align = 0
-script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "close-btn"
-}
+[node name="TextureRect" type="TextureRect" parent="main-panel/Control/HBoxContainer3"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 22 )
 
-[node name="Button4" type="Button" parent="main-panel/Control"]
-margin_left = 203.392
-margin_top = 571.428
-margin_right = 388.452
-margin_bottom = 684.428
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/normal = ExtResource( 3 )
+[node name="Label" type="Label" parent="main-panel/Control/HBoxContainer3"]
+margin_left = 36.0
+margin_right = 141.0
+margin_bottom = 32.0
 custom_fonts/font = ExtResource( 2 )
 text = "Settings"
-align = 0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="main-panel/Control"]
+margin_left = 1170.28
+margin_top = 712.211
+margin_right = 1288.28
+margin_bottom = 744.211
 script = ExtResource( 5 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false,
-"_editor_description_": "settings-btn"
+"_editor_description_": "exit"
 }
+
+[node name="TextureRect" type="TextureRect" parent="main-panel/Control/HBoxContainer4"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="main-panel/Control/HBoxContainer4"]
+margin_left = 36.0
+margin_right = 170.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 2 )
+text = "Exit Game"
 
 [node name="icon" type="Sprite" parent="main-panel"]
 position = Vector2( 206.433, 146.5 )
 scale = Vector2( 0.336753, 0.336753 )
 texture = ExtResource( 7 )
 
-[node name="ng-panel" type="PanelContainer" parent="main-panel"]
-visible = false
+[node name="ng-panel" type="Control" parent="main-panel"]
 self_modulate = Color( 0.596078, 0.596078, 0.596078, 1 )
 margin_right = 1366.0
 margin_bottom = 768.0
-custom_styles/panel = ExtResource( 8 )
+mouse_filter = 2
+
+[node name="container" type="Panel" parent="main-panel/ng-panel"]
+margin_left = 47.0
+margin_top = 57.0
+margin_right = 1039.0
+margin_bottom = 617.0
+custom_styles/panel = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="set-panel" type="PanelContainer" parent="main-panel"]
+visible = false
+margin_right = 1366.0
+margin_bottom = 768.0
+custom_styles/panel = ExtResource( 21 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="Control" type="Control" parent="main-panel/ng-panel"]
+[node name="Control" type="Control" parent="main-panel/set-panel"]
 margin_right = 1366.0
 margin_bottom = 768.0
 
-[node name="back" type="TextureButton" parent="main-panel/ng-panel/Control"]
+[node name="back" type="TextureButton" parent="main-panel/set-panel/Control"]
 margin_left = 17.0
 margin_top = 17.0
-margin_right = 145.0
-margin_bottom = 145.0
+margin_right = 98.0
+margin_bottom = 98.0
 texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 9 )
 texture_hover = ExtResource( 10 )
+expand = true
 stretch_mode = 4
 script = ExtResource( 13 )
 __meta__ = {
@@ -143,226 +181,20 @@ __meta__ = {
 "_editor_description_": "back"
 }
 
-[node name="create" type="Button" parent="main-panel/ng-panel/Control"]
-margin_left = 995.693
-margin_top = 624.01
-margin_right = 1313.75
-margin_bottom = 737.01
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/normal = ExtResource( 3 )
-custom_fonts/font = ExtResource( 2 )
-text = "Create Character"
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "submit"
-}
-
-[node name="name" type="LineEdit" parent="main-panel/ng-panel/Control"]
-margin_left = 31.3145
-margin_top = 164.675
-margin_right = 451.315
-margin_bottom = 206.675
-custom_fonts/font = ExtResource( 2 )
-max_length = 50
-placeholder_text = "Name"
+[node name="resolution" type="OptionButton" parent="main-panel/set-panel/Control"]
+margin_left = 888.0
+margin_top = 39.0
+margin_right = 1309.0
+margin_bottom = 78.0
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="body" type="ColorPickerButton" parent="main-panel/ng-panel/Control"]
-margin_left = 117.53
-margin_top = 235.402
-margin_right = 191.53
-margin_bottom = 292.402
-color = Color( 1, 1, 1, 1 )
-script = ExtResource( 14 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "body"
-}
-
-[node name="wings" type="ColorPickerButton" parent="main-panel/ng-panel/Control"]
-margin_left = 117.53
-margin_top = 304.604
-margin_right = 191.53
-margin_bottom = 361.604
-color = Color( 1, 1, 1, 1 )
-script = ExtResource( 14 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "wings"
-}
-
-[node name="horns" type="ColorPickerButton" parent="main-panel/ng-panel/Control"]
-margin_left = 117.53
-margin_top = 375.849
-margin_right = 191.53
-margin_bottom = 432.849
-color = Color( 1, 1, 1, 1 )
-script = ExtResource( 14 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "horns"
-}
-
-[node name="eyes" type="ColorPickerButton" parent="main-panel/ng-panel/Control"]
-margin_left = 117.53
-margin_top = 448.602
-margin_right = 191.53
-margin_bottom = 505.602
-color = Color( 1, 1, 1, 1 )
-script = ExtResource( 14 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "eyes"
-}
-
-[node name="tribes_container" type="GridContainer" parent="main-panel/ng-panel/Control"]
-margin_left = 931.76
-margin_top = 87.8236
-margin_right = 1343.76
-margin_bottom = 317.824
-columns = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="hw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_right = 211.0
-margin_bottom = 40.0
-custom_fonts/font = ExtResource( 2 )
-text = "HiveWing"
-
-[node name="iw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_left = 215.0
-margin_right = 412.0
-margin_bottom = 40.0
-custom_fonts/font = ExtResource( 2 )
-text = "IceWing"
-
-[node name="lw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_top = 44.0
-margin_right = 211.0
-margin_bottom = 84.0
-custom_fonts/font = ExtResource( 2 )
-text = "LeafWing"
-
-[node name="mw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_left = 215.0
-margin_top = 44.0
-margin_right = 412.0
-margin_bottom = 84.0
-custom_fonts/font = ExtResource( 2 )
-text = "MudWing"
-
-[node name="nw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_top = 88.0
-margin_right = 211.0
-margin_bottom = 128.0
-custom_fonts/font = ExtResource( 2 )
-text = "NightWing"
-
-[node name="rw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_left = 215.0
-margin_top = 88.0
-margin_right = 412.0
-margin_bottom = 128.0
-custom_fonts/font = ExtResource( 2 )
-text = "RainWing"
-
-[node name="saw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_top = 132.0
-margin_right = 211.0
-margin_bottom = 172.0
-custom_fonts/font = ExtResource( 2 )
-text = "SandWing"
-
-[node name="sew" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_left = 215.0
-margin_top = 132.0
-margin_right = 412.0
-margin_bottom = 172.0
-custom_fonts/font = ExtResource( 2 )
-text = "SeaWing"
-
-[node name="siw" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_top = 176.0
-margin_right = 211.0
-margin_bottom = 216.0
-custom_fonts/font = ExtResource( 2 )
-text = "SilkWing"
-
-[node name="sky" type="CheckButton" parent="main-panel/ng-panel/Control/tribes_container"]
-margin_left = 215.0
-margin_top = 176.0
-margin_right = 412.0
-margin_bottom = 216.0
-custom_fonts/font = ExtResource( 2 )
-text = "SkyWing"
-
-[node name="Label" type="Label" parent="main-panel/ng-panel/Control"]
-margin_left = 1089.28
-margin_top = 38.4727
-margin_right = 1170.28
-margin_bottom = 70.4727
-custom_fonts/font = ExtResource( 2 )
-text = "Tribes"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="main-panel/ng-panel/Control"]
-margin_left = 11.3905
-margin_top = 250.051
-margin_right = 111.39
-margin_bottom = 562.051
-custom_fonts/font = ExtResource( 2 )
-text = "Body
-
-Wings
-
-Horns
-
-Eyes
-
-Colors -----"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="body-preview" type="Panel" parent="main-panel/ng-panel/Control"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_left = 278.015
-margin_top = 317.117
-margin_right = 910.015
-margin_bottom = 725.117
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prev-body" type="Sprite" parent="main-panel/ng-panel/Control/body-preview"]
-position = Vector2( 331.614, 203.094 )
-texture = ExtResource( 17 )
-
-[node name="prev-bodys" type="Sprite" parent="main-panel/ng-panel/Control/body-preview"]
-position = Vector2( 331.614, 203.094 )
-texture = ExtResource( 19 )
-
-[node name="prev-wings" type="Sprite" parent="main-panel/ng-panel/Control/body-preview"]
-position = Vector2( 331.614, 203.094 )
-texture = ExtResource( 18 )
-
-[node name="prev-horns" type="Sprite" parent="main-panel/ng-panel/Control/body-preview"]
-position = Vector2( 331.614, 203.094 )
-texture = ExtResource( 16 )
-
-[node name="prev-eyes" type="Sprite" parent="main-panel/ng-panel/Control/body-preview"]
-position = Vector2( 331.614, 203.094 )
-texture = ExtResource( 15 )
-[connection signal="color_changed" from="main-panel/ng-panel/Control/body" to="main-panel/ng-panel/Control/body" method="color_changed"]
-[connection signal="color_changed" from="main-panel/ng-panel/Control/wings" to="main-panel/ng-panel/Control/wings" method="color_changed"]
-[connection signal="color_changed" from="main-panel/ng-panel/Control/horns" to="main-panel/ng-panel/Control/horns" method="color_changed"]
-[connection signal="color_changed" from="main-panel/ng-panel/Control/eyes" to="main-panel/ng-panel/Control/eyes" method="color_changed"]
+[connection signal="mouse_entered" from="main-panel/Control/HBoxContainer" to="main-panel/Control/HBoxContainer" method="_mouse_enter"]
+[connection signal="mouse_exited" from="main-panel/Control/HBoxContainer" to="main-panel/Control/HBoxContainer" method="_mouse_exit"]
+[connection signal="mouse_entered" from="main-panel/Control/HBoxContainer2" to="main-panel/Control/HBoxContainer2" method="_mouse_enter"]
+[connection signal="mouse_exited" from="main-panel/Control/HBoxContainer2" to="main-panel/Control/HBoxContainer2" method="_mouse_exit"]
+[connection signal="mouse_entered" from="main-panel/Control/HBoxContainer3" to="main-panel/Control/HBoxContainer3" method="_mouse_enter"]
+[connection signal="mouse_exited" from="main-panel/Control/HBoxContainer3" to="main-panel/Control/HBoxContainer3" method="_mouse_exit"]
+[connection signal="mouse_entered" from="main-panel/Control/HBoxContainer4" to="main-panel/Control/HBoxContainer4" method="_mouse_enter"]
+[connection signal="mouse_exited" from="main-panel/Control/HBoxContainer4" to="main-panel/Control/HBoxContainer4" method="_mouse_exit"]

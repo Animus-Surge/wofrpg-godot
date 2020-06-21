@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GVars="*res://scripts/GVars.gd"
-Scenemanager="*res://scripts/scenemanager.gd"
+loadscreen="*res://scripts/loadscreen.gd"
 
 [debug]
 

@@ -151,6 +151,7 @@ scale = Vector2( 0.336753, 0.336753 )
 texture = ExtResource( 7 )
 
 [node name="ng-panel" type="Control" parent="main-panel"]
+visible = false
 self_modulate = Color( 0.596078, 0.596078, 0.596078, 1 )
 margin_right = 1366.0
 margin_bottom = 768.0

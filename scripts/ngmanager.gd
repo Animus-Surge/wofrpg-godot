@@ -48,7 +48,7 @@ func action():
 	elif get_node("container/role").selected == 3:
 		role = "warrior"
 		
-	get_tree().change_scene("res://scenes/possibility.tscn")
+	loadscreen.loadScene("res://scenes/possibility.tscn")
 	
 func saveCharacter():
 	var file = File.new()

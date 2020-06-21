@@ -6,6 +6,8 @@ var plrB = Color.white
 var plrC = Color.white
 var plrD = Color.white
 
+var scene = 1
+
 var itemData
 
 var currentSceneRoot

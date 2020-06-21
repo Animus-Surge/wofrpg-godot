@@ -2,7 +2,7 @@
 
 [ext_resource path="res://godot-resources/player-frames.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
-[ext_resource path="res://scripts/popup_handler.vs" type="Script" id=3]
+[ext_resource path="res://popup_handler.gd" type="Script" id=3]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=4]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=5]
 [ext_resource path="res://godot-resources/bg-prim.tres" type="StyleBox" id=6]

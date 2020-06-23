@@ -5,21 +5,24 @@ var wait
 var maxtime = 100
 var currentscene
 
-func _ready():
-	var root = get_tree().get_root()
-	currentscene = root.get_child(root.get_child_count() -1)
+#func _ready():
+#	var root = get_tree().get_root()
+#	currentscene = root.get_child(root.get_child_count() -1)
 
 func loadScene(scene):
-	loader = ResourceLoader.load_interactive(scene)
-	if loader == null:
-		return
 	
-	currentscene.queue_free()
+	get_tree().change_scene(scene)	
 	
-	set_process(true)
-	set_scene(preload("res://scenes/loadscreen.tscn"))
+#	loader = ResourceLoader.load_interactive(scene)
+#	if loader == null:
+#		return
 	
-	wait = 1
+#	currentscene.queue_free()
+	
+#	set_process(true)
+#	set_scene(preload("res://scenes/loadscreen.tscn"))
+	
+#	wait = 1
 	
 func _process(delta):
 	if loader == null:

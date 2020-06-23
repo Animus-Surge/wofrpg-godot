@@ -22,8 +22,3 @@ func _ready():
 	var data = JSON.parse(itemFile.get_as_text())
 	itemFile.close()
 	itemData = data.result
-	
-func passSignal(Signal : String, args : Array):
-	if Signal == "pickUpItem":
-		print("Passing a signal: pickUpItem")
-		emit_signal("pickUpItem", args)

@@ -1,25 +1,27 @@
 extends TextureRect
 
-var item
+var itm
 var txture
 var usage
 
+signal iteminfo(itemName, itemTexture, itemUsage)
+
 func _init():
-	item = null
+	itm = null
 	
 func addItem(itemName : String, itemSprite : Texture, itemUsage : String):
-	item = itemName
+	itm = itemName
 	txture = itemSprite
 	get_node("Icon").texture = itemSprite
 	usage = itemUsage
-	print(usage)
 
 func clear():
-	item = null
+	itm = null
 	get_node("Icon").texture = null
+	usage = null
 	
 func _gui_input(event):
-	if item:
+	if itm:
 		if event is InputEventMouseButton:
 			if event.button_index == BUTTON_RIGHT and event.pressed:
 				var interactableScript = preload("res://scripts/interactable.gd")
@@ -37,30 +39,26 @@ func _gui_input(event):
 				item.add_child(itemClickBounds)
 				
 				item.set_script(interactableScript)
-				item.itemName = item
-				item.itemTexture = txture
-				item.usage = usage
 				
-				GVars.currentSceneRoot.add_child(item)
+				connect("iteminfo", item, "setItemInfo")
+				emit_signal("iteminfo", itm, txture, usage)
+				disconnect("iteminfo", item, "setItemInfo")
+				
+				item.editor_description = "item"
+				
+				GVars.currentSceneRoot.get_node("items").add_child(item)
 				clear()
 			elif event.button_index == BUTTON_LEFT and event.pressed:
 				parseUses()
 
 func parseUses():
 	var tokens = usage.split(" ")
-	var function = ""
-	var args = ""
-	for token in tokens:
-		if function == "":
-			if token == "print":
-				function = "print"
-			elif token == "end":
-				pass
-			elif token == ";":
-				if function == "print":
-					print(args)
-				function = ""
-				continue
-		elif function == "print":
-			args += token + " "
-	print("Used an item")
+	var function = tokens[0]
+	tokens.remove(0)
+	if function == "print":
+		var args: String
+		for word in tokens:
+			if word == ";":
+				break
+			args = args + word + " "
+		print(args)

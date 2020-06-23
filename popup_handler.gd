@@ -9,3 +9,4 @@ func _pressed():
 		get_parent().visible = false
 	elif desc == 'main':
 		loadscreen.loadScene("res://scenes/menus.tscn")
+		get_tree().paused = false

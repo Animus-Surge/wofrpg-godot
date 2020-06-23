@@ -5,15 +5,17 @@ var slots = Array()
 func _ready():
 	slots = get_children()
 	for slot in slots:
-		slot.removeItem()
+		slot.clear()
 		
-func addItem(itemName : String, itemTexture : Texture):
-	print("Adding item: " + itemName + " to the inventory")
+func add_item(itemName : String, itemTexture : Texture, itemUsage : String):
 	for slot in slots:
-		if !slot.itemInSlot:
-			slot.addItem(itemName, itemTexture)
+		if !slot.itm:
+			slot.addItem(itemName, itemTexture, itemUsage)
+			return
 
-
-func itemPickUp(args):
-	print("Signal received")
-	addItem(args[0], args[1])
+func inventoryContains(itemName : String, itemTexture : Texture):
+	for slot in slots:
+		if slot.itm == itemName:
+			if slot.txture == itemTexture:
+				get_tree().call_group("npcInteract", "inventoryContains")
+				slot.clear()

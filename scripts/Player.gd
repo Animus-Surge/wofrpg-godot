@@ -3,10 +3,9 @@ extends KinematicBody2D
 export (float) var maxSpeed = 100
 export (float) var friction = 10
 
-onready var inventoryList = get_node("UI/Panel2/SlotContainer")
-var slots = Array()
-
 var vel = Vector2.ZERO
+
+var flippedG = false
 
 func _ready():
 	var colA = GVars.plrA
@@ -14,28 +13,18 @@ func _ready():
 	var colC = GVars.plrC
 	var colD = GVars.plrD
 	
-	slots = inventoryList.get_children()
+	get_node("sprites/norm/ir/body").self_modulate = colA
+	get_node("sprites/norm/ir/body-shadow").self_modulate = colA
+	get_node("sprites/norm/ir/wings").self_modulate = colB
+	get_node("sprites/norm/ir/horns").self_modulate = colC
+	get_node("sprites/norm/ir/eyes").self_modulate = colD
+	get_node("sprites/flip/norm/ir/body").self_modulate = colA
+	get_node("sprites/flip/norm/ir/body-shadow").self_modulate = colA
+	get_node("sprites/flip/norm/ir/wings").self_modulate = colB
+	get_node("sprites/flip/norm/ir/horns").self_modulate = colC
+	get_node("sprites/flip/norm/ir/eyes").self_modulate = colD
 	
-	for slot in slots:
-		slot.clear()
-	
-	get_child(0).self_modulate = colA
-	get_child(1).self_modulate = colA
-	get_child(2).self_modulate = colB
-	get_child(3).self_modulate = colC
-	get_child(4).self_modulate = colD
-	
-	get_child(0).play("idle-body")
-	get_child(1).play("idle-body-shadow")
-	get_child(2).play("idle-wings")
-	get_child(3).play("idle-horns")
-	get_child(4).play("idle-eyes")
-	
-	get_child(0).playing = true
-	get_child(1).playing = true
-	get_child(2).playing = true
-	get_child(3).playing = true
-	get_child(4).playing = true
+	animation(flippedG, "idle")
 
 func _physics_process(delta):
 	var vect = Vector2.ZERO
@@ -43,46 +32,56 @@ func _physics_process(delta):
 	vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
 	if vect.x < 0:
-		get_child(0).flip_h = true
-		get_child(1).flip_h = true
-		get_child(2).flip_h = true
-		get_child(3).flip_h = true
-		get_child(4).flip_h = true
+		flippedG = true
 	elif vect.x > 0:
-		get_child(0).flip_h = false
-		get_child(1).flip_h = false
-		get_child(2).flip_h = false
-		get_child(3).flip_h = false
-		get_child(4).flip_h = false
+		flippedG = false
 	
 	vect = vect.normalized()
 	if vect != Vector2.ZERO:
 		vel = vel.move_toward(vect * maxSpeed, friction * delta)
-		get_child(0).play("run-body")
-		get_child(1).play("run-body-shadow")
-		get_child(2).play("run-wings")
-		get_child(3).play("run-horns")
-		get_child(4).play("run-eyes")
+		animation(flippedG, "run")
 	else:
 		vel = vel.move_toward(Vector2.ZERO, friction * delta)
-		get_child(0).play("idle-body")
-		get_child(1).play("idle-body-shadow")
-		get_child(2).play("idle-wings")
-		get_child(3).play("idle-horns")
-		get_child(4).play("idle-eyes")
+		animation(flippedG, "idle")
+		
 	
 	vel = move_and_slide(vel)
-
-func _unhandled_input(event):
-	if event is InputEventKey:
-		if event.pressed and event.scancode == KEY_SPACE:
-			print("Attacking") #play the attack animation (tail attack)
-
-var itemsInInventory = 0
-var maxItems = 40
-
-func pickUpItem(iname, texture, usage):
-	for slot in slots:
-		if !slot.item:
-			slot.addItem(iname, texture, usage)
-			break
+	
+func animation(flipped: bool, anim: String):
+	if flipped:
+		get_node("sprites/norm/ir/body").visible = false
+		get_node("sprites/norm/ir/body-shadow").visible = false
+		get_node("sprites/norm/ir/wings").visible = false
+		get_node("sprites/norm/ir/horns").visible = false
+		get_node("sprites/norm/ir/eyes").visible = false
+		get_node("sprites/flip/norm/ir/body").visible = true
+		get_node("sprites/flip/norm/ir/body-shadow").visible = true
+		get_node("sprites/flip/norm/ir/wings").visible = true
+		get_node("sprites/flip/norm/ir/horns").visible = true
+		get_node("sprites/flip/norm/ir/eyes").visible = true
+	else:
+		get_node("sprites/norm/ir/body").visible = true
+		get_node("sprites/norm/ir/body-shadow").visible = true
+		get_node("sprites/norm/ir/wings").visible = true
+		get_node("sprites/norm/ir/horns").visible = true
+		get_node("sprites/norm/ir/eyes").visible = true
+		get_node("sprites/flip/norm/ir/body").visible = false
+		get_node("sprites/flip/norm/ir/body-shadow").visible = false
+		get_node("sprites/flip/norm/ir/wings").visible = false
+		get_node("sprites/flip/norm/ir/horns").visible = false
+		get_node("sprites/flip/norm/ir/eyes").visible = false
+	
+	get_node("sprites/norm/ir/body").play(anim + "-body")
+	get_node("sprites/norm/ir/body-shadow").play(anim + "-body-shadow")
+	get_node("sprites/norm/ir/wings").play(anim + "-wings")
+	get_node("sprites/norm/ir/horns").play(anim + "-horns")
+	get_node("sprites/norm/ir/eyes").play(anim + "-eyes")
+	get_node("sprites/flip/norm/ir/body").play(anim + "-body")
+	get_node("sprites/flip/norm/ir/body-shadow").play(anim + "-body-shadow")
+	get_node("sprites/flip/norm/ir/wings").play(anim + "-wings")
+	get_node("sprites/flip/norm/ir/horns").play(anim + "-horns")
+	get_node("sprites/flip/norm/ir/eyes").play(anim + "-eyes")
+	
+	
+	
+	

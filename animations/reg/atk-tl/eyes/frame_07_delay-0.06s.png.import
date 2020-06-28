@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/frame_07_delay-0.06s.png-39cbfc17cd556229db0da4b503fdb33d.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://animations/reg/atk-tl/eyes/frame_07_delay-0.06s.png"
+dest_files=[ "res://.import/frame_07_delay-0.06s.png-39cbfc17cd556229db0da4b503fdb33d.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

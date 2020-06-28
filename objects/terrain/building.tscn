@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://images/1x1x3_tower_1.png" type="Texture" id=1]
+
+[node name="building" type="StaticBody2D"]
+position = Vector2( -1436, 120 )
+z_as_relative = false
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.699951, -97.2499 )
+scale = Vector2( 0.315306, 0.232314 )
+z_as_relative = false
+texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 1665.3, -600.25 )
+polygon = PoolVector2Array( -1666, 696, -1549, 646, -1665, 596, -1780, 647 )

@@ -45,7 +45,7 @@ func _gui_input(event):
 				disconnect("iteminfo", item, "setItemInfo")
 				
 				item.editor_description = "item"
-				
+				item.position = GVars.currentSceneRoot.get_node("objects/playerRoot").position
 				GVars.currentSceneRoot.get_node("items").add_child(item)
 				clear()
 			elif event.button_index == BUTTON_LEFT and event.pressed:

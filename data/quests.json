@@ -1,0 +1,66 @@
+{
+	"quests":{
+		"cactihelp":{
+			"name":"Help Cacti Out",
+			"desc":"Cacti needs a little bit of help. Why don't you lend him a hand?",
+			"id":"cactihelp",
+			"tasks":{
+				"task-1":{
+					"title":"Go to Cacti.",
+					"requires":{
+						"location":{
+							"x":0,
+							"y":0
+						}
+					},
+					"task_complete":false
+				},
+				"task-2":{
+					"title":"Find the lost gem",
+					"requires":{
+						"item":{
+							"name":"Cacti's Friend's Gem",
+							"id":51
+						}
+					},
+					"task_complete":false
+				},
+				"task-3":{
+					"title":"Bring the gem to Cacti",
+					"requires":{
+						"location":{
+							"x":0,
+							"y":0
+						}
+					},
+					"task_complete":false
+				}
+			},
+			"completed":false,
+			"locked":false
+		},
+		"story-1":{
+				"name":"The Great Intro",
+				"desc":"Part zero of the storyline",
+				"id":"storyone",
+				"tasks":{
+					"task-1":{
+						"title":"Go to the crate",
+						"requires":{
+							"location":{
+								"x":0,
+								"y":0
+							}
+						},
+						"rewards":{
+							"xp-reward":400
+						},
+						"task_complete":false
+					}
+				},
+				"completed":false,
+				"locked":false
+			}
+		}
+	}
+}

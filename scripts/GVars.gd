@@ -28,6 +28,8 @@ func _ready():
 	
 	_get_quest_info()
 	
+	#TODO: make it so all data files will be "moved" to the user folders
+	
 func _get_quest_info():
 	var questFile = File.new()
 	questFile.open("user://data/quests.json", File.READ)

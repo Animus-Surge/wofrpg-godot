@@ -27,7 +27,6 @@ func action():
 	col4 = get_node("container/eyes").color
 	for i in get_node("container/tribes").get_child_count():
 		tribes.append(get_node("container/tribes").get_child(i).pressed)
-	saveCharacter()
 	
 	GVars.plrA = col1
 	GVars.plrB = col2
@@ -50,27 +49,49 @@ func action():
 		
 	loadscreen.loadScene("res://scenes/possibility.tscn")
 	
-func saveCharacter():
-	var file = File.new()
-	file.open("user://" + charName + ".save", File.WRITE)
-	var info = {
-		"name": charName,
-		"tribes": tribes,
-		"color_1": col1,
-		"color_2": col2,
-		"color_3": col3,
-		"color_4": col4,
-		"color_5": col5,
+	var plrDict = {
+		"name":charName,
+		"gender":gender,
 		"role":role,
-		"gender":gender
+		"colors":{
+			"body":[
+				col1.r8,
+				col1.g8,
+				col1.b8
+			],
+			"wings":[
+				col2.r8,
+				col2.g8,
+				col2.b8
+			],
+			"horns":[
+				col3.r8,
+				col3.g8,
+				col3.b8
+			],
+			"eyes":[
+				col4.r8,
+				col4.g8,
+				col4.b8
+			]
+		},
+		"tribes":{
+			"hive":tribes[0],
+			"ice":tribes[1],
+			"leaf":tribes[2],
+			"mud":tribes[3],
+			"night":tribes[4],
+			"rain":tribes[5],
+			"sand":tribes[6],
+			"sea":tribes[7],
+			"silk":tribes[8],
+			"sky":tribes[9]
+		}
 	}
-	file.store_line(to_json(info))
-	file.close()
-
+	GVars._game_save(plrDict)
 
 func hideMenu():
 	visible = false
-
 
 func _on_HBoxContainer5_saveCharacter():
 	action()

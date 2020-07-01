@@ -70,6 +70,9 @@ func animation(anim: String):
 		get_node(\"AnimationPlayer\").play(\"idle-plr\")
 	elif anim == \"run\":
 		get_node(\"AnimationPlayer\").play(\"run-plr\")
+
+func _saveData():
+	pass
 "
 
 [sub_resource type="CapsuleShape2D" id=2]

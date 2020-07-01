@@ -27,9 +27,14 @@ func action():
 	if editor_description == "ng":
 		get_parent().get_parent().get_node("ng-panel").visible = true
 		get_parent().get_parent().get_node("set-panel").visible = false
+		get_parent().get_parent().get_node("lg-panel").visible = false
 	elif editor_description == "lg":
-		pass
+		get_parent().get_parent().get_node("lg-panel").visible = true
+		get_parent().get_parent().get_node("set-panel").visible = false
+		get_parent().get_parent().get_node("ng-panel").visible = false
 	elif editor_description == "set":
 		get_parent().get_parent().get_node("set-panel").visible = true
+		get_parent().get_parent().get_node("ng-panel").visible = false
+		get_parent().get_parent().get_node("lg-panel").visible = false
 	elif editor_description == "exit":
 		get_tree().quit(0)

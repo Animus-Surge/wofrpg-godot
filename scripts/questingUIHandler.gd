@@ -10,6 +10,9 @@ func _ready():
 	visible = false
 
 func showUI():
+	
+	get_node("Label2").text = ""
+	
 	for quest in GVars.questData["quests"]:
 		questList.append(GVars.questData["quests"].get(quest))
 	

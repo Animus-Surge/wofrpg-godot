@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=16]
 [ext_resource path="res://ngcolorhandler.vs" type="Script" id=17]
 [ext_resource path="res://scripts/buttonhandler.gd" type="Script" id=18]
+[ext_resource path="res://scripts/lg-manager.gd" type="Script" id=19]
 [ext_resource path="res://godot-resources/ls-bg.tres" type="StyleBox" id=21]
 [ext_resource path="res://images/mmbutton-graphic.png" type="Texture" id=22]
 
@@ -151,7 +152,6 @@ scale = Vector2( 0.336753, 0.336753 )
 texture = ExtResource( 7 )
 
 [node name="ng-panel" type="Control" parent="main-panel"]
-visible = false
 self_modulate = Color( 0.596078, 0.596078, 0.596078, 1 )
 margin_right = 1366.0
 margin_bottom = 768.0
@@ -469,6 +469,68 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="lg-panel" type="Control" parent="main-panel"]
+margin_right = 1366.0
+margin_bottom = 768.0
+mouse_filter = 2
+script = ExtResource( 19 )
+
+[node name="Panel" type="Panel" parent="main-panel/lg-panel"]
+margin_left = 47.0
+margin_top = 57.0
+margin_right = 1039.0
+margin_bottom = 613.0
+custom_styles/panel = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="main-panel/lg-panel/Panel"]
+margin_left = 20.0
+margin_top = 4.0
+margin_right = 72.0
+margin_bottom = 56.0
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="main-panel/lg-panel/Panel"]
+margin_left = 34.0
+margin_top = 74.0
+margin_right = 565.0
+margin_bottom = 537.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="main-panel/lg-panel/Panel"]
+margin_left = 642.0
+margin_top = 505.0
+margin_right = 888.0
+margin_bottom = 537.0
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "exit"
+}
+
+[node name="TextureRect" type="TextureRect" parent="main-panel/lg-panel/Panel/HBoxContainer5"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="main-panel/lg-panel/Panel/HBoxContainer5"]
+margin_left = 36.0
+margin_right = 246.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 2 )
+text = "Load Character"
 [connection signal="mouse_entered" from="main-panel/Control/HBoxContainer" to="main-panel/Control/HBoxContainer" method="_mouse_enter"]
 [connection signal="mouse_exited" from="main-panel/Control/HBoxContainer" to="main-panel/Control/HBoxContainer" method="_mouse_exit"]
 [connection signal="mouse_entered" from="main-panel/Control/HBoxContainer2" to="main-panel/Control/HBoxContainer2" method="_mouse_enter"]
@@ -485,3 +547,9 @@ __meta__ = {
 [connection signal="mouse_entered" from="main-panel/ng-panel/container/HBoxContainer5" to="main-panel/ng-panel/container/HBoxContainer5" method="_mouse_enter"]
 [connection signal="mouse_exited" from="main-panel/ng-panel/container/HBoxContainer5" to="main-panel/ng-panel/container/HBoxContainer5" method="_mouse_exit"]
 [connection signal="saveCharacter" from="main-panel/ng-panel/container/HBoxContainer5" to="main-panel/ng-panel" method="_on_HBoxContainer5_saveCharacter"]
+[connection signal="pressed" from="main-panel/lg-panel/Panel/TextureButton2" to="main-panel/lg-panel" method="hideMenu"]
+[connection signal="item_selected" from="main-panel/lg-panel/Panel/ItemList" to="main-panel/lg-panel" method="itemSelected"]
+[connection signal="nothing_selected" from="main-panel/lg-panel/Panel/ItemList" to="main-panel/lg-panel" method="deselected"]
+[connection signal="mouse_entered" from="main-panel/lg-panel/Panel/HBoxContainer5" to="main-panel/lg-panel/Panel/HBoxContainer5" method="_mouse_enter"]
+[connection signal="mouse_exited" from="main-panel/lg-panel/Panel/HBoxContainer5" to="main-panel/lg-panel/Panel/HBoxContainer5" method="_mouse_exit"]
+[connection signal="saveCharacter" from="main-panel/lg-panel/Panel/HBoxContainer5" to="main-panel/lg-panel" method="_on_HBoxContainer5_saveCharacter"]

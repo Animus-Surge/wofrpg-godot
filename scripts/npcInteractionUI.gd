@@ -71,4 +71,3 @@ func inventoryContains():
 	get_node("Button").text = "Close"
 	get_tree().call_group("questingUI", "questComplete")
 	GVars.hasQuest = false
-	GVars.currentQuest = {}

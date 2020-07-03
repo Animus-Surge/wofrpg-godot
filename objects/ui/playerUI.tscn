@@ -1,6 +1,6 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://scripts/GUIKeyManager.vs" type="Script" id=1]
+[ext_resource path="res://scripts/GUIKeyManager.gd" type="Script" id=1]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=2]
 [ext_resource path="res://popup_handler.gd" type="Script" id=3]
 [ext_resource path="res://scripts/slotHandler.gd" type="Script" id=4]
@@ -50,6 +50,29 @@ margin_left = 3.08429
 margin_right = 3.08429
 margin_top = 2.82727
 margin_bottom = 3.2128
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends TextureRect
+
+var equipmentItem #is a dictionary
+
+func clear():
+	equipmentItem = null
+	get_node(\"Icon\").texture = null
+
+func setItem(item: Dictionary):
+	if item.get(\"attr\") == \"weap-seco\":
+		equipmentItem = item
+		get_node(\"Icon\").texture = equipmentItem.get(\"texture\")
+		hint_tooltip = equipmentItem.get(\"description\")
+
+# {
+#  \"item-name\":\"Display Name of the Item\"
+#  \"item-id\":\"id-of-item\"
+#  \"item-desc\":\"Description of the item\"
+#  \"item-texture\":\"res://path/to/item/texture.png\"
+# }
+"
 
 [node name="Node2D" type="Node2D"]
 z_index = 5
@@ -127,41 +150,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel2" type="Panel" parent="uiControl"]
+[node name="inventory" type="Panel" parent="uiControl"]
 pause_mode = 1
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -275.0
-margin_bottom = 361.0
+margin_bottom = 523.0
 custom_styles/panel = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SlotContainer" type="GridContainer" parent="uiControl/Panel2" groups=[
+[node name="SlotContainer" type="GridContainer" parent="uiControl/inventory" groups=[
 "inventorySys",
 ]]
-anchor_top = 0.161
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 46.0
-margin_top = 8.87899
-margin_right = -47.0
-margin_bottom = -10.0
+anchor_left = 0.138
+anchor_top = 0.124
+anchor_right = 0.86
+anchor_bottom = 0.704
+margin_left = 8.05
+margin_top = 7.14799
+margin_right = -8.5
+margin_bottom = -8.19202
 columns = 5
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -172,7 +196,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot2" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot2" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_right = 68.0
@@ -180,7 +204,7 @@ margin_bottom = 32.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot2"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -191,7 +215,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot3" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot3" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_right = 104.0
@@ -199,7 +223,7 @@ margin_bottom = 32.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot3"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -210,7 +234,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot4" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot4" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_right = 140.0
@@ -218,7 +242,7 @@ margin_bottom = 32.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot4"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot4"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -229,7 +253,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot5" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot5" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_right = 176.0
@@ -237,7 +261,7 @@ margin_bottom = 32.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot5"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot5"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -248,7 +272,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot6" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot6" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 36.0
 margin_right = 32.0
@@ -256,7 +280,7 @@ margin_bottom = 68.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot6"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot6"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -267,7 +291,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot7" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot7" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 36.0
@@ -276,7 +300,7 @@ margin_bottom = 68.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot7"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot7"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -287,7 +311,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot8" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot8" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 36.0
@@ -296,7 +320,7 @@ margin_bottom = 68.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot8"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot8"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -307,7 +331,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot9" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot9" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 36.0
@@ -316,7 +340,7 @@ margin_bottom = 68.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot9"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot9"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -327,7 +351,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot10" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot10" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 36.0
@@ -336,7 +360,7 @@ margin_bottom = 68.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot10"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot10"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -347,7 +371,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot11" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot11" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 72.0
 margin_right = 32.0
@@ -355,7 +379,7 @@ margin_bottom = 104.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot11"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot11"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -366,7 +390,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot12" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot12" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 72.0
@@ -375,7 +399,7 @@ margin_bottom = 104.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot12"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot12"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -386,7 +410,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot13" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot13" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 72.0
@@ -395,7 +419,7 @@ margin_bottom = 104.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot13"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot13"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -406,7 +430,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot14" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot14" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 72.0
@@ -415,7 +439,7 @@ margin_bottom = 104.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot14"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot14"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -426,7 +450,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot15" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot15" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 72.0
@@ -435,7 +459,7 @@ margin_bottom = 104.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot15"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot15"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -446,7 +470,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot16" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot16" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 108.0
 margin_right = 32.0
@@ -454,7 +478,7 @@ margin_bottom = 140.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot16"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot16"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -465,7 +489,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot17" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot17" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 108.0
@@ -474,7 +498,7 @@ margin_bottom = 140.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot17"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot17"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -485,7 +509,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot18" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot18" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 108.0
@@ -494,7 +518,7 @@ margin_bottom = 140.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot18"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot18"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -505,7 +529,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot19" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot19" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 108.0
@@ -514,7 +538,7 @@ margin_bottom = 140.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot19"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot19"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -525,7 +549,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot20" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot20" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 108.0
@@ -534,7 +558,7 @@ margin_bottom = 140.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot20"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot20"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -545,7 +569,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot21" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot21" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 144.0
 margin_right = 32.0
@@ -553,7 +577,7 @@ margin_bottom = 176.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot21"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot21"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -564,7 +588,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot22" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot22" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 144.0
@@ -573,7 +597,7 @@ margin_bottom = 176.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot22"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot22"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -584,7 +608,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot23" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot23" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 144.0
@@ -593,7 +617,7 @@ margin_bottom = 176.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot23"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot23"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -604,7 +628,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot24" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot24" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 144.0
@@ -613,7 +637,7 @@ margin_bottom = 176.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot24"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot24"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -624,7 +648,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot25" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot25" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 144.0
@@ -633,7 +657,7 @@ margin_bottom = 176.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot25"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot25"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -644,7 +668,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot26" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot26" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 180.0
 margin_right = 32.0
@@ -652,7 +676,7 @@ margin_bottom = 212.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot26"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot26"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -663,7 +687,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot27" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot27" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 180.0
@@ -672,7 +696,7 @@ margin_bottom = 212.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot27"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot27"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -683,7 +707,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot28" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot28" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 180.0
@@ -692,7 +716,7 @@ margin_bottom = 212.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot28"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot28"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -703,7 +727,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot29" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot29" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 180.0
@@ -712,7 +736,7 @@ margin_bottom = 212.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot29"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot29"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -723,7 +747,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot30" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot30" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 180.0
@@ -732,7 +756,7 @@ margin_bottom = 212.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot30"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot30"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -743,7 +767,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot31" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot31" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 216.0
 margin_right = 32.0
@@ -751,7 +775,7 @@ margin_bottom = 248.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot31"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot31"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -762,7 +786,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot32" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot32" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 216.0
@@ -771,7 +795,7 @@ margin_bottom = 248.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot32"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot32"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -782,7 +806,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot33" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot33" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 216.0
@@ -791,7 +815,7 @@ margin_bottom = 248.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot33"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot33"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -802,7 +826,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot34" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot34" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 216.0
@@ -811,7 +835,7 @@ margin_bottom = 248.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot34"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot34"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -822,7 +846,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot35" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot35" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 216.0
@@ -831,7 +855,7 @@ margin_bottom = 248.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot35"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot35"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -842,7 +866,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot36" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot36" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_top = 252.0
 margin_right = 32.0
@@ -850,7 +874,7 @@ margin_bottom = 284.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot36"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot36"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -861,7 +885,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot37" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot37" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 36.0
 margin_top = 252.0
@@ -870,7 +894,7 @@ margin_bottom = 284.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot37"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot37"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -881,7 +905,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot38" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot38" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 72.0
 margin_top = 252.0
@@ -890,7 +914,7 @@ margin_bottom = 284.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot38"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot38"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -901,7 +925,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot39" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot39" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 108.0
 margin_top = 252.0
@@ -910,7 +934,7 @@ margin_bottom = 284.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot39"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot39"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -921,7 +945,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot40" type="TextureRect" parent="uiControl/Panel2/SlotContainer"]
+[node name="Slot40" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 margin_left = 144.0
 margin_top = 252.0
@@ -930,7 +954,7 @@ margin_bottom = 284.0
 texture = ExtResource( 7 )
 script = ExtResource( 4 )
 
-[node name="Icon" type="TextureRect" parent="uiControl/Panel2/SlotContainer/Slot40"]
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot40"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -941,7 +965,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="uiControl/Panel2"]
+[node name="Label" type="Label" parent="uiControl/inventory"]
 margin_left = 98.0
 margin_top = 21.0
 margin_right = 170.0
@@ -950,6 +974,371 @@ custom_fonts/font = ExtResource( 6 )
 text = "Inventory"
 align = 1
 valign = 1
+
+[node name="equipment" type="Control" parent="uiControl/inventory"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 21.0
+margin_top = -139.0
+margin_right = 230.0
+margin_bottom = -21.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arm-head" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"arm-head",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 37.0
+margin_bottom = 37.0
+hint_tooltip = "HEAD_ARMOR"
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-head"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arm-neck" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"arm-neck",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 43.0
+margin_top = 5.0
+margin_right = 75.0
+margin_bottom = 37.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "NECK_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-neck"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arm-body" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"arm-body",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 82.0
+margin_top = 5.0
+margin_right = 114.0
+margin_bottom = 37.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "BODY_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-body"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arm-tail" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"arm-tail",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 121.0
+margin_top = 5.0
+margin_right = 153.0
+margin_bottom = 37.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "TAIL_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-tail"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arm-legs" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"arm-legs",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 161.0
+margin_top = 5.0
+margin_right = 193.0
+margin_bottom = 37.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "LEG_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-legs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cos-head" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"cos-head",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 4.0
+margin_top = 44.0
+margin_right = 36.0
+margin_bottom = 76.0
+hint_tooltip = "HEAD_ARMOR"
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-head"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cos-neck" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"cos-neck",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 43.0
+margin_top = 44.0
+margin_right = 75.0
+margin_bottom = 76.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "NECK_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-neck"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cos-body" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"cos-body",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 82.0
+margin_top = 44.0
+margin_right = 114.0
+margin_bottom = 76.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "BODY_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-body"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cos-tail" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"cos-tail",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 121.0
+margin_top = 44.0
+margin_right = 153.0
+margin_bottom = 76.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "TAIL_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-tail"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cos-legs" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"cos-legs",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 161.0
+margin_top = 44.0
+margin_right = 193.0
+margin_bottom = 76.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "LEG_ARMOR"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-legs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="weap-prim" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"weap-prim",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 4.0
+margin_top = 99.0
+margin_right = 36.0
+margin_bottom = 131.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "PRIMARY_WEAPON"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/weap-prim"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="weap-seco" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
+"weap-seco",
+]]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 43.0
+margin_top = 99.0
+margin_right = 75.0
+margin_bottom = 131.0
+mouse_filter = 0
+texture = ExtResource( 7 )
+script = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": "SECONDARY_WEAPON"
+}
+
+[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/weap-seco"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="uiControl/inventory/equipment"]
+margin_left = 93.0
+margin_top = -17.0
+margin_right = 193.0
+margin_bottom = 2.0
+custom_fonts/font = ExtResource( 6 )
+text = "Armor"
+align = 1
+
+[node name="Label2" type="Label" parent="uiControl/inventory/equipment"]
+margin_left = 93.0
+margin_top = 76.0
+margin_right = 193.0
+margin_bottom = 95.0
+custom_fonts/font = ExtResource( 6 )
+text = "Cosmetics"
+align = 1
+
+[node name="Label3" type="Label" parent="uiControl/inventory/equipment"]
+margin_left = 78.0
+margin_top = 106.0
+margin_right = 178.0
+margin_bottom = 125.0
+custom_fonts/font = ExtResource( 6 )
+text = "Weapons"
+align = 1
 
 [node name="npcInteractionUI" type="Panel" parent="uiControl" groups=[
 "npcInteract",

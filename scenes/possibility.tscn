@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://images/items/item-special-quest-citem.png" type="Texture" id=1]
 [ext_resource path="res://objects/entity/playerRoot.tscn" type="PackedScene" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://terrain/static/high_alt._sand.png" type="Texture" id=4]
 [ext_resource path="res://scripts/interactable.gd" type="Script" id=5]
 [ext_resource path="res://scripts/npcHandler.gd" type="Script" id=6]
-[ext_resource path="res://godot-resources/jjwe83hf832fa8s-anims.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://animations/jjwe83hf832fa8s/jjwe83hf832fa8s-anims.tres" type="SpriteFrames" id=7]
 [ext_resource path="res://terrain/animated/frame_0_delay-0.4s.png" type="Texture" id=8]
 [ext_resource path="res://scripts/buildingHandler.gd" type="Script" id=9]
 [ext_resource path="res://objects/terrain/building.tscn" type="PackedScene" id=10]
@@ -16,21 +16,66 @@
 [ext_resource path="res://images/3x3_tent_2.png" type="Texture" id=14]
 [ext_resource path="res://images/items/item-dummy.png" type="Texture" id=15]
 [ext_resource path="res://entity-shadow.png" type="Texture" id=16]
+[ext_resource path="res://animations/x2116aef73wah37/x2116aef73wah37.tres" type="SpriteFrames" id=17]
+[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_1_delay-0.2s.png" type="Texture" id=18]
+[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_3_delay-0.2s.png" type="Texture" id=19]
+[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_0_delay-0.2s.png" type="Texture" id=20]
+[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_2_delay-0.2s.png" type="Texture" id=21]
+[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_4_delay-0.2s.png" type="Texture" id=22]
+[ext_resource path="res://animations/base/idle/frame_0_delay-0.5s.png" type="Texture" id=23]
+[ext_resource path="res://animations/base/idle/frame_1_delay-0.5s.png" type="Texture" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 17, 17 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 102, 86 )
+extents = Vector2( 102, 91 )
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 13.9997
-height = 158.001
+radius = 12.9997
+height = 152.0
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 303, 262 )
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 55, 49 )
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 9.99976
+height = 80.0005
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 20 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 22 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 55, 41 )
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 4.99988
+height = 40.0002
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 55, 41 )
+
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 7.99988
+height = 60.0002
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 303, 262 )
+
+[sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 692, 23 )
 
 [node name="possibility" type="Node2D"]
@@ -38,6 +83,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
+id = "sw-pos"
 
 [node name="terrain" type="Node2D" parent="."]
 __meta__ = {
@@ -32783,7 +32829,6 @@ __meta__ = {
 itemName = "Special Quest Item"
 itemTexture = ExtResource( 1 )
 usage = "questItem"
-questname = "cactihelp"
 
 [node name="Sprite" type="Sprite" parent="items/item"]
 texture = ExtResource( 1 )
@@ -32809,25 +32854,25 @@ shape = SubResource( 1 )
 
 [node name="objects" type="YSort" parent="."]
 
-[node name="npc" type="StaticBody2D" parent="objects"]
+[node name="cacti" type="StaticBody2D" parent="objects"]
 position = Vector2( -1825, -82 )
 script = ExtResource( 6 )
 flipped = true
 
-[node name="shadow" type="Sprite" parent="objects/npc"]
+[node name="shadow" type="Sprite" parent="objects/cacti"]
 self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
 position = Vector2( 117, 76 )
 scale = Vector2( 0.65625, 0.133667 )
 texture = ExtResource( 16 )
 
-[node name="Sprite" type="AnimatedSprite" parent="objects/npc"]
+[node name="Sprite" type="AnimatedSprite" parent="objects/cacti"]
 position = Vector2( 84.3115, -7.87496 )
 scale = Vector2( 0.438058, 0.438058 )
 z_as_relative = false
 frames = ExtResource( 7 )
 animation = "idle"
 
-[node name="Sprite2" type="AnimatedSprite" parent="objects/npc"]
+[node name="Sprite2" type="AnimatedSprite" parent="objects/cacti"]
 position = Vector2( 213.673, -7.62496 )
 scale = Vector2( 0.439174, 0.439174 )
 z_as_relative = false
@@ -32835,34 +32880,154 @@ frames = ExtResource( 7 )
 animation = "idle"
 flip_h = true
 
-[node name="interaction" type="Area2D" parent="objects/npc"]
+[node name="interaction" type="Area2D" parent="objects/cacti"]
 script = ExtResource( 5 )
 __meta__ = {
 "_editor_description_": "npc"
 }
-itemName = "Special Quest Item"
-itemTexture = ExtResource( 1 )
-questname = "A lost gem"
-npcname = "General Cacti"
-questcomplete = "Ah this is the one. He'll be happy to know that it has been found.
+npcID = "saw_cacti"
+npcName = "General Cacti"
 
-Thanks lad."
-questinprogress = "I still need the gem, lad."
-questdesc = "Oi... A friend of mine lost a gem a few days ago. Can you help me find it?
-It should be around here somewhere."
-confirmMessage = "Thanks lad. Come back when you find the gem."
-declineMessage = "Ah alright. I guess I'll keep looking."
-isQuest = true
-
-[node name="click-mask" type="CollisionShape2D" parent="objects/npc/interaction"]
+[node name="click-mask" type="CollisionShape2D" parent="objects/cacti/interaction"]
 position = Vector2( 147, -4 )
 shape = SubResource( 2 )
 
-[node name="phys-collider" type="CollisionShape2D" parent="objects/npc"]
-position = Vector2( 146, 75 )
+[node name="phys-collider" type="CollisionShape2D" parent="objects/cacti"]
+position = Vector2( 146, 79 )
 rotation = 1.5708
 z_as_relative = false
 shape = SubResource( 3 )
+
+[node name="peregrine" type="StaticBody2D" parent="objects"]
+position = Vector2( 2178, 1985 )
+script = ExtResource( 6 )
+flipped = true
+
+[node name="shadow" type="Sprite" parent="objects/peregrine"]
+self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
+position = Vector2( 0, 43 )
+scale = Vector2( 0.464844, 0.090271 )
+texture = ExtResource( 16 )
+
+[node name="Sprite" type="AnimatedSprite" parent="objects/peregrine"]
+self_modulate = Color( 1, 0.584314, 0, 1 )
+position = Vector2( -44, -6.78711 )
+scale = Vector2( 0.311043, 0.311043 )
+z_as_relative = false
+frames = SubResource( 4 )
+animation = "idle"
+
+[node name="Sprite2" type="AnimatedSprite" parent="objects/peregrine"]
+self_modulate = Color( 1, 0.584314, 0, 1 )
+position = Vector2( 43, -6.78662 )
+scale = Vector2( 0.312296, 0.312296 )
+z_as_relative = false
+frames = SubResource( 4 )
+animation = "idle"
+flip_h = true
+
+[node name="interaction" type="Area2D" parent="objects/peregrine"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": "npc"
+}
+npcID = "skw_peregrine"
+npcName = "Peregrine"
+
+[node name="click-mask" type="CollisionShape2D" parent="objects/peregrine/interaction"]
+shape = SubResource( 5 )
+
+[node name="phys-collider" type="CollisionShape2D" parent="objects/peregrine"]
+position = Vector2( 0, 43.2126 )
+rotation = 1.5708
+z_as_relative = false
+shape = SubResource( 6 )
+
+[node name="surge" type="StaticBody2D" parent="objects"]
+position = Vector2( -1044, 1147 )
+script = ExtResource( 6 )
+flipped = true
+
+[node name="shadow" type="Sprite" parent="objects/surge"]
+self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
+position = Vector2( 0, 35 )
+scale = Vector2( 0.371094, 0.0863647 )
+texture = ExtResource( 16 )
+
+[node name="Sprite" type="AnimatedSprite" parent="objects/surge"]
+position = Vector2( -30.488, -1 )
+scale = Vector2( 0.194754, 0.194754 )
+z_as_relative = false
+frames = SubResource( 7 )
+animation = "idle"
+
+[node name="Sprite2" type="AnimatedSprite" parent="objects/surge"]
+position = Vector2( 34.35, -1.125 )
+scale = Vector2( 0.19587, 0.19587 )
+z_as_relative = false
+frames = SubResource( 7 )
+animation = "idle"
+flip_h = true
+
+[node name="interaction" type="Area2D" parent="objects/surge"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": "npc"
+}
+npcID = "iw-siw-wolf_surge"
+npcName = "Surge"
+
+[node name="click-mask" type="CollisionShape2D" parent="objects/surge/interaction"]
+shape = SubResource( 8 )
+
+[node name="phys-collider" type="CollisionShape2D" parent="objects/surge"]
+position = Vector2( 0, 36 )
+rotation = 1.5708
+z_as_relative = false
+shape = SubResource( 9 )
+
+[node name="asteri" type="StaticBody2D" parent="objects"]
+position = Vector2( -2241, 67 )
+script = ExtResource( 6 )
+
+[node name="shadow" type="Sprite" parent="objects/asteri"]
+self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
+position = Vector2( 0, 35 )
+scale = Vector2( 0.371094, 0.0863647 )
+texture = ExtResource( 16 )
+
+[node name="Sprite" type="AnimatedSprite" parent="objects/asteri"]
+position = Vector2( -41.4819, -7.1875 )
+scale = Vector2( 0.222377, 0.222377 )
+z_as_relative = false
+frames = ExtResource( 17 )
+animation = "idle"
+
+[node name="Sprite2" type="AnimatedSprite" parent="objects/asteri"]
+position = Vector2( 45.0108, -7.12503 )
+scale = Vector2( 0.222656, 0.222656 )
+z_as_relative = false
+frames = ExtResource( 17 )
+animation = "idle"
+flip_h = true
+
+[node name="interaction" type="Area2D" parent="objects/asteri"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": "npc"
+}
+npcID = "velw_asteri"
+npcName = "Asteri"
+
+[node name="click-mask" type="CollisionShape2D" parent="objects/asteri/interaction"]
+position = Vector2( 0, -6 )
+shape = SubResource( 10 )
+
+[node name="phys-collider" type="CollisionShape2D" parent="objects/asteri"]
+position = Vector2( 0, 32 )
+rotation = 1.5708
+z_as_relative = false
+shape = SubResource( 11 )
 
 [node name="building" parent="objects" instance=ExtResource( 10 )]
 
@@ -32904,7 +33069,7 @@ building_name = "qtent-pos"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="objects/building5/Area2D"]
 position = Vector2( 1, -107 )
-shape = SubResource( 4 )
+shape = SubResource( 12 )
 
 [node name="bridge3" type="Node2D" parent="objects"]
 position = Vector2( -175, 872 )
@@ -33056,11 +33221,11 @@ centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="objects/bridge3/StaticBody2D"]
 position = Vector2( -30, 25 )
-shape = SubResource( 5 )
+shape = SubResource( 13 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="objects/bridge3/StaticBody2D"]
 position = Vector2( -26, 145 )
-shape = SubResource( 5 )
+shape = SubResource( 13 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="objects/bridge3/StaticBody2D"]
 polygon = PoolVector2Array( -718, 122, -838, 214, -718, 168 )
@@ -33227,11 +33392,11 @@ centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="objects/bridge4/StaticBody2D"]
 position = Vector2( -30, 25 )
-shape = SubResource( 5 )
+shape = SubResource( 13 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="objects/bridge4/StaticBody2D"]
 position = Vector2( -26, 145 )
-shape = SubResource( 5 )
+shape = SubResource( 13 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="objects/bridge4/StaticBody2D"]
 polygon = PoolVector2Array( -718, 122, -838, 214, -718, 168 )
@@ -33252,7 +33417,10 @@ polygon = PoolVector2Array( -788, 160.2, -865, 126.2, -865, 172.2 )
 position = Vector2( -1454, 395 )
 maxSpeed = 500.0
 friction = 1000.0
-[connection signal="input_event" from="objects/npc/interaction" to="objects/npc/interaction" method="_input_event"]
+[connection signal="input_event" from="objects/cacti/interaction" to="objects/cacti/interaction" method="_input_event"]
+[connection signal="input_event" from="objects/peregrine/interaction" to="objects/peregrine/interaction" method="_input_event"]
+[connection signal="input_event" from="objects/surge/interaction" to="objects/surge/interaction" method="_input_event"]
+[connection signal="input_event" from="objects/asteri/interaction" to="objects/asteri/interaction" method="_input_event"]
 
 [editable path="objects/building"]
 

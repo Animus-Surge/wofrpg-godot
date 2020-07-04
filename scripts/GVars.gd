@@ -10,9 +10,14 @@ var scene = 1
 
 var itemData
 var questData
+var squestData
+var dialogueData
 
 var hasQuest = false
 var currentQuest = {}
+var questPart
+var questPartInfo = {}
+var questInteraction
 
 var currentSceneRoot
 
@@ -22,20 +27,34 @@ var loadFile = false
 func _ready():
 	var itemFile = File.new()
 	itemFile.open("res://data/itemDictionary.json", File.READ)
+	print("Loading item dictionary")
 	var data = JSON.parse(itemFile.get_as_text())
 	itemFile.close()
 	itemData = data.result
 	
-	_get_quest_info()
+	var dialogueFile = File.new()
+	dialogueFile.open("user://data/dialogues.json", File.READ)
+	print("Loading dialogue info")
+	var ddata = JSON.parse(dialogueFile.get_as_text())
+	dialogueFile.close()
+	dialogueData = ddata.result
 	
-	#TODO: make it so all data files will be "moved" to the user folders
+	_get_quest_info()
 	
 func _get_quest_info():
 	var questFile = File.new()
 	questFile.open("user://data/quests.json", File.READ)
+	print("Loading quest data")
 	var qdata = JSON.parse(questFile.get_as_text())
 	questFile.close()
 	questData = qdata.result
+	
+	var squestFile = File.new()
+	squestFile.open("user://data/side-quests.json", File.READ)
+	print("Loading side quest data")
+	var sqdata = JSON.parse(squestFile.get_as_text())
+	squestFile.close()
+	squestData = sqdata.result
 
 func _game_save(playerObj: Dictionary):
 	var save = {
@@ -71,7 +90,6 @@ func _game_save(playerObj: Dictionary):
 	saveFile.store_line(to_json(save))
 	saveFile.close()
 
-
 func _game_load(file: String):
 	var saveFile = File.new()
 	saveFile.open("user://saves/" + file, File.READ)
@@ -88,3 +106,10 @@ func _game_load(file: String):
 	plrD = Color(colorRoot.get("eyes")[0] / 255, colorRoot.get("eyes")[1] / 255, colorRoot.get("eyes")[2] / 255)
 	
 	get_tree().change_scene("res://scenes/possibility.tscn")
+
+func loadSideQuest(sqid: String):
+	questPart = 1
+	currentQuest = squestData["side-quests"].get(sqid)
+
+func questUpdate():
+	questPartInfo = currentQuest.get("tasks").get("task-" + String(questPart))

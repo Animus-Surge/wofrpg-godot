@@ -4,14 +4,11 @@ export (String) var itemName
 export (Texture) var itemTexture
 export (String) var usage
 
-export (String) var questname
-export (String) var npcname
-export (String, MULTILINE) var questcomplete
-export (String, MULTILINE) var questinprogress
-export (String, MULTILINE) var questdesc
-export (String, MULTILINE) var confirmMessage
-export (String, MULTILINE) var declineMessage
-export (bool) var isQuest = false
+export (String) var questId
+export (String) var npcID
+export (String) var npcName
+
+export (bool) var isQuest
 
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
@@ -19,17 +16,12 @@ func _input_event(viewport, event, shape_idx):
 	if editor_description == "item":
 		if event is InputEventMouseButton:
 			if event.button_index == BUTTON_LEFT and event.pressed:
-				if GVars.hasQuest and GVars.currentQuest.get("id") == questname:
-					get_tree().call_group("questingUI", "_update", GVars.currentQuest.get("tasks").get("task-3"))
 				get_tree().call_group("inventorySys", "add_item", itemName, itemTexture, usage)
 				get_parent().remove_child(self)
 	elif editor_description == "npc":
 		if event is InputEventMouseButton:
 			if event.button_index == BUTTON_LEFT and event.pressed:
-				if isQuest:
-					get_tree().call_group("npcInteract", "showInteraction", [npcname, questdesc, questinprogress, questcomplete, itemName, itemTexture, confirmMessage, declineMessage, questname])
-				else:
-					pass
+				get_tree().call_group("npcInteract", "showInteraction", npcID, npcName)
 
 func setItemInfo(itemName: String, itemTexture: Texture, usage: String):
 	self.itemName = itemName

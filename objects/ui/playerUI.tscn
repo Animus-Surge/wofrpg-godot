@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/GUIKeyManager.gd" type="Script" id=1]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=2]
@@ -17,7 +17,9 @@
 [ext_resource path="res://images/mana-icon.png" type="Texture" id=15]
 [ext_resource path="res://images/mana-bar-fg.png" type="Texture" id=16]
 [ext_resource path="res://scripts/questingUIHandler.gd" type="Script" id=17]
+[ext_resource path="res://images/exp.png" type="Texture" id=18]
 [ext_resource path="res://scripts/hudQuest.gd" type="Script" id=19]
+[ext_resource path="res://scripts/skilltree.gd" type="Script" id=20]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 8 )
@@ -90,7 +92,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="stats" type="Panel" parent="uiControl"]
+[node name="stats" type="Panel" parent="uiControl" groups=[
+"statsDisplay",
+]]
 pause_mode = 1
 self_modulate = Color( 0.286275, 0.286275, 0.286275, 0.282353 )
 anchor_left = 0.5
@@ -104,9 +108,9 @@ __meta__ = {
 
 [node name="healthBar" type="ProgressBar" parent="uiControl/stats"]
 margin_left = 18.0
-margin_top = 4.0
+margin_top = 3.0
 margin_right = 228.0
-margin_bottom = 18.0
+margin_bottom = 17.0
 custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 2 )
 max_value = 20.0
@@ -117,9 +121,23 @@ __meta__ = {
 
 [node name="manaBar" type="ProgressBar" parent="uiControl/stats"]
 margin_left = 18.0
-margin_top = 24.0
+margin_top = 21.0
 margin_right = 228.0
-margin_bottom = 38.0
+margin_bottom = 35.0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="xpBar" type="ProgressBar" parent="uiControl/stats"]
+self_modulate = Color( 0.196078, 1, 0, 1 )
+margin_left = 18.0
+margin_top = 39.0
+margin_right = 228.0
+margin_bottom = 53.0
 custom_styles/fg = SubResource( 3 )
 custom_styles/bg = SubResource( 4 )
 value = 100.0
@@ -130,9 +148,9 @@ __meta__ = {
 
 [node name="TextureRect" type="TextureRect" parent="uiControl/stats"]
 margin_left = 2.0
-margin_top = 4.0
+margin_top = 3.0
 margin_right = 16.0
-margin_bottom = 18.0
+margin_bottom = 17.0
 texture = ExtResource( 13 )
 expand = true
 __meta__ = {
@@ -141,10 +159,21 @@ __meta__ = {
 
 [node name="TextureRect2" type="TextureRect" parent="uiControl/stats"]
 margin_left = 2.0
-margin_top = 24.0
+margin_top = 21.0
 margin_right = 16.0
-margin_bottom = 38.0
+margin_bottom = 35.0
 texture = ExtResource( 15 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="uiControl/stats"]
+margin_left = 2.0
+margin_top = 39.0
+margin_right = 16.0
+margin_bottom = 53.0
+texture = ExtResource( 18 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1369,18 +1398,22 @@ text = "NPCNAMEHERE"
 align = 1
 
 [node name="Label2" type="Label" parent="uiControl/npcInteractionUI"]
-margin_left = 197.0
-margin_top = 71.0
-margin_right = 313.0
-margin_bottom = 90.0
+margin_left = 46.0
+margin_top = 75.0
+margin_right = 752.0
+margin_bottom = 345.0
 custom_fonts/font = ExtResource( 6 )
 text = "Body text here"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 36.0
-margin_top = 114.0
-margin_right = 181.0
-margin_bottom = 139.0
+margin_left = 46.0
+margin_top = 364.0
+margin_right = 718.0
+margin_bottom = 389.0
 custom_fonts/font = ExtResource( 6 )
 text = "interaction option"
 script = ExtResource( 11 )
@@ -1389,10 +1422,10 @@ __meta__ = {
 }
 
 [node name="Button2" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 36.0
-margin_top = 146.0
-margin_right = 181.0
-margin_bottom = 171.0
+margin_left = 46.0
+margin_top = 398.0
+margin_right = 718.0
+margin_bottom = 423.0
 custom_fonts/font = ExtResource( 6 )
 text = "interaction option"
 script = ExtResource( 11 )
@@ -1401,19 +1434,10 @@ __meta__ = {
 }
 
 [node name="Button3" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 36.0
-margin_top = 178.0
-margin_right = 181.0
-margin_bottom = 203.0
-custom_fonts/font = ExtResource( 6 )
-text = "interaction option"
-script = ExtResource( 11 )
-
-[node name="Button4" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 36.0
-margin_top = 210.0
-margin_right = 181.0
-margin_bottom = 235.0
+margin_left = 46.0
+margin_top = 433.0
+margin_right = 718.0
+margin_bottom = 458.0
 custom_fonts/font = ExtResource( 6 )
 text = "interaction option"
 script = ExtResource( 11 )
@@ -1424,6 +1448,7 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="uiControl" groups=[
 "questingUI",
 ]]
+visible = false
 self_modulate = Color( 0.843137, 0.682353, 0.0392157, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1545,6 +1570,7 @@ __meta__ = {
 
 [node name="PauseMenu" type="Panel" parent="uiControl"]
 pause_mode = 2
+visible = false
 self_modulate = Color( 0.647059, 0.647059, 0.647059, 1 )
 margin_left = 30.0
 margin_top = 43.0
@@ -1593,6 +1619,77 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "main"
 }
+
+[node name="SkillTree" type="Panel" parent="uiControl"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 20 )
+
+[node name="bottombar" type="Panel" parent="uiControl/SkillTree"]
+anchor_top = 0.928
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.295959
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="close" type="Button" parent="uiControl/SkillTree/bottombar"]
+margin_left = 5.0
+margin_top = 8.0
+margin_right = 194.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 6 )
+text = "Close"
+
+[node name="Button2" type="Button" parent="uiControl/SkillTree/bottombar"]
+margin_left = 208.0
+margin_top = 8.0
+margin_right = 397.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 6 )
+text = "Abilities"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="uiControl/SkillTree/bottombar"]
+margin_left = 411.0
+margin_top = 8.0
+margin_right = 600.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 6 )
+disabled = true
+text = "Skills"
+
+[node name="tab-skilltree" type="Control" parent="uiControl/SkillTree"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/SkillTree/tab-skilltree"]
+margin_right = 1366.0
+margin_bottom = 713.0
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="uiControl/SkillTree/tab-skilltree/ScrollContainer"]
+
+[node name="Panel" type="Panel" parent="uiControl/SkillTree/tab-skilltree/ScrollContainer/Control"]
+margin_right = 1366.0
+margin_bottom = 701.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tab-abilities" type="Control" parent="uiControl/SkillTree"]
+margin_right = 40.0
+margin_bottom = 40.0
 [connection signal="pressed" from="uiControl/Panel/Button" to="uiControl/Panel" method="_close"]
 [connection signal="item_selected" from="uiControl/Panel/ScrollContainer/VBoxContainer/ItemList" to="uiControl/Panel" method="_quest_selected"]
 [connection signal="pressed" from="uiControl/Panel/Button2" to="uiControl/Panel" method="_acceptQuest"]

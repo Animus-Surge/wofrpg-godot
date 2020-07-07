@@ -47,48 +47,7 @@ func action():
 	elif get_node("container/role").selected == 3:
 		role = "warrior"
 		
-	loadscreen.loadScene("res://scenes/possibility.tscn")
 	
-	var plrDict = {
-		"name":charName,
-		"gender":gender,
-		"role":role,
-		"colors":{
-			"body":[
-				col1.r8,
-				col1.g8,
-				col1.b8
-			],
-			"wings":[
-				col2.r8,
-				col2.g8,
-				col2.b8
-			],
-			"horns":[
-				col3.r8,
-				col3.g8,
-				col3.b8
-			],
-			"eyes":[
-				col4.r8,
-				col4.g8,
-				col4.b8
-			]
-		},
-		"tribes":{
-			"hive":tribes[0],
-			"ice":tribes[1],
-			"leaf":tribes[2],
-			"mud":tribes[3],
-			"night":tribes[4],
-			"rain":tribes[5],
-			"sand":tribes[6],
-			"sea":tribes[7],
-			"silk":tribes[8],
-			"sky":tribes[9]
-		}
-	}
-	GVars._game_save(plrDict)
 
 func hideMenu():
 	visible = false

@@ -15,8 +15,8 @@ script/source = "extends KinematicBody2D
 
 var vel = Vector2.ZERO
 
-export (float) var maxSpeed = 100
-export (float) var friction = 1
+export (float) var maxSpeed = 1250
+export (float) var friction = 2000
 
 var flipped = false
 

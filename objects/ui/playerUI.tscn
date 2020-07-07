@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/GUIKeyManager.gd" type="Script" id=1]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=2]
@@ -20,6 +20,9 @@
 [ext_resource path="res://images/exp.png" type="Texture" id=18]
 [ext_resource path="res://scripts/hudQuest.gd" type="Script" id=19]
 [ext_resource path="res://scripts/skilltree.gd" type="Script" id=20]
+[ext_resource path="res://images/ui/interactions/velw_asteri/interaction-bar.png" type="Texture" id=21]
+[ext_resource path="res://animations/ui/interaction/iw-siw-wolf_surge-confused.anim" type="Animation" id=22]
+[ext_resource path="res://images/ui/interactions/iw-siw-wolf_surge/animated/confused/frame_00_delay-0.08s.png" type="Texture" id=23]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 8 )
@@ -1369,86 +1372,9 @@ custom_fonts/font = ExtResource( 6 )
 text = "Weapons"
 align = 1
 
-[node name="npcInteractionUI" type="Panel" parent="uiControl" groups=[
-"npcInteract",
-]]
-pause_mode = 2
-self_modulate = Color( 0.745098, 0.686275, 0.45098, 1 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -399.0
-margin_top = -238.5
-margin_right = 399.0
-margin_bottom = 238.5
-custom_styles/panel = ExtResource( 2 )
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="uiControl/npcInteractionUI"]
-margin_left = 314.0
-margin_top = 15.0
-margin_right = 499.0
-margin_bottom = 47.0
-custom_fonts/font = ExtResource( 5 )
-text = "NPCNAMEHERE"
-align = 1
-
-[node name="Label2" type="Label" parent="uiControl/npcInteractionUI"]
-margin_left = 46.0
-margin_top = 75.0
-margin_right = 752.0
-margin_bottom = 345.0
-custom_fonts/font = ExtResource( 6 )
-text = "Body text here"
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 46.0
-margin_top = 364.0
-margin_right = 718.0
-margin_bottom = 389.0
-custom_fonts/font = ExtResource( 6 )
-text = "interaction option"
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button2" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 46.0
-margin_top = 398.0
-margin_right = 718.0
-margin_bottom = 423.0
-custom_fonts/font = ExtResource( 6 )
-text = "interaction option"
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button3" type="Button" parent="uiControl/npcInteractionUI"]
-margin_left = 46.0
-margin_top = 433.0
-margin_right = 718.0
-margin_bottom = 458.0
-custom_fonts/font = ExtResource( 6 )
-text = "interaction option"
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Panel" type="Panel" parent="uiControl" groups=[
 "questingUI",
 ]]
-visible = false
 self_modulate = Color( 0.843137, 0.682353, 0.0392157, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1567,6 +1493,114 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="npcInteractionUI" type="Control" parent="uiControl" groups=[
+"npcInteract",
+]]
+pause_mode = 2
+self_modulate = Color( 0.745098, 0.686275, 0.45098, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="uiControl/npcInteractionUI"]
+self_modulate = Color( 1, 1, 1, 0.509804 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/npcInteractionUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 23 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="uiControl/npcInteractionUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 21 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="uiControl/npcInteractionUI/TextureRect2"]
+margin_left = 30.0
+margin_top = 502.0
+margin_right = 209.0
+margin_bottom = 534.0
+custom_fonts/font = ExtResource( 5 )
+text = "PLACEHOLDER"
+
+[node name="Label2" type="Label" parent="uiControl/npcInteractionUI/TextureRect2"]
+margin_left = 30.0
+margin_top = 543.0
+margin_right = 668.0
+margin_bottom = 748.0
+custom_fonts/font = ExtResource( 6 )
+text = "PLACEHOLDER"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
+margin_left = 746.0
+margin_top = 523.0
+margin_right = 1315.0
+margin_bottom = 561.0
+custom_fonts/font = ExtResource( 6 )
+text = "PLACEHOLDER"
+flat = true
+script = ExtResource( 11 )
+
+[node name="Button2" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
+margin_left = 746.0
+margin_top = 572.0
+margin_right = 1315.0
+margin_bottom = 610.0
+custom_fonts/font = ExtResource( 6 )
+text = "PLACEHOLDER"
+flat = true
+script = ExtResource( 11 )
+
+[node name="Button3" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
+margin_left = 746.0
+margin_top = 623.0
+margin_right = 1315.0
+margin_bottom = 661.0
+custom_fonts/font = ExtResource( 6 )
+text = "PLACEHOLDER"
+flat = true
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
+margin_left = 746.0
+margin_top = 675.0
+margin_right = 1315.0
+margin_bottom = 713.0
+custom_fonts/font = ExtResource( 6 )
+text = "PLACEHOLDER"
+flat = true
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="extras" type="AnimationPlayer" parent="uiControl/npcInteractionUI"]
+anims/iw-siw-wolf_surge-confused = ExtResource( 22 )
 
 [node name="PauseMenu" type="Panel" parent="uiControl"]
 pause_mode = 2

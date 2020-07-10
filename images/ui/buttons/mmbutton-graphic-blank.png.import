@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/scroll-ui.png-b8ef6c7b05a9d95df331ab7808b81706.stex"
+path="res://.import/mmbutton-graphic-blank.png-6243e0956f20322035d2f29882e2b89c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/scroll-ui.png"
-dest_files=[ "res://.import/scroll-ui.png-b8ef6c7b05a9d95df331ab7808b81706.stex" ]
+source_file="res://images/ui/buttons/mmbutton-graphic-blank.png"
+dest_files=[ "res://.import/mmbutton-graphic-blank.png-6243e0956f20322035d2f29882e2b89c.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

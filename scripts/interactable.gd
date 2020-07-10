@@ -8,7 +8,7 @@ export (String) var questId
 export (String) var npcID
 export (String) var npcName
 
-export (bool) var isQuest
+export (bool) var isShop
 
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
@@ -21,7 +21,10 @@ func _input_event(viewport, event, shape_idx):
 	elif editor_description == "npc":
 		if event is InputEventMouseButton:
 			if event.button_index == BUTTON_LEFT and event.pressed:
-				get_tree().call_group("npcInteract", "showInteraction", npcID, npcName)
+				if !isShop:
+					get_tree().call_group("npcInteract", "showInteraction", npcID, npcName)
+				else:
+					pass
 
 func setItemInfo(itemName: String, itemTexture: Texture, usage: String):
 	self.itemName = itemName

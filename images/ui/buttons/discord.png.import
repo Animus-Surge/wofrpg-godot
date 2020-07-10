@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/back-btn-hover.png-54482696942d039c17e4d7b8992322e0.stex"
+path="res://.import/discord.png-f81a9d90bed61c771322ae127ea09789.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/back-btn-hover.png"
-dest_files=[ "res://.import/back-btn-hover.png-54482696942d039c17e4d7b8992322e0.stex" ]
+source_file="res://images/ui/buttons/discord.png"
+dest_files=[ "res://.import/discord.png-f81a9d90bed61c771322ae127ea09789.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

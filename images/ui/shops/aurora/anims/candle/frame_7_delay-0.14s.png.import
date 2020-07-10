@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mmbutton-graphic-click.png-9a7ec56d8a7e83c610b1a4f065978d9a.stex"
+path="res://.import/frame_7_delay-0.14s.png-0e87f7452839baa0836707587b0c921c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/mmbutton-graphic-click.png"
-dest_files=[ "res://.import/mmbutton-graphic-click.png-9a7ec56d8a7e83c610b1a4f065978d9a.stex" ]
+source_file="res://images/ui/shops/aurora/anims/candle/frame_7_delay-0.14s.png"
+dest_files=[ "res://.import/frame_7_delay-0.14s.png-0e87f7452839baa0836707587b0c921c.stex" ]
 
 [params]
 

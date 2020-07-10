@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://scripts/GUIKeyManager.gd" type="Script" id=1]
 [ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=2]
@@ -23,6 +23,19 @@
 [ext_resource path="res://images/ui/interactions/velw_asteri/interaction-bar.png" type="Texture" id=21]
 [ext_resource path="res://animations/ui/interaction/iw-siw-wolf_surge-confused.anim" type="Animation" id=22]
 [ext_resource path="res://images/ui/interactions/iw-siw-wolf_surge/animated/confused/frame_00_delay-0.08s.png" type="Texture" id=23]
+[ext_resource path="res://images/ui/shops/aurora/aurora-shop-foreground.png" type="Texture" id=24]
+[ext_resource path="res://images/ui/shops/aurora/aurora-shop-bg.png" type="Texture" id=25]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_0_delay-0.14s.png" type="Texture" id=26]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_5_delay-0.14s.png" type="Texture" id=27]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_1_delay-0.14s.png" type="Texture" id=28]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_3_delay-0.14s.png" type="Texture" id=29]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_8_delay-0.14s.png" type="Texture" id=30]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_4_delay-0.14s.png" type="Texture" id=31]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_7_delay-0.14s.png" type="Texture" id=32]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_2_delay-0.14s.png" type="Texture" id=33]
+[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_6_delay-0.14s.png" type="Texture" id=34]
+[ext_resource path="res://images/ui/shops/aurora/light.png" type="Texture" id=35]
+[ext_resource path="res://images/ui/shops/aurora/shadow.png" type="Texture" id=36]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 8 )
@@ -78,6 +91,35 @@ func setItem(item: Dictionary):
 #  \"item-texture\":\"res://path/to/item/texture.png\"
 # }
 "
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="CanvasItemMaterial" id=9]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id=10]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id=8]
+blend_mode = 1
+
+[sub_resource type="Animation" id=7]
+resource_name = "scene"
+length = 1.12
+loop = true
+step = 0.14
+tracks/0/type = "value"
+tracks/0/path = NodePath("candle:texture")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 0.98, 1.12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ ExtResource( 26 ), ExtResource( 28 ), ExtResource( 33 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 27 ), ExtResource( 34 ), ExtResource( 32 ), ExtResource( 30 ) ]
+}
 
 [node name="Node2D" type="Node2D"]
 z_index = 5
@@ -1724,6 +1766,73 @@ __meta__ = {
 [node name="tab-abilities" type="Control" parent="uiControl/SkillTree"]
 margin_right = 40.0
 margin_bottom = 40.0
+
+[node name="Panel2" type="Panel" parent="uiControl"]
+margin_right = 1366.0
+margin_bottom = 768.0
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="TextureRect" parent="uiControl/Panel2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 25 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lightmask" type="TextureRect" parent="uiControl/Panel2"]
+self_modulate = Color( 1, 1, 1, 0.784314 )
+material = SubResource( 9 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 35 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="shadowmask" type="TextureRect" parent="uiControl/Panel2"]
+self_modulate = Color( 0, 0, 0, 1 )
+material = SubResource( 10 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 36 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fg" type="TextureRect" parent="uiControl/Panel2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 24 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="candle" type="TextureRect" parent="uiControl/Panel2"]
+self_modulate = Color( 1, 1, 1, 0.784314 )
+material = SubResource( 8 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 26 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="uiControl/Panel2"]
+anims/scene = SubResource( 7 )
 [connection signal="pressed" from="uiControl/Panel/Button" to="uiControl/Panel" method="_close"]
 [connection signal="item_selected" from="uiControl/Panel/ScrollContainer/VBoxContainer/ItemList" to="uiControl/Panel" method="_quest_selected"]
 [connection signal="pressed" from="uiControl/Panel/Button2" to="uiControl/Panel" method="_acceptQuest"]

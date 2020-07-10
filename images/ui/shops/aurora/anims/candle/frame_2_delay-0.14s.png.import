@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mmbkg.png-65a0ed5718ad9d8c115109e5e035e7b7.stex"
+path="res://.import/frame_2_delay-0.14s.png-778c8ab2ab59b9caf681b1a9839bb8cb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/mmbkg.png"
-dest_files=[ "res://.import/mmbkg.png-65a0ed5718ad9d8c115109e5e035e7b7.stex" ]
+source_file="res://images/ui/shops/aurora/anims/candle/frame_2_delay-0.14s.png"
+dest_files=[ "res://.import/frame_2_delay-0.14s.png-778c8ab2ab59b9caf681b1a9839bb8cb.stex" ]
 
 [params]
 
@@ -30,5 +30,5 @@ process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

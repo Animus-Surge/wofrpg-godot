@@ -1,41 +1,17 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://scripts/GUIKeyManager.gd" type="Script" id=1]
-[ext_resource path="res://godot-resources/scroll_ui.tres" type="StyleBox" id=2]
-[ext_resource path="res://popup_handler.gd" type="Script" id=3]
-[ext_resource path="res://scripts/slotHandler.gd" type="Script" id=4]
-[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=5]
-[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=6]
-[ext_resource path="res://images/slot.png" type="Texture" id=7]
+[ext_resource path="res://scripts/ui/plruihandler.gd" type="Script" id=1]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
+[ext_resource path="res://images/slot.png" type="Texture" id=3]
+[ext_resource path="res://images/slot-highlight.png" type="Texture" id=4]
+[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=5]
 [ext_resource path="res://images/life-bar-fg.png" type="Texture" id=8]
-[ext_resource path="res://scripts/inventoryHandler.gd" type="Script" id=9]
-[ext_resource path="res://scripts/npcInteractionUI.gd" type="Script" id=10]
-[ext_resource path="res://scripts/interactionButtons.gd" type="Script" id=11]
 [ext_resource path="res://images/life-bar-bg.png" type="Texture" id=12]
 [ext_resource path="res://images/heart-icon.png" type="Texture" id=13]
 [ext_resource path="res://images/mana-bar-bg.png" type="Texture" id=14]
 [ext_resource path="res://images/mana-icon.png" type="Texture" id=15]
 [ext_resource path="res://images/mana-bar-fg.png" type="Texture" id=16]
-[ext_resource path="res://scripts/questingUIHandler.gd" type="Script" id=17]
 [ext_resource path="res://images/exp.png" type="Texture" id=18]
-[ext_resource path="res://scripts/hudQuest.gd" type="Script" id=19]
-[ext_resource path="res://scripts/skilltree.gd" type="Script" id=20]
-[ext_resource path="res://images/ui/interactions/velw_asteri/interaction-bar.png" type="Texture" id=21]
-[ext_resource path="res://animations/ui/interaction/iw-siw-wolf_surge-confused.anim" type="Animation" id=22]
-[ext_resource path="res://images/ui/interactions/iw-siw-wolf_surge/animated/confused/frame_00_delay-0.08s.png" type="Texture" id=23]
-[ext_resource path="res://images/ui/shops/aurora/aurora-shop-foreground.png" type="Texture" id=24]
-[ext_resource path="res://images/ui/shops/aurora/aurora-shop-bg.png" type="Texture" id=25]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_0_delay-0.14s.png" type="Texture" id=26]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_5_delay-0.14s.png" type="Texture" id=27]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_1_delay-0.14s.png" type="Texture" id=28]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_3_delay-0.14s.png" type="Texture" id=29]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_8_delay-0.14s.png" type="Texture" id=30]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_4_delay-0.14s.png" type="Texture" id=31]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_7_delay-0.14s.png" type="Texture" id=32]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_2_delay-0.14s.png" type="Texture" id=33]
-[ext_resource path="res://images/ui/shops/aurora/anims/candle/frame_6_delay-0.14s.png" type="Texture" id=34]
-[ext_resource path="res://images/ui/shops/aurora/light.png" type="Texture" id=35]
-[ext_resource path="res://images/ui/shops/aurora/shadow.png" type="Texture" id=36]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 8 )
@@ -70,56 +46,11 @@ margin_top = 2.82727
 margin_bottom = 3.2128
 
 [sub_resource type="GDScript" id=5]
-script/source = "extends TextureRect
+script/source = "extends Button
 
-var equipmentItem #is a dictionary
-
-func clear():
-	equipmentItem = null
-	get_node(\"Icon\").texture = null
-
-func setItem(item: Dictionary):
-	if item.get(\"attr\") == \"weap-seco\":
-		equipmentItem = item
-		get_node(\"Icon\").texture = equipmentItem.get(\"texture\")
-		hint_tooltip = equipmentItem.get(\"description\")
-
-# {
-#  \"item-name\":\"Display Name of the Item\"
-#  \"item-id\":\"id-of-item\"
-#  \"item-desc\":\"Description of the item\"
-#  \"item-texture\":\"res://path/to/item/texture.png\"
-# }
+func _pressed():
+	get_parent().get_parent().call(\"_button_input\", editor_description)
 "
-
-[sub_resource type="StyleBoxEmpty" id=6]
-
-[sub_resource type="CanvasItemMaterial" id=9]
-blend_mode = 1
-
-[sub_resource type="CanvasItemMaterial" id=10]
-blend_mode = 1
-
-[sub_resource type="CanvasItemMaterial" id=8]
-blend_mode = 1
-
-[sub_resource type="Animation" id=7]
-resource_name = "scene"
-length = 1.12
-loop = true
-step = 0.14
-tracks/0/type = "value"
-tracks/0/path = NodePath("candle:texture")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 0.98, 1.12 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ ExtResource( 26 ), ExtResource( 28 ), ExtResource( 33 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 27 ), ExtResource( 34 ), ExtResource( 32 ), ExtResource( 30 ) ]
-}
 
 [node name="Node2D" type="Node2D"]
 z_index = 5
@@ -128,9 +59,9 @@ z_as_relative = false
 [node name="uiControl" type="Control" parent="."]
 pause_mode = 2
 margin_left = -683.0
-margin_top = -384.0
+margin_top = -386.0
 margin_right = 683.0
-margin_bottom = 384.0
+margin_bottom = 382.0
 mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
@@ -142,20 +73,25 @@ __meta__ = {
 ]]
 pause_mode = 1
 self_modulate = Color( 0.286275, 0.286275, 0.286275, 0.282353 )
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -116.0
-margin_right = 116.0
-margin_bottom = 56.0
+anchor_left = 0.415
+anchor_right = 0.585
+anchor_bottom = 0.073
+margin_left = 0.109985
+margin_right = -0.110046
+margin_bottom = -0.064003
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="healthBar" type="ProgressBar" parent="uiControl/stats"]
-margin_left = 18.0
-margin_top = 3.0
-margin_right = 228.0
-margin_bottom = 17.0
+anchor_left = 0.078
+anchor_top = 0.054
+anchor_right = 0.983
+anchor_bottom = 0.304
+margin_left = -0.0960007
+margin_top = -0.0240002
+margin_right = -0.056015
+margin_bottom = -0.0240021
 custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 2 )
 max_value = 20.0
@@ -165,10 +101,13 @@ __meta__ = {
 }
 
 [node name="manaBar" type="ProgressBar" parent="uiControl/stats"]
-margin_left = 18.0
-margin_top = 21.0
-margin_right = 228.0
-margin_bottom = 35.0
+anchor_left = 0.078
+anchor_top = 0.375
+anchor_right = 0.983
+anchor_bottom = 0.625
+margin_left = -0.0960007
+margin_top = -1.90735e-06
+margin_right = -0.056015
 custom_styles/fg = SubResource( 3 )
 custom_styles/bg = SubResource( 4 )
 value = 100.0
@@ -179,10 +118,14 @@ __meta__ = {
 
 [node name="xpBar" type="ProgressBar" parent="uiControl/stats"]
 self_modulate = Color( 0.196078, 1, 0, 1 )
-margin_left = 18.0
-margin_top = 39.0
-margin_right = 228.0
-margin_bottom = 53.0
+anchor_left = 0.078
+anchor_top = 0.696
+anchor_right = 0.983
+anchor_bottom = 0.946
+margin_left = -0.0960007
+margin_top = 0.0239983
+margin_right = -0.056015
+margin_bottom = 0.0239983
 custom_styles/fg = SubResource( 3 )
 custom_styles/bg = SubResource( 4 )
 value = 100.0
@@ -192,1647 +135,168 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="uiControl/stats"]
-margin_left = 2.0
-margin_top = 3.0
-margin_right = 16.0
-margin_bottom = 17.0
+anchor_left = 0.009
+anchor_top = 0.054
+anchor_right = 0.069
+anchor_bottom = 0.304
+margin_left = -0.0880001
+margin_top = -0.0240002
+margin_right = -0.00800133
+margin_bottom = -0.0240021
 texture = ExtResource( 13 )
 expand = true
+stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureRect2" type="TextureRect" parent="uiControl/stats"]
-margin_left = 2.0
-margin_top = 21.0
-margin_right = 16.0
-margin_bottom = 35.0
+anchor_left = 0.009
+anchor_top = 0.375
+anchor_right = 0.069
+anchor_bottom = 0.625
+margin_left = -0.0880001
+margin_top = -1.90735e-06
+margin_right = -0.00800133
 texture = ExtResource( 15 )
 expand = true
+stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureRect3" type="TextureRect" parent="uiControl/stats"]
-margin_left = 2.0
-margin_top = 39.0
-margin_right = 16.0
-margin_bottom = 53.0
+anchor_left = 0.009
+anchor_top = 0.696
+anchor_right = 0.069
+anchor_bottom = 0.946
+margin_left = -0.0880001
+margin_top = 0.0239983
+margin_right = -0.00800133
+margin_bottom = 0.0239983
 texture = ExtResource( 18 )
 expand = true
+stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="inventory" type="Panel" parent="uiControl"]
-pause_mode = 1
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -275.0
-margin_bottom = 523.0
-custom_styles/panel = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SlotContainer" type="GridContainer" parent="uiControl/inventory" groups=[
-"inventorySys",
-]]
-anchor_left = 0.138
-anchor_top = 0.124
-anchor_right = 0.86
-anchor_bottom = 0.704
-margin_left = 8.05
-margin_top = 7.14799
-margin_right = -8.5
-margin_bottom = -8.19202
-columns = 5
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_right = 32.0
-margin_bottom = 32.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot2" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_right = 68.0
-margin_bottom = 32.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot3" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_right = 104.0
-margin_bottom = 32.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot3"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot4" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_right = 140.0
-margin_bottom = 32.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot5" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_right = 176.0
-margin_bottom = 32.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot6" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 36.0
-margin_right = 32.0
-margin_bottom = 68.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot7" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 36.0
-margin_right = 68.0
-margin_bottom = 68.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot7"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot8" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 36.0
-margin_right = 104.0
-margin_bottom = 68.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot8"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot9" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 36.0
-margin_right = 140.0
-margin_bottom = 68.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot9"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot10" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 36.0
-margin_right = 176.0
-margin_bottom = 68.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot10"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot11" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 72.0
-margin_right = 32.0
-margin_bottom = 104.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot11"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot12" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 72.0
-margin_right = 68.0
-margin_bottom = 104.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot12"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot13" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 72.0
-margin_right = 104.0
-margin_bottom = 104.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot13"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot14" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 72.0
-margin_right = 140.0
-margin_bottom = 104.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot14"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot15" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 72.0
-margin_right = 176.0
-margin_bottom = 104.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot15"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot16" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 108.0
-margin_right = 32.0
-margin_bottom = 140.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot16"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot17" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 108.0
-margin_right = 68.0
-margin_bottom = 140.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot17"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot18" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 108.0
-margin_right = 104.0
-margin_bottom = 140.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot18"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot19" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 108.0
-margin_right = 140.0
-margin_bottom = 140.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot19"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot20" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 108.0
-margin_right = 176.0
-margin_bottom = 140.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot20"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot21" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 144.0
-margin_right = 32.0
-margin_bottom = 176.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot21"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot22" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 144.0
-margin_right = 68.0
-margin_bottom = 176.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot22"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot23" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 144.0
-margin_right = 104.0
-margin_bottom = 176.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot23"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot24" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 144.0
-margin_right = 140.0
-margin_bottom = 176.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot24"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot25" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 144.0
-margin_right = 176.0
-margin_bottom = 176.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot25"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot26" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 180.0
-margin_right = 32.0
-margin_bottom = 212.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot26"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot27" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 180.0
-margin_right = 68.0
-margin_bottom = 212.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot27"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot28" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 180.0
-margin_right = 104.0
-margin_bottom = 212.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot28"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot29" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 180.0
-margin_right = 140.0
-margin_bottom = 212.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot29"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot30" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 180.0
-margin_right = 176.0
-margin_bottom = 212.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot30"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot31" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 216.0
-margin_right = 32.0
-margin_bottom = 248.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot31"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot32" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 216.0
-margin_right = 68.0
-margin_bottom = 248.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot32"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot33" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 216.0
-margin_right = 104.0
-margin_bottom = 248.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot33"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot34" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 216.0
-margin_right = 140.0
-margin_bottom = 248.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot34"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot35" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 216.0
-margin_right = 176.0
-margin_bottom = 248.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot35"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot36" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 252.0
-margin_right = 32.0
-margin_bottom = 284.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot36"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot37" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 36.0
-margin_top = 252.0
-margin_right = 68.0
-margin_bottom = 284.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot37"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot38" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 72.0
-margin_top = 252.0
-margin_right = 104.0
-margin_bottom = 284.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot38"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot39" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 108.0
-margin_top = 252.0
-margin_right = 140.0
-margin_bottom = 284.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot39"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Slot40" type="TextureRect" parent="uiControl/inventory/SlotContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 144.0
-margin_top = 252.0
-margin_right = 176.0
-margin_bottom = 284.0
-texture = ExtResource( 7 )
-script = ExtResource( 4 )
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/SlotContainer/Slot40"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="uiControl/inventory"]
-margin_left = 98.0
-margin_top = 21.0
-margin_right = 170.0
-margin_bottom = 40.0
-custom_fonts/font = ExtResource( 6 )
-text = "Inventory"
-align = 1
-valign = 1
-
-[node name="equipment" type="Control" parent="uiControl/inventory"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 21.0
-margin_top = -139.0
-margin_right = 230.0
-margin_bottom = -21.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="arm-head" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"arm-head",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 37.0
-margin_bottom = 37.0
-hint_tooltip = "HEAD_ARMOR"
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-head"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="arm-neck" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"arm-neck",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 43.0
-margin_top = 5.0
-margin_right = 75.0
-margin_bottom = 37.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "NECK_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-neck"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="arm-body" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"arm-body",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 82.0
-margin_top = 5.0
-margin_right = 114.0
-margin_bottom = 37.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "BODY_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-body"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="arm-tail" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"arm-tail",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 121.0
-margin_top = 5.0
-margin_right = 153.0
-margin_bottom = 37.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "TAIL_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-tail"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="arm-legs" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"arm-legs",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 161.0
-margin_top = 5.0
-margin_right = 193.0
-margin_bottom = 37.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "LEG_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/arm-legs"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cos-head" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"cos-head",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 4.0
-margin_top = 44.0
-margin_right = 36.0
-margin_bottom = 76.0
-hint_tooltip = "HEAD_ARMOR"
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-head"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cos-neck" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"cos-neck",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 43.0
-margin_top = 44.0
-margin_right = 75.0
-margin_bottom = 76.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "NECK_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-neck"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cos-body" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"cos-body",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 82.0
-margin_top = 44.0
-margin_right = 114.0
-margin_bottom = 76.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "BODY_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-body"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cos-tail" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"cos-tail",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 121.0
-margin_top = 44.0
-margin_right = 153.0
-margin_bottom = 76.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "TAIL_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-tail"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cos-legs" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"cos-legs",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 161.0
-margin_top = 44.0
-margin_right = 193.0
-margin_bottom = 76.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "LEG_ARMOR"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/cos-legs"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="weap-prim" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"weap-prim",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 4.0
-margin_top = 99.0
-margin_right = 36.0
-margin_bottom = 131.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_editor_description_": "PRIMARY_WEAPON"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/weap-prim"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="weap-seco" type="TextureRect" parent="uiControl/inventory/equipment" groups=[
-"weap-seco",
-]]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 43.0
-margin_top = 99.0
-margin_right = 75.0
-margin_bottom = 131.0
-mouse_filter = 0
-texture = ExtResource( 7 )
-script = SubResource( 5 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false,
-"_editor_description_": "SECONDARY_WEAPON"
-}
-
-[node name="Icon" type="TextureRect" parent="uiControl/inventory/equipment/weap-seco"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="uiControl/inventory/equipment"]
-margin_left = 93.0
-margin_top = -17.0
-margin_right = 193.0
-margin_bottom = 2.0
-custom_fonts/font = ExtResource( 6 )
-text = "Armor"
-align = 1
-
-[node name="Label2" type="Label" parent="uiControl/inventory/equipment"]
-margin_left = 93.0
-margin_top = 76.0
-margin_right = 193.0
-margin_bottom = 95.0
-custom_fonts/font = ExtResource( 6 )
-text = "Cosmetics"
-align = 1
-
-[node name="Label3" type="Label" parent="uiControl/inventory/equipment"]
-margin_left = 78.0
-margin_top = 106.0
-margin_right = 178.0
-margin_bottom = 125.0
-custom_fonts/font = ExtResource( 6 )
-text = "Weapons"
-align = 1
-
-[node name="Panel" type="Panel" parent="uiControl" groups=[
-"questingUI",
-]]
-self_modulate = Color( 0.843137, 0.682353, 0.0392157, 1 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -399.0
-margin_top = -238.5
-margin_right = 399.0
-margin_bottom = 238.5
-custom_styles/panel = ExtResource( 2 )
-script = ExtResource( 17 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="uiControl/Panel"]
-margin_left = 134.0
-margin_top = 15.0
-margin_right = 757.0
-margin_bottom = 47.0
-custom_fonts/font = ExtResource( 5 )
-text = "LOCATIONNAMEHERE | Questing Tent"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="uiControl/Panel"]
-margin_left = 36.0
-margin_top = 19.0
-margin_right = 109.0
-margin_bottom = 44.0
-custom_fonts/font = ExtResource( 6 )
-text = "Close"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/Panel"]
-margin_left = 31.0
-margin_top = 68.0
-margin_right = 496.0
-margin_bottom = 463.0
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="uiControl/Panel/ScrollContainer"]
-margin_right = 465.0
-margin_bottom = 395.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ItemList" type="ItemList" parent="uiControl/Panel/ScrollContainer/VBoxContainer"]
-margin_right = 465.0
-margin_bottom = 395.0
-size_flags_vertical = 3
-
-[node name="Label2" type="Label" parent="uiControl/Panel"]
-margin_left = 511.0
-margin_top = 74.0
-margin_right = 756.0
-margin_bottom = 214.0
-custom_fonts/font = ExtResource( 6 )
-text = "opt-text"
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button2" type="Button" parent="uiControl/Panel"]
-margin_left = 534.0
-margin_top = 411.0
-margin_right = 718.0
-margin_bottom = 449.0
-custom_fonts/font = ExtResource( 5 )
-disabled = true
-text = "Accept quest"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel3" type="Panel" parent="uiControl" groups=[
-"questingUI",
-]]
-self_modulate = Color( 1, 1, 1, 0.470588 )
-margin_right = 234.0
-margin_bottom = 91.0
-script = ExtResource( 19 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="title" type="Label" parent="uiControl/Panel3"]
-margin_left = 5.0
-margin_top = 3.0
-margin_right = 228.0
-margin_bottom = 22.0
-custom_fonts/font = ExtResource( 6 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "TITLE OF QUEST HERE"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="currentTask" type="Label" parent="uiControl/Panel3"]
-margin_left = 5.0
-margin_top = 30.0
-margin_right = 228.0
-margin_bottom = 85.0
-custom_fonts/font = ExtResource( 6 )
-custom_colors/font_color = Color( 0.996078, 1, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Quest Task"
-align = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="npcInteractionUI" type="Control" parent="uiControl" groups=[
-"npcInteract",
-]]
-pause_mode = 2
-self_modulate = Color( 0.745098, 0.686275, 0.45098, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="uiControl/npcInteractionUI"]
-self_modulate = Color( 1, 1, 1, 0.509804 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/npcInteractionUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 23 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect2" type="TextureRect" parent="uiControl/npcInteractionUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 21 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="uiControl/npcInteractionUI/TextureRect2"]
-margin_left = 30.0
-margin_top = 502.0
-margin_right = 209.0
-margin_bottom = 534.0
-custom_fonts/font = ExtResource( 5 )
-text = "PLACEHOLDER"
-
-[node name="Label2" type="Label" parent="uiControl/npcInteractionUI/TextureRect2"]
-margin_left = 30.0
-margin_top = 543.0
-margin_right = 668.0
-margin_bottom = 748.0
-custom_fonts/font = ExtResource( 6 )
-text = "PLACEHOLDER"
-align = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
-margin_left = 746.0
-margin_top = 523.0
-margin_right = 1315.0
-margin_bottom = 561.0
-custom_fonts/font = ExtResource( 6 )
-text = "PLACEHOLDER"
-flat = true
-script = ExtResource( 11 )
-
-[node name="Button2" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
-margin_left = 746.0
-margin_top = 572.0
-margin_right = 1315.0
-margin_bottom = 610.0
-custom_fonts/font = ExtResource( 6 )
-text = "PLACEHOLDER"
-flat = true
-script = ExtResource( 11 )
-
-[node name="Button3" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
-margin_left = 746.0
-margin_top = 623.0
-margin_right = 1315.0
-margin_bottom = 661.0
-custom_fonts/font = ExtResource( 6 )
-text = "PLACEHOLDER"
-flat = true
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button4" type="Button" parent="uiControl/npcInteractionUI/TextureRect2"]
-margin_left = 746.0
-margin_top = 675.0
-margin_right = 1315.0
-margin_bottom = 713.0
-custom_fonts/font = ExtResource( 6 )
-text = "PLACEHOLDER"
-flat = true
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="extras" type="AnimationPlayer" parent="uiControl/npcInteractionUI"]
-anims/iw-siw-wolf_surge-confused = ExtResource( 22 )
-
-[node name="PauseMenu" type="Panel" parent="uiControl"]
+[node name="pause" type="Panel" parent="uiControl"]
 pause_mode = 2
 visible = false
-self_modulate = Color( 0.647059, 0.647059, 0.647059, 1 )
-margin_left = 30.0
-margin_top = 43.0
-margin_right = 668.0
-margin_bottom = 341.0
-custom_styles/panel = ExtResource( 2 )
+self_modulate = Color( 0.647059, 0.647059, 0.647059, 0.647059 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="uiControl/PauseMenu"]
-margin_left = 31.9178
-margin_top = 10.7006
-margin_right = 141.918
-margin_bottom = 48.7006
-custom_fonts/font = ExtResource( 5 )
-text = "Resume"
-script = ExtResource( 3 )
+[node name="Button" type="Button" parent="uiControl/pause"]
+anchor_left = 0.023
+anchor_top = 0.832
+anchor_right = 0.554
+anchor_bottom = 0.882
+margin_left = 0.581997
+margin_top = 0.0239868
+margin_right = 0.235962
+margin_bottom = -0.376038
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Return to Game"
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "resume"
 }
 
-[node name="Button2" type="Button" parent="uiControl/PauseMenu"]
-margin_left = 49.0
-margin_top = 126.0
-margin_right = 195.0
-margin_bottom = 164.0
-custom_fonts/font = ExtResource( 5 )
-text = "Exit Game"
-script = ExtResource( 3 )
+[node name="Button2" type="Button" parent="uiControl/pause"]
+anchor_left = 0.299
+anchor_top = 0.906
+anchor_right = 0.554
+anchor_bottom = 0.956
+margin_left = 0.565979
+margin_top = 0.192017
+margin_right = 0.235962
+margin_bottom = -0.208008
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Save and quit to menu"
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false,
-"_editor_description_": "exit"
+"_editor_description_": "exit-mm"
 }
 
-[node name="Button3" type="Button" parent="uiControl/PauseMenu"]
-margin_left = 49.0
-margin_top = 82.0
-margin_right = 336.0
-margin_bottom = 120.0
-custom_fonts/font = ExtResource( 5 )
-text = "Return to Main Menu"
-script = ExtResource( 3 )
+[node name="Button3" type="Button" parent="uiControl/pause"]
+anchor_left = 0.023
+anchor_top = 0.906
+anchor_right = 0.278
+anchor_bottom = 0.956
+margin_left = 0.581997
+margin_top = 0.192017
+margin_right = 0.251953
+margin_bottom = -0.208008
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Save and quit to desktop"
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false,
-"_editor_description_": "main"
+"_editor_description_": "exit-ds"
 }
 
-[node name="SkillTree" type="Panel" parent="uiControl"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 20 )
+[node name="inventory" type="Panel" parent="uiControl"]
+anchor_right = 0.383
+anchor_bottom = 0.421
+margin_right = -0.17804
+margin_bottom = -0.328033
+custom_styles/panel = ExtResource( 5 )
 
-[node name="bottombar" type="Panel" parent="uiControl/SkillTree"]
-anchor_top = 0.928
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 0.295959
+[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/inventory"]
+anchor_left = 0.054
+anchor_top = 0.207
+anchor_right = 0.92
+anchor_bottom = 0.808
+margin_left = -0.242001
+margin_top = 0.138992
+margin_right = -0.160004
+margin_bottom = 0.0159912
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="close" type="Button" parent="uiControl/SkillTree/bottombar"]
-margin_left = 5.0
-margin_top = 8.0
-margin_right = 194.0
-margin_bottom = 50.0
-custom_fonts/font = ExtResource( 6 )
-text = "Close"
+[node name="GridContainer" type="GridContainer" parent="uiControl/inventory/ScrollContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
 
-[node name="Button2" type="Button" parent="uiControl/SkillTree/bottombar"]
-margin_left = 208.0
-margin_top = 8.0
-margin_right = 397.0
-margin_bottom = 50.0
-custom_fonts/font = ExtResource( 6 )
-text = "Abilities"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TextureButton" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_right = 64.0
+margin_bottom = 64.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
 
-[node name="Button3" type="Button" parent="uiControl/SkillTree/bottombar"]
-margin_left = 411.0
-margin_top = 8.0
-margin_right = 600.0
-margin_bottom = 50.0
-custom_fonts/font = ExtResource( 6 )
-disabled = true
-text = "Skills"
-
-[node name="tab-skilltree" type="Control" parent="uiControl/SkillTree"]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/SkillTree/tab-skilltree"]
-margin_right = 1366.0
-margin_bottom = 713.0
-scroll_vertical_enabled = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control" type="Control" parent="uiControl/SkillTree/tab-skilltree/ScrollContainer"]
-
-[node name="Panel" type="Panel" parent="uiControl/SkillTree/tab-skilltree/ScrollContainer/Control"]
-margin_right = 1366.0
-margin_bottom = 701.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="tab-abilities" type="Control" parent="uiControl/SkillTree"]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="Panel2" type="Panel" parent="uiControl"]
-margin_right = 1366.0
-margin_bottom = 768.0
-custom_styles/panel = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="bg" type="TextureRect" parent="uiControl/Panel2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 25 )
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
 expand = true
-stretch_mode = 1
+stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="lightmask" type="TextureRect" parent="uiControl/Panel2"]
-self_modulate = Color( 1, 1, 1, 0.784314 )
-material = SubResource( 9 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 35 )
-expand = true
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="shadowmask" type="TextureRect" parent="uiControl/Panel2"]
-self_modulate = Color( 0, 0, 0, 1 )
-material = SubResource( 10 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 36 )
-expand = true
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="fg" type="TextureRect" parent="uiControl/Panel2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 24 )
-expand = true
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="candle" type="TextureRect" parent="uiControl/Panel2"]
-self_modulate = Color( 1, 1, 1, 0.784314 )
-material = SubResource( 8 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 26 )
-expand = true
-stretch_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="uiControl/Panel2"]
-anims/scene = SubResource( 7 )
-[connection signal="pressed" from="uiControl/Panel/Button" to="uiControl/Panel" method="_close"]
-[connection signal="item_selected" from="uiControl/Panel/ScrollContainer/VBoxContainer/ItemList" to="uiControl/Panel" method="_quest_selected"]
-[connection signal="pressed" from="uiControl/Panel/Button2" to="uiControl/Panel" method="_acceptQuest"]

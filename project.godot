@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="WoFRPG"
 config/description="The official Wings of Fire RPG"
-run/main_scene="res://scenes/menus.tscn"
+run/main_scene="res://scenes/loadscreen.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="WoFRPG"
 boot_splash/image="res://programwings-logo_trans.png"
@@ -29,9 +29,9 @@ config/windows_native_icon="res://favicon.ico"
 
 [autoload]
 
-GVars="*res://scripts/GVars.gd"
-loadscreen="*res://scripts/loadscreen.gd"
-Savesys="*res://savesys.gd"
+gvars="*res://scripts/global/gvars.gd"
+Playerdetailhandler="*res://scripts/player/playerdetailhandler.gd"
+scenes="*res://scripts/scene management/scenemanager.gd"
 
 [debug]
 

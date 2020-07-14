@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://animations/reg/plr-run.anim" type="Animation" id=1]
+[ext_resource path="res://animations/reg/plr-idle.anim" type="Animation" id=2]
+[ext_resource path="res://animations/base/idle/idle-full-s.png" type="Texture" id=3]
+[ext_resource path="res://scripts/player/sp-playerhandler.gd" type="Script" id=4]
+[ext_resource path="res://objects/ui/playerUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://entity-shadow.png" type="Texture" id=7]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 12.0
+height = 112.0
+
+[node name="playerRoot" type="KinematicBody2D"]
+script = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle-plr = ExtResource( 2 )
+anims/run-plr = ExtResource( 1 )
+
+[node name="shadow" type="Sprite" parent="."]
+self_modulate = Color( 0.392157, 0.392157, 0.392157, 0.372549 )
+position = Vector2( 5.96046e-08, 16 )
+scale = Vector2( 0.496094, 0.144531 )
+texture = ExtResource( 7 )
+
+[node name="reg" type="Sprite" parent="."]
+position = Vector2( -76, -66 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+hframes = 2
+
+[node name="flip" type="Sprite" parent="."]
+position = Vector2( 77, -66 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+flip_h = true
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 16 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="uiControl" parent="." instance=ExtResource( 6 )]
+
+[editable path="uiControl"]

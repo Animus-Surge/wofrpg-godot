@@ -12,7 +12,6 @@
 [ext_resource path="res://animations/ui/loadingScreen/frame_00_delay-0.14s.png" type="Texture" id=10]
 [ext_resource path="res://animations/ui/loadingScreen/frame_01_delay-0.14s.png" type="Texture" id=11]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "loadscreen-icon"
 loop = true
@@ -36,7 +35,7 @@ func _ready():
 	get_parent().get_node(\"AnimationPlayer\").play(\"loadscreen-icon\")
 "
 
-[node name="Control" type="Control"]
+[node name="loadscreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -54,10 +53,14 @@ texture = ExtResource( 1 )
 expand = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = 1148.68
-margin_top = 40.7124
-margin_right = 1306.68
-margin_bottom = 141.712
+anchor_left = 0.836
+anchor_top = 0.014
+anchor_right = 0.952
+anchor_bottom = 0.146
+margin_left = 0.0239258
+margin_top = 0.247999
+margin_right = -0.432007
+margin_bottom = -0.128372
 texture = ExtResource( 10 )
 expand = true
 script = SubResource( 2 )

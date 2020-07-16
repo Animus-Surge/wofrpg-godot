@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -14,43 +14,18 @@
 [ext_resource path="res://images/ui/buttons/yt.png" type="Texture" id=12]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://images/ui/bars/bar.png" type="Texture" id=14]
+[ext_resource path="res://scripts/ui/sphandler.gd" type="Script" id=15]
+[ext_resource path="res://scripts/ui/menuhandler.gd" type="Script" id=16]
+[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=17]
+[ext_resource path="res://animations/reg/idle/base-wings/frame_0_delay-0.5s.png" type="Texture" id=18]
+[ext_resource path="res://animations/reg/idle/base-horns/frame_0_delay-0.5s.png" type="Texture" id=19]
+[ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=20]
+[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=21]
 [ext_resource path="res://images/ui/buttons/mmbutton-graphic.png" type="Texture" id=22]
+[ext_resource path="res://scripts/ui/charactercreator.gd" type="Script" id=23]
+[ext_resource path="res://objects/ui/Character.tscn" type="PackedScene" id=24]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends Control
-
-func _ready():
-	hideAll()
-
-func _show(menu: String):
-	if menu == \"sp\":
-# warning-ignore:unsafe_property_access
-		get_node(\"sp\").visible = true
-	elif menu == \"mp\":
-# warning-ignore:unsafe_property_access
-		get_node(\"mp\").visible = true
-	elif menu == \"set\":
-# warning-ignore:unsafe_property_access
-		get_node(\"set\").visible = true
-	elif menu == \"cred\":
-# warning-ignore:unsafe_property_access
-		get_node(\"cred\").visible = true
-	elif menu == \"exit\":
-		get_tree().quit(0)
-
-
-func hideAll():
-# warning-ignore:unsafe_property_access
-	get_node(\"sp\").visible = false
-# warning-ignore:unsafe_property_access
-	get_node(\"mp\").visible = false
-# warning-ignore:unsafe_property_access
-	get_node(\"set\").visible = false
-# warning-ignore:unsafe_property_access
-	get_node(\"cred\").visible = false
-"
-
-[sub_resource type="GDScript" id=2]
 script/source = "extends HBoxContainer
 
 const nohov = preload(\"res://images/ui/buttons/mmbutton-graphic-blank.png\")
@@ -81,28 +56,28 @@ func _gui_input(event):
 			get_node(\"TextureRect\").texture = hover
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureButton
 
 func _pressed():
 	OS.shell_open(\"http://discord.gg/63vHEFV\")
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=3]
 script/source = "extends TextureButton
 
 func _pressed():
 	OS.shell_open(\"https://www.youtube.com/channel/UCE73mNQPoVEeAU6Y_lFfwnA\")
 "
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 15
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0, 0, 0, 0.686275 )
 
-[sub_resource type="StyleBoxTexture" id=5]
+[sub_resource type="StyleBoxTexture" id=6]
 texture = ExtResource( 14 )
 region_rect = Rect2( 0, 0, 40, 40 )
 margin_left = 12.3854
@@ -110,7 +85,7 @@ margin_right = 12.1219
 margin_top = 12.1219
 margin_bottom = 12.649
 
-[sub_resource type="StyleBoxTexture" id=6]
+[sub_resource type="StyleBoxTexture" id=7]
 texture = ExtResource( 14 )
 region_rect = Rect2( 0, 0, 40, 40 )
 margin_left = 12.2038
@@ -119,7 +94,7 @@ margin_top = 12.2038
 margin_bottom = 12.3975
 modulate_color = Color( 1, 0.854902, 0.654902, 1 )
 
-[sub_resource type="StyleBoxTexture" id=7]
+[sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 14 )
 region_rect = Rect2( 0, 0, 40, 40 )
 margin_left = 12.0801
@@ -128,38 +103,40 @@ margin_top = 12.0801
 margin_bottom = 11.8231
 modulate_color = Color( 0.364706, 0.364706, 0.364706, 1 )
 
-[sub_resource type="StyleBoxEmpty" id=8]
+[sub_resource type="StyleBoxEmpty" id=9]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 1.0
 content_margin_bottom = 1.0
 
-[sub_resource type="Theme" id=9]
+[sub_resource type="Theme" id=10]
 default_font = ExtResource( 13 )
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 5 )
-VScrollBar/styles/grabber_highlight = SubResource( 6 )
-VScrollBar/styles/grabber_pressed = SubResource( 7 )
-VScrollBar/styles/scroll = SubResource( 8 )
+VScrollBar/styles/grabber = SubResource( 6 )
+VScrollBar/styles/grabber_highlight = SubResource( 7 )
+VScrollBar/styles/grabber_pressed = SubResource( 8 )
+VScrollBar/styles/scroll = SubResource( 9 )
 VScrollBar/styles/scroll_focus = null
 
-[sub_resource type="StreamTexture" id=12]
-load_path = "res://.import/frame_1_delay-0.5s.png-5b465b9b454291fd1e9a0a78a753a72a.stex"
+[sub_resource type="GDScript" id=11]
+script/source = "extends GridContainer
 
-[sub_resource type="GDScript" id=15]
-script/source = "extends Button
+func displayCharacter(data: Dictionary):
+	var slot = get_child(data.slot)
+	slot.setDetails(data.name)"
 
-func _pressed():
-	#get_tree().change_scene(\"res://scenes/possibility.tscn\")
-	scenes.load_scene(\"res://scenes/possibility.tscn\")
-"
+[sub_resource type="StyleBoxEmpty" id=12]
 
-[sub_resource type="StyleBoxEmpty" id=10]
+[sub_resource type="StyleBoxEmpty" id=13]
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="DynamicFont" id=16]
 size = 60
 font_data = ExtResource( 1 )
 
@@ -169,7 +146,7 @@ margin_bottom = 768.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource( 1 )
+script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -269,7 +246,7 @@ alignment = 2
 margin_right = 341.0
 margin_bottom = 67.0
 size_flags_vertical = 3
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
 margin_right = 112.0
@@ -295,7 +272,7 @@ margin_top = 67.0
 margin_right = 341.0
 margin_bottom = 134.0
 size_flags_vertical = 3
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
 margin_right = 112.0
@@ -321,7 +298,7 @@ margin_top = 134.0
 margin_right = 341.0
 margin_bottom = 201.0
 size_flags_vertical = 3
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
 margin_right = 112.0
@@ -347,7 +324,7 @@ margin_top = 201.0
 margin_right = 341.0
 margin_bottom = 268.0
 size_flags_vertical = 3
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
 margin_right = 112.0
@@ -373,7 +350,7 @@ margin_top = 268.0
 margin_right = 341.0
 margin_bottom = 338.0
 size_flags_vertical = 3
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
 margin_right = 112.0
@@ -415,7 +392,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource( 6 )
 expand = true
 stretch_mode = 5
-script = SubResource( 13 )
+script = SubResource( 2 )
 
 [node name="TextureButton2" type="TextureButton" parent="main/VBoxContainer/HBoxContainer2/HBoxContainer"]
 margin_left = 105.0
@@ -425,7 +402,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource( 12 )
 expand = true
 stretch_mode = 5
-script = SubResource( 14 )
+script = SubResource( 3 )
 
 [node name="TextureButton3" type="TextureButton" parent="main/VBoxContainer/HBoxContainer2/HBoxContainer"]
 visible = false
@@ -450,7 +427,7 @@ margin_right = 1155.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "dev-0.181.6313"
 align = 1
 valign = 2
@@ -458,7 +435,7 @@ valign = 2
 [node name="sp" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -481,6 +458,7 @@ margin_left = 117.0
 margin_right = 1248.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
+script = ExtResource( 15 )
 
 [node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2"]
 margin_right = 1131.0
@@ -489,9 +467,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="sp/HBoxContainer/VBoxContainer2"]
-margin_top = 80.0
+visible = false
+margin_top = 46.0
 margin_right = 1131.0
-margin_bottom = 688.0
+margin_bottom = 382.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
@@ -524,1679 +503,305 @@ margin_left = -0.406
 margin_top = -0.272003
 margin_right = 0.109009
 margin_bottom = -0.112
-theme = SubResource( 9 )
+theme = SubResource( 10 )
 scroll_horizontal_enabled = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="GridContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer"]
-margin_right = 1048.0
-margin_bottom = 1012.0
+[node name="GridContainer" type="GridContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer" groups=[
+"characterDisplay",
+]]
+margin_right = 1058.0
+margin_bottom = 287.44
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
+script = SubResource( 11 )
 
-[node name="Character" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-script = SubResource( 15 )
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character2" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_right = 1048.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character2/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character3" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 127.0
-margin_right = 522.0
-margin_bottom = 250.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character3/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character4" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 127.0
-margin_right = 1048.0
-margin_bottom = 250.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character4/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character5" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 254.0
-margin_right = 522.0
-margin_bottom = 377.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character5/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character6" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 254.0
-margin_right = 1048.0
-margin_bottom = 377.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character6/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character7" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 381.0
-margin_right = 522.0
-margin_bottom = 504.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character7/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character8" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 381.0
-margin_right = 1048.0
-margin_bottom = 504.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character8/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character9" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 508.0
-margin_right = 522.0
-margin_bottom = 631.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character9/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character10" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 508.0
-margin_right = 1048.0
-margin_bottom = 631.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character10/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character11" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 635.0
-margin_right = 522.0
-margin_bottom = 758.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character11/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character12" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 635.0
-margin_right = 1048.0
-margin_bottom = 758.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character12/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character13" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 762.0
-margin_right = 522.0
-margin_bottom = 885.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character13/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character14" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 762.0
-margin_right = 1048.0
-margin_bottom = 885.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character14/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character15" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_top = 889.0
-margin_right = 522.0
-margin_bottom = 1012.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character15/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character16" type="HBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer"]
-margin_left = 526.0
-margin_top = 889.0
-margin_right = 1048.0
-margin_bottom = 1012.0
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16"]
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-texture = SubResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16"]
-margin_left = 209.0
-margin_right = 414.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="margin" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer"]
-margin_right = 205.0
-margin_bottom = 21.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer"]
-margin_top = 25.0
-margin_right = 205.0
-margin_bottom = 46.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="charname" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer"]
-margin_top = 50.0
-margin_right = 205.0
-margin_bottom = 71.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-text = "CHARNAME"
-
-[node name="margin3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer"]
-margin_top = 75.0
-margin_right = 205.0
-margin_bottom = 96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="margin4" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer"]
-margin_top = 100.0
-margin_right = 205.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 13 )
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16"]
-margin_left = 418.0
-margin_right = 522.0
-margin_bottom = 123.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer2"]
-margin_right = 104.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer2"]
-margin_top = 23.0
-margin_right = 104.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer2"]
-margin_top = 46.0
-margin_right = 104.0
-margin_bottom = 71.0
-custom_fonts/font = ExtResource( 13 )
-text = "Play"
-
-[node name="Button2" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer2"]
-margin_top = 75.0
-margin_right = 104.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 13 )
-text = "Delete"
-
-[node name="Label3" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character16/VBoxContainer2"]
-margin_top = 104.0
-margin_right = 104.0
-margin_bottom = 123.0
-custom_fonts/font = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Character" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer" instance=ExtResource( 24 )]
 
 [node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
-margin_left = 245.0
-margin_top = 23.0
-margin_right = 285.0
-margin_bottom = 37.0
+anchor_left = 0.217
+anchor_top = 0.023
+anchor_right = 0.357
+anchor_bottom = 0.076
+margin_left = -0.427002
+margin_top = 0.0159988
+margin_right = 0.232971
+margin_bottom = -0.208004
+custom_fonts/font = ExtResource( 2 )
+text = "Singleplayer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel2" type="Panel" parent="sp/HBoxContainer/VBoxContainer2"]
+margin_top = 80.0
+margin_right = 1131.0
+margin_bottom = 688.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+custom_styles/panel = ExtResource( 8 )
+script = ExtResource( 23 )
+
+[node name="TextureButton" type="TextureButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+anchor_left = 0.022
+anchor_top = 0.016
+anchor_right = 0.057
+anchor_bottom = 0.082
+margin_left = 0.117998
+margin_top = 0.271999
+margin_right = -0.467003
+margin_bottom = 0.143997
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+anchor_left = 0.217
+anchor_top = 0.023
+anchor_right = 0.427
+anchor_bottom = 0.076
+margin_left = -0.427002
+margin_top = 0.0159988
+margin_right = 0.0629883
+margin_bottom = -0.208004
+custom_fonts/font = ExtResource( 2 )
+text = "Create Character"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+anchor_left = 0.034
+anchor_top = 0.125
+anchor_right = 0.951
+anchor_bottom = 0.395
+margin_left = -0.454002
+margin_right = 0.418945
+margin_bottom = -0.160004
+custom_styles/panel = SubResource( 12 )
+custom_fonts/font = ExtResource( 13 )
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Basic Details" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 13 )
+
+[node name="name" type="LineEdit" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_left = 87.0
+margin_top = 7.0
+margin_right = 280.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 13 )
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_top = 6.0
+margin_right = 760.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 2 )
+text = "Name                    Gender                        Role"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gender" type="OptionButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_left = 402.0
+margin_top = 7.0
+margin_right = 627.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 13 )
+text = "Male"
+items = [ "Male", null, false, 0, null, "Female", null, false, 1, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Role" type="OptionButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_left = 717.0
+margin_top = 7.0
+margin_right = 942.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 13 )
+text = "Commoner"
+items = [ "Commoner", null, false, 0, null, "Rogue", null, false, 1, null, "Servant", null, false, 2, null, "Animus", null, false, 3, null, "Royalty", null, false, 4, null, "Soldier", null, false, 5, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tribes" type="ItemList" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_left = 775.0
+margin_top = 53.0
+margin_right = 1025.0
+margin_bottom = 420.0
+select_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Colors" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 14 )
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 20.0
+margin_top = 65.0
+margin_right = 68.0
+margin_bottom = 113.0
+focus_mode = 0
+enabled_focus_mode = 0
+color = Color( 1, 1, 1, 1 )
+edit_alpha = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPickerButton2" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 153.0
+margin_top = 65.0
+margin_right = 201.0
+margin_bottom = 113.0
+focus_mode = 0
+enabled_focus_mode = 0
+color = Color( 1, 1, 1, 1 )
+edit_alpha = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPickerButton3" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 285.0
+margin_top = 65.0
+margin_right = 333.0
+margin_bottom = 113.0
+focus_mode = 0
+enabled_focus_mode = 0
+color = Color( 1, 1, 1, 1 )
+edit_alpha = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPickerButton4" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 415.0
+margin_top = 65.0
+margin_right = 463.0
+margin_bottom = 113.0
+focus_mode = 0
+enabled_focus_mode = 0
+color = Color( 1, 1, 1, 1 )
+edit_alpha = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 11.0
+margin_top = 21.0
+margin_right = 470.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 2 )
+text = "Body      Wings     Horns      Eyes"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="preview" type="Control" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+anchor_left = 0.026
+anchor_top = 0.437
+anchor_right = 0.553
+anchor_bottom = 0.957
+margin_left = -0.406
+margin_top = 0.303986
+margin_right = 0.556946
+margin_bottom = 0.143982
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 21 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 19 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect5" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 20 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+margin_left = 813.0
+margin_top = 541.0
+margin_right = 1063.0
+margin_bottom = 579.0
+custom_fonts/font = ExtResource( 2 )
+text = "Create Character"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2220,7 +825,7 @@ size_flags_stretch_ratio = 0.1
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2356,7 +961,7 @@ margin_left = 3.85537
 margin_top = 4.2409
 margin_right = 1361.88
 margin_bottom = 764.016
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 15 )
 
 [node name="TextureButton2" type="TextureButton" parent="set/Panel"]
 margin_left = -3.85537
@@ -2406,7 +1011,7 @@ margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 16 )
 text = "Credits"
 align = 1
 valign = 1
@@ -2428,6 +1033,8 @@ size_flags_stretch_ratio = 4.0
 [connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseOver"]
 [connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseExit"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
+[connection signal="createCharInSlot" from="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character" to="sp/HBoxContainer/VBoxContainer2" method="create"]
+[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
 [connection signal="pressed" from="mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="pressed" from="set/Panel/TextureButton2" to="." method="hideAll"]
 [connection signal="pressed" from="cred/content/bar/TextureButton" to="." method="hideAll"]

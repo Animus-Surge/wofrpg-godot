@@ -7,3 +7,4 @@ var sppaused = false
 
 func _ready():
 	scenes.load_scene("res://scenes/menus.tscn")
+	

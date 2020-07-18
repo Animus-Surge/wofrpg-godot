@@ -11,7 +11,7 @@ func onCreate():
 	emit_signal("createCharInSlot", slotNum)
 
 func onPlay():
-	pass
+	scenes.load_scene("res://scenes/possibility.tscn")
 
 func onDelete():
 	setDetails("empty", null)

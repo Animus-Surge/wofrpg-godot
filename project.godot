@@ -29,10 +29,10 @@ config/windows_native_icon="res://favicon.ico"
 
 [autoload]
 
-gvars="*res://scripts/global/gvars.gd"
 scenes="*res://scripts/scene management/scenemanager.gd"
+globalvars="*res://scripts/global/gvars.gd"
 cfm="*res://scripts/filemanager/characterFileHandler.gd"
-player="*res://scripts/player/playerdetailhandler.gd"
+gloader="*res://scripts/global/globalLoader.gd"
 
 [debug]
 

@@ -1,2 +1,6 @@
 # Godot
 /.import
+
+#packages
+*.zip
+*.pck

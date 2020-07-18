@@ -1,38 +1,32 @@
 extends Node
 
-const path = "user://characters/"
-
 var characters = []
 
 func _ready():
-	loadCharsList()
+	print("CFM Active")
+	loadCharList()
 
-func create(data):
+func loadCharList():
+	print("Attempting load of local character list...")
+	var charDir = Directory.new()
+	charDir.open("user://characters")
+	charDir.list_dir_begin()
+	
+	var currentFile = charDir.get_next()
+	var filesLoaded = 0
+	
+	while true:
+		if currentFile != "":
+			if currentFile.begins_with("."):
+				pass
+			else:
+				filesLoaded += 1
+				print(currentFile)
+			currentFile = charDir.get_next()
+		else:
+			break
+	print("Characters loaded. Loaded: " + String(filesLoaded) + " files")
+
+func loadFile(path):
 	var file = File.new()
-	file.open(path + data.name.to_lower() + ".json", File.WRITE)
-	file.store_line(to_json(data))
-
-func loadCharacter(cname: String):
-	var file = File.new()
-	file.open(path + cname + ".json", File.READ)
-	var contents = JSON.parse(file.get_as_text()).result
-	
-	#plug the character values into the detail handler
-
-func loadCharsList():
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin()
-	
-	var file = dir.get_next()
-	while file != "":
-		if !file.begins_with("."):
-			var f = File.new()
-			f.open(path + file, File.READ)
-			get_tree().call_group("characterDisplay", "displayCharacter", JSON.parse(f.get_as_text()).result)
-		file = dir.get_next()
-	
-
-func deleteCharacter(cname: String):
-	var dir = Directory.new()
-	dir.remove(path + cname + ".json")
+	file.open(path)

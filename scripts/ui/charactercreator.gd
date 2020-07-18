@@ -11,9 +11,15 @@ onready var cname = get_node("TabContainer/Basic Details/name")
 onready var crole = get_node("TabContainer/Basic Details/Role")
 onready var cgender = get_node("TabContainer/Basic Details/Gender")
 
+func _ready():
+	for tribe in gloader.baseTribes:
+		tribes.add_item(tribe.name)
+
 func create():
 	var tribesList = []
 	
+	for itemindex in tribes.get_selected_items():
+		tribesList.append(tribes.get_item_text(itemindex).to_lower())
 	
 	var details = {
 		"name": cname,
@@ -47,7 +53,24 @@ func create():
 			}
 		]
 	}
+	var charfile = File.new()
+	charfile.open("user://characters/" + cname.to_lower() + ".json", File.WRITE)
+	print("Saving character: " + cname)
+	charfile.store_line()
 
 func init(slotnum: int):
 	slotToCreateTo = slotnum
 	print("Creating a new character at slot: " + String(slotnum))
+
+
+func createChar():
+	var tribes = 0
+	for itemindex in tribes.get_selected_items():
+		tribes+= 1
+	if cname.text == "":
+		pass #alert the player
+	elif tribes == 0:
+		pass #alert the player
+	else:
+		create()
+	

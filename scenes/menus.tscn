@@ -1035,6 +1035,7 @@ size_flags_stretch_ratio = 4.0
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="createCharInSlot" from="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character" to="sp/HBoxContainer/VBoxContainer2" method="create"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
+[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
 [connection signal="pressed" from="mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="pressed" from="set/Panel/TextureButton2" to="." method="hideAll"]
 [connection signal="pressed" from="cred/content/bar/TextureButton" to="." method="hideAll"]

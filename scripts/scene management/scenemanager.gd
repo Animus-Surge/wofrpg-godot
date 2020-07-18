@@ -8,7 +8,7 @@ func load_scene(scene: String):
 	get_tree().change_scene("res://scenes/loadscreen.tscn")
 	var root = get_tree().get_root()
 	scn = ResourceLoader.load_interactive(scene)
-	#todo: error handling
+	print("Attempting load of scene: " + scene)
 	set_process(true)
 	
 	wait = 1
@@ -27,6 +27,7 @@ func _process(delta):
 		if err == ERR_FILE_EOF:
 			var resource = scn.get_resource()
 			scn = null
+			print("Successfully loaded the scene. Switching to scene")
 			get_node("/root").add_child(resource.instance())
 			get_node("/root/loadscreen").queue_free()
 			#get_node("/root/loadscreen").hide()
@@ -35,4 +36,5 @@ func _process(delta):
 			continue
 		else:
 			scn = null
+			printerr("An error occured while loading a scene.")
 			break #TODO

@@ -15,7 +15,6 @@ func showSelectMenu():
 func showAllCharacters():
 	pass
 
-
 func create(slot):
 	showCreateMenu()
-	#pass slot num to charactercreator.gd
+	$Panel2.call("init", slot)

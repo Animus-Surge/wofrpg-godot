@@ -2,7 +2,7 @@ extends Node
 
 var characters = []
 
-func _ready():
+func startLoad():
 	print("CFM Active")
 	loadCharList()
 

@@ -22,9 +22,9 @@ func create():
 		tribesList.append(tribes.get_item_text(itemindex).to_lower())
 	
 	var details = {
-		"name": cname,
-		"gender": cgender,
-		"role": crole,
+		"name": cname.text,
+		"gender": cgender.selected,
+		"role": crole.selected,
 		"tribes":tribesList,
 		"colors":[
 			{
@@ -54,23 +54,29 @@ func create():
 		]
 	}
 	var charfile = File.new()
-	charfile.open("user://characters/" + cname.to_lower() + ".json", File.WRITE)
-	print("Saving character: " + cname)
-	charfile.store_line()
+	charfile.open("user://characters/" + cname.text.to_lower() + ".json", File.WRITE)
+	charfile.store_line(to_json(details))
+	print("Saved character: " + cname.text)
 
 func init(slotnum: int):
 	slotToCreateTo = slotnum
 	print("Creating a new character at slot: " + String(slotnum))
 
-
 func createChar():
-	var tribes = 0
+	var errored = false
+	var numtribes = 0
+	cname.modulate = Color.white
+	tribes.modulate = Color.white
 	for itemindex in tribes.get_selected_items():
-		tribes+= 1
+		numtribes+= 1
 	if cname.text == "":
-		pass #alert the player
-	elif tribes == 0:
-		pass #alert the player
-	else:
-		create()
+		get_node("TabContainer").set_current_tab(0)
+		cname.modulate = Color.red
+		errored = true
+	if numtribes == 0:
+		get_node("TabContainer").set_current_tab(0)
+		tribes.modulate = Color.red
+		errored = true
+	
+	if !errored: create()
 	

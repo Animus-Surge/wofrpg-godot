@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/straight_sand_t.png-79443b6a696fe93b5fdbde97f1a2c538.stex"
+path="res://.import/water-bankSW.png-417b929ed77100f7b700dd9eb4a686c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/tiles/norm/straight_sand_t.png"
-dest_files=[ "res://.import/straight_sand_t.png-79443b6a696fe93b5fdbde97f1a2c538.stex" ]
+source_file="res://images/tiles/norm/water-bankSW.png"
+dest_files=[ "res://.import/water-bankSW.png-417b929ed77100f7b700dd9eb4a686c5.stex" ]
 
 [params]
 

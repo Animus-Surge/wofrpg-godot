@@ -8,7 +8,7 @@ const itemDict = "user://data/base/items/itemdict.json"
 var baseTribes: Array
 var itemdict: Array
 
-func _ready():
+func startLoad():
 	loadBaseTribes()
 	loadItems()
 
@@ -39,4 +39,12 @@ func loadItems():
 	dict.open(itemDict, File.READ)
 	itemdict = JSON.parse(dict.get_as_text()).result.itemDict
 	print("Loaded item dictionary")
-	
+
+func loadSkillset(characterSkills: Array) -> Array:
+	var cskills = []
+	for skill in characterSkills:
+		var skillFile = File.new()
+		skillFile.open("user://data/base/skills/" + skill.id.split("-", true, 1)[1] + ".json") #TODO: skill handling
+		var fileParseResult = JSON.parse(skillFile.get_as_text()).result
+		cskills.append(fileParseResult)
+	return cskills

@@ -30,7 +30,6 @@ func _process(delta):
 			print("Successfully loaded the scene. Switching to scene")
 			get_node("/root").add_child(resource.instance())
 			get_node("/root/loadscreen").queue_free()
-			#get_node("/root/loadscreen").hide()
 			break
 		elif err == OK:
 			continue

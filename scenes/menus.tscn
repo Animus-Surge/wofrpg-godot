@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -136,7 +136,37 @@ func displayCharacter(data: Dictionary):
 
 [sub_resource type="StyleBoxEmpty" id=15]
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="GDScript" id=18]
+script/source = "extends Control
+
+onready var body = get_node(\"TextureRect\")
+onready var bodys = get_node(\"TextureRect2\")
+
+onready var wings = get_node(\"TextureRect3\")
+
+onready var horns = get_node(\"TextureRect4\")
+
+onready var eyes = get_node(\"TextureRect5\")
+
+onready var bodyc = get_node(\"../TabContainer/Colors/ColorPickerButton\")
+onready var wingc = get_node(\"../TabContainer/Colors/ColorPickerButton2\")
+onready var hornc = get_node(\"../TabContainer/Colors/ColorPickerButton3\")
+onready var eyec = get_node(\"../TabContainer/Colors/ColorPickerButton4\")
+
+func updateColors(_color: Color):
+	body.modulate = bodyc.color
+	bodys.modulate = bodyc.color
+	
+	wings.modulate = wingc.color
+	
+	horns.modulate = hornc.color
+	
+	eyes.modulate = eyec.color
+"
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="DynamicFont" id=17]
 size = 60
 font_data = ExtResource( 1 )
 
@@ -602,23 +632,35 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 13 )
 
-[node name="name" type="LineEdit" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_left = 87.0
-margin_top = 7.0
-margin_right = 280.0
-margin_bottom = 36.0
-custom_fonts/font = ExtResource( 13 )
-caret_blink = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_top = 6.0
 margin_right = 760.0
 margin_bottom = 38.0
 custom_fonts/font = ExtResource( 2 )
 text = "Name                    Gender                        Role"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_left = 540.632
+margin_top = 53.0
+margin_right = 764.632
+margin_bottom = 85.0
+custom_fonts/font = ExtResource( 2 )
+text = "Tribes (Required)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="name" type="LineEdit" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+margin_left = 87.0
+margin_top = 7.0
+margin_right = 280.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 13 )
+placeholder_text = "Required"
+caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -731,6 +773,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Skills" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
+margin_left = 578.0
+margin_top = 12.0
+margin_right = 1038.0
+margin_bottom = 415.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills/ScrollContainer"]
+margin_right = 460.0
+margin_bottom = 403.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="preview" type="Control" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.026
 anchor_top = 0.437
@@ -740,6 +806,7 @@ margin_left = -0.406
 margin_top = 0.303986
 margin_right = 0.556946
 margin_bottom = 0.143982
+script = SubResource( 18 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -961,7 +1028,7 @@ margin_left = 3.85537
 margin_top = 4.2409
 margin_right = 1361.88
 margin_bottom = 764.016
-custom_styles/panel = SubResource( 15 )
+custom_styles/panel = SubResource( 16 )
 
 [node name="TextureButton2" type="TextureButton" parent="set/Panel"]
 margin_left = -3.85537
@@ -1011,7 +1078,7 @@ margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 17 )
 text = "Credits"
 align = 1
 valign = 1
@@ -1035,6 +1102,10 @@ size_flags_stretch_ratio = 4.0
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="createCharInSlot" from="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character" to="sp/HBoxContainer/VBoxContainer2" method="create"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
+[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton2" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton3" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton4" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
 [connection signal="pressed" from="mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="pressed" from="set/Panel/TextureButton2" to="." method="hideAll"]

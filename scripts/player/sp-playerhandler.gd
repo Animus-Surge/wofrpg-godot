@@ -11,7 +11,7 @@ func _ready():
 	pass
 
 func _physics_process(delta):
-	if !gvars.sppaused:
+	if !globalvars.sppaused:
 		var vect = Vector2.ZERO
 		vect.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")

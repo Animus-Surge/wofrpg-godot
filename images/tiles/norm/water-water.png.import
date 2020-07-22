@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/straight_sand_l.png-5a43587007c749e8ac2f61c38f8881c9.stex"
+path="res://.import/water-water.png-4992a2b62643cb4dcd555e47ca0a41f8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/tiles/norm/straight_sand_l.png"
-dest_files=[ "res://.import/straight_sand_l.png-5a43587007c749e8ac2f61c38f8881c9.stex" ]
+source_file="res://images/tiles/norm/water-water.png"
+dest_files=[ "res://.import/water-water.png-4992a2b62643cb4dcd555e47ca0a41f8.stex" ]
 
 [params]
 

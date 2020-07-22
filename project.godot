@@ -146,6 +146,7 @@ limits/message_queue/max_size_kb=4096
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false

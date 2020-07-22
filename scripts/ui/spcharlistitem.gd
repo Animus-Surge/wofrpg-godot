@@ -1,7 +1,10 @@
 extends HBoxContainer
 
 signal createCharInSlot(slot)
-export (int) var slotNum
+var slotNum
+
+func onReady(slot):
+	slotNum = slot - 1
 
 func setDetails(charname: String, icon: Texture):
 	$VBoxContainer/charname.text = charname
@@ -11,7 +14,10 @@ func onCreate():
 	emit_signal("createCharInSlot", slotNum)
 
 func onPlay():
-	scenes.load_scene("res://scenes/possibility.tscn")
+	scenes.showGameHandler(cfm.characters[slotNum])
 
 func onDelete():
 	setDetails("empty", null)
+	cfm.deleteCharacter(slotNum)
+	if slotNum >= 1:
+		self.queue_free()

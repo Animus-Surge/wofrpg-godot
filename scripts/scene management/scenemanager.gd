@@ -37,3 +37,8 @@ func _process(delta):
 			scn = null
 			printerr("An error occured while loading a scene.")
 			break #TODO
+
+func showGameHandler(character):
+	print("Showing saves for character: " + character.name)
+	get_tree().change_scene("res://scenes/game-select.tscn")
+	globalvars.loadedCharacter = character

@@ -5,7 +5,9 @@ puppet var uiShowing = false
 
 var sppaused = false
 
-export (bool) var debug = false
+var loadedCharacter
+
+var debug = false
 
 func _ready():
 	if !debug:

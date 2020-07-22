@@ -13,6 +13,11 @@ func showSelectMenu():
 	$Panel2.visible = false
 
 func showAllCharacters():
+	for character in cfm.characters:
+		var charSlot = load("res://obects/ui/Character.tscn").instance()
+		charSlot.setDetails(character.name, null)
+
+func refresh():
 	pass
 
 func create(slot):

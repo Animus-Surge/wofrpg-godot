@@ -21,12 +21,15 @@ func loadCharList():
 				pass
 			else:
 				filesLoaded += 1
-				#print(currentFile)
+				var charfile = File.new()
+				charfile.open("user://characters/"+currentFile.get_file(), File.READ)
+				var cdetails = JSON.parse(charfile.get_as_text()).result
+				characters.append(cdetails)
+				charfile.close()
 			currentFile = charDir.get_next()
 		else:
 			break
 	print("Characters loaded. Loaded: " + String(filesLoaded) + " files")
 
-func loadFile(path):
-	var file = File.new()
-	file.open(path)
+func deleteCharacter(slot):
+	characters.remove(slot)

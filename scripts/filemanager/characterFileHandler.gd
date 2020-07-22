@@ -21,7 +21,7 @@ func loadCharList():
 				pass
 			else:
 				filesLoaded += 1
-				print(currentFile)
+				#print(currentFile)
 			currentFile = charDir.get_next()
 		else:
 			break

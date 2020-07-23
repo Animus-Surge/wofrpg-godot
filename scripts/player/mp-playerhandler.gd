@@ -13,7 +13,7 @@ func _ready():
 
 func _physics_process(delta):
 	if is_network_master():
-		if !gvars.clipaused:
+		if !globalvars.clipaused:
 			var vel = Vector2.ZERO
 			vel.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 			vel.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")

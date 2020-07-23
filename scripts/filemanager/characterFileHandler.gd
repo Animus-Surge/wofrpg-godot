@@ -31,5 +31,6 @@ func loadCharList():
 			break
 	print("Characters loaded. Loaded: " + String(filesLoaded) + " files")
 
-func deleteCharacter(slot):
-	characters.remove(slot)
+func delete(character):
+	characters.remove(characters.find(character))
+	print("Deleted character: " + character.name)

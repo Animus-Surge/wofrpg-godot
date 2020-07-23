@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=11]
 [ext_resource path="res://images/ui/buttons/yt.png" type="Texture" id=12]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
-[ext_resource path="res://images/ui/bars/bar.png" type="Texture" id=14]
 [ext_resource path="res://scripts/ui/sphandler.gd" type="Script" id=15]
 [ext_resource path="res://scripts/ui/menuhandler.gd" type="Script" id=16]
 [ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=17]
@@ -23,7 +22,6 @@
 [ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=21]
 [ext_resource path="res://images/ui/buttons/mmbutton-graphic.png" type="Texture" id=22]
 [ext_resource path="res://scripts/ui/charactercreator.gd" type="Script" id=23]
-[ext_resource path="res://objects/ui/Character.tscn" type="PackedScene" id=24]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends HBoxContainer
@@ -77,56 +75,13 @@ font_data = ExtResource( 1 )
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0, 0, 0, 0.686275 )
 
-[sub_resource type="StyleBoxTexture" id=6]
-texture = ExtResource( 14 )
-region_rect = Rect2( 0, 0, 40, 40 )
-margin_left = 12.3854
-margin_right = 12.1219
-margin_top = 12.1219
-margin_bottom = 12.649
+[sub_resource type="StyleBoxEmpty" id=20]
 
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 14 )
-region_rect = Rect2( 0, 0, 40, 40 )
-margin_left = 12.2038
-margin_right = 12.2038
-margin_top = 12.2038
-margin_bottom = 12.3975
-modulate_color = Color( 1, 0.854902, 0.654902, 1 )
+[sub_resource type="StyleBoxEmpty" id=21]
 
-[sub_resource type="StyleBoxTexture" id=8]
-texture = ExtResource( 14 )
-region_rect = Rect2( 0, 0, 40, 40 )
-margin_left = 12.0801
-margin_right = 12.0801
-margin_top = 12.0801
-margin_bottom = 11.8231
-modulate_color = Color( 0.364706, 0.364706, 0.364706, 1 )
+[sub_resource type="StyleBoxEmpty" id=22]
 
-[sub_resource type="StyleBoxEmpty" id=9]
-content_margin_left = 5.0
-content_margin_right = 5.0
-content_margin_top = 1.0
-content_margin_bottom = 1.0
-
-[sub_resource type="Theme" id=10]
-default_font = ExtResource( 13 )
-VScrollBar/icons/decrement = null
-VScrollBar/icons/decrement_highlight = null
-VScrollBar/icons/increment = null
-VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 6 )
-VScrollBar/styles/grabber_highlight = SubResource( 7 )
-VScrollBar/styles/grabber_pressed = SubResource( 8 )
-VScrollBar/styles/scroll = SubResource( 9 )
-VScrollBar/styles/scroll_focus = null
-
-[sub_resource type="GDScript" id=11]
-script/source = "extends GridContainer
-
-func displayCharacter(data: Dictionary):
-	var slot = get_child(data.slot)
-	slot.setDetails(data.name)"
+[sub_resource type="StyleBoxEmpty" id=19]
 
 [sub_resource type="StyleBoxEmpty" id=12]
 
@@ -483,7 +438,9 @@ size_flags_stretch_ratio = 0.1
 percent_visible = 0.0
 max_lines_visible = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer" groups=[
+"charlist",
+]]
 margin_left = 117.0
 margin_right = 1248.0
 margin_bottom = 768.0
@@ -497,10 +454,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="sp/HBoxContainer/VBoxContainer2"]
-visible = false
-margin_top = 46.0
+margin_top = 80.0
 margin_right = 1131.0
-margin_bottom = 382.0
+margin_bottom = 688.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
@@ -524,33 +480,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.026
-anchor_top = 0.109
-anchor_right = 0.961
-anchor_bottom = 0.964
-margin_left = -0.406
-margin_top = -0.272003
-margin_right = 0.109009
-margin_bottom = -0.112
-theme = SubResource( 10 )
-scroll_horizontal_enabled = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="GridContainer" type="GridContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer" groups=[
-"characterDisplay",
-]]
-margin_right = 1058.0
-margin_bottom = 287.44
-size_flags_horizontal = 3
-size_flags_vertical = 3
-columns = 2
-script = SubResource( 11 )
-
-[node name="Character" parent="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer" instance=ExtResource( 24 )]
-
 [node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.217
 anchor_top = 0.023
@@ -566,7 +495,113 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="create" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+anchor_left = 0.034
+anchor_top = 0.89
+anchor_right = 0.314
+anchor_bottom = 0.952
+margin_left = -0.454002
+margin_top = -0.120056
+margin_right = -0.134003
+margin_bottom = 0.18396
+custom_fonts/font = ExtResource( 2 )
+text = "Create New Character"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="delete" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+anchor_left = 0.766
+anchor_top = 0.89
+anchor_right = 0.849
+anchor_bottom = 0.952
+margin_left = -0.346008
+margin_top = -0.120056
+margin_right = -0.219055
+margin_bottom = 0.18396
+custom_fonts/font = ExtResource( 2 )
+text = "Delete"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="play" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+anchor_left = 0.866
+anchor_top = 0.89
+anchor_right = 0.95
+anchor_bottom = 0.952
+margin_left = 0.553955
+margin_top = -0.120056
+margin_right = -0.450073
+margin_bottom = 0.18396
+custom_fonts/font = ExtResource( 2 )
+text = "Play"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+anchor_left = 0.034
+anchor_top = 0.122
+anchor_right = 0.401
+anchor_bottom = 0.863
+margin_left = -0.454002
+margin_top = -0.176003
+margin_right = -0.531036
+margin_bottom = 0.295959
+custom_styles/selected_focus = SubResource( 20 )
+custom_styles/bg_focus = SubResource( 21 )
+custom_styles/selected = SubResource( 22 )
+custom_styles/bg = SubResource( 19 )
+custom_fonts/font = ExtResource( 13 )
+custom_colors/font_color_selected = Color( 0.898039, 1, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+anchor_left = 0.421
+anchor_top = 0.148
+anchor_right = 0.504
+anchor_bottom = 0.546
+margin_left = -0.151031
+margin_top = 0.0159988
+margin_right = -0.0239868
+margin_bottom = 0.0319824
+custom_fonts/font = ExtResource( 2 )
+text = "Name
+Gender
+Role
+Tribes"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="details" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+anchor_left = 0.535
+anchor_top = 0.148
+anchor_right = 0.727
+anchor_bottom = 0.546
+margin_left = -0.085022
+margin_top = 0.0159988
+margin_right = -123.237
+margin_bottom = 0.0319824
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
+text = "Nothing selected
+
+
+
+
+
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Panel2" type="Panel" parent="sp/HBoxContainer/VBoxContainer2"]
+visible = false
 margin_top = 80.0
 margin_right = 1131.0
 margin_bottom = 688.0
@@ -796,6 +831,15 @@ margin_right = 460.0
 margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Appearances" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
 
 [node name="preview" type="Control" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.026
@@ -1100,7 +1144,8 @@ size_flags_stretch_ratio = 4.0
 [connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseOver"]
 [connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseExit"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
-[connection signal="createCharInSlot" from="sp/HBoxContainer/VBoxContainer2/Panel/ScrollContainer/GridContainer/Character" to="sp/HBoxContainer/VBoxContainer2" method="create"]
+[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/create" to="sp/HBoxContainer/VBoxContainer2" method="showCreateMenu"]
+[connection signal="item_selected" from="sp/HBoxContainer/VBoxContainer2/Panel/ItemList" to="sp/HBoxContainer/VBoxContainer2" method="charItemSelected"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
 [connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
 [connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton2" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]

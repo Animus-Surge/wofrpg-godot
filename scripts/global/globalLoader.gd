@@ -37,6 +37,9 @@ func loadItems():
 	print("Loading item dictionary")
 	var dict = File.new()
 	dict.open(itemDict, File.READ)
+	if dict == null:
+		printerr("Item dictionary nonexistent!")
+		get_tree().exit(-1)
 	itemdict = JSON.parse(dict.get_as_text()).result.itemDict
 	print("Loaded item dictionary")
 

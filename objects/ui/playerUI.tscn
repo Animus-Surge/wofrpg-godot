@@ -271,8 +271,9 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="uiControl/inventory/ScrollContainer"]
-margin_right = 64.0
-margin_bottom = 64.0
+margin_right = 404.0
+margin_bottom = 336.0
+columns = 6
 
 [node name="TextureButton" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
@@ -287,6 +288,838 @@ texture_disabled = ExtResource( 3 )
 stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 68.0
+margin_right = 132.0
+margin_bottom = 64.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton3" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 136.0
+margin_right = 200.0
+margin_bottom = 64.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton4" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 204.0
+margin_right = 268.0
+margin_bottom = 64.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton5" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 272.0
+margin_right = 336.0
+margin_bottom = 64.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton5"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton6" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 340.0
+margin_right = 404.0
+margin_bottom = 64.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton6"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton7" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 68.0
+margin_right = 64.0
+margin_bottom = 132.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton7"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton8" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 68.0
+margin_top = 68.0
+margin_right = 132.0
+margin_bottom = 132.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton8"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton9" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 136.0
+margin_top = 68.0
+margin_right = 200.0
+margin_bottom = 132.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton9"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton10" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 204.0
+margin_top = 68.0
+margin_right = 268.0
+margin_bottom = 132.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton10"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton11" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 272.0
+margin_top = 68.0
+margin_right = 336.0
+margin_bottom = 132.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton11"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton12" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 340.0
+margin_top = 68.0
+margin_right = 404.0
+margin_bottom = 132.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton12"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton13" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 136.0
+margin_right = 64.0
+margin_bottom = 200.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton13"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton14" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 68.0
+margin_top = 136.0
+margin_right = 132.0
+margin_bottom = 200.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton14"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton15" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 136.0
+margin_top = 136.0
+margin_right = 200.0
+margin_bottom = 200.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton15"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton16" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 204.0
+margin_top = 136.0
+margin_right = 268.0
+margin_bottom = 200.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton16"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton17" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 272.0
+margin_top = 136.0
+margin_right = 336.0
+margin_bottom = 200.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton17"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton18" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 340.0
+margin_top = 136.0
+margin_right = 404.0
+margin_bottom = 200.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton18"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton19" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 204.0
+margin_right = 64.0
+margin_bottom = 268.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton19"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton20" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 68.0
+margin_top = 204.0
+margin_right = 132.0
+margin_bottom = 268.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton20"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton21" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 136.0
+margin_top = 204.0
+margin_right = 200.0
+margin_bottom = 268.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton21"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton22" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 204.0
+margin_top = 204.0
+margin_right = 268.0
+margin_bottom = 268.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton22"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton23" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 272.0
+margin_top = 204.0
+margin_right = 336.0
+margin_bottom = 268.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton23"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton24" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 340.0
+margin_top = 204.0
+margin_right = 404.0
+margin_bottom = 268.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton24"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton25" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_top = 272.0
+margin_right = 64.0
+margin_bottom = 336.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton25"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton26" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 68.0
+margin_top = 272.0
+margin_right = 132.0
+margin_bottom = 336.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton26"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton27" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 136.0
+margin_top = 272.0
+margin_right = 200.0
+margin_bottom = 336.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton27"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton28" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 204.0
+margin_top = 272.0
+margin_right = 268.0
+margin_bottom = 336.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton28"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton29" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 272.0
+margin_top = 272.0
+margin_right = 336.0
+margin_bottom = 336.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton29"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton30" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+margin_left = 340.0
+margin_top = 272.0
+margin_right = 404.0
+margin_bottom = 336.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 3 )
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton30"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

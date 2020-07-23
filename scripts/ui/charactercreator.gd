@@ -1,7 +1,5 @@
 extends Panel
 
-var slotToCreateTo: int
-
 onready var bodyCol = get_node("TabContainer/Colors/ColorPickerButton")
 onready var wingCol = get_node("TabContainer/Colors/ColorPickerButton2")
 onready var hornCol = get_node("TabContainer/Colors/ColorPickerButton3")
@@ -21,46 +19,53 @@ func create():
 	for itemindex in tribes.get_selected_items():
 		tribesList.append(tribes.get_item_text(itemindex).to_lower())
 	
+	var appearanceModifiers = []
+	
+	var skills = []
+	
+	var colors = []
+	if appearanceModifiers.size() == 0: #TODO
+		var body = {
+			"r":bodyCol.color.r,
+			"g":bodyCol.color.g,
+			"b":bodyCol.color.b
+		}
+		var wings = {
+			"r":bodyCol.color.r,
+			"g":bodyCol.color.g,
+			"b":bodyCol.color.b
+		}
+		var horns = {
+			"r":bodyCol.color.r,
+			"g":bodyCol.color.g,
+			"b":bodyCol.color.b
+		}
+		var eyes = {
+			"r":bodyCol.color.r,
+			"g":bodyCol.color.g,
+			"b":bodyCol.color.b
+		}
+		colors.append(body)
+		colors.append(wings)
+		colors.append(horns)
+		colors.append(eyes)
+	
 	var details = {
 		"name": cname.text,
-		"gender": cgender.selected,
-		"role": crole.selected,
+		"gender": cgender.get_item_text(cgender.selected),
+		"role": crole.get_item_text(crole.selected),
 		"tribes":tribesList,
-		"colors":[
-			{
-				"part":"body",
-				"r":bodyCol.color.r,
-				"g":bodyCol.color.g,
-				"b":bodyCol.color.b
-			},
-			{
-				"part":"wings",
-				"r":wingCol.color.r,
-				"g":wingCol.color.g,
-				"b":wingCol.color.b
-			},
-			{
-				"part":"horns",
-				"r":hornCol.color.r,
-				"g":hornCol.color.g,
-				"b":hornCol.color.b
-			},
-			{
-				"part":"eyes",
-				"r":eyeCol.color.r,
-				"g":eyeCol.color.g,
-				"b":eyeCol.color.b
-			}
-		]
+		"appearance":appearanceModifiers, #TODO
+		"skills":skills,
+		"colors":colors,
+		"size":"default",
+		"speed":"default"
 	}
 	var charfile = File.new()
 	charfile.open("user://characters/" + cname.text.to_lower() + ".json", File.WRITE)
 	charfile.store_line(to_json(details))
 	print("Saved character: " + cname.text)
-
-func init(slotnum: int):
-	slotToCreateTo = slotnum
-	print("Creating a new character at slot: " + String(slotnum))
+	get_tree().call_group("charlist", "created")
 
 func createChar():
 	var errored = false

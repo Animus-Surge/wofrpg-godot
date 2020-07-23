@@ -1,11 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://godot-resources/bg1.tres" type="StyleBox" id=1]
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=2]
 [ext_resource path="res://scripts/global/gamehandler.gd" type="Script" id=3]
+[ext_resource path="res://images/ui/buttons/back-btn-hover.png" type="Texture" id=4]
+[ext_resource path="res://images/ui/buttons/back-btn-pressed.png" type="Texture" id=5]
+[ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.694118 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends TextureButton
+
+func _pressed():
+	get_tree().change_scene(\"res://scenes/menus.tscn\")
+"
 
 [node name="game-select" type="Control"]
 anchor_right = 1.0
@@ -36,6 +46,21 @@ margin_right = -0.550049
 margin_bottom = 0.0719604
 custom_styles/panel = ExtResource( 2 )
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="content/Panel"]
+margin_left = 23.0
+margin_top = 10.0
+margin_right = 63.0
+margin_bottom = 50.0
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 4 )
+expand = true
+stretch_mode = 4
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

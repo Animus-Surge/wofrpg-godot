@@ -1,8 +1,11 @@
 extends Control
 
+onready var charList = get_node("Panel/ItemList")
+
 func _ready():
 	$Panel.visible = true
 	$Panel2.visible = false
+	refresh()
 
 func showCreateMenu():
 	$Panel.visible = false
@@ -12,14 +15,18 @@ func showSelectMenu():
 	$Panel.visible = true
 	$Panel2.visible = false
 
-func showAllCharacters():
-	for character in cfm.characters:
-		var charSlot = load("res://obects/ui/Character.tscn").instance()
-		charSlot.setDetails(character.name, null)
-
 func refresh():
-	pass
+	charList.clear()
+	for c in cfm.characters:
+		charList.add_item(c.name)
 
-func create(slot):
+func charItemSelected(index):
+	var characterDetails = cfm.characters[index]
+	get_node("Panel/details").text = characterDetails.name + "\n" + characterDetails.gender + "\n" + characterDetails.role + "\n" + "TODO"
+
+func created():
+	showSelectMenu()
+	refresh()
+
+func create():
 	showCreateMenu()
-	$Panel2.call("init", slot)

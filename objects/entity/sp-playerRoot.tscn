@@ -7,7 +7,7 @@
 [ext_resource path="res://objects/ui/playerUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entity-shadow.png" type="Texture" id=7]
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 12.0
 height = 112.0
 
@@ -40,7 +40,7 @@ hframes = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 16 )
 rotation = 1.5708
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

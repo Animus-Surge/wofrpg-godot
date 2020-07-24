@@ -7,7 +7,9 @@ var sppaused = false
 
 var loadedCharacter
 
-var debug = false
+var debug = true
+
+var current
 
 func _ready():
 	if !debug:
@@ -16,4 +18,6 @@ func _ready():
 		cfm.startLoad()
 	else:
 		print("DEBUG MODE ACTIVE")
-	
+
+func setCurrentScene(scene):
+	current = scene

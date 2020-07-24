@@ -75,23 +75,23 @@ font_data = ExtResource( 1 )
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0, 0, 0, 0.686275 )
 
-[sub_resource type="StyleBoxEmpty" id=20]
+[sub_resource type="StyleBoxEmpty" id=6]
 
-[sub_resource type="StyleBoxEmpty" id=21]
+[sub_resource type="StyleBoxEmpty" id=7]
 
-[sub_resource type="StyleBoxEmpty" id=22]
+[sub_resource type="StyleBoxEmpty" id=8]
 
-[sub_resource type="StyleBoxEmpty" id=19]
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
 
 [sub_resource type="StyleBoxEmpty" id=12]
 
 [sub_resource type="StyleBoxEmpty" id=13]
 
-[sub_resource type="StyleBoxEmpty" id=14]
-
-[sub_resource type="StyleBoxEmpty" id=15]
-
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=14]
 script/source = "extends Control
 
 onready var body = get_node(\"TextureRect\")
@@ -119,9 +119,9 @@ func updateColors(_color: Color):
 	eyes.modulate = eyec.color
 "
 
-[sub_resource type="StyleBoxEmpty" id=17]
+[sub_resource type="StyleBoxEmpty" id=15]
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=16]
 size = 60
 font_data = ExtResource( 1 )
 
@@ -549,10 +549,10 @@ margin_left = -0.454002
 margin_top = -0.176003
 margin_right = -0.531036
 margin_bottom = 0.295959
-custom_styles/selected_focus = SubResource( 20 )
-custom_styles/bg_focus = SubResource( 21 )
-custom_styles/selected = SubResource( 22 )
-custom_styles/bg = SubResource( 19 )
+custom_styles/selected_focus = SubResource( 6 )
+custom_styles/bg_focus = SubResource( 7 )
+custom_styles/selected = SubResource( 8 )
+custom_styles/bg = SubResource( 9 )
 custom_fonts/font = ExtResource( 13 )
 custom_colors/font_color_selected = Color( 0.898039, 1, 0, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -652,7 +652,7 @@ anchor_bottom = 0.395
 margin_left = -0.454002
 margin_right = 0.418945
 margin_bottom = -0.160004
-custom_styles/panel = SubResource( 12 )
+custom_styles/panel = SubResource( 10 )
 custom_fonts/font = ExtResource( 13 )
 tab_align = 0
 __meta__ = {
@@ -665,7 +665,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 13 )
+custom_styles/panel = SubResource( 11 )
 
 [node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_top = 6.0
@@ -743,7 +743,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 14 )
+custom_styles/panel = SubResource( 12 )
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 20.0
@@ -815,7 +815,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 15 )
+custom_styles/panel = SubResource( 13 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
 margin_left = 578.0
@@ -839,7 +839,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 15 )
+custom_styles/panel = SubResource( 13 )
 
 [node name="preview" type="Control" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.026
@@ -850,7 +850,7 @@ margin_left = -0.406
 margin_top = 0.303986
 margin_right = 0.556946
 margin_bottom = 0.143982
-script = SubResource( 16 )
+script = SubResource( 14 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -1072,7 +1072,7 @@ margin_left = 3.85537
 margin_top = 4.2409
 margin_right = 1361.88
 margin_bottom = 764.016
-custom_styles/panel = SubResource( 17 )
+custom_styles/panel = SubResource( 15 )
 
 [node name="TextureButton2" type="TextureButton" parent="set/Panel"]
 margin_left = -3.85537
@@ -1122,7 +1122,7 @@ margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 16 )
 text = "Credits"
 align = 1
 valign = 1
@@ -1143,8 +1143,10 @@ size_flags_stretch_ratio = 4.0
 [connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseExit"]
 [connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseOver"]
 [connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseExit"]
+[connection signal="visibility_changed" from="sp" to="sp/HBoxContainer/VBoxContainer2" method="onParentVisibilityChanged"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/create" to="sp/HBoxContainer/VBoxContainer2" method="showCreateMenu"]
+[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/play" to="sp/HBoxContainer/VBoxContainer2" method="onPlay"]
 [connection signal="item_selected" from="sp/HBoxContainer/VBoxContainer2/Panel/ItemList" to="sp/HBoxContainer/VBoxContainer2" method="charItemSelected"]
 [connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
 [connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]

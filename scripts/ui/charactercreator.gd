@@ -17,7 +17,7 @@ func create():
 	var tribesList = []
 	
 	for itemindex in tribes.get_selected_items():
-		tribesList.append(tribes.get_item_text(itemindex).to_lower())
+		tribesList.append(tribes.get_item_text(itemindex))
 	
 	var appearanceModifiers = []
 	
@@ -66,6 +66,7 @@ func create():
 	charfile.store_line(to_json(details))
 	print("Saved character: " + cname.text)
 	get_tree().call_group("charlist", "created")
+	cfm.characters.append(details)
 
 func createChar():
 	var errored = false

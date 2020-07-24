@@ -6,8 +6,9 @@ var tmax = 100
 
 func load_scene(scene: String):
 	get_tree().change_scene("res://scenes/loadscreen.tscn")
-	var root = get_tree().get_root()
 	scn = ResourceLoader.load_interactive(scene)
+	var root = get_tree().get_root()
+	var rc = root.get_children()
 	print("Attempting load of scene: " + scene)
 	set_process(true)
 	
@@ -30,6 +31,8 @@ func _process(delta):
 			print("Successfully loaded the scene. Switching to scene")
 			get_node("/root").add_child(resource.instance())
 			get_node("/root/loadscreen").queue_free()
+			var root = get_tree().get_root()
+			var rc = root.get_children()
 			break
 		elif err == OK:
 			continue

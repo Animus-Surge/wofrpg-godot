@@ -23,6 +23,7 @@ func loadCharList():
 				filesLoaded += 1
 				var charfile = File.new()
 				charfile.open("user://characters/"+currentFile.get_file(), File.READ)
+# warning-ignore:unsafe_property_access
 				var cdetails = JSON.parse(charfile.get_as_text()).result
 				characters.append(cdetails)
 				charfile.close()
@@ -31,6 +32,8 @@ func loadCharList():
 			break
 	print("Characters loaded. Loaded: " + String(filesLoaded) + " files")
 
-func delete(character):
-	characters.remove(characters.find(character))
-	print("Deleted character: " + character.name)
+func delete(idx: int):
+	print("Removed character: " + characters[idx].name)
+	var cdir = Directory.new()
+	cdir.remove("user://characters/" + characters[idx].name.to_lower() + ".json")
+	characters.remove(idx)

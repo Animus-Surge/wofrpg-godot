@@ -7,9 +7,9 @@ var sppaused = false
 
 var loadedCharacter
 
-var debug = true
+var debug = false
 
-var current
+var current = "loadscreen"
 
 func _ready():
 	if !debug:

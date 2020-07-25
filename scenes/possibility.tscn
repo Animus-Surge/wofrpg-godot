@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://objects/entity/sp-playerRoot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://images/tiles/norm/high_alt._sand_r.png" type="Texture" id=2]
@@ -10,18 +10,13 @@
 [ext_resource path="res://images/tiles/norm/high_alt._sand_t.png" type="Texture" id=8]
 [ext_resource path="res://images/tiles/norm/water-water.png" type="Texture" id=9]
 [ext_resource path="res://images/tiles/norm/water-waterfall-diag.png" type="Texture" id=10]
-[ext_resource path="res://animations/vc28ha372la372g/vc28ha372la372g.tres" type="SpriteFrames" id=11]
+[ext_resource path="res://scripts/npchandler.gd" type="Script" id=11]
 [ext_resource path="res://images/tiles/norm/water-bankE.png" type="Texture" id=12]
 [ext_resource path="res://images/tiles/norm/water-bankN.png" type="Texture" id=13]
 [ext_resource path="res://images/tiles/norm/water-bankS.png" type="Texture" id=14]
 [ext_resource path="res://scripts/worlds/possibility.gd" type="Script" id=15]
 [ext_resource path="res://entity-shadow.png" type="Texture" id=16]
 [ext_resource path="res://images/tiles/norm/water-bankW.png" type="Texture" id=17]
-[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_1_delay-0.2s.png" type="Texture" id=18]
-[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_3_delay-0.2s.png" type="Texture" id=19]
-[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_0_delay-0.2s.png" type="Texture" id=20]
-[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_2_delay-0.2s.png" type="Texture" id=21]
-[ext_resource path="res://animations/06nn821ns8a3hf8/idle/frame_4_delay-0.2s.png" type="Texture" id=22]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Sand Regular"
@@ -200,28 +195,6 @@ extents = Vector2( 102, 91 )
 radius = 12.9997
 height = 152.0
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 55, 49 )
-
-[sub_resource type="CapsuleShape2D" id=5]
-radius = 9.99976
-height = 80.0005
-
-[sub_resource type="SpriteFrames" id=6]
-animations = [ {
-"frames": [ ExtResource( 20 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 22 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-} ]
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 55, 41 )
-
-[sub_resource type="CapsuleShape2D" id=8]
-radius = 4.99988
-height = 40.0002
-
 [node name="possibility" type="Node2D"]
 script = ExtResource( 15 )
 __meta__ = {
@@ -261,25 +234,27 @@ tile_data = PoolIntArray( -3080240, 0, 0, -3080239, 0, 0, -3080238, 0, 0, -30802
 [node name="cacti" type="StaticBody2D" parent="objects"]
 position = Vector2( 15079, -2961 )
 scale = Vector2( 4.70746, 4.70746 )
+script = ExtResource( 11 )
 __meta__ = {
 "_edit_group_": true
 }
+flipped = true
 
 [node name="shadow" type="Sprite" parent="objects/cacti"]
 self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
-position = Vector2( 117, 76 )
+position = Vector2( 0, 23.74 )
 scale = Vector2( 0.65625, 0.133667 )
 texture = ExtResource( 16 )
 
 [node name="Sprite" type="AnimatedSprite" parent="objects/cacti"]
-position = Vector2( 84.3115, -7.87496 )
+position = Vector2( -65, -60 )
 scale = Vector2( 0.438058, 0.438058 )
 z_as_relative = false
 frames = ExtResource( 7 )
 animation = "idle"
 
 [node name="Sprite2" type="AnimatedSprite" parent="objects/cacti"]
-position = Vector2( 213.673, -7.62496 )
+position = Vector2( 70, -60 )
 scale = Vector2( 0.439174, 0.439174 )
 z_as_relative = false
 frames = ExtResource( 7 )
@@ -287,6 +262,7 @@ animation = "idle"
 flip_h = true
 
 [node name="interaction" type="Area2D" parent="objects/cacti"]
+position = Vector2( -145.76, -52.2595 )
 __meta__ = {
 "_editor_description_": "npc"
 }
@@ -296,92 +272,10 @@ position = Vector2( 147, -4 )
 shape = SubResource( 2 )
 
 [node name="phys-collider" type="CollisionShape2D" parent="objects/cacti"]
-position = Vector2( 146, 79 )
+position = Vector2( 0, 26.9785 )
 rotation = 1.5708
 z_as_relative = false
 shape = SubResource( 3 )
-
-[node name="aurora" type="StaticBody2D" parent="objects"]
-position = Vector2( 18236, 4041 )
-scale = Vector2( 4.72201, 4.72201 )
-
-[node name="shadow" type="Sprite" parent="objects/aurora"]
-self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
-position = Vector2( -0.260254, 18.749 )
-scale = Vector2( 0.464844, 0.090271 )
-texture = ExtResource( 16 )
-
-[node name="Sprite" type="AnimatedSprite" parent="objects/aurora"]
-position = Vector2( -44.2607, -31.0381 )
-scale = Vector2( 0.311043, 0.311043 )
-z_as_relative = false
-frames = ExtResource( 11 )
-animation = "idle"
-
-[node name="Sprite2" type="AnimatedSprite" parent="objects/aurora"]
-position = Vector2( 42.7393, -31.0377 )
-scale = Vector2( 0.312296, 0.312296 )
-z_as_relative = false
-frames = ExtResource( 11 )
-animation = "idle"
-flip_h = true
-
-[node name="interaction" type="Area2D" parent="objects/aurora"]
-position = Vector2( -0.260742, -24.251 )
-__meta__ = {
-"_editor_description_": "npc"
-}
-
-[node name="click-mask" type="CollisionShape2D" parent="objects/aurora/interaction"]
-shape = SubResource( 4 )
-
-[node name="phys-collider" type="CollisionShape2D" parent="objects/aurora"]
-position = Vector2( -0.260742, 18.9614 )
-rotation = 1.5708
-z_as_relative = false
-shape = SubResource( 5 )
-
-[node name="surge" type="StaticBody2D" parent="objects"]
-position = Vector2( 6786, 6429 )
-scale = Vector2( 2.47429, 2.47429 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="shadow" type="Sprite" parent="objects/surge"]
-self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
-position = Vector2( 0, 35 )
-scale = Vector2( 0.371094, 0.0863647 )
-texture = ExtResource( 16 )
-
-[node name="Sprite" type="AnimatedSprite" parent="objects/surge"]
-position = Vector2( -30.488, -1 )
-scale = Vector2( 0.194754, 0.194754 )
-z_as_relative = false
-frames = SubResource( 6 )
-animation = "idle"
-
-[node name="Sprite2" type="AnimatedSprite" parent="objects/surge"]
-position = Vector2( 34.35, -1.125 )
-scale = Vector2( 0.19587, 0.19587 )
-z_as_relative = false
-frames = SubResource( 6 )
-animation = "idle"
-flip_h = true
-
-[node name="interaction" type="Area2D" parent="objects/surge"]
-__meta__ = {
-"_editor_description_": "npc"
-}
-
-[node name="click-mask" type="CollisionShape2D" parent="objects/surge/interaction"]
-shape = SubResource( 7 )
-
-[node name="phys-collider" type="CollisionShape2D" parent="objects/surge"]
-position = Vector2( 0, 36 )
-rotation = 1.5708
-z_as_relative = false
-shape = SubResource( 8 )
 
 [node name="playerRoot" parent="objects" instance=ExtResource( 1 )]
 scale = Vector2( 3.50886, 3.50886 )
@@ -395,14 +289,11 @@ margin_top = -547.0
 margin_right = 973.0
 margin_bottom = 547.0
 
-[node name="pause" parent="objects/playerRoot/uiControl/uiControl" index="1"]
+[node name="pause" parent="objects/playerRoot/uiControl/uiControl" index="2"]
 margin_left = 0.0344238
 margin_top = -0.186279
 margin_right = 0.0344238
 margin_bottom = -0.186279
-[connection signal="input_event" from="objects/cacti/interaction" to="objects/cacti/interaction" method="_input_event"]
-[connection signal="input_event" from="objects/aurora/interaction" to="objects/aurora/interaction" method="_input_event"]
-[connection signal="input_event" from="objects/surge/interaction" to="objects/surge/interaction" method="_input_event"]
 
 [editable path="objects/playerRoot"]
 

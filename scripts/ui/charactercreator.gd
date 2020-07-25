@@ -31,19 +31,19 @@ func create():
 			"b":bodyCol.color.b
 		}
 		var wings = {
-			"r":bodyCol.color.r,
-			"g":bodyCol.color.g,
-			"b":bodyCol.color.b
+			"r":wingCol.color.r,
+			"g":wingCol.color.g,
+			"b":wingCol.color.b
 		}
 		var horns = {
-			"r":bodyCol.color.r,
-			"g":bodyCol.color.g,
-			"b":bodyCol.color.b
+			"r":hornCol.color.r,
+			"g":hornCol.color.g,
+			"b":hornCol.color.b
 		}
 		var eyes = {
-			"r":bodyCol.color.r,
-			"g":bodyCol.color.g,
-			"b":bodyCol.color.b
+			"r":eyeCol.color.r,
+			"g":eyeCol.color.g,
+			"b":eyeCol.color.b
 		}
 		colors.append(body)
 		colors.append(wings)

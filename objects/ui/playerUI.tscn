@@ -181,75 +181,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="pause" type="Panel" parent="uiControl"]
-pause_mode = 2
-visible = false
-self_modulate = Color( 0.647059, 0.647059, 0.647059, 0.647059 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -1.0
-margin_bottom = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="uiControl/pause"]
-anchor_left = 0.023
-anchor_top = 0.832
-anchor_right = 0.554
-anchor_bottom = 0.882
-margin_left = 0.581997
-margin_top = 0.0239868
-margin_right = 0.235962
-margin_bottom = -0.376038
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Return to Game"
-script = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "resume"
-}
-
-[node name="Button2" type="Button" parent="uiControl/pause"]
-anchor_left = 0.299
-anchor_top = 0.906
-anchor_right = 0.554
-anchor_bottom = 0.956
-margin_left = 0.565979
-margin_top = 0.192017
-margin_right = 0.235962
-margin_bottom = -0.208008
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Save and quit to menu"
-script = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "exit-mm"
-}
-
-[node name="Button3" type="Button" parent="uiControl/pause"]
-anchor_left = 0.023
-anchor_top = 0.906
-anchor_right = 0.278
-anchor_bottom = 0.956
-margin_left = 0.581997
-margin_top = 0.192017
-margin_right = 0.251953
-margin_bottom = -0.208008
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Save and quit to desktop"
-script = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "exit-ds"
-}
-
 [node name="inventory" type="Panel" parent="uiControl"]
 anchor_right = 0.383
 anchor_bottom = 0.421
@@ -1132,4 +1063,72 @@ expand = true
 stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
+}
+
+[node name="pause" type="Panel" parent="uiControl"]
+pause_mode = 2
+self_modulate = Color( 0.647059, 0.647059, 0.647059, 0.647059 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_bottom = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="uiControl/pause"]
+anchor_left = 0.023
+anchor_top = 0.832
+anchor_right = 0.554
+anchor_bottom = 0.882
+margin_left = 0.581997
+margin_top = 0.0239868
+margin_right = 0.235962
+margin_bottom = -0.376038
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Return to Game"
+script = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "resume"
+}
+
+[node name="Button2" type="Button" parent="uiControl/pause"]
+anchor_left = 0.299
+anchor_top = 0.906
+anchor_right = 0.554
+anchor_bottom = 0.956
+margin_left = 0.565979
+margin_top = 0.192017
+margin_right = 0.235962
+margin_bottom = -0.208008
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Save and quit to menu"
+script = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "exit-mm"
+}
+
+[node name="Button3" type="Button" parent="uiControl/pause"]
+anchor_left = 0.023
+anchor_top = 0.906
+anchor_right = 0.278
+anchor_bottom = 0.956
+margin_left = 0.581997
+margin_top = 0.192017
+margin_right = 0.251953
+margin_bottom = -0.208008
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Save and quit to desktop"
+script = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "exit-ds"
 }

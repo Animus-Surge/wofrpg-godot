@@ -29,3 +29,5 @@ func hideAll():
 	get_node("set").visible = false
 # warning-ignore:unsafe_property_access
 	get_node("cred").visible = false
+# warning-ignore:unsafe_property_access
+	get_node("conf-dialogue").visible = false

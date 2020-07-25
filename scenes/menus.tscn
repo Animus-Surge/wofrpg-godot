@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=11]
 [ext_resource path="res://images/ui/buttons/yt.png" type="Texture" id=12]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
+[ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
 [ext_resource path="res://scripts/ui/sphandler.gd" type="Script" id=15]
 [ext_resource path="res://scripts/ui/menuhandler.gd" type="Script" id=16]
 [ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=17]
@@ -125,18 +126,47 @@ func updateColors(_color: Color):
 size = 60
 font_data = ExtResource( 1 )
 
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0, 0, 0, 0.686275 )
+
+[sub_resource type="GDScript" id=18]
+script/source = "extends Button
+
+func _pressed():
+	if name == \"conf\":
+		get_tree().call_group(\"charlist\", \"confdelete\")
+		get_node(\"../../../..\").visible = false
+"
+
+[sub_resource type="GDScript" id=19]
+script/source = "extends Button
+
+func _pressed():
+	if name == \"canc\":
+		get_node(\"../../../..\").visible = false
+"
+
 [node name="menus" type="Control"]
 margin_right = 1366.0
 margin_bottom = 768.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+sceneName = "menus"
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="main" type="PanelContainer" parent="."]
+[node name="main" type="PanelContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -145,32 +175,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="main"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/main"]
 margin_right = 1366.0
 margin_bottom = 768.0
 
-[node name="Label" type="Label" parent="main/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer"]
 margin_right = 1366.0
 margin_bottom = 42.0
 size_flags_vertical = 3
 percent_visible = 0.0
 max_lines_visible = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="main/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/main/VBoxContainer"]
 margin_top = 46.0
 margin_right = 1366.0
 margin_bottom = 257.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 
-[node name="Label" type="Label" parent="main/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/HBoxContainer"]
 margin_right = 38.0
 margin_bottom = 211.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
 
-[node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/HBoxContainer"]
 margin_left = 42.0
 margin_right = 197.0
 margin_bottom = 211.0
@@ -180,7 +210,7 @@ texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
-[node name="Label2" type="Label" parent="main/VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Label" parent="Control/main/VBoxContainer/HBoxContainer"]
 margin_left = 201.0
 margin_right = 1366.0
 margin_bottom = 211.0
@@ -188,7 +218,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
 
-[node name="Label2" type="Label" parent="main/VBoxContainer"]
+[node name="Label2" type="Label" parent="Control/main/VBoxContainer"]
 margin_top = 261.0
 margin_right = 1366.0
 margin_bottom = 366.0
@@ -197,14 +227,14 @@ size_flags_stretch_ratio = 2.5
 percent_visible = 0.0
 max_lines_visible = 0
 
-[node name="bottom" type="HBoxContainer" parent="main/VBoxContainer"]
+[node name="bottom" type="HBoxContainer" parent="Control/main/VBoxContainer"]
 margin_top = 370.0
 margin_right = 1366.0
 margin_bottom = 708.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
-[node name="Label" type="Label" parent="main/VBoxContainer/bottom"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom"]
 margin_right = 1021.0
 margin_bottom = 338.0
 size_flags_horizontal = 3
@@ -213,27 +243,27 @@ size_flags_stretch_ratio = 3.0
 percent_visible = 0.0
 max_lines_visible = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="main/VBoxContainer/bottom"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom"]
 margin_left = 1025.0
 margin_right = 1366.0
 margin_bottom = 338.0
 size_flags_horizontal = 3
 alignment = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="main/VBoxContainer/bottom/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer"]
 margin_right = 341.0
 margin_bottom = 338.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 alignment = 2
 
-[node name="sp" type="HBoxContainer" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
+[node name="sp" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
 margin_right = 341.0
 margin_bottom = 67.0
 size_flags_vertical = 3
 script = SubResource( 1 )
 
-[node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
+[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
 margin_right = 112.0
 margin_bottom = 67.0
 size_flags_horizontal = 3
@@ -242,7 +272,7 @@ texture = ExtResource( 22 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
 margin_left = 116.0
 margin_right = 341.0
 margin_bottom = 67.0
@@ -252,14 +282,14 @@ custom_fonts/font = ExtResource( 2 )
 text = "Singleplayer"
 valign = 1
 
-[node name="mp" type="HBoxContainer" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
+[node name="mp" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
 margin_top = 67.0
 margin_right = 341.0
 margin_bottom = 134.0
 size_flags_vertical = 3
 script = SubResource( 1 )
 
-[node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
+[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
 margin_right = 112.0
 margin_bottom = 67.0
 size_flags_horizontal = 3
@@ -268,7 +298,7 @@ texture = ExtResource( 22 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
 margin_left = 116.0
 margin_right = 341.0
 margin_bottom = 67.0
@@ -278,14 +308,14 @@ custom_fonts/font = ExtResource( 2 )
 text = "Multiplayer"
 valign = 1
 
-[node name="set" type="HBoxContainer" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
+[node name="set" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
 margin_top = 134.0
 margin_right = 341.0
 margin_bottom = 201.0
 size_flags_vertical = 3
 script = SubResource( 1 )
 
-[node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
+[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
 margin_right = 112.0
 margin_bottom = 67.0
 size_flags_horizontal = 3
@@ -294,7 +324,7 @@ texture = ExtResource( 22 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
 margin_left = 116.0
 margin_right = 341.0
 margin_bottom = 67.0
@@ -304,14 +334,14 @@ custom_fonts/font = ExtResource( 2 )
 text = "Settings"
 valign = 1
 
-[node name="cred" type="HBoxContainer" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
+[node name="cred" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
 margin_top = 201.0
 margin_right = 341.0
 margin_bottom = 268.0
 size_flags_vertical = 3
 script = SubResource( 1 )
 
-[node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
+[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
 margin_right = 112.0
 margin_bottom = 67.0
 size_flags_horizontal = 3
@@ -320,7 +350,7 @@ texture = ExtResource( 22 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
 margin_left = 116.0
 margin_right = 341.0
 margin_bottom = 67.0
@@ -330,14 +360,14 @@ custom_fonts/font = ExtResource( 2 )
 text = "Credits"
 valign = 1
 
-[node name="exit" type="HBoxContainer" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
+[node name="exit" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
 margin_top = 268.0
 margin_right = 341.0
 margin_bottom = 338.0
 size_flags_vertical = 3
 script = SubResource( 1 )
 
-[node name="TextureRect" type="TextureRect" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
+[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
 margin_right = 112.0
 margin_bottom = 70.0
 size_flags_horizontal = 3
@@ -346,7 +376,7 @@ texture = ExtResource( 22 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
 margin_left = 116.0
 margin_right = 341.0
 margin_bottom = 70.0
@@ -356,7 +386,7 @@ custom_fonts/font = ExtResource( 2 )
 text = "Exit"
 valign = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="main/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/main/VBoxContainer"]
 margin_top = 712.0
 margin_right = 1366.0
 margin_bottom = 768.0
@@ -364,13 +394,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="main/VBoxContainer/HBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/main/VBoxContainer/HBoxContainer2"]
 margin_right = 207.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.18
 
-[node name="TextureButton" type="TextureButton" parent="main/VBoxContainer/HBoxContainer2/HBoxContainer"]
+[node name="TextureButton" type="TextureButton" parent="Control/main/VBoxContainer/HBoxContainer2/HBoxContainer"]
 margin_right = 101.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
@@ -379,7 +409,7 @@ expand = true
 stretch_mode = 5
 script = SubResource( 2 )
 
-[node name="TextureButton2" type="TextureButton" parent="main/VBoxContainer/HBoxContainer2/HBoxContainer"]
+[node name="TextureButton2" type="TextureButton" parent="Control/main/VBoxContainer/HBoxContainer2/HBoxContainer"]
 margin_left = 105.0
 margin_right = 207.0
 margin_bottom = 56.0
@@ -389,7 +419,7 @@ expand = true
 stretch_mode = 5
 script = SubResource( 3 )
 
-[node name="TextureButton3" type="TextureButton" parent="main/VBoxContainer/HBoxContainer2/HBoxContainer"]
+[node name="TextureButton3" type="TextureButton" parent="Control/main/VBoxContainer/HBoxContainer2/HBoxContainer"]
 visible = false
 margin_left = 140.0
 margin_right = 207.0
@@ -399,7 +429,7 @@ texture_normal = ExtResource( 5 )
 expand = true
 stretch_mode = 5
 
-[node name="Label" type="HBoxContainer" parent="main/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="HBoxContainer" parent="Control/main/VBoxContainer/HBoxContainer2"]
 margin_left = 211.0
 margin_right = 1366.0
 margin_bottom = 56.0
@@ -407,7 +437,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="main/VBoxContainer/HBoxContainer2/Label"]
+[node name="Label" type="Label" parent="Control/main/VBoxContainer/HBoxContainer2/Label"]
 margin_right = 1155.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
@@ -417,7 +447,7 @@ text = "dev-0.181.6313"
 align = 1
 valign = 2
 
-[node name="sp" type="PanelContainer" parent="."]
+[node name="sp" type="PanelContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -425,11 +455,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="sp"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/sp"]
 margin_right = 1366.0
 margin_bottom = 768.0
 
-[node name="Margin" type="Label" parent="sp/HBoxContainer"]
+[node name="Margin" type="Label" parent="Control/sp/HBoxContainer"]
 margin_right = 113.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
@@ -438,7 +468,7 @@ size_flags_stretch_ratio = 0.1
 percent_visible = 0.0
 max_lines_visible = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="sp/HBoxContainer" groups=[
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/sp/HBoxContainer" groups=[
 "charlist",
 ]]
 margin_left = 117.0
@@ -447,13 +477,13 @@ margin_bottom = 768.0
 size_flags_horizontal = 3
 script = ExtResource( 15 )
 
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2"]
 margin_right = 1131.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="sp/HBoxContainer/VBoxContainer2"]
+[node name="Panel" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2"]
 margin_top = 80.0
 margin_right = 1131.0
 margin_bottom = 688.0
@@ -462,7 +492,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 custom_styles/panel = ExtResource( 8 )
 
-[node name="TextureButton" type="TextureButton" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="TextureButton" type="TextureButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.022
 anchor_top = 0.016
 anchor_right = 0.057
@@ -480,7 +510,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.217
 anchor_top = 0.023
 anchor_right = 0.357
@@ -495,7 +525,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="create" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="create" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.034
 anchor_top = 0.89
 anchor_right = 0.314
@@ -510,7 +540,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="delete" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="delete" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.766
 anchor_top = 0.89
 anchor_right = 0.849
@@ -525,7 +555,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="play" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="play" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.866
 anchor_top = 0.89
 anchor_right = 0.95
@@ -540,7 +570,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemList" type="ItemList" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="ItemList" type="ItemList" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.034
 anchor_top = 0.122
 anchor_right = 0.401
@@ -560,7 +590,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.421
 anchor_top = 0.148
 anchor_right = 0.504
@@ -578,7 +608,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="details" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel"]
+[node name="details" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
 anchor_left = 0.535
 anchor_top = 0.148
 anchor_right = 0.727
@@ -600,7 +630,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel2" type="Panel" parent="sp/HBoxContainer/VBoxContainer2"]
+[node name="Panel2" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2"]
 visible = false
 margin_top = 80.0
 margin_right = 1131.0
@@ -611,7 +641,7 @@ size_flags_stretch_ratio = 8.0
 custom_styles/panel = ExtResource( 8 )
 script = ExtResource( 23 )
 
-[node name="TextureButton" type="TextureButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+[node name="TextureButton" type="TextureButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.022
 anchor_top = 0.016
 anchor_right = 0.057
@@ -629,7 +659,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.217
 anchor_top = 0.023
 anchor_right = 0.427
@@ -644,7 +674,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TabContainer" type="TabContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+[node name="TabContainer" type="TabContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.034
 anchor_top = 0.125
 anchor_right = 0.951
@@ -659,7 +689,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Basic Details" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+[node name="Basic Details" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 29.0
@@ -667,7 +697,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 11 )
 
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_top = 6.0
 margin_right = 760.0
 margin_bottom = 38.0
@@ -677,7 +707,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_left = 540.632
 margin_top = 53.0
 margin_right = 764.632
@@ -688,7 +718,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="name" type="LineEdit" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+[node name="name" type="LineEdit" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_left = 87.0
 margin_top = 7.0
 margin_right = 280.0
@@ -700,7 +730,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Gender" type="OptionButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+[node name="Gender" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_left = 402.0
 margin_top = 7.0
 margin_right = 627.0
@@ -713,7 +743,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Role" type="OptionButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+[node name="Role" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_left = 717.0
 margin_top = 7.0
 margin_right = 942.0
@@ -726,7 +756,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tribes" type="ItemList" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
+[node name="tribes" type="ItemList" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_left = 775.0
 margin_top = 53.0
 margin_right = 1025.0
@@ -736,7 +766,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Colors" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+[node name="Colors" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -745,7 +775,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 12 )
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 20.0
 margin_top = 65.0
 margin_right = 68.0
@@ -758,7 +788,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPickerButton2" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+[node name="ColorPickerButton2" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 153.0
 margin_top = 65.0
 margin_right = 201.0
@@ -771,7 +801,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPickerButton3" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+[node name="ColorPickerButton3" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 285.0
 margin_top = 65.0
 margin_right = 333.0
@@ -784,7 +814,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPickerButton4" type="ColorPickerButton" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+[node name="ColorPickerButton4" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 415.0
 margin_top = 65.0
 margin_right = 463.0
@@ -797,7 +827,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 11.0
 margin_top = 21.0
 margin_right = 470.0
@@ -808,7 +838,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Skills" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+[node name="Skills" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -817,7 +847,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 13 )
 
-[node name="ScrollContainer" type="ScrollContainer" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
 margin_left = 578.0
 margin_top = 12.0
 margin_right = 1038.0
@@ -826,13 +856,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemList" type="ItemList" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills/ScrollContainer"]
+[node name="ItemList" type="ItemList" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills/ScrollContainer"]
 margin_right = 460.0
 margin_bottom = 403.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Appearances" type="Panel" parent="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+[node name="Appearances" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -841,7 +871,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 13 )
 
-[node name="preview" type="Control" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+[node name="preview" type="Control" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.026
 anchor_top = 0.437
 anchor_right = 0.553
@@ -856,7 +886,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+[node name="TextureRect" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 17 )
@@ -866,7 +896,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect2" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+[node name="TextureRect2" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 21 )
@@ -876,7 +906,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect3" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+[node name="TextureRect3" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 18 )
@@ -886,7 +916,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect4" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+[node name="TextureRect4" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 19 )
@@ -896,7 +926,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect5" type="TextureRect" parent="sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+[node name="TextureRect5" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 20 )
@@ -906,7 +936,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="sp/HBoxContainer/VBoxContainer2/Panel2"]
+[node name="Button" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 margin_left = 813.0
 margin_top = 541.0
 margin_right = 1063.0
@@ -917,14 +947,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="sp/HBoxContainer/VBoxContainer2"]
+[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2"]
 margin_top = 692.0
 margin_right = 1131.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Margin2" type="Label" parent="sp/HBoxContainer"]
+[node name="Margin2" type="Label" parent="Control/sp/HBoxContainer"]
 margin_left = 1252.0
 margin_right = 1366.0
 margin_bottom = 768.0
@@ -932,7 +962,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="mp" type="PanelContainer" parent="."]
+[node name="mp" type="PanelContainer" parent="Control"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -941,11 +971,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="mp"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/mp"]
 margin_right = 1366.0
 margin_bottom = 768.0
 
-[node name="Margin" type="Label" parent="mp/HBoxContainer2"]
+[node name="Margin" type="Label" parent="Control/mp/HBoxContainer2"]
 margin_right = 113.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
@@ -954,19 +984,19 @@ size_flags_stretch_ratio = 0.1
 percent_visible = 0.0
 max_lines_visible = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="mp/HBoxContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/mp/HBoxContainer2"]
 margin_left = 117.0
 margin_right = 1248.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="mp/HBoxContainer2/VBoxContainer2"]
+[node name="Label" type="Label" parent="Control/mp/HBoxContainer2/VBoxContainer2"]
 margin_right = 1131.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="mp/HBoxContainer2/VBoxContainer2"]
+[node name="Panel" type="Panel" parent="Control/mp/HBoxContainer2/VBoxContainer2"]
 margin_top = 80.0
 margin_right = 1131.0
 margin_bottom = 688.0
@@ -975,7 +1005,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 custom_styles/panel = ExtResource( 8 )
 
-[node name="TextureButton" type="TextureButton" parent="mp/HBoxContainer2/VBoxContainer2/Panel"]
+[node name="TextureButton" type="TextureButton" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
 anchor_left = 0.022
 anchor_top = 0.016
 anchor_right = 0.057
@@ -993,7 +1023,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="mp/HBoxContainer2/VBoxContainer2/Panel"]
+[node name="Label" type="Label" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
 anchor_left = 0.437
 anchor_top = 0.023
 anchor_right = 0.563
@@ -1009,7 +1039,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineEdit" type="LineEdit" parent="mp/HBoxContainer2/VBoxContainer2/Panel"]
+[node name="LineEdit" type="LineEdit" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
 margin_left = 419.0
 margin_top = 74.0
 margin_right = 712.0
@@ -1021,7 +1051,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="mp/HBoxContainer2/VBoxContainer2/Panel"]
+[node name="Button" type="Button" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
 margin_left = 721.0
 margin_top = 144.0
 margin_right = 842.0
@@ -1032,7 +1062,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button2" type="Button" parent="mp/HBoxContainer2/VBoxContainer2/Panel"]
+[node name="Button2" type="Button" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
 margin_left = 875.0
 margin_top = 144.0
 margin_right = 996.0
@@ -1043,14 +1073,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="mp/HBoxContainer2/VBoxContainer2"]
+[node name="Label2" type="Label" parent="Control/mp/HBoxContainer2/VBoxContainer2"]
 margin_top = 692.0
 margin_right = 1131.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Margin2" type="Label" parent="mp/HBoxContainer2"]
+[node name="Margin2" type="Label" parent="Control/mp/HBoxContainer2"]
 margin_left = 1252.0
 margin_right = 1366.0
 margin_bottom = 768.0
@@ -1058,7 +1088,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="set" type="PanelContainer" parent="."]
+[node name="set" type="PanelContainer" parent="Control"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1067,14 +1097,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="set"]
+[node name="Panel" type="Panel" parent="Control/set"]
 margin_left = 3.85537
 margin_top = 4.2409
 margin_right = 1361.88
 margin_bottom = 764.016
 custom_styles/panel = SubResource( 15 )
 
-[node name="TextureButton2" type="TextureButton" parent="set/Panel"]
+[node name="TextureButton2" type="TextureButton" parent="Control/set/Panel"]
 margin_left = -3.85537
 margin_top = -4.2409
 margin_right = 119.145
@@ -1089,23 +1119,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="cred" type="PanelContainer" parent="."]
+[node name="cred" type="PanelContainer" parent="Control"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 4 )
 
-[node name="content" type="VBoxContainer" parent="cred"]
+[node name="content" type="VBoxContainer" parent="Control/cred"]
 margin_right = 1366.0
 margin_bottom = 768.0
 
-[node name="bar" type="HBoxContainer" parent="cred/content"]
+[node name="bar" type="HBoxContainer" parent="Control/cred/content"]
 margin_right = 1366.0
 margin_bottom = 84.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 
-[node name="TextureButton" type="TextureButton" parent="cred/content/bar"]
+[node name="TextureButton" type="TextureButton" parent="Control/cred/content/bar"]
 margin_right = 123.0
 margin_bottom = 84.0
 size_flags_horizontal = 3
@@ -1115,7 +1145,7 @@ texture_hover = ExtResource( 10 )
 expand = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="cred/content/bar"]
+[node name="Label" type="Label" parent="Control/cred/content/bar"]
 margin_left = 127.0
 margin_right = 1366.0
 margin_bottom = 84.0
@@ -1127,33 +1157,137 @@ text = "Credits"
 align = 1
 valign = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="cred/content"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/cred/content"]
 margin_top = 88.0
 margin_right = 1366.0
 margin_bottom = 768.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
-[connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseOver"]
-[connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseExit"]
-[connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseOver"]
-[connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseExit"]
-[connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" method="mouseOver"]
-[connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" method="mouseExit"]
-[connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseOver"]
-[connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseExit"]
-[connection signal="mouse_entered" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseOver"]
-[connection signal="mouse_exited" from="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseExit"]
-[connection signal="visibility_changed" from="sp" to="sp/HBoxContainer/VBoxContainer2" method="onParentVisibilityChanged"]
-[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
-[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/create" to="sp/HBoxContainer/VBoxContainer2" method="showCreateMenu"]
-[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel/play" to="sp/HBoxContainer/VBoxContainer2" method="onPlay"]
-[connection signal="item_selected" from="sp/HBoxContainer/VBoxContainer2/Panel/ItemList" to="sp/HBoxContainer/VBoxContainer2" method="charItemSelected"]
-[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
-[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton2" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton3" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="color_changed" from="sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton4" to="sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="pressed" from="sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
-[connection signal="pressed" from="mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
-[connection signal="pressed" from="set/Panel/TextureButton2" to="." method="hideAll"]
-[connection signal="pressed" from="cred/content/bar/TextureButton" to="." method="hideAll"]
+
+[node name="conf-dialogue" type="PanelContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/conf-dialogue"]
+margin_right = 1366.0
+margin_bottom = 768.0
+
+[node name="Label" type="Label" parent="Control/conf-dialogue/HBoxContainer"]
+margin_right = 452.0
+margin_bottom = 768.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/conf-dialogue/HBoxContainer"]
+margin_left = 456.0
+margin_right = 908.0
+margin_bottom = 768.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer"]
+margin_right = 452.0
+margin_bottom = 253.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer"]
+self_modulate = Color( 1, 0.815686, 0.580392, 1 )
+margin_top = 257.0
+margin_right = 452.0
+margin_bottom = 510.0
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 8 )
+
+[node name="conf" type="Button" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
+margin_left = 289.0
+margin_top = 191.0
+margin_right = 407.0
+margin_bottom = 229.0
+custom_fonts/font = ExtResource( 2 )
+text = "Confirm"
+script = SubResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="canc" type="Button" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
+margin_left = 32.0
+margin_top = 191.0
+margin_right = 131.0
+margin_bottom = 229.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cancel"
+script = SubResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
+anchor_right = 1.0
+margin_bottom = 58.0
+custom_fonts/font = ExtResource( 2 )
+text = "CONFIRM"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -33.5
+margin_bottom = 33.5
+custom_fonts/font = ExtResource( 2 )
+text = "Are you sure you want to do 
+this?"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer"]
+margin_top = 514.0
+margin_right = 452.0
+margin_bottom = 768.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="Control/conf-dialogue/HBoxContainer"]
+margin_left = 912.0
+margin_right = 1366.0
+margin_bottom = 768.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseOver"]
+[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseExit"]
+[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseOver"]
+[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseExit"]
+[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" method="mouseOver"]
+[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" method="mouseExit"]
+[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseOver"]
+[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseExit"]
+[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseOver"]
+[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseExit"]
+[connection signal="visibility_changed" from="Control/sp" to="Control/sp/HBoxContainer/VBoxContainer2" method="onParentVisibilityChanged"]
+[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="Control" method="hideAll"]
+[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/create" to="Control/sp/HBoxContainer/VBoxContainer2" method="showCreateMenu"]
+[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/delete" to="Control/sp/HBoxContainer/VBoxContainer2" method="onDelete"]
+[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/play" to="Control/sp/HBoxContainer/VBoxContainer2" method="onPlay"]
+[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/ItemList" to="Control/sp/HBoxContainer/VBoxContainer2" method="charItemSelected"]
+[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="Control/sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton2" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton3" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton4" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
+[connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
+[connection signal="pressed" from="Control/set/Panel/TextureButton2" to="." method="hideAll"]
+[connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="." method="hideAll"]

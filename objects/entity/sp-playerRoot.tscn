@@ -1,11 +1,15 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://animations/reg/plr-run.anim" type="Animation" id=1]
 [ext_resource path="res://animations/reg/plr-idle.anim" type="Animation" id=2]
-[ext_resource path="res://animations/base/idle/idle-full-s.png" type="Texture" id=3]
+[ext_resource path="res://animations/reg/idle/base-wings/frame_0_delay-0.5s.png" type="Texture" id=3]
 [ext_resource path="res://scripts/player/sp-playerhandler.gd" type="Script" id=4]
+[ext_resource path="res://animations/reg/idle/base-horns/frame_0_delay-0.5s.png" type="Texture" id=5]
 [ext_resource path="res://objects/ui/playerUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entity-shadow.png" type="Texture" id=7]
+[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=8]
+[ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=9]
+[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=10]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.0
@@ -24,18 +28,53 @@ position = Vector2( 5.96046e-08, 16 )
 scale = Vector2( 0.496094, 0.144531 )
 texture = ExtResource( 7 )
 
-[node name="reg" type="Sprite" parent="."]
+[node name="reg" type="Node2D" parent="."]
 position = Vector2( -76, -66 )
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
-hframes = 2
 
-[node name="flip" type="Sprite" parent="."]
+[node name="body" type="Sprite" parent="reg"]
+texture = ExtResource( 8 )
+
+[node name="bodys" type="Sprite" parent="reg"]
+texture = ExtResource( 10 )
+
+[node name="wings" type="Sprite" parent="reg"]
+texture = ExtResource( 3 )
+
+[node name="horns" type="Sprite" parent="reg"]
+texture = ExtResource( 5 )
+
+[node name="eyes" type="Sprite" parent="reg"]
+texture = ExtResource( 9 )
+
+[node name="flip" type="Node2D" parent="."]
 position = Vector2( 77, -66 )
 scale = Vector2( 0.5, 0.5 )
+
+[node name="body" type="Sprite" parent="flip"]
+position = Vector2( -2, 0 )
+texture = ExtResource( 8 )
+flip_h = true
+
+[node name="bodys" type="Sprite" parent="flip"]
+position = Vector2( -2, 0 )
+texture = ExtResource( 10 )
+flip_h = true
+
+[node name="wings" type="Sprite" parent="flip"]
+position = Vector2( -2, 0 )
 texture = ExtResource( 3 )
 flip_h = true
-hframes = 2
+
+[node name="horns" type="Sprite" parent="flip"]
+position = Vector2( -2, 0 )
+texture = ExtResource( 5 )
+flip_h = true
+
+[node name="eyes" type="Sprite" parent="flip"]
+position = Vector2( -2, 0 )
+texture = ExtResource( 9 )
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 16 )

@@ -44,8 +44,12 @@ func onPlay():
 	spgs.init(cfm.characters[charList.get_selected_items()[0]])
 	scenes.load_scene("res://scenes/possibility.tscn")
 
+func confdelete():
+	cfm.delete(charList.get_selected_items()[0])
+	refresh()
+
 func onDelete():
-	pass #TODO
+	get_node("../../../conf-dialogue").visible = true
 
 func onParentVisibilityChanged():
 	charList.unselect_all()

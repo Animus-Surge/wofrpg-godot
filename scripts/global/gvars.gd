@@ -7,7 +7,7 @@ var sppaused = false
 
 var loadedCharacter
 
-var debug = false
+var debug = true
 
 var current = "loadscreen"
 

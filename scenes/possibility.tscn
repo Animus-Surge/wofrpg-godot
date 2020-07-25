@@ -239,6 +239,8 @@ __meta__ = {
 "_edit_group_": true
 }
 flipped = true
+npcName = "General Cacti"
+npcID = "saw_cacti"
 
 [node name="shadow" type="Sprite" parent="objects/cacti"]
 self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
@@ -294,6 +296,7 @@ margin_left = 0.0344238
 margin_top = -0.186279
 margin_right = 0.0344238
 margin_bottom = -0.186279
+[connection signal="input_event" from="objects/cacti/interaction" to="objects/cacti" method="interacted"]
 
 [editable path="objects/playerRoot"]
 

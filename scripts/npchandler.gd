@@ -1,6 +1,11 @@
 extends StaticBody2D
 
+#appearance modifiers
 export (bool) var flipped = false
+
+#npc details
+export (String) var npcName
+export (String) var npcID
 
 func _ready():
 	if flipped:
@@ -15,6 +20,8 @@ func _ready():
 	
 	set_process(true)
 
+
+
 func _process(delta):
 	if globalvars.sppaused:
 		$Sprite.playing = false
@@ -22,3 +29,9 @@ func _process(delta):
 	else:
 		$Sprite.playing = true
 		$Sprite2.playing = true
+
+
+func interacted(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			print("NPC was interacted with")

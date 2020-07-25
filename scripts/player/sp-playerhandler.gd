@@ -8,19 +8,20 @@ var vel: Vector2
 var flipped = false
 
 func _ready():
-	get_node("reg/body").modulate = spgs.body
-	get_node("reg/bodys").modulate = spgs.body
-	get_node("reg/wings").modulate = spgs.wings
-	get_node("reg/horns").modulate = spgs.horns
-	get_node("reg/eyes").modulate = spgs.eyes
-	
-	get_node("flip/body").modulate = spgs.body
-	get_node("flip/bodys").modulate = spgs.body
-	get_node("flip/wings").modulate = spgs.wings
-	get_node("flip/horns").modulate = spgs.horns
-	get_node("flip/eyes").modulate = spgs.eyes
-	
-	print("Loaded character colors")
+	if !globalvars.debug:
+		get_node("reg/body").modulate = spgs.body
+		get_node("reg/bodys").modulate = spgs.body
+		get_node("reg/wings").modulate = spgs.wings
+		get_node("reg/horns").modulate = spgs.horns
+		get_node("reg/eyes").modulate = spgs.eyes
+		
+		get_node("flip/body").modulate = spgs.body
+		get_node("flip/bodys").modulate = spgs.body
+		get_node("flip/wings").modulate = spgs.wings
+		get_node("flip/horns").modulate = spgs.horns
+		get_node("flip/eyes").modulate = spgs.eyes
+		
+		print("Loaded character colors")
 
 func _physics_process(delta):
 	if !globalvars.sppaused:
@@ -38,6 +39,7 @@ func _physics_process(delta):
 		if vect != Vector2.ZERO:
 			vel = vel.move_toward(vect * speed, friction * delta)
 			animation("run")
+		#	animation("idle")
 		else:
 			vel = vel.move_toward(Vector2.ZERO, friction * delta)
 			animation("idle")

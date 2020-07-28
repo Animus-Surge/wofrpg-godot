@@ -1,17 +1,23 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/ui/plruihandler.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
 [ext_resource path="res://images/slot.png" type="Texture" id=3]
 [ext_resource path="res://images/slot-highlight.png" type="Texture" id=4]
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=5]
+[ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/interaction-bar.png" type="Texture" id=6]
+[ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/iw_sw_wolf-surge-confused.tres" type="Animation" id=7]
 [ext_resource path="res://images/life-bar-fg.png" type="Texture" id=8]
+[ext_resource path="res://scripts/ui/npcinteraction.gd" type="Script" id=9]
+[ext_resource path="res://scripts/ibutton.gd" type="Script" id=10]
 [ext_resource path="res://images/life-bar-bg.png" type="Texture" id=12]
 [ext_resource path="res://images/heart-icon.png" type="Texture" id=13]
 [ext_resource path="res://images/mana-bar-bg.png" type="Texture" id=14]
 [ext_resource path="res://images/mana-icon.png" type="Texture" id=15]
 [ext_resource path="res://images/mana-bar-fg.png" type="Texture" id=16]
 [ext_resource path="res://images/exp.png" type="Texture" id=18]
+[ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_1_delay-0.3s.png" type="Texture" id=27]
+[ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=31]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 8 )
@@ -45,7 +51,27 @@ margin_right = 3.08429
 margin_top = 2.82727
 margin_bottom = 3.2128
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0.568627 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "iw_sw_wolf-surge-scared"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("reaction:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 31 ), ExtResource( 27 ) ]
+}
+
+[sub_resource type="GDScript" id=7]
 script/source = "extends Button
 
 func _pressed():
@@ -1065,8 +1091,165 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="npcinteraction" type="Panel" parent="uiControl" groups=[
+"npcinteract",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="reaction" type="TextureRect" parent="uiControl/npcinteraction"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 31 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ibar" type="TextureRect" parent="uiControl/npcinteraction"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="namelabel" type="Label" parent="uiControl/npcinteraction/ibar"]
+anchor_left = 0.02
+anchor_top = 0.659
+anchor_right = 0.466
+anchor_bottom = 0.701
+margin_left = 0.679998
+margin_top = -0.11203
+margin_right = 0.44397
+margin_bottom = -0.368042
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "NPCNAME"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="speechlabel" type="Label" parent="uiControl/npcinteraction/ibar"]
+anchor_left = 0.02
+anchor_top = 0.742
+anchor_right = 0.536
+anchor_bottom = 0.954
+margin_left = 0.68
+margin_top = 0.143982
+margin_right = -0.176025
+margin_bottom = 0.328003
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "NPC text"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="i1" type="Button" parent="uiControl/npcinteraction/ibar"]
+anchor_left = 0.536
+anchor_top = 0.68
+anchor_right = 0.981
+anchor_bottom = 0.729
+margin_left = -0.176025
+margin_top = -0.23999
+margin_right = -0.0461426
+margin_bottom = 0.127991
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 0.85098, 0, 0, 1 )
+custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
+custom_colors/font_color_hover = Color( 0.760784, 0.760784, 0.760784, 1 )
+custom_colors/font_color_pressed = Color( 0.309804, 0.541176, 0.705882, 1 )
+text = "INTERACTION 1"
+flat = true
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="i2" type="Button" parent="uiControl/npcinteraction/ibar"]
+anchor_left = 0.536
+anchor_top = 0.754
+anchor_right = 0.981
+anchor_bottom = 0.803
+margin_left = -0.176025
+margin_top = -0.0720215
+margin_right = -0.0461426
+margin_bottom = 0.295959
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 0.85098, 0, 0, 1 )
+custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
+custom_colors/font_color_hover = Color( 0.760784, 0.760784, 0.760784, 1 )
+custom_colors/font_color_pressed = Color( 0.309804, 0.541176, 0.705882, 1 )
+text = "INTERACTION 2"
+flat = true
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="i3" type="Button" parent="uiControl/npcinteraction/ibar"]
+anchor_left = 0.536
+anchor_top = 0.831
+anchor_right = 0.981
+anchor_bottom = 0.88
+margin_left = -0.176025
+margin_top = -0.208008
+margin_right = -0.0461426
+margin_bottom = 0.159973
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 0.85098, 0, 0, 1 )
+custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
+custom_colors/font_color_hover = Color( 0.760784, 0.760784, 0.760784, 1 )
+custom_colors/font_color_pressed = Color( 0.309804, 0.541176, 0.705882, 1 )
+text = "INTERACTION 3"
+flat = true
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="i4" type="Button" parent="uiControl/npcinteraction/ibar"]
+anchor_left = 0.536
+anchor_top = 0.905
+anchor_right = 0.981
+anchor_bottom = 0.954
+margin_left = -0.176025
+margin_top = -0.0400391
+margin_right = -0.0461426
+margin_bottom = 0.327942
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color_disabled = Color( 0.85098, 0, 0, 1 )
+custom_colors/font_color = Color( 0.537255, 0.537255, 0.537255, 1 )
+custom_colors/font_color_hover = Color( 0.760784, 0.760784, 0.760784, 1 )
+custom_colors/font_color_pressed = Color( 0.309804, 0.541176, 0.705882, 1 )
+text = "INTERACTION 4"
+flat = true
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="animatedInteractions" type="AnimationPlayer" parent="uiControl/npcinteraction"]
+anims/iw_sw_wolf-surge-confused = ExtResource( 7 )
+anims/iw_sw_wolf-surge-scared = SubResource( 6 )
+
 [node name="pause" type="Panel" parent="uiControl"]
 pause_mode = 2
+visible = false
 self_modulate = Color( 0.647059, 0.647059, 0.647059, 0.647059 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1089,7 +1272,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Return to Game"
-script = SubResource( 5 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "resume"
@@ -1108,7 +1291,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to menu"
-script = SubResource( 5 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-mm"
@@ -1127,7 +1310,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to desktop"
-script = SubResource( 5 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-ds"

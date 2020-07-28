@@ -1,11 +1,10 @@
 extends Node
 
-puppet var clipaused = false
-puppet var uiShowing = false
-
 var sppaused = false
+var uiShowing = false
 
 var loadedCharacter
+var save = "test-save"
 
 var debug = true
 

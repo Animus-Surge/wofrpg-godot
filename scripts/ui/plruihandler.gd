@@ -3,11 +3,12 @@ extends Control
 func _ready():
 	$pause.visible = false
 	$inventory.visible = false
+	$npcinteraction.visible = false
 
 func _unhandled_key_input(event):
 	if event.scancode == KEY_ESCAPE and event.pressed:
-		if globalvars.sppaused and !$pause.visible:
-			pass #a different UI is showing
+		if globalvars.uiShowing:
+			pass
 		elif !globalvars.sppaused:
 			$pause.visible = true
 			globalvars.sppaused = true

@@ -86,4 +86,10 @@ current = true
 
 [node name="uiControl" parent="." instance=ExtResource( 6 )]
 
+[node name="inventory" parent="uiControl/uiControl" index="1"]
+visible = false
+
+[node name="npcinteraction" parent="uiControl/uiControl" index="2"]
+visible = false
+
 [editable path="uiControl"]

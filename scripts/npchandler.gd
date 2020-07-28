@@ -20,18 +20,15 @@ func _ready():
 	
 	set_process(true)
 
-
-
 func _process(delta):
-	if globalvars.sppaused:
+	if globalvars.sppaused or globalvars.uiShowing:
 		$Sprite.playing = false
 		$Sprite2.playing = false
 	else:
 		$Sprite.playing = true
 		$Sprite2.playing = true
 
-
 func interacted(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
-			print("NPC was interacted with")
+			get_tree().call_group("npcinteract", "loadDialogue", npcID, npcName)

@@ -6,7 +6,7 @@ var uiShowing = false
 var loadedCharacter
 var save = "test-save"
 
-var debug = true
+var debug = false
 
 var current = "loadscreen"
 
@@ -20,3 +20,7 @@ func _ready():
 
 func setCurrentScene(scene):
 	current = scene
+
+func inrange(callerPos, targetPos, distance) -> bool:
+	if callerPos.distance_to(targetPos) <= distance: return true
+	return false

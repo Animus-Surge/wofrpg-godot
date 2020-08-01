@@ -27,8 +27,13 @@ func _process(delta):
 	else:
 		$Sprite.playing = true
 		$Sprite2.playing = true
+	
+	var dist = global_position.distance_to(get_parent().get_node("playerRoot").global_position)
+	if dist <= 900: $Panel.visible = true
+	else: $Panel.visible = false
 
 func interacted(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
-			get_tree().call_group("npcinteract", "loadDialogue", npcID, npcName)
+			var dist = global_position.distance_to(get_parent().get_node("playerRoot").global_position)
+			if dist <= 900: get_tree().call_group("npcinteract", "loadDialogue", npcID, npcName)

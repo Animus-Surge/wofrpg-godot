@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://images/projectiles/fireball.png" type="Texture" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="CanvasItemMaterial" id=2]
+blend_mode = 1
+
+[node name="fireball" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Particles2D" type="CPUParticles2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0.745098 )
+material = SubResource( 2 )
+amount = 20
+lifetime = 4.0
+preprocess = 10.0
+speed_scale = 10.0
+randomness = 1.0
+lifetime_randomness = 1.0
+local_coords = false
+draw_order = 1
+texture = ExtResource( 1 )
+emission_shape = 1
+emission_sphere_radius = 4.0
+flag_align_y = true
+spread = 180.0
+gravity = Vector2( -2, 0 )
+angular_velocity = -15.48
+angular_velocity_random = 1.0
+linear_accel = 3.0
+linear_accel_random = 1.0
+angle = 10.0
+angle_random = 1.0
+scale_amount = 0.0
+scale_amount_random = 1.0

@@ -7,6 +7,8 @@ var wings
 var horns
 var eyes
 
+var atkdmg = 20
+
 func init(characterData: Dictionary):
 	charname = characterData.name
 	body = Color(characterData.colors[0].r, characterData.colors[0].g, characterData.colors[0].b)

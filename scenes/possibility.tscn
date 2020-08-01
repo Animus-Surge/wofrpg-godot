@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://objects/entity/sp-playerRoot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://images/tiles/norm/high_alt._sand_r.png" type="Texture" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://images/tiles/norm/high_alt._sand_b.png" type="Texture" id=4]
 [ext_resource path="res://images/tiles/norm/sand_l.png" type="Texture" id=5]
 [ext_resource path="res://images/tiles/norm/high_alt._sand.png" type="Texture" id=6]
-[ext_resource path="res://animations/jjwe83hf832fa8s/jjwe83hf832fa8s-anims.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=7]
 [ext_resource path="res://images/tiles/norm/high_alt._sand_t.png" type="Texture" id=8]
 [ext_resource path="res://images/tiles/norm/water-water.png" type="Texture" id=9]
 [ext_resource path="res://images/tiles/norm/water-waterfall-diag.png" type="Texture" id=10]
@@ -36,6 +36,8 @@
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/confused/frame_12_delay-0.08s.png" type="Texture" id=34]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/confused/frame_05_delay-0.08s.png" type="Texture" id=35]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/confused/frame_15_delay-0.08s.png" type="Texture" id=36]
+[ext_resource path="res://images/targetdummy.png" type="Texture" id=37]
+[ext_resource path="res://scripts/attackable.gd" type="Script" id=38]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Sand Regular"
@@ -207,21 +209,7 @@
 11/shapes = [  ]
 11/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 102, 91 )
-
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 12.9997
-height = 152.0
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 29.9524, 32.0768 )
-
-[sub_resource type="CapsuleShape2D" id=5]
-radius = 7.43494
-height = 59.4802
-
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=3]
 resource_name = "iw_siw_wolf-surge-confused"
 length = 1.44
 loop = true
@@ -238,6 +226,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ ExtResource( 30 ), ExtResource( 19 ), ExtResource( 22 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 35 ), ExtResource( 32 ), ExtResource( 20 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 31 ), ExtResource( 25 ), ExtResource( 34 ), ExtResource( 23 ), ExtResource( 33 ), ExtResource( 36 ), ExtResource( 29 ), ExtResource( 21 ) ]
 }
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 17.2068, 20.6056 )
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 2.76166
+height = 24.6412
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 58.0
+height = 132.0
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 102, 248 )
 
 [node name="possibility" type="Node2D"]
 script = ExtResource( 15 )
@@ -275,99 +277,6 @@ tile_data = PoolIntArray( -3080240, 0, 0, -3080239, 0, 0, -3080238, 0, 0, -30802
 
 [node name="objects" type="YSort" parent="."]
 
-[node name="cacti" type="StaticBody2D" parent="objects"]
-position = Vector2( 15079, -2961 )
-scale = Vector2( 4.70746, 4.70746 )
-script = ExtResource( 11 )
-__meta__ = {
-"_edit_group_": true
-}
-flipped = true
-npcName = "General Cacti"
-npcID = "saw_cacti"
-
-[node name="shadow" type="Sprite" parent="objects/cacti"]
-self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
-position = Vector2( 0, 23.74 )
-scale = Vector2( 0.65625, 0.133667 )
-texture = ExtResource( 16 )
-
-[node name="Sprite" type="AnimatedSprite" parent="objects/cacti"]
-position = Vector2( -65, -60 )
-scale = Vector2( 0.438058, 0.438058 )
-z_as_relative = false
-frames = ExtResource( 7 )
-animation = "idle"
-
-[node name="Sprite2" type="AnimatedSprite" parent="objects/cacti"]
-position = Vector2( 70, -60 )
-scale = Vector2( 0.439174, 0.439174 )
-z_as_relative = false
-frames = ExtResource( 7 )
-animation = "idle"
-flip_h = true
-
-[node name="interaction" type="Area2D" parent="objects/cacti"]
-position = Vector2( -145.76, -52.2595 )
-__meta__ = {
-"_editor_description_": "npc"
-}
-
-[node name="click-mask" type="CollisionShape2D" parent="objects/cacti/interaction"]
-position = Vector2( 147, -4 )
-shape = SubResource( 2 )
-
-[node name="phys-collider" type="CollisionShape2D" parent="objects/cacti"]
-position = Vector2( 0, 26.9785 )
-rotation = 1.5708
-z_as_relative = false
-shape = SubResource( 3 )
-
-[node name="surge" type="StaticBody2D" parent="objects"]
-position = Vector2( 14193, 3784 )
-scale = Vector2( 4.70746, 4.70746 )
-script = ExtResource( 11 )
-flipped = true
-npcName = "Surge"
-npcID = "iw_siw_wolf-surge"
-
-[node name="shadow" type="Sprite" parent="objects/surge"]
-self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
-position = Vector2( 0, 28.041 )
-scale = Vector2( 0.21942, 0.0446922 )
-texture = ExtResource( 16 )
-
-[node name="Sprite" type="AnimatedSprite" parent="objects/surge"]
-position = Vector2( -21.916, 2.19336 )
-scale = Vector2( 0.134414, 0.134414 )
-z_as_relative = false
-frames = ExtResource( 18 )
-animation = "idle"
-
-[node name="Sprite2" type="AnimatedSprite" parent="objects/surge"]
-position = Vector2( 22.0566, 2.19336 )
-scale = Vector2( 0.134972, 0.134972 )
-z_as_relative = false
-frames = ExtResource( 18 )
-animation = "idle"
-flip_h = true
-
-[node name="interaction" type="Area2D" parent="objects/surge"]
-position = Vector2( -145.76, -52.2595 )
-__meta__ = {
-"_editor_description_": "npc"
-}
-
-[node name="click-mask" type="CollisionShape2D" parent="objects/surge/interaction"]
-position = Vector2( 145.76, 52.2595 )
-shape = SubResource( 4 )
-
-[node name="phys-collider" type="CollisionShape2D" parent="objects/surge"]
-position = Vector2( -0.000244141, 30.1648 )
-rotation = 1.5708
-z_as_relative = false
-shape = SubResource( 5 )
-
 [node name="playerRoot" parent="objects" instance=ExtResource( 1 )]
 scale = Vector2( 3.50886, 3.50886 )
 
@@ -384,15 +293,102 @@ margin_bottom = 547.0
 texture = ExtResource( 19 )
 
 [node name="animatedInteractions" parent="objects/playerRoot/uiControl/uiControl/npcinteraction" index="2"]
-anims/iw_siw_wolf-surge-confused = SubResource( 7 )
+anims/iw_siw_wolf-surge-confused = SubResource( 3 )
 
 [node name="pause" parent="objects/playerRoot/uiControl/uiControl" index="3"]
 margin_left = 0.0344238
 margin_top = -0.186279
 margin_right = 0.0344238
 margin_bottom = -0.186279
-[connection signal="input_event" from="objects/cacti/interaction" to="objects/cacti" method="interacted"]
+
+[node name="surge" type="StaticBody2D" parent="objects"]
+position = Vector2( 14193, 3784 )
+scale = Vector2( 4.70746, 4.70746 )
+script = ExtResource( 11 )
+flipped = true
+npcName = "Surge"
+npcID = "iw_siw_wolf-surge"
+
+[node name="shadow" type="Sprite" parent="objects/surge"]
+self_modulate = Color( 0.458824, 0.458824, 0.458824, 0.372549 )
+position = Vector2( 0.0332031, 14.873 )
+scale = Vector2( 0.21942, 0.0446922 )
+texture = ExtResource( 16 )
+
+[node name="Sprite" type="AnimatedSprite" parent="objects/surge"]
+position = Vector2( -16, -3 )
+scale = Vector2( 0.0948667, 0.0948667 )
+z_as_relative = false
+frames = ExtResource( 18 )
+animation = "idle"
+
+[node name="Sprite2" type="AnimatedSprite" parent="objects/surge"]
+position = Vector2( 17, -3 )
+scale = Vector2( 0.0951468, 0.0951468 )
+z_as_relative = false
+frames = ExtResource( 18 )
+animation = "idle"
+flip_h = true
+
+[node name="interaction" type="Area2D" parent="objects/surge"]
+position = Vector2( 0.000244141, 0 )
+scale = Vector2( 1, 1 )
+__meta__ = {
+"_editor_description_": "npc"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="objects/surge/interaction"]
+position = Vector2( -0.000244141, -4.03619 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="objects/surge"]
+position = Vector2( 0, 15.0823 )
+rotation = 1.5708
+shape = SubResource( 5 )
+
+[node name="Panel" type="Panel" parent="objects/surge"]
+self_modulate = Color( 0.281158, 0.972656, 0, 0.392157 )
+margin_left = -64.0
+margin_top = -69.0
+margin_right = 64.0
+margin_bottom = -47.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="objects/surge/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click to interact"
+align = 1
+valign = 1
+
+[node name="targetDummy" type="StaticBody2D" parent="objects"]
+position = Vector2( 1612, 0 )
+script = ExtResource( 38 )
+
+[node name="Sprite" type="Sprite" parent="objects/targetDummy"]
+position = Vector2( 0, -183 )
+scale = Vector2( 22.625, 22.625 )
+texture = ExtResource( 37 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="objects/targetDummy"]
+position = Vector2( 0, 10 )
+rotation = 1.5708
+shape = SubResource( 6 )
+
+[node name="Area2D" type="Area2D" parent="objects/targetDummy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="objects/targetDummy/Area2D"]
+position = Vector2( 0, -186 )
+shape = SubResource( 7 )
+
+[node name="projectiles" type="Node2D" parent="."]
 [connection signal="input_event" from="objects/surge/interaction" to="objects/surge" method="interacted"]
+[connection signal="input_event" from="objects/targetDummy/Area2D" to="objects/targetDummy" method="attacked"]
 
 [editable path="objects/playerRoot"]
 

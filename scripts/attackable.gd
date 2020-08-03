@@ -9,7 +9,7 @@ func attacked(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
 		if globalvars.inrange(global_position, get_parent().get_node("playerRoot").global_position, 600):
 			if hp == -1:
-				pass #TODO: damage indicators
+				pass
 			else:
 				hp -= spgs.atkdmg
 				print("CURRENT ENTITY ("+ name +") HP: " + String(hp))

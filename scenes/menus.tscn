@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -127,9 +127,14 @@ size = 60
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0, 0, 0, 0.541176 )
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxFlat" id=19]
 bg_color = Color( 0, 0, 0, 0.686275 )
 
-[sub_resource type="GDScript" id=18]
+[sub_resource type="GDScript" id=20]
 script/source = "extends Button
 
 func _pressed():
@@ -138,7 +143,7 @@ func _pressed():
 		get_node(\"../../../..\").visible = false
 "
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=21]
 script/source = "extends Button
 
 func _pressed():
@@ -448,6 +453,7 @@ align = 1
 valign = 2
 
 [node name="sp" type="PanelContainer" parent="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -1120,7 +1126,6 @@ __meta__ = {
 }
 
 [node name="cred" type="PanelContainer" parent="Control"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 4 )
@@ -1164,10 +1169,134 @@ margin_bottom = 768.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="conf-dialogue" type="PanelContainer" parent="Control"]
+[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer"]
+margin_right = 113.0
+margin_bottom = 680.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+custom_fonts/font = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/cred/content/HBoxContainer"]
+margin_left = 117.0
+margin_right = 1248.0
+margin_bottom = 680.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer"]
+margin_right = 1131.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Panel" type="Panel" parent="Control/cred/content/HBoxContainer/VBoxContainer"]
+margin_top = 60.0
+margin_right = 1131.0
+margin_bottom = 620.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 17 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 17 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer"]
+margin_right = 1119.0
+margin_bottom = 855.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 18 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer"]
+margin_right = 1119.0
+margin_bottom = 855.0
+
+[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer"]
+margin_right = 21.0
+margin_bottom = 855.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.02
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer"]
+margin_left = 25.0
+margin_right = 1093.0
+margin_bottom = 855.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+margin_right = 1068.0
+margin_bottom = 14.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.03
+
+[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1068.0
+margin_bottom = 855.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Development Team
+---------------
+Surge - Lead Programmer
+Asteri - Animator
+Auryn - Tile and map designer
+Magma Studios - Audio Designer
+Cacti - Voice Actor
+Kayak - Audio Designer
+Jellyfoosh - Concept Artist and Creature Designer
+ambivalent - Map Tile Designer
+PaintbrushWonder - Concept Artist
+Lord Crow - Concept Artist
+Cal - Concept Artist
+
+Special Thanks to our Patrons!
+-----------------------
+aarise
+
+
+Dedicated servers hosted using Microsoft Azure
+
+
+Portions of this software are copyright © 2020 The FreeType Project (www.freetype.org). All rights reserved."
+align = 1
+autowrap = true
+
+[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer"]
+margin_left = 1097.0
+margin_right = 1119.0
+margin_bottom = 855.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.02
+
+[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer"]
+margin_top = 624.0
+margin_right = 1131.0
+margin_bottom = 680.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer"]
+margin_left = 1252.0
+margin_right = 1366.0
+margin_bottom = 680.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+custom_fonts/font = ExtResource( 2 )
+
+[node name="conf-dialogue" type="PanelContainer" parent="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1210,7 +1339,7 @@ margin_right = 407.0
 margin_bottom = 229.0
 custom_fonts/font = ExtResource( 2 )
 text = "Confirm"
-script = SubResource( 18 )
+script = SubResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1222,7 +1351,7 @@ margin_right = 131.0
 margin_bottom = 229.0
 custom_fonts/font = ExtResource( 2 )
 text = "Cancel"
-script = SubResource( 19 )
+script = SubResource( 21 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1290,4 +1419,4 @@ size_flags_vertical = 3
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
 [connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
 [connection signal="pressed" from="Control/set/Panel/TextureButton2" to="." method="hideAll"]
-[connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="." method="hideAll"]
+[connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="Control" method="hideAll"]

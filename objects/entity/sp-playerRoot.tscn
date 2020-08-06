@@ -24,12 +24,12 @@ anims/run-plr = ExtResource( 1 )
 
 [node name="shadow" type="Sprite" parent="."]
 self_modulate = Color( 0.392157, 0.392157, 0.392157, 0.372549 )
-position = Vector2( 5.96046e-08, 16 )
+position = Vector2( 0, 109 )
 scale = Vector2( 0.496094, 0.144531 )
 texture = ExtResource( 7 )
 
 [node name="reg" type="Node2D" parent="."]
-position = Vector2( -76, -66 )
+position = Vector2( -76, 27 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="body" type="Sprite" parent="reg"]
@@ -48,7 +48,7 @@ texture = ExtResource( 5 )
 texture = ExtResource( 9 )
 
 [node name="flip" type="Node2D" parent="."]
-position = Vector2( 77, -66 )
+position = Vector2( 77, 27 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="body" type="Sprite" parent="flip"]
@@ -77,7 +77,7 @@ texture = ExtResource( 9 )
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 16 )
+position = Vector2( 0, 106 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
@@ -89,7 +89,13 @@ current = true
 [node name="inventory" parent="uiControl/uiControl" index="1"]
 visible = false
 
-[node name="npcinteraction" parent="uiControl/uiControl" index="2"]
-visible = false
+[node name="fireballFlip" type="Position2D" parent="."]
+position = Vector2( -72, 0 )
+
+[node name="fireballReg" type="Position2D" parent="."]
+position = Vector2( 72, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+[connection signal="timeout" from="Timer" to="." method="cooldownExpire"]
 
 [editable path="uiControl"]

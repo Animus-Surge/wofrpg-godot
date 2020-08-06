@@ -6,7 +6,9 @@ var uiShowing = false
 var loadedCharacter
 var save = "test-save"
 
-var debug = false
+var playerFlip
+
+var debug = true
 
 var current = "loadscreen"
 

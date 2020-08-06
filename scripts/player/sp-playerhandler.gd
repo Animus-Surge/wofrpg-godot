@@ -3,9 +3,13 @@ extends KinematicBody2D
 const speed = 2000
 const friction = 3250
 
+var fireball = preload("res://objects/projectile/fireball.tscn")
+
 var vel: Vector2
 
 var flipped = false
+
+var fbcooldown = false
 
 func _ready():
 	if !globalvars.debug:
@@ -23,6 +27,14 @@ func _ready():
 		
 		print("Loaded character colors")
 
+func _unhandled_input(event):
+	if event is InputEventMouseButton and not globalvars.sppaused and not globalvars.uiShowing:
+		if event.pressed and event.button_index == BUTTON_RIGHT and not fbcooldown:
+			get_node("Timer").wait_time = 0.5
+			get_node("Timer").start()
+			fbcooldown = true
+			get_tree().call_group("projectilehandler", "summonFireball")
+
 func _physics_process(delta):
 	if !globalvars.sppaused and !globalvars.uiShowing:
 		var vect = Vector2.ZERO
@@ -33,8 +45,10 @@ func _physics_process(delta):
 		
 		if vect.x > 0:
 			flipped = false
+			globalvars.playerFlip = false
 		elif vect.x < 0:
 			flipped = true
+			globalvars.playerFlip = true
 		
 		if vect != Vector2.ZERO:
 			vel = vel.move_toward(vect * speed, friction * delta)
@@ -60,3 +74,7 @@ func animation(anim:String):
 		$AnimationPlayer.play("idle-plr")
 	elif anim == "run":
 		$AnimationPlayer.play("run-plr")
+
+
+func cooldownExpire():
+	fbcooldown = false

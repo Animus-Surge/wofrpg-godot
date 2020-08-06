@@ -8,6 +8,7 @@ var horns
 var eyes
 
 var atkdmg = 20
+var rngdmg = 40 #TODO: set base values based on tribes and abilitiesZ
 
 func init(characterData: Dictionary):
 	charname = characterData.name

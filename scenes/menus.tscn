@@ -463,7 +463,6 @@ align = 1
 valign = 2
 
 [node name="sp" type="PanelContainer" parent="Control"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -1408,6 +1407,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="gameselect" type="Panel" parent="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 4 )

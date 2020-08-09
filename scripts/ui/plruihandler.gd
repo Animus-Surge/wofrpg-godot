@@ -23,6 +23,8 @@ func _button_input(action):
 		$pause.visible = false
 		globalvars.sppaused = false
 	elif action == "exit-mm":
+		gfm.savegame(get_parent().get_global_position())
 		scenes.load_scene("res://scenes/menus.tscn")
 	elif action == "exit-ds":
+		gfm.savegame(get_parent().get_global_position())
 		get_tree().quit(0)

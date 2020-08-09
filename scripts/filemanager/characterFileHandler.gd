@@ -37,3 +37,10 @@ func delete(idx: int):
 	var cdir = Directory.new()
 	cdir.remove("user://characters/" + characters[idx].name.to_lower() + ".json")
 	characters.remove(idx)
+
+func loadCharacter(charname) -> Dictionary:
+	var data = {}
+	var charfile = File.new()
+	charfile.open("user://characters/" + charname + ".json", File.READ)
+	data = JSON.parse(charfile.get_as_text()).result
+	return data

@@ -25,6 +25,8 @@ func _ready():
 		get_node("flip/horns").modulate = spgs.horns
 		get_node("flip/eyes").modulate = spgs.eyes
 		
+		position = spgs.pos
+		
 		print("Loaded character colors")
 
 func _unhandled_input(event):

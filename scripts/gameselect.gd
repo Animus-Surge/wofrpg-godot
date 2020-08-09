@@ -24,6 +24,7 @@ func showMenu(ctr):
 
 func loadsaves(ctr):
 	saves = []
+	$Panel/ItemList.clear()
 	var numfiles = 0
 	var savesdir = Directory.new()
 	savesdir.open("user://saves")
@@ -53,18 +54,26 @@ func refresh():
 	loadsaves(character)
 
 func loadsave():
-	var selected = Array($Panel/ItemList.get_selected_items())[0]
-	print(selected)
+	var selectedsave = $Panel/ItemList.get_item_text(Array($Panel/ItemList.get_selected_items())[0])
+	gfm.loadsave(selectedsave)
 
 func newsave():
 	$savename.show()
 
 func createsave():
 	var savename = $savename/Panel/saveName.text
+	$savename/Panel/saveName.set("custom_colors/font_color", null)
 	if savename == "":
-		pass #tell the user
+		$savename/Panel/saveName.set("custom_colors/font_color", Color.red)
 	else:
-		pass
+		print("Creating new save: " + savename)
+		var data = {
+			"date":"blank",
+			"character":character
+		}
+		gfm.createNew(data, savename)
+		$savename.hide()
+		refresh()
 
 func removesave():
 	gfm.removesave($Panel/ItemList.get_item_text(Array($Panel/ItemList.get_selected_items())[0]))

@@ -41,8 +41,17 @@ func create():
 	showCreateMenu()
 
 func onPlay():
-	spgs.init(cfm.characters[charList.get_selected_items()[0]])
-	scenes.load_scene("res://scenes/possibility.tscn")
+	get_node("../../../gameselect").call("showMenu", charList.get_item_text(charList.get_selected_items()[0]))
+	setGlobalColorValues()
+	hide()
+
+func setGlobalColorValues():
+	var chardata = cfm.loadCharacter(charList.get_item_text(charList.get_selected_items()[0]))
+	spgs.body = Color(chardata.colors[0].r, chardata.colors[0].g, chardata.colors[0].b)
+	spgs.wings = Color(chardata.colors[1].r, chardata.colors[1].g, chardata.colors[1].b)
+	spgs.horns = Color(chardata.colors[2].r, chardata.colors[2].g, chardata.colors[2].b)
+	spgs.eyes = Color(chardata.colors[3].r, chardata.colors[3].g, chardata.colors[3].b)
+	spgs.charname = chardata.name
 
 func confdelete():
 	cfm.delete(charList.get_selected_items()[0])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=21]
 [ext_resource path="res://images/ui/buttons/mmbutton-graphic.png" type="Texture" id=22]
 [ext_resource path="res://scripts/ui/charactercreator.gd" type="Script" id=23]
+[ext_resource path="res://scripts/gameselect.gd" type="Script" id=24]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends HBoxContainer
@@ -150,6 +151,15 @@ func _pressed():
 	if name == \"canc\":
 		get_node(\"../../../..\").visible = false
 "
+
+[sub_resource type="StyleBoxFlat" id=22]
+bg_color = Color( 0, 0, 0, 0.54902 )
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[sub_resource type="StyleBoxEmpty" id=25]
 
 [node name="menus" type="Control"]
 margin_right = 1366.0
@@ -1126,6 +1136,7 @@ __meta__ = {
 }
 
 [node name="cred" type="PanelContainer" parent="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 4 )
@@ -1206,8 +1217,8 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer"]
-margin_right = 1119.0
-margin_bottom = 855.0
+margin_right = 1131.0
+margin_bottom = 560.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 18 )
@@ -1395,6 +1406,154 @@ margin_right = 1366.0
 margin_bottom = 768.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="gameselect" type="Panel" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 4 )
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control/gameselect"]
+anchor_left = 0.132
+anchor_top = 0.113
+anchor_right = 0.868
+anchor_bottom = 0.887
+margin_left = 0.188004
+margin_top = -0.284004
+margin_right = -0.187988
+margin_bottom = 0.283997
+custom_styles/panel = ExtResource( 8 )
+
+[node name="TextureButton" type="TextureButton" parent="Control/gameselect/Panel"]
+anchor_left = 0.024
+anchor_top = 0.018
+anchor_right = 0.064
+anchor_bottom = 0.085
+margin_left = 0.266016
+margin_top = -0.198793
+margin_right = 0.0660172
+margin_bottom = -0.0637932
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 10 )
+expand = true
+stretch_mode = 4
+
+[node name="Button" type="Button" parent="Control/gameselect/Panel"]
+margin_left = 30.5
+margin_top = 534.5
+margin_right = 183.5
+margin_bottom = 572.5
+custom_fonts/font = ExtResource( 2 )
+text = "New Game"
+
+[node name="Button2" type="Button" parent="Control/gameselect/Panel"]
+margin_left = 196.498
+margin_top = 534.0
+margin_right = 290.498
+margin_bottom = 572.0
+custom_fonts/font = ExtResource( 2 )
+text = "Delete"
+
+[node name="Button3" type="Button" parent="Control/gameselect/Panel"]
+margin_left = 300.349
+margin_top = 534.0
+margin_right = 459.349
+margin_bottom = 572.0
+custom_fonts/font = ExtResource( 2 )
+text = "Load Game"
+
+[node name="ItemList" type="ItemList" parent="Control/gameselect/Panel"]
+anchor_left = 0.031
+anchor_top = 0.118
+anchor_right = 0.457
+anchor_bottom = 0.871
+margin_left = -0.155001
+margin_top = -0.210007
+margin_right = -0.285004
+margin_bottom = -0.245056
+
+[node name="Label" type="Label" parent="Control/gameselect/Panel"]
+margin_left = 507.0
+margin_top = 74.0
+margin_right = 931.0
+margin_bottom = 518.0
+custom_fonts/font = ExtResource( 13 )
+text = "Level: 2
+XP: 35/1200
+
+HP: 100/100
+Mana: 0/0
+
+Location: ?????"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="savename" type="Panel" parent="Control/gameselect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 22 )
+
+[node name="Panel" type="Panel" parent="Control/gameselect/savename"]
+anchor_left = 0.367
+anchor_top = 0.331
+anchor_right = 0.633
+anchor_bottom = 0.669
+margin_left = -0.322021
+margin_top = -0.208023
+margin_right = 0.32196
+margin_bottom = 0.208008
+custom_styles/panel = ExtResource( 3 )
+
+[node name="saveName" type="LineEdit" parent="Control/gameselect/savename/Panel"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -9.5
+margin_bottom = 9.5
+custom_styles/read_only = SubResource( 23 )
+custom_styles/focus = SubResource( 24 )
+custom_styles/normal = SubResource( 25 )
+custom_fonts/font = ExtResource( 13 )
+align = 1
+placeholder_text = "A wonderful save name"
+
+[node name="Button" type="Button" parent="Control/gameselect/savename/Panel"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -38.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.0784314, 1, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0.717647, 1 )
+custom_colors/font_color_pressed = Color( 0.0431373, 0.443137, 0, 1 )
+enabled_focus_mode = 0
+text = "Create New Game"
+flat = true
+
+[node name="Button2" type="Button" parent="Control/gameselect/savename/Panel"]
+anchor_top = 0.85
+anchor_right = 1.0
+anchor_bottom = 0.85
+margin_top = -38.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Cancel"
+flat = true
+
+[node name="Label" type="Label" parent="Control/gameselect/savename/Panel"]
+anchor_right = 1.0
+margin_bottom = 67.0
+custom_fonts/font = ExtResource( 2 )
+text = "Enter the name for your new save:"
+align = 1
+autowrap = true
 [connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseOver"]
 [connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseExit"]
 [connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseOver"]
@@ -1418,5 +1577,12 @@ size_flags_vertical = 3
 [connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton4" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
 [connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
-[connection signal="pressed" from="Control/set/Panel/TextureButton2" to="." method="hideAll"]
+[connection signal="pressed" from="Control/set/Panel/TextureButton2" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="Control" method="hideAll"]
+[connection signal="pressed" from="Control/gameselect/Panel/TextureButton" to="Control/gameselect" method="hideMenu"]
+[connection signal="pressed" from="Control/gameselect/Panel/Button" to="Control/gameselect" method="newsave"]
+[connection signal="pressed" from="Control/gameselect/Panel/Button2" to="Control/gameselect" method="removesave"]
+[connection signal="pressed" from="Control/gameselect/Panel/Button3" to="Control/gameselect" method="loadsave"]
+[connection signal="item_selected" from="Control/gameselect/Panel/ItemList" to="Control/gameselect" method="onSelectItem"]
+[connection signal="pressed" from="Control/gameselect/savename/Panel/Button" to="Control/gameselect" method="createsave"]
+[connection signal="pressed" from="Control/gameselect/savename/Panel/Button2" to="Control/gameselect" method="cancelcreate"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://scripts/ui/plruihandler.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://images/ui/icons/mbutton-right.png" type="Texture" id=21]
 [ext_resource path="res://images/ui/buttons/tab-inactive.png" type="Texture" id=22]
 [ext_resource path="res://images/ui/icons/fireball-icon.png" type="Texture" id=23]
+[ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=24]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_1_delay-0.3s.png" type="Texture" id=27]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=31]
 
@@ -78,14 +79,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 31 ), ExtResource( 27 ) ]
 }
 
-[sub_resource type="GDScript" id=7]
-script/source = "extends Button
-
-func _pressed():
-	get_parent().get_parent().call(\"_button_input\", editor_description)
-"
-
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=7]
 texture = ExtResource( 22 )
 region_rect = Rect2( 0, 0, 64, 64 )
 margin_left = 26.2008
@@ -93,9 +87,20 @@ margin_right = 25.916
 margin_top = 24.0649
 margin_bottom = 2.18471
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 19 )
 region_rect = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 50
+font_data = ExtResource( 24 )
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Button
+
+func _pressed():
+	get_parent().get_parent().call(\"_button_input\", editor_description)
+"
 
 [node name="Node2D" type="Node2D"]
 z_index = 5
@@ -1267,81 +1272,12 @@ __meta__ = {
 anims/iw_sw_wolf-surge-confused = ExtResource( 7 )
 anims/iw_sw_wolf-surge-scared = SubResource( 6 )
 
-[node name="pause" type="Panel" parent="uiControl"]
-pause_mode = 2
-visible = false
-self_modulate = Color( 0.647059, 0.647059, 0.647059, 0.647059 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -1.0
-margin_bottom = -1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="uiControl/pause"]
-anchor_left = 0.023
-anchor_top = 0.832
-anchor_right = 0.554
-anchor_bottom = 0.882
-margin_left = 0.581997
-margin_top = 0.0239868
-margin_right = 0.235962
-margin_bottom = -0.376038
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Return to Game"
-script = SubResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "resume"
-}
-
-[node name="Button2" type="Button" parent="uiControl/pause"]
-anchor_left = 0.299
-anchor_top = 0.906
-anchor_right = 0.554
-anchor_bottom = 0.956
-margin_left = 0.565979
-margin_top = 0.192017
-margin_right = 0.235962
-margin_bottom = -0.208008
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Save and quit to menu"
-script = SubResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "exit-mm"
-}
-
-[node name="Button3" type="Button" parent="uiControl/pause"]
-anchor_left = 0.023
-anchor_top = 0.906
-anchor_right = 0.278
-anchor_bottom = 0.956
-margin_left = 0.581997
-margin_top = 0.192017
-margin_right = 0.251953
-margin_bottom = -0.208008
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Save and quit to desktop"
-script = SubResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "exit-ds"
-}
-
 [node name="hotbar" type="Panel" parent="uiControl"]
 anchor_top = 0.905
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -0.0400391
-custom_styles/panel = SubResource( 8 )
+custom_styles/panel = SubResource( 7 )
 
 [node name="Panel" type="Panel" parent="uiControl/hotbar"]
 anchor_left = 0.408
@@ -1352,7 +1288,7 @@ margin_left = -0.328003
 margin_top = 3.751
 margin_right = -0.602051
 margin_bottom = -8.0
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1393,7 +1329,7 @@ margin_left = 0.201965
 margin_top = 3.751
 margin_right = -0.0720215
 margin_bottom = -8.0
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="TextureRect3" type="TextureRect" parent="uiControl/hotbar/Panel2"]
 anchor_right = 1.0
@@ -1431,7 +1367,7 @@ margin_left = 0.215942
 margin_top = 3.75102
 margin_right = -0.0580444
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1445,7 +1381,7 @@ margin_left = -0.620056
 margin_top = 4.26202
 margin_right = 0.471924
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="Panel5" type="Panel" parent="uiControl/hotbar"]
 anchor_left = 0.615
@@ -1456,7 +1392,7 @@ margin_left = -0.0900269
 margin_top = 3.53202
 margin_right = -0.364075
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1470,7 +1406,88 @@ margin_left = -0.560059
 margin_top = 3.97002
 margin_right = 0.531982
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 9 )
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
+}
+
+[node name="pause" type="Panel" parent="uiControl"]
+pause_mode = 2
+self_modulate = Color( 0.647059, 0.647059, 0.647059, 0.647059 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="uiControl/pause"]
+anchor_left = 0.413
+anchor_top = 0.082
+anchor_right = 0.595
+anchor_bottom = 0.141
+margin_left = 0.247742
+margin_top = -0.327381
+margin_right = 0.635742
+margin_bottom = 0.360619
+custom_fonts/font = SubResource( 9 )
+text = "Game Paused"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="uiControl/pause"]
+anchor_left = 0.023
+anchor_top = 0.832
+anchor_right = 0.554
+anchor_bottom = 0.882
+margin_left = 0.581997
+margin_top = 0.0239868
+margin_right = 0.235962
+margin_bottom = -0.376038
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Return to Game"
+script = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "resume"
+}
+
+[node name="Button2" type="Button" parent="uiControl/pause"]
+anchor_left = 0.299
+anchor_top = 0.906
+anchor_right = 0.554
+anchor_bottom = 0.956
+margin_left = 0.565979
+margin_top = 0.192017
+margin_right = 0.235962
+margin_bottom = -0.208008
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Save and quit to menu"
+script = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "exit-mm"
+}
+
+[node name="Button3" type="Button" parent="uiControl/pause"]
+anchor_left = 0.023
+anchor_top = 0.906
+anchor_right = 0.278
+anchor_bottom = 0.956
+margin_left = 0.581997
+margin_top = 0.192017
+margin_right = 0.251953
+margin_bottom = -0.208008
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Save and quit to desktop"
+script = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "exit-ds"
 }

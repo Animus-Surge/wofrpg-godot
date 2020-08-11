@@ -64,7 +64,7 @@ func create():
 	var charfile = File.new()
 	charfile.open("user://characters/" + cname.text.to_lower() + ".json", File.WRITE)
 	charfile.store_line(to_json(details))
-	print("Saved character: " + cname.text)
+	logcat.stdout("Saved character: " + cname.text, logcat.INFO)
 	get_tree().call_group("charlist", "created")
 	cfm.characters.append(details)
 

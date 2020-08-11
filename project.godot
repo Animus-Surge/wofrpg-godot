@@ -35,6 +35,7 @@ cfm="*res://scripts/filemanager/characterFileHandler.gd"
 gloader="*res://scripts/global/globalLoader.gd"
 spgs="*res://scripts/global/spgamestate.gd"
 gfm="*res://scripts/filemanager/gameFileHandler.gd"
+logcat="*res://scripts/global/logger.gd"
 
 [debug]
 

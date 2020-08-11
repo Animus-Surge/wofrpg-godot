@@ -3,11 +3,10 @@ extends Node
 var characters = []
 
 func startLoad():
-	print("CFM Active")
 	loadCharList()
 
 func loadCharList():
-	print("Attempting load of local character list...")
+	logcat.stdout("Attempting load of local character list...", logcat.INFO)
 	var charDir = Directory.new()
 	charDir.open("user://characters")
 	charDir.list_dir_begin()
@@ -30,10 +29,10 @@ func loadCharList():
 			currentFile = charDir.get_next()
 		else:
 			break
-	print("Characters loaded. Loaded: " + String(filesLoaded) + " files")
+	logcat.stdout("Characters loaded. Loaded: " + String(filesLoaded) + " files", logcat.INFO)
 
 func delete(idx: int):
-	print("Removed character: " + characters[idx].name)
+	logcat.stdout("Removed character: " + characters[idx].name, logcat.INFO)
 	var cdir = Directory.new()
 	cdir.remove("user://characters/" + characters[idx].name.to_lower() + ".json")
 	characters.remove(idx)
@@ -41,6 +40,6 @@ func delete(idx: int):
 func loadCharacter(charname) -> Dictionary:
 	var data = {}
 	var charfile = File.new()
-	charfile.open("user://characters/" + charname + ".json", File.READ)
+	charfile.open("user://characters/" + charname.to_lower() + ".json", File.READ)
 	data = JSON.parse(charfile.get_as_text()).result
 	return data

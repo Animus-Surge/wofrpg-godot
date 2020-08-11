@@ -29,7 +29,7 @@ func loadsaves(ctr):
 	var savesdir = Directory.new()
 	savesdir.open("user://saves")
 	savesdir.list_dir_begin()
-	print("Loading user saves")
+	logcat.stdout("Loading user saves", logcat.INFO)
 	var save = savesdir.get_next()
 	while save != "":
 		if !save.begins_with("."):
@@ -40,7 +40,7 @@ func loadsaves(ctr):
 				saves.append(save)
 				numfiles += 1
 		save = savesdir.get_next()
-	print("Loaded " + String(numfiles) + " files")
+	logcat.stdout("Loaded " + String(numfiles) + " files", logcat.INFO)
 	
 	for s in saves:
 		$Panel/ItemList.add_item(s)
@@ -50,7 +50,7 @@ func onSelectItem(index):
 	get_node("Panel/Button3").disabled = false
 
 func refresh():
-	print("Refreshing saves")
+	logcat.stdout("Refreshing saves", logcat.DEBUG)
 	loadsaves(character)
 
 func loadsave():
@@ -66,7 +66,7 @@ func createsave():
 	if savename == "":
 		$savename/Panel/saveName.set("custom_colors/font_color", Color.red)
 	else:
-		print("Creating new save: " + savename)
+		logcat.stdout("Creating new save: " + savename, logcat.INFO)
 		var data = {
 			"date":"blank",
 			"character":character

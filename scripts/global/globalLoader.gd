@@ -10,15 +10,14 @@ var itemdict: Array
 
 func startLoad():
 	loadBaseTribes()
-	loadItems()
 
 func loadBaseTribes():
 	var dir = Directory.new()
 	if !dir.dir_exists(tribesPath):
-		printerr("ERROR: No base tribes have been defined!") #replace this with an in game message
+		logcat.stdout("No base tribes have been defined!", logcat.ERROR) #replace this with an in game message
 		return
 	dir.open(tribesPath)
-	print("Loading base tribes...")
+	logcat.stdout("Loading base tribes...", logcat.INFO)
 	dir.list_dir_begin()
 	var file = dir.get_next()
 	while file != "":
@@ -29,19 +28,9 @@ func loadBaseTribes():
 			f.close()
 		file = dir.get_next()
 	if baseTribes.size() == 0:
-		printerr("ERROR: No base tribes have been defined!")
+		logcat.stdout("No base tribes have been defined!", logcat.ERROR)
 		return
-	print("Base tribes loaded")
-
-func loadItems():
-	print("Loading item dictionary")
-	var dict = File.new()
-	dict.open(itemDict, File.READ)
-	if dict == null:
-		printerr("Item dictionary nonexistent!")
-		get_tree().exit(-1)
-	itemdict = JSON.parse(dict.get_as_text()).result.itemDict
-	print("Loaded item dictionary")
+	logcat.stdout("Base tribes loaded", logcat.INFO)
 
 func loadSkillset(characterSkills: Array) -> Array:
 	var cskills = []
@@ -51,3 +40,12 @@ func loadSkillset(characterSkills: Array) -> Array:
 		var fileParseResult = JSON.parse(skillFile.get_as_text()).result
 		cskills.append(fileParseResult)
 	return cskills
+
+func loadItem(itemid) -> Dictionary:
+	var dict = File.new()
+	dict.open("res://data/itemDictionary.json", File.READ) #TODO: make the naming convention consistent
+	var dictjson = JSON.parse(dict.get_as_text()).result
+	if dictjson.has(itemid):
+		return dictjson.get(itemid)
+	else:
+		return {}

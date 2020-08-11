@@ -21,7 +21,7 @@ func refresh():
 	charList.clear()
 	$Panel/play.disabled = true
 	$Panel/delete.disabled = true
-	print("Refreshed character list")
+	logcat.stdout("Refreshed character list", logcat.DEBUG)
 	for c in cfm.characters:
 		charList.add_item(c.name)
 
@@ -43,7 +43,8 @@ func create():
 func onPlay():
 	get_node("../../../gameselect").call("showMenu", charList.get_item_text(charList.get_selected_items()[0]))
 	setGlobalColorValues()
-	hide()
+	showSelectMenu()
+	get_node("../..").hide()
 
 func setGlobalColorValues():
 	var chardata = cfm.loadCharacter(charList.get_item_text(charList.get_selected_items()[0]))

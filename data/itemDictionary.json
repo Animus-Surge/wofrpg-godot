@@ -1,14 +1,6 @@
 {
-	"itemDict":[
-		{
-			"name":"Emerald",
-			"desc":"Just a green gem. Can be used by the jeweler or for crafting.",
-			"texture":"res://images/items/emerald.png"
-		},
-		{
-			"name":"Cactus Juice Jar",
-			"desc":"Used to heal SandWing inflicted poison wounds",
-			"texture":"res://images/items/Jars.png"
-		}
-	]
+	"item-dummy":{
+		"dname":"Dummy Item",
+		"texture":"res://images/items/item-dummy.png"
+	}
 }

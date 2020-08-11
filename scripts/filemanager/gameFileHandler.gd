@@ -5,18 +5,18 @@ var loadedsave
 
 func createNew(data: Dictionary, savename):
 	var gamedata = data
-	print("Converting game data to JSON")
+	logcat.stdout("Converting game data to JSON", logcat.INFO)
 	for key in globalvars.DEFAULT_SAVE_DATA:
 		gamedata[key] = globalvars.DEFAULT_SAVE_DATA[key]
 	var savedir = Directory.new()
 	savedir.make_dir("user://saves/" + savename)
 	var savejson = File.new()
 	savejson.open("user://saves/" + savename + "/save.json", File.WRITE)
-	print("Storing game data")
+	logcat.stdout("Storing game data", logcat.INFO)
 	savejson.store_line(to_json(gamedata))
 	savejson.close()
 	savedir.make_dir("user://saves/" + savename + "/data")
-	print("Save complete. Copying game files to data folder")
+	logcat.stdout("Save complete. Copying game files to data folder", logcat.INFO)
 	#TODO
 
 func removesave(savename: String):
@@ -33,6 +33,8 @@ func loadsave(savename:String):
 	scenes.load_scene("res://scenes/" + data["character-scene"] + ".tscn")
 
 func savegame(playerpos: Vector2):
+	if loadedsave == null:
+		return
 	var _savedir = Directory.new()
 	_savedir.remove("user://saves/" + loadedsave + "/save.json")
 	var savefile = File.new()
@@ -49,4 +51,4 @@ func savegame(playerpos: Vector2):
 	
 	savefile.store_line(to_json(savedata))
 	savefile.close()
-	print("Successfully saved game: " + loadedsave)
+	logcat.stdout("Successfully saved game: " + loadedsave, logcat.INFO)

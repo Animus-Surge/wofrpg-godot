@@ -10,10 +10,14 @@ func loadDialogue(npcid, npcname):
 	$ibar/namelabel.text = npcname
 	
 	$ibar.texture = load("res://images/ui/interactions/" + npcid + "/interaction-bar.png")
-	print("Loading NPC interaction: " + npcid)
+	logcat.stdout("Loading NPC interaction: " + npcid, logcat.INFO)
 	self.npcid = npcid
 	
 	var dialogue = File.new()
+	if !dialogue.file_exists("user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json"):
+		logcat.stdout("Dialogue data file: " + npcid + ".json does not exist. Creating from resource...", logcat.WARNING)
+		var dir = Directory.new()
+		dir.copy("res://data/" + npcid + ".json", "user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json")
 	dialogue.open("user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json", File.READ)
 	currentDialogue = JSON.parse(dialogue.get_as_text()).result
 	
@@ -44,7 +48,8 @@ func showPart():
 			$ibar.get_child(index).disabled = true
 		else:
 			$ibar.get_child(index).call("setGoto", option.goto)
-			$ibar.get_child(index).text = option.text
+			var formattedText = option.text.format({"plr":spgs.charname})
+			$ibar.get_child(index).text = formattedText
 		index += 1
 	
 	while index < 6:

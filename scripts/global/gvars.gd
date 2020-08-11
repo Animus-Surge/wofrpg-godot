@@ -1,5 +1,7 @@
 extends Node
 
+enum REMOVE_REASONS {DROP, QUEST, DIED}
+
 const DEFAULT_SAVE_DATA = {
 	"character-location":{
 		"x":0,	
@@ -48,11 +50,12 @@ var current = "loadscreen"
 
 func _ready():
 	if !debug:
+		print("==============> GAME START <==============")
 		scenes.load_scene("res://scenes/menus.tscn")
 		gloader.startLoad()
 		cfm.startLoad()
 	else:
-		print("DEBUG MODE ACTIVE")
+		logcat.stdout("DEBUG MODE ACTIVE", logcat.DEBUG)
 
 func setCurrentScene(scene):
 	current = scene

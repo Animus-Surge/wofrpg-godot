@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://scripts/ui/plruihandler.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=5]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/interaction-bar.png" type="Texture" id=6]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/iw_sw_wolf-surge-confused.tres" type="Animation" id=7]
-[ext_resource path="res://images/life-bar-fg.png" type="Texture" id=8]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=8]
 [ext_resource path="res://scripts/ui/npcinteraction.gd" type="Script" id=9]
 [ext_resource path="res://scripts/ibutton.gd" type="Script" id=10]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/reaction-cute.png" type="Texture" id=11]
@@ -17,7 +17,7 @@
 [ext_resource path="res://images/mana-icon.png" type="Texture" id=15]
 [ext_resource path="res://images/mana-bar-fg.png" type="Texture" id=16]
 [ext_resource path="res://images/ui/icons/claw-attack-icon.png" type="Texture" id=17]
-[ext_resource path="res://images/exp.png" type="Texture" id=18]
+[ext_resource path="res://images/life-bar-fg.png" type="Texture" id=18]
 [ext_resource path="res://images/ui/buttons/tab-active.png" type="Texture" id=19]
 [ext_resource path="res://images/ui/icons/mbutton-left.png" type="Texture" id=20]
 [ext_resource path="res://images/ui/icons/mbutton-right.png" type="Texture" id=21]
@@ -29,38 +29,6 @@
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=31]
 
 [sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 8 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.15573
-margin_right = 3.3899
-margin_top = 3.02721
-margin_bottom = 3.02721
-
-[sub_resource type="StyleBoxTexture" id=2]
-texture = ExtResource( 12 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.08429
-margin_right = 3.08429
-margin_top = 2.82727
-margin_bottom = 3.2128
-
-[sub_resource type="StyleBoxTexture" id=3]
-texture = ExtResource( 16 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.15573
-margin_right = 3.3899
-margin_top = 3.02721
-margin_bottom = 3.02721
-
-[sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 14 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.08429
-margin_right = 3.08429
-margin_top = 2.82727
-margin_bottom = 3.2128
-
-[sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 22 )
 region_rect = Rect2( 0, 0, 64, 64 )
 margin_left = 26.2008
@@ -68,14 +36,48 @@ margin_right = 25.916
 margin_top = 24.0649
 margin_bottom = 2.18471
 
-[sub_resource type="StyleBoxTexture" id=6]
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 19 )
 region_rect = Rect2( 0, 0, 64, 64 )
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.08429
+margin_right = 3.2128
+margin_top = 2.95578
+margin_bottom = 2.95578
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.2128
+margin_right = 3.2128
+margin_top = 2.95578
+margin_bottom = 2.95578
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.46983
+margin_right = 3.34132
+margin_top = 3.2128
+margin_bottom = 2.95578
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.08429
+margin_right = 3.08429
+margin_top = 3.34132
+margin_bottom = 2.95578
+
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 0.568627 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -91,11 +93,11 @@ tracks/0/keys = {
 "values": [ ExtResource( 31 ), ExtResource( 27 ) ]
 }
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 50
 font_data = ExtResource( 24 )
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Button
 
 func _pressed():
@@ -116,119 +118,6 @@ margin_right = 683.0
 margin_bottom = 382.0
 mouse_filter = 2
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="stats" type="Panel" parent="uiControl" groups=[
-"statsDisplay",
-]]
-pause_mode = 1
-self_modulate = Color( 0.286275, 0.286275, 0.286275, 0.282353 )
-anchor_left = 0.415
-anchor_right = 0.585
-anchor_bottom = 0.073
-margin_left = 0.109985
-margin_right = -0.110046
-margin_bottom = -0.064003
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="healthBar" type="ProgressBar" parent="uiControl/stats"]
-anchor_left = 0.078
-anchor_top = 0.054
-anchor_right = 0.983
-anchor_bottom = 0.304
-margin_left = -0.0960007
-margin_top = -0.0240002
-margin_right = -0.056015
-margin_bottom = -0.0240021
-custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
-max_value = 20.0
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="manaBar" type="ProgressBar" parent="uiControl/stats"]
-anchor_left = 0.078
-anchor_top = 0.375
-anchor_right = 0.983
-anchor_bottom = 0.625
-margin_left = -0.0960007
-margin_top = -1.90735e-06
-margin_right = -0.056015
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
-value = 100.0
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="xpBar" type="ProgressBar" parent="uiControl/stats"]
-self_modulate = Color( 0.196078, 1, 0, 1 )
-anchor_left = 0.078
-anchor_top = 0.696
-anchor_right = 0.983
-anchor_bottom = 0.946
-margin_left = -0.0960007
-margin_top = 0.0239983
-margin_right = -0.056015
-margin_bottom = 0.0239983
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
-value = 100.0
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/stats"]
-anchor_left = 0.009
-anchor_top = 0.054
-anchor_right = 0.069
-anchor_bottom = 0.304
-margin_left = -0.0880001
-margin_top = -0.0240002
-margin_right = -0.00800133
-margin_bottom = -0.0240021
-texture = ExtResource( 13 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect2" type="TextureRect" parent="uiControl/stats"]
-anchor_left = 0.009
-anchor_top = 0.375
-anchor_right = 0.069
-anchor_bottom = 0.625
-margin_left = -0.0880001
-margin_top = -1.90735e-06
-margin_right = -0.00800133
-texture = ExtResource( 15 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect3" type="TextureRect" parent="uiControl/stats"]
-anchor_left = 0.009
-anchor_top = 0.696
-anchor_right = 0.069
-anchor_bottom = 0.946
-margin_left = -0.0880001
-margin_top = 0.0239983
-margin_right = -0.00800133
-margin_bottom = 0.0239983
-texture = ExtResource( 18 )
-expand = true
-stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -974,7 +863,7 @@ anchor_top = 0.905
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -0.0400391
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="Panel" type="Panel" parent="uiControl/hotbar"]
 anchor_left = 0.408
@@ -985,7 +874,7 @@ margin_left = -0.328003
 margin_top = 3.751
 margin_right = -0.602051
 margin_bottom = -8.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1026,7 +915,7 @@ margin_left = 0.201965
 margin_top = 3.751
 margin_right = -0.0720215
 margin_bottom = -8.0
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="TextureRect3" type="TextureRect" parent="uiControl/hotbar/Panel2"]
 anchor_right = 1.0
@@ -1064,7 +953,24 @@ margin_left = 0.215942
 margin_top = 3.75102
 margin_right = -0.0580444
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="uiControl/hotbar/Panel3"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 8 )
+text = "1"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1078,7 +984,24 @@ margin_left = -0.620056
 margin_top = 4.26202
 margin_right = 0.471924
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 2 )
+
+[node name="Label2" type="Label" parent="uiControl/hotbar/Panel4"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 8 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel5" type="Panel" parent="uiControl/hotbar"]
 anchor_left = 0.615
@@ -1089,7 +1012,24 @@ margin_left = -0.0900269
 margin_top = 3.53202
 margin_right = -0.364075
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="uiControl/hotbar/Panel5"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 8 )
+text = "3"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1103,7 +1043,100 @@ margin_left = -0.560059
 margin_top = 3.97002
 margin_right = 0.531982
 margin_bottom = -8.00003
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="uiControl/hotbar/Panel6"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -8.0
+margin_top = -9.0
+margin_right = 8.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 8 )
+text = "4"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel7" type="Panel" parent="uiControl/hotbar"]
+anchor_left = 0.023
+anchor_top = 0.192
+anchor_right = 0.287
+anchor_bottom = 0.89
+margin_left = 0.581997
+margin_top = -0.0160122
+margin_right = -0.0419922
+margin_bottom = 0.0299454
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="uiControl/hotbar/Panel7"]
+anchor_right = 0.483
+anchor_bottom = 0.353
+margin_right = 0.119995
+margin_bottom = -0.00300026
+custom_styles/fg = SubResource( 4 )
+custom_styles/bg = SubResource( 5 )
+value = 50.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar2" type="ProgressBar" parent="uiControl/hotbar/Panel7"]
+anchor_left = 0.517
+anchor_right = 1.0
+anchor_bottom = 0.353
+margin_left = -0.12001
+margin_bottom = -0.00300026
+custom_styles/fg = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
+value = 50.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/hotbar/Panel7"]
+margin_left = -9.0
+margin_top = 6.10352e-05
+margin_right = 9.0
+margin_bottom = 18.0001
+texture = ExtResource( 13 )
+expand = true
+
+[node name="TextureRect2" type="TextureRect" parent="uiControl/hotbar/Panel7"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -9.0
+margin_top = 6.10352e-05
+margin_right = 9.0
+margin_bottom = 18.0001
+texture = ExtResource( 15 )
+expand = true
+
+[node name="fps" type="Label" parent="uiControl/hotbar/Panel7"]
+margin_top = 34.0001
+margin_right = 40.0
+margin_bottom = 48.0001
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dist" type="Label" parent="uiControl/hotbar/Panel7"]
+margin_left = 56.0
+margin_top = 34.0001
+margin_right = 96.0
+margin_bottom = 48.0001
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1114,7 +1147,7 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1263,7 +1296,9 @@ __meta__ = {
 
 [node name="animatedInteractions" type="AnimationPlayer" parent="uiControl/npcinteraction"]
 anims/iw_sw_wolf-surge-confused = ExtResource( 7 )
-anims/iw_sw_wolf-surge-scared = SubResource( 8 )
+anims/iw_sw_wolf-surge-scared = SubResource( 9 )
+
+[node name="Timer" type="Timer" parent="uiControl/npcinteraction"]
 
 [node name="pause" type="Panel" parent="uiControl"]
 pause_mode = 2
@@ -1284,7 +1319,7 @@ margin_left = 0.247742
 margin_top = -0.327381
 margin_right = 0.635742
 margin_bottom = 0.360619
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Game Paused"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1303,7 +1338,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Return to Game"
-script = SubResource( 10 )
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "resume"
@@ -1322,7 +1357,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to menu"
-script = SubResource( 10 )
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-mm"
@@ -1341,8 +1376,9 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to desktop"
-script = SubResource( 10 )
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-ds"
 }
+[connection signal="timeout" from="uiControl/npcinteraction/Timer" to="uiControl/npcinteraction" method="_timerdone"]

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const speed = 2000
+const speed = 1200
 const friction = 3250
 
 var fireball = preload("res://objects/projectile/fireball.tscn")

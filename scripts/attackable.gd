@@ -13,7 +13,7 @@ func _ready():
 
 func attacked(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == 1:
-		if globalvars.inrange(global_position, get_parent().get_node("playerRoot").global_position, 600):
+		if globalvars.inrange(global_position, get_parent().get_node("playerRoot").global_position, 400):
 			if hp == -1:
 				get_node("Label").text = "-" + String(spgs.atkdmg)
 			else:

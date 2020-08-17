@@ -10,6 +10,12 @@ func _ready():
 	for child in get_node("inventory/ScrollContainer/GridContainer").get_children():
 		invslots.append(child)
 		child.call("clear")
+	$hotbar/Panel7/fps.text = ""
+	if globalvars.debug:
+		set_process(true)
+
+func _process(delta):
+	$hotbar/Panel7/fps.text = "FPS: " + String(Performance.get_monitor(Performance.TIME_FPS))
 
 func _unhandled_key_input(event):
 	if event.scancode == KEY_ESCAPE and event.pressed:

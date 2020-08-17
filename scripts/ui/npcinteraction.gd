@@ -28,12 +28,22 @@ func loadDialogue(npcid, npcname):
 	
 	showPart()
 
+func _timerdone():
+	$ibar/speechlabel.visible_characters += 1
+	$Timer.stop()
+	$Timer.wait_time = 0.01
+	$Timer.start()
+
 func showPart():
+	$Timer.wait_time = 0.01
+	$Timer.start()
 	var index = 2
 	while index < 6:
 		$ibar.get_child(index).show()
 		index += 1
 	index = 2
+	
+	$ibar/speechlabel.visible_characters = 0
 	
 	if part.has("anim"):
 		if part.anim:

@@ -17,7 +17,24 @@ func loadDialogue(npcid, npcname):
 	if !dialogue.file_exists("user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json"):
 		logcat.stdout("Dialogue data file: " + npcid + ".json does not exist. Creating from resource...", logcat.WARNING)
 		var dir = Directory.new()
-		dir.copy("res://data/" + npcid + ".json", "user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json")
+		var temp = File.new()
+		var error = dir.copy("res://data/" + npcid + ".json", "user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json")
+		if error != OK:
+			var errorString = ""
+			if error == ERR_FILE_NOT_FOUND:
+				errorString = "File appears to be missing from the game's resource folder, or a directory is missing."
+			elif error == ERR_FILE_ALREADY_IN_USE:
+				errorString = "File is already in use by another process."
+			elif error == ERR_FILE_CORRUPT:
+				errorString = "File corrupt. Rebuild of sources required."
+			elif error == ERR_FILE_CANT_OPEN:
+				errorString = "Attempt at opening file failed."
+			else:
+				errorString = "Generic error."
+			logcat.stdout("Error copying file: " + npcid + ".json: " + errorString, logcat.ERROR)
+			npcid = null
+			return
+		logcat.stdout("Data file: " + npcid + ".json copied successfully.", logcat.INFO)
 	dialogue.open("user://saves/" + globalvars.save + "/data/dialogues/" + npcid + ".json", File.READ)
 	currentDialogue = JSON.parse(dialogue.get_as_text()).result
 	

@@ -34,6 +34,9 @@ func loadsaves(ctr):
 	while save != "":
 		if !save.begins_with("."):
 			var savejson = File.new()
+			if save == "test-save":
+				save = savesdir.get_next()
+				continue
 			savejson.open(savesdir.get_current_dir() + "/" + save + "/save.json", File.READ)
 			var savedata = JSON.parse(savejson.get_as_text()).result
 			if savedata.character == character:

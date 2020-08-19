@@ -16,7 +16,8 @@ func createNew(data: Dictionary, savename):
 	savejson.store_line(to_json(gamedata))
 	savejson.close()
 	savedir.make_dir("user://saves/" + savename + "/data")
-	logcat.stdout("Save complete. Copying game files to data folder", logcat.INFO)
+	savedir.make_dir("user://saves/" + savename + "/data/dialogues")
+	logcat.stdout("Save complete.", logcat.INFO)
 	#TODO
 
 func removesave(savename: String):

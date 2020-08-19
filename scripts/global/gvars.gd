@@ -44,7 +44,7 @@ var save = "test-save"
 
 var playerFlip
 
-var debug = true
+var debug = false
 
 var current = "loadscreen"
 

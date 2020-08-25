@@ -1,0 +1,20 @@
+{
+	"name":"SkyWing",
+	"city":"",
+	"tribe-effects":[],
+	"skills":[
+		{
+			"id":"skw_sk-flight_dur_inc",
+			"type":"ability",
+			"slot":"undefined",
+			"unlocked":"skill-tree"
+		},
+		{
+			"id":"skw_sk-firebreath",
+			"type":"skill",
+			"slot":"attack-sec",
+			"unlocked":"unlocked"
+		}
+	],
+	"appearance-modifiers":[]
+}

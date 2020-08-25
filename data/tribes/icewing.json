@@ -1,0 +1,25 @@
+{
+	"name":"IceWing",
+	"city":"loc:iw-palace",
+	"tribe-effects":[
+		{
+			"id":"ef-bleed",
+			"condition":"attack"
+		}
+	],
+	"skills":[
+		{
+			"id":"iw_sk-frostbreath",
+			"type":"skill",
+			"slot":"attack-sec",
+			"unlocked":"unlocked"
+		},
+		{
+			"id":"iw_sk-ice_spikes",
+			"type":"skill",
+			"slot":"numeric",
+			"unlocked":"skill-tree"
+		}
+	],
+	"appearance-modifiers":[]
+}

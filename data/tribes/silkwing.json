@@ -1,0 +1,14 @@
+{
+	"name":"SilkWing",
+	"city":"",
+	"tribe-effects":[],
+	"skills":[
+		{
+			"id":"siw_sk-silk_spinning",
+			"type":"skill",
+			"slot":"numeric",
+			"unlocked":"skill-tree"
+		}
+	],
+	"appearance-modifiers":[]
+}

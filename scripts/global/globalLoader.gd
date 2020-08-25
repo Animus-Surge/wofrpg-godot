@@ -1,6 +1,6 @@
 extends Node
 
-const tribesPath = "user://data/base/tribes/"
+const tribesPath = "res://data/tribes/"
 const ctribesPath = "user://localuserdata/tribes"
 
 const itemDict = "user://data/base/items/itemdict.json"

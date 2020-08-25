@@ -1,0 +1,25 @@
+{
+	"name":"RainWing",
+	"city":"loc:rw-rainforest",
+	"tribe-effects":[
+		{
+			"id":"ef-poison_rw",
+			"condition":["skill", "morale"]
+		}
+	],
+	"skills":[
+		{
+			"id":"rw_sk-venom",
+			"type":"skill",
+			"slot":"attack-sec",
+			"unlocked":"skill-tree"
+		},
+		{
+			"id":"rw_sk-camoflauge",
+			"type":"skill",
+			"slot":"numeric",
+			"unlocked":"unlocked"
+		}
+	],
+	"appearance-modifiers":[]
+}

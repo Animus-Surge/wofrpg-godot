@@ -33,18 +33,23 @@ position = Vector2( -76, -76 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="body" type="Sprite" parent="reg"]
+position = Vector2( 2, 0 )
 texture = ExtResource( 8 )
 
 [node name="bodys" type="Sprite" parent="reg"]
+position = Vector2( 2, 0 )
 texture = ExtResource( 10 )
 
 [node name="wings" type="Sprite" parent="reg"]
+position = Vector2( 2, 0 )
 texture = ExtResource( 3 )
 
 [node name="horns" type="Sprite" parent="reg"]
+position = Vector2( 2, 0 )
 texture = ExtResource( 5 )
 
 [node name="eyes" type="Sprite" parent="reg"]
+position = Vector2( 2, 0 )
 texture = ExtResource( 9 )
 
 [node name="flip" type="Node2D" parent="."]
@@ -85,7 +90,7 @@ current = true
 
 [node name="uiControl" parent="." instance=ExtResource( 6 )]
 
-[node name="inventory" parent="uiControl/uiControl" index="1"]
+[node name="inventory" parent="uiControl/uiControl" index="0"]
 visible = false
 
 [node name="fireballFlip" type="Position2D" parent="."]

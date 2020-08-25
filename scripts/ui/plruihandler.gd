@@ -3,6 +3,15 @@ extends Control
 var invslots = []
 var itemsininventory = []
 
+var currentLevel
+var xp
+var mana
+var hp
+
+var levelupxp
+var maxmana
+var maxhp
+
 func _ready():
 	$pause.visible = false
 	$inventory.visible = false
@@ -10,13 +19,20 @@ func _ready():
 	for child in get_node("inventory/ScrollContainer/GridContainer").get_children():
 		invslots.append(child)
 		child.call("clear")
-	$hotbar/Panel7/fps.text = ""
-	if globalvars.debug:
-		set_process(true)
+	#$hotbar/Panel7/fps.text = ""
+	#if globalvars.debug:
+		#set_process(true)
+
+func checkStats():
+	if hp <= 0:
+		pass #kill the player and take them to the respawn point
+	if xp >= levelupxp:
+		pass #level up the player and add two skill points to their skill point counter
 
 func _process(delta):
-	$hotbar/Panel7/fps.text = "FPS: " + String(Performance.get_monitor(Performance.TIME_FPS))
-
+	#$hotbar/Panel7/fps.text = "FPS: " + String(Performance.get_monitor(Performance.TIME_FPS))
+	pass
+	
 func _unhandled_key_input(event):
 	if event.scancode == KEY_ESCAPE and event.pressed:
 		if globalvars.uiShowing:

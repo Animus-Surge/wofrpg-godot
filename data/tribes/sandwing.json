@@ -1,0 +1,25 @@
+{
+	"name":"SandWing",
+	"city":"loc:saw-stronghold",
+	"tribe-effects":[
+		{
+			"id":"ef-poison_saw",
+			"condition":"attack"
+		}
+	],
+	"skills":[
+		{
+			"id":"saw_sk-fire",
+			"type":"skill",
+			"slot":"numeric",
+			"unlocked":"unlocked"
+		},
+		{
+			"id":"saw_sk-tail_stab",
+			"type":"skill",
+			"slot":"attack-sec",
+			"unlocked":"unlocked"
+		}
+	],
+	"appearance-modifiers":[]
+}

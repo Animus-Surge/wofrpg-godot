@@ -1,0 +1,19 @@
+{
+	"name":"HiveWing",
+	"city":"",
+	"tribe-effects":[
+		{
+			"id":"ef-poison",
+			"condition":"attack"
+		}
+	],
+	"skills":[
+		{
+			"id":"hw_sk-paralysis",
+			"type":"skill",
+			"slot":"attack-sec",
+			"unlocked":"skill-tree"
+		}
+	],
+	"appearance-modifiers":[]
+}

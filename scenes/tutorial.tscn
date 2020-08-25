@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://godot-resources/main-tilemap.tres" type="TileSet" id=1]
+[ext_resource path="res://objects/entity/sp-playerRoot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/projectile/handler-shuttle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=4]
+
+[node name="tutorial" type="Node2D"]
+script = ExtResource( 4 )
+sceneName = "tutorial"
+
+[node name="map" type="Node2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="map"]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 530, 310 )
+format = 1
+tile_data = PoolIntArray( -262149, 15, 0, -262148, 15, 0, -262147, 15, 0, -262146, 15, 0, -262145, 15, 0, -327680, 15, 0, -327679, 15, 0, -327678, 15, 0, -327677, 15, 0, -327676, 15, 0, -327675, 15, 0, -196613, 15, 0, -196612, 15, 0, -196611, 15, 0, -196610, 15, 0, -196609, 15, 0, -262144, 15, 0, -262143, 15, 0, -262142, 15, 0, -262141, 15, 0, -262140, 15, 0, -262139, 15, 0, -131077, 15, 0, -131076, 15, 0, -131075, 15, 0, -131074, 15, 0, -131073, 15, 0, -196608, 15, 0, -196607, 15, 0, -196606, 15, 0, -196605, 15, 0, -196604, 15, 0, -196603, 15, 0, -65541, 15, 0, -65540, 15, 0, -65539, 15, 0, -65538, 15, 0, -65537, 15, 0, -131072, 15, 0, -131071, 15, 0, -131070, 15, 0, -131069, 15, 0, -131068, 15, 0, -131067, 15, 0, -5, 15, 0, -4, 15, 0, -3, 15, 0, -2, 15, 0, -1, 15, 0, -65536, 15, 0, -65535, 15, 0, -65534, 15, 0, -65533, 15, 0, -65532, 15, 0, -65531, 15, 0, 65531, 15, 0, 65532, 15, 0, 65533, 15, 0, 65534, 15, 0, 65535, 15, 0, 0, 15, 0, 1, 15, 0, 2, 15, 0, 3, 15, 0, 4, 15, 0, 5, 15, 0, 131067, 15, 0, 131068, 15, 0, 131069, 15, 0, 131070, 15, 0, 131071, 15, 0, 65536, 15, 0, 65537, 15, 0, 65538, 15, 0, 65539, 15, 0, 65540, 15, 0, 65541, 15, 0, 196603, 15, 0, 196604, 15, 0, 196605, 15, 0, 196606, 15, 0, 196607, 15, 0, 131072, 15, 0, 131073, 15, 0, 131074, 15, 0, 131075, 15, 0, 131076, 15, 0, 131077, 15, 0, 262139, 15, 0, 262140, 15, 0, 262141, 15, 0, 262142, 15, 0, 262143, 15, 0, 196608, 15, 0, 196609, 15, 0, 196610, 15, 0, 196611, 15, 0, 196612, 15, 0, 196613, 15, 0, 327675, 15, 0, 327676, 15, 0, 327677, 15, 0, 327678, 15, 0, 327679, 15, 0, 262144, 15, 0, 262145, 15, 0, 262146, 15, 0, 262147, 15, 0, 262148, 15, 0, 262149, 15, 0, 393211, 15, 0, 393212, 15, 0, 393213, 15, 0, 393214, 15, 0, 393215, 15, 0, 327680, 15, 0, 327681, 15, 0, 327682, 15, 0, 327683, 15, 0, 327684, 15, 0, 327685, 15, 0 )
+
+[node name="objects" type="YSort" parent="."]
+
+[node name="playerRoot" parent="objects" instance=ExtResource( 2 )]
+scale = Vector2( 1.74086, 1.74086 )
+
+[node name="Camera2D" parent="objects/playerRoot" index="5"]
+zoom = Vector2( 1.74, 1.73 )
+
+[node name="items" type="Node2D" parent="."]
+
+[node name="projectiles" type="Node2D" parent="."]
+
+[node name="handler-shuttle" parent="projectiles" instance=ExtResource( 3 )]
+
+[node name="flip" parent="projectiles/handler-shuttle" index="0"]
+position = Vector2( -125, 182 )
+
+[node name="reg" parent="projectiles/handler-shuttle" index="1"]
+position = Vector2( 125, 182 )
+
+[editable path="objects/playerRoot"]
+
+[editable path="projectiles/handler-shuttle"]

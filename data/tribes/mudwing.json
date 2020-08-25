@@ -1,0 +1,14 @@
+{
+	"name":"MudWing",
+	"city":"",
+	"tribe-effects":[],
+	"skills":[
+		{
+			"id":"mw-sk-elongated_breath",
+			"type":"skill",
+			"slot":"numeric",
+			"unlocked":"unlocked"
+		}
+	],
+	"appearance-modifiers":[]
+}

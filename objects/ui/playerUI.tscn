@@ -1,84 +1,42 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/ui/plruihandler.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
-[ext_resource path="res://images/slot.png" type="Texture" id=3]
-[ext_resource path="res://images/slot-highlight.png" type="Texture" id=4]
-[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=5]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/interaction-bar.png" type="Texture" id=6]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/iw_sw_wolf-surge-confused.tres" type="Animation" id=7]
-[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=8]
+[ext_resource path="res://images/exp.png" type="Texture" id=8]
 [ext_resource path="res://scripts/ui/npcinteraction.gd" type="Script" id=9]
 [ext_resource path="res://scripts/ibutton.gd" type="Script" id=10]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/reaction-cute.png" type="Texture" id=11]
 [ext_resource path="res://images/life-bar-bg.png" type="Texture" id=12]
 [ext_resource path="res://images/heart-icon.png" type="Texture" id=13]
-[ext_resource path="res://images/mana-bar-bg.png" type="Texture" id=14]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=14]
 [ext_resource path="res://images/mana-icon.png" type="Texture" id=15]
-[ext_resource path="res://images/mana-bar-fg.png" type="Texture" id=16]
-[ext_resource path="res://images/ui/icons/claw-attack-icon.png" type="Texture" id=17]
 [ext_resource path="res://images/life-bar-fg.png" type="Texture" id=18]
-[ext_resource path="res://images/ui/buttons/tab-active.png" type="Texture" id=19]
-[ext_resource path="res://images/ui/icons/mbutton-left.png" type="Texture" id=20]
-[ext_resource path="res://images/ui/icons/mbutton-right.png" type="Texture" id=21]
-[ext_resource path="res://images/ui/buttons/tab-inactive.png" type="Texture" id=22]
-[ext_resource path="res://images/ui/icons/fireball-icon.png" type="Texture" id=23]
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=24]
-[ext_resource path="res://scripts/invslot.gd" type="Script" id=25]
-[ext_resource path="res://images/ui/icons/padlock-icon.png" type="Texture" id=26]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_1_delay-0.3s.png" type="Texture" id=27]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=31]
 
-[sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 22 )
-region_rect = Rect2( 0, 0, 64, 64 )
-margin_left = 26.2008
-margin_right = 25.916
-margin_top = 24.0649
-margin_bottom = 2.18471
-
-[sub_resource type="StyleBoxTexture" id=2]
-texture = ExtResource( 19 )
-region_rect = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="StyleBoxEmpty" id=3]
-
-[sub_resource type="StyleBoxTexture" id=4]
+[sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 18 )
 region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.08429
+margin_left = 3.34132
 margin_right = 3.2128
-margin_top = 2.95578
-margin_bottom = 2.95578
-
-[sub_resource type="StyleBoxTexture" id=5]
-texture = ExtResource( 12 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.2128
-margin_right = 3.2128
-margin_top = 2.95578
-margin_bottom = 2.95578
+margin_top = 3.08429
+margin_bottom = 3.34132
 
 [sub_resource type="StyleBoxTexture" id=6]
-texture = ExtResource( 16 )
-region_rect = Rect2( 0, 0, 16, 16 )
-margin_left = 3.46983
-margin_right = 3.34132
-margin_top = 3.2128
-margin_bottom = 2.95578
-
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 14 )
+texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 16, 16 )
 margin_left = 3.08429
-margin_right = 3.08429
-margin_top = 3.34132
-margin_bottom = 2.95578
+margin_right = 2.82727
+margin_top = 3.2128
+margin_bottom = 3.34132
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.568627 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=2]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -94,11 +52,11 @@ tracks/0/keys = {
 "values": [ ExtResource( 31 ), ExtResource( 27 ) ]
 }
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=3]
 size = 50
 font_data = ExtResource( 24 )
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Button
 
 func _pressed():
@@ -123,1074 +81,283 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="inventory" type="Panel" parent="uiControl"]
-anchor_right = 0.383
-anchor_bottom = 0.421
-margin_right = -0.17804
-margin_bottom = -0.328033
-custom_styles/panel = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/inventory"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 28.0
-margin_top = 67.0
-margin_right = -42.0
-margin_bottom = -62.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="GridContainer" type="GridContainer" parent="uiControl/inventory/ScrollContainer"]
-margin_right = 404.0
-margin_bottom = 268.0
-columns = 6
-
-[node name="TextureButton" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_right = 64.0
-margin_bottom = 64.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton2" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 68.0
-margin_right = 132.0
-margin_bottom = 64.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton3" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 136.0
-margin_right = 200.0
-margin_bottom = 64.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton4" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 204.0
-margin_right = 268.0
-margin_bottom = 64.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton5" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 272.0
-margin_right = 336.0
-margin_bottom = 64.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton5"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton6" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 340.0
-margin_right = 404.0
-margin_bottom = 64.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton6"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton7" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 68.0
-margin_right = 64.0
-margin_bottom = 132.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton7"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton8" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 68.0
-margin_top = 68.0
-margin_right = 132.0
-margin_bottom = 132.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton8"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton9" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 136.0
-margin_top = 68.0
-margin_right = 200.0
-margin_bottom = 132.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton9"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton10" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 204.0
-margin_top = 68.0
-margin_right = 268.0
-margin_bottom = 132.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton10"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton11" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 272.0
-margin_top = 68.0
-margin_right = 336.0
-margin_bottom = 132.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton11"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton12" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 340.0
-margin_top = 68.0
-margin_right = 404.0
-margin_bottom = 132.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton12"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton13" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 136.0
-margin_right = 64.0
-margin_bottom = 200.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton13"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton14" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 68.0
-margin_top = 136.0
-margin_right = 132.0
-margin_bottom = 200.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton14"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton15" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 136.0
-margin_top = 136.0
-margin_right = 200.0
-margin_bottom = 200.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton15"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton16" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 204.0
-margin_top = 136.0
-margin_right = 268.0
-margin_bottom = 200.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton16"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton17" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 272.0
-margin_top = 136.0
-margin_right = 336.0
-margin_bottom = 200.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton17"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton18" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 340.0
-margin_top = 136.0
-margin_right = 404.0
-margin_bottom = 200.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton18"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton19" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 204.0
-margin_right = 64.0
-margin_bottom = 268.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton19"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton20" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 68.0
-margin_top = 204.0
-margin_right = 132.0
-margin_bottom = 268.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton20"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton21" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 136.0
-margin_top = 204.0
-margin_right = 200.0
-margin_bottom = 268.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton21"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton22" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 204.0
-margin_top = 204.0
-margin_right = 268.0
-margin_bottom = 268.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton22"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton23" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 272.0
-margin_top = 204.0
-margin_right = 336.0
-margin_bottom = 268.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton23"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton24" type="TextureButton" parent="uiControl/inventory/ScrollContainer/GridContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_left = 340.0
-margin_top = 204.0
-margin_right = 404.0
-margin_bottom = 268.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 3 )
-texture_pressed = ExtResource( 4 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 3 )
-stretch_mode = 5
-script = ExtResource( 25 )
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/inventory/ScrollContainer/GridContainer/TextureButton24"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="hotbar" type="Panel" parent="uiControl"]
-anchor_top = 0.905
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -0.0400391
-custom_styles/panel = SubResource( 1 )
-
-[node name="Panel" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.408
-anchor_top = 0.113
-anchor_right = 0.447
-anchor_bottom = 1.0
-margin_left = -0.328003
-margin_top = 3.751
-margin_right = -0.602051
-margin_bottom = -8.0
-custom_styles/panel = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/hotbar/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 2.0
-margin_right = -6.0
-margin_bottom = -11.0
-texture = ExtResource( 17 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect2" type="TextureRect" parent="uiControl/hotbar/Panel"]
-anchor_left = 0.358
-anchor_top = 0.83
-anchor_right = 0.66
-anchor_bottom = 1.132
-margin_left = 0.0259991
-margin_top = 0.00999832
-margin_right = 0.0200005
-margin_bottom = 0.00399399
-texture = ExtResource( 20 )
-expand = true
-stretch_mode = 5
-
-[node name="Panel2" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.453
-anchor_top = 0.113
-anchor_right = 0.492
-anchor_bottom = 1.0
-margin_left = 0.201965
-margin_top = 3.751
-margin_right = -0.0720215
-margin_bottom = -8.0
-custom_styles/panel = SubResource( 2 )
-
-[node name="TextureRect3" type="TextureRect" parent="uiControl/hotbar/Panel2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 2.0
-margin_right = -6.0
-margin_bottom = -11.0
-texture = ExtResource( 23 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect4" type="TextureRect" parent="uiControl/hotbar/Panel2"]
-anchor_left = 0.358
-anchor_top = 0.83
-anchor_right = 0.66
-anchor_bottom = 1.132
-margin_left = 0.0259991
-margin_top = 0.00999832
-margin_right = 0.0200005
-margin_bottom = 0.00399399
-texture = ExtResource( 21 )
-expand = true
-stretch_mode = 5
-
-[node name="Panel3" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.524
-anchor_top = 0.113
-anchor_right = 0.563
-anchor_bottom = 1.0
-margin_left = 0.215942
-margin_top = 3.75102
-margin_right = -0.0580444
-margin_bottom = -8.00003
-custom_styles/panel = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="uiControl/hotbar/Panel3"]
-anchor_left = 0.5
+[node name="chatpanel" type="Panel" parent="uiControl"]
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -8.0
-margin_top = -9.0
-margin_right = 8.0
-margin_bottom = 10.0
-custom_fonts/font = ExtResource( 8 )
-text = "1"
+margin_left = -310.0
+margin_top = -262.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="uiControl/chatpanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Global" type="Panel" parent="uiControl/chatpanel/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 37.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Global"]
+anchor_right = 1.0
+anchor_bottom = 0.854
+margin_right = -0.00012207
+margin_bottom = -0.00402832
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="uiControl/chatpanel/TabContainer/Global"]
+anchor_top = 0.872
+anchor_right = 0.745
+anchor_bottom = 1.0
+margin_top = -0.0720062
+margin_right = 0.0098877
+custom_fonts/font = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="uiControl/chatpanel/TabContainer/Global"]
+anchor_left = 0.762
+anchor_top = 0.872
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.1241
+margin_top = -0.0720367
+margin_right = -0.00012207
+margin_bottom = -3.05176e-05
+custom_fonts/font = ExtResource( 14 )
+text = "Send"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Local" type="Panel" parent="uiControl/chatpanel/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 37.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Local"]
+anchor_right = 1.0
+anchor_bottom = 0.854
+margin_top = 5.0
+margin_right = -0.00012207
+margin_bottom = 4.99597
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit2" type="LineEdit" parent="uiControl/chatpanel/TabContainer/Local"]
+anchor_top = 0.872
+anchor_right = 0.745
+anchor_bottom = 1.0
+margin_top = 0.568008
+margin_right = 0.0098877
+margin_bottom = 0.640015
+custom_fonts/font = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="uiControl/chatpanel/TabContainer/Local"]
+anchor_left = 0.762
+anchor_top = 0.872
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.1241
+margin_top = 0.567947
+margin_right = -0.00012207
+margin_bottom = 0.639954
+custom_fonts/font = ExtResource( 14 )
+text = "Send"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Party" type="Panel" parent="uiControl/chatpanel/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 37.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Party"]
+anchor_right = 1.0
+anchor_bottom = 0.854
+margin_right = -0.00012207
+margin_bottom = -0.00402832
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit2" type="LineEdit" parent="uiControl/chatpanel/TabContainer/Party"]
+anchor_top = 0.872
+anchor_right = 0.745
+anchor_bottom = 1.0
+margin_top = -0.071991
+margin_right = 0.0098877
+margin_bottom = 0.640015
+custom_fonts/font = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="uiControl/chatpanel/TabContainer/Party"]
+anchor_left = 0.762
+anchor_top = 0.872
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.1241
+margin_top = -0.072052
+margin_right = -0.00012207
+margin_bottom = -4.57764e-05
+custom_fonts/font = ExtResource( 14 )
+text = "Send"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stats" type="Panel" parent="uiControl"]
+self_modulate = Color( 0.054902, 1, 0, 1 )
+anchor_right = 0.266
+anchor_bottom = 0.176
+margin_right = 0.643982
+margin_bottom = -0.168015
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="levelIndicator" type="TextureRect" parent="uiControl/stats"]
+anchor_right = 0.275
+anchor_bottom = 0.741
+margin_right = -0.0999908
+margin_bottom = -0.0350037
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="uiControl/stats/levelIndicator"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 2 )
+text = "LVL
+8"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="TextureRect" type="TextureRect" parent="uiControl/hotbar/Panel3"]
+[node name="Panel" type="Panel" parent="uiControl/stats"]
+anchor_left = 0.297
 anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 2.0
-margin_right = -6.00006
-margin_bottom = -11.0
-texture = ExtResource( 26 )
-expand = true
-stretch_mode = 6
+anchor_bottom = 0.741
+margin_left = -0.108009
+margin_bottom = -0.0350113
 
-[node name="Panel4" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.57
-anchor_top = 0.106
-anchor_right = 0.608
-anchor_bottom = 1.0
-margin_left = -0.620056
-margin_top = 4.26202
-margin_right = 0.471924
-margin_bottom = -8.00003
-custom_styles/panel = SubResource( 2 )
-
-[node name="Label2" type="Label" parent="uiControl/hotbar/Panel4"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -8.0
-margin_top = -9.0
-margin_right = 8.0
-margin_bottom = 10.0
-custom_fonts/font = ExtResource( 8 )
-text = "2"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect2" type="TextureRect" parent="uiControl/hotbar/Panel4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 2.0
-margin_right = -6.00006
-margin_bottom = -11.0
-texture = ExtResource( 26 )
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel5" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.615
-anchor_top = 0.116
-anchor_right = 0.654
-anchor_bottom = 1.0
-margin_left = -0.0900269
-margin_top = 3.53202
-margin_right = -0.364075
-margin_bottom = -8.00003
-custom_styles/panel = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label3" type="Label" parent="uiControl/hotbar/Panel5"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -8.0
-margin_top = -9.0
-margin_right = 8.0
-margin_bottom = 10.0
-custom_fonts/font = ExtResource( 8 )
-text = "3"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect3" type="TextureRect" parent="uiControl/hotbar/Panel5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 2.0
-margin_right = -6.00006
-margin_bottom = -11.0
-texture = ExtResource( 26 )
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel6" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.66
-anchor_top = 0.11
-anchor_right = 0.698
-anchor_bottom = 1.0
-margin_left = -0.560059
-margin_top = 3.97002
-margin_right = 0.531982
-margin_bottom = -8.00003
-custom_styles/panel = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label4" type="Label" parent="uiControl/hotbar/Panel6"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -8.0
-margin_top = -9.0
-margin_right = 8.0
-margin_bottom = 10.0
-custom_fonts/font = ExtResource( 8 )
-text = "4"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect4" type="TextureRect" parent="uiControl/hotbar/Panel6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 7.0
-margin_top = 2.0
-margin_right = -6.00006
-margin_bottom = -11.0
-texture = ExtResource( 26 )
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel7" type="Panel" parent="uiControl/hotbar"]
-anchor_left = 0.023
-anchor_top = 0.192
-anchor_right = 0.287
-anchor_bottom = 0.89
-margin_left = 0.581997
-margin_top = -0.0160122
-margin_right = -0.0419922
-margin_bottom = 0.0299454
-custom_styles/panel = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ProgressBar" type="ProgressBar" parent="uiControl/hotbar/Panel7"]
-anchor_right = 0.483
-anchor_bottom = 0.353
-margin_right = 0.119995
-margin_bottom = -0.00300026
-custom_styles/fg = SubResource( 4 )
-custom_styles/bg = SubResource( 5 )
-value = 50.0
+[node name="hpbar" type="ProgressBar" parent="uiControl/stats/Panel"]
+anchor_left = 0.016
+anchor_top = 0.05
+anchor_right = 0.984
+anchor_bottom = 0.27
+margin_left = -0.0960002
+margin_right = 0.0960083
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
+value = 100.0
 percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="ProgressBar2" type="ProgressBar" parent="uiControl/hotbar/Panel7"]
-anchor_left = 0.517
-anchor_right = 1.0
-anchor_bottom = 0.353
-margin_left = -0.12001
-margin_bottom = -0.00300026
-custom_styles/fg = SubResource( 6 )
-custom_styles/bg = SubResource( 7 )
-value = 50.0
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="uiControl/hotbar/Panel7"]
-margin_left = -9.0
-margin_top = 6.10352e-05
-margin_right = 9.0
-margin_bottom = 18.0001
+[node name="TextureRect" type="TextureRect" parent="uiControl/stats/Panel/hpbar"]
+anchor_left = -0.073
+anchor_top = -0.227
+anchor_right = 0.073
+anchor_bottom = 1.364
+margin_left = 0.104002
+margin_top = -0.00599909
+margin_right = -0.104002
+margin_bottom = -0.00800514
 texture = ExtResource( 13 )
 expand = true
+stretch_mode = 6
 
-[node name="TextureRect2" type="TextureRect" parent="uiControl/hotbar/Panel7"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -9.0
-margin_top = 6.10352e-05
-margin_right = 9.0
-margin_bottom = 18.0001
+[node name="manabar" type="ProgressBar" parent="uiControl/stats/Panel"]
+anchor_left = 0.016
+anchor_top = 0.73
+anchor_right = 0.984
+anchor_bottom = 0.95
+margin_left = -0.0960002
+margin_right = 0.095993
+margin_bottom = -7.62939e-06
+percent_visible = false
+
+[node name="TextureRect" type="TextureRect" parent="uiControl/stats/Panel/manabar"]
+anchor_left = -0.048
+anchor_top = -0.273
+anchor_right = 0.073
+anchor_bottom = 1.227
+margin_left = -0.0959997
+margin_top = 0.00600004
+margin_right = -0.104002
+margin_bottom = 0.0059967
 texture = ExtResource( 15 )
 expand = true
+stretch_mode = 6
 
-[node name="fps" type="Label" parent="uiControl/hotbar/Panel7"]
-margin_top = 34.0001
-margin_right = 40.0
-margin_bottom = 48.0001
+[node name="xpbar" type="ProgressBar" parent="uiControl/stats"]
+anchor_left = 0.016
+anchor_top = 0.8
+anchor_right = 0.984
+anchor_bottom = 0.963
+margin_left = 0.176
+margin_top = 7.62939e-06
+margin_right = -0.175995
+margin_bottom = -0.00500488
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="dist" type="Label" parent="uiControl/hotbar/Panel7"]
-margin_left = 56.0
-margin_top = 34.0001
-margin_right = 96.0
-margin_bottom = 48.0001
+[node name="TextureRect" type="TextureRect" parent="uiControl/stats/xpbar"]
+anchor_left = -0.017
+anchor_top = -0.273
+anchor_right = 0.062
+anchor_bottom = 1.227
+margin_left = -0.0159998
+margin_top = 0.00599813
+margin_right = 0.175999
+margin_bottom = 0.00600624
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="Panel" type="Panel" parent="uiControl"]
+anchor_top = 0.914
+anchor_right = 0.773
+anchor_bottom = 1.0
+margin_top = 0.0479736
+margin_right = 0.0819092
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1201,7 +368,7 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 8 )
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1350,7 +517,7 @@ __meta__ = {
 
 [node name="animatedInteractions" type="AnimationPlayer" parent="uiControl/npcinteraction"]
 anims/iw_sw_wolf-surge-confused = ExtResource( 7 )
-anims/iw_sw_wolf-surge-scared = SubResource( 9 )
+anims/iw_sw_wolf-surge-scared = SubResource( 2 )
 
 [node name="Timer" type="Timer" parent="uiControl/npcinteraction"]
 
@@ -1373,7 +540,7 @@ margin_left = 0.247742
 margin_top = -0.327381
 margin_right = 0.635742
 margin_bottom = 0.360619
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 3 )
 text = "Game Paused"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1392,7 +559,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Return to Game"
-script = SubResource( 11 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "resume"
@@ -1411,7 +578,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to menu"
-script = SubResource( 11 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-mm"
@@ -1430,7 +597,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to desktop"
-script = SubResource( 11 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-ds"

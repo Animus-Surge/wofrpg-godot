@@ -463,6 +463,7 @@ align = 1
 valign = 2
 
 [node name="sp" type="PanelContainer" parent="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -978,7 +979,6 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
 [node name="mp" type="PanelContainer" parent="Control"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -1576,7 +1576,7 @@ autowrap = true
 [connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton3" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
 [connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton4" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
-[connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="." method="hideAll"]
+[connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/set/Panel/TextureButton2" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/gameselect/Panel/TextureButton" to="Control/gameselect" method="hideMenu"]

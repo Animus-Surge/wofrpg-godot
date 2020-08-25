@@ -1,0 +1,14 @@
+{
+	"name":"LeafWing",
+	"city":"",
+	"tribe-effects":[],
+	"skills":[
+		{
+			"id":"lw_sk-leafspeak",
+			"type":"skill",
+			"slot":"numeric",
+			"unlocked":"skill-tree"
+		}
+	],
+	"appearance-modifiers":[]
+}

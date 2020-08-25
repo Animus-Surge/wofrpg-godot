@@ -44,16 +44,16 @@ var save = "test-save"
 
 var playerFlip
 
-var debug = false
+var debug = true
 
 var current = "loadscreen"
 
 func _ready():
 	if !debug:
 		print("==============> GAME START <==============")
-		scenes.load_scene("res://scenes/menus.tscn")
 		gloader.startLoad()
 		cfm.startLoad()
+		scenes.load_scene("res://scenes/menus.tscn")
 	else:
 		logcat.stdout("DEBUG MODE ACTIVE", logcat.DEBUG)
 

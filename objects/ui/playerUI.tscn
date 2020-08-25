@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/ui/plruihandler.gd" type="Script" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -17,7 +17,11 @@
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_1_delay-0.3s.png" type="Texture" id=27]
 [ext_resource path="res://images/ui/interactions/iw_siw_wolf-surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=31]
 
-[sub_resource type="StyleBoxTexture" id=5]
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 18 )
 region_rect = Rect2( 0, 0, 16, 16 )
 margin_left = 3.34132
@@ -25,7 +29,7 @@ margin_right = 3.2128
 margin_top = 3.08429
 margin_bottom = 3.34132
 
-[sub_resource type="StyleBoxTexture" id=6]
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 16, 16 )
 margin_left = 3.08429
@@ -33,10 +37,10 @@ margin_right = 2.82727
 margin_top = 3.2128
 margin_bottom = 3.34132
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0, 0, 0, 0.568627 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=5]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -52,11 +56,11 @@ tracks/0/keys = {
 "values": [ ExtResource( 31 ), ExtResource( 27 ) ]
 }
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=6]
 size = 50
 font_data = ExtResource( 24 )
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Button
 
 func _pressed():
@@ -88,6 +92,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -310.0
 margin_top = -262.0
+custom_styles/panel = SubResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -109,15 +114,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Global"]
-anchor_right = 1.0
-anchor_bottom = 0.854
-margin_right = -0.00012207
-margin_bottom = -0.00402832
-__meta__ = {
-"_edit_use_anchors_": false
-}
+custom_styles/panel = SubResource( 1 )
 
 [node name="LineEdit" type="LineEdit" parent="uiControl/chatpanel/TabContainer/Global"]
 anchor_top = 0.872
@@ -145,6 +142,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ScrollContainer" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Global"]
+anchor_right = 1.0
+anchor_bottom = 0.86
+margin_bottom = -0.0599976
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="uiControl/chatpanel/TabContainer/Global/ScrollContainer"]
+margin_right = 302.0
+margin_bottom = 190.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=#22ffff]Surge[/color]: Hello there, guys! Hows everyone doing?
+[color=#999]Commando has joined the game[/color]
+[color=#ff7700]Commando[/color]: Good afternoon
+[color=#22ffff]Surge[/color]: Heyo!
+[color=#daa520]A boss is being summoned in the [color=#f00]deadworlds[/color] realm![/color]
+[color=#00ff00]QUEST COMPLETE: Destroy the heart crystal[/color]
+[color=#22ffff]Surge[/color]: Finally was able to complete this quest... man did it take me forever"
+text = "Surge: Hello there, guys! Hows everyone doing?
+Commando has joined the game
+Commando: Good afternoon
+Surge: Heyo!
+A boss is being summoned in the deadworlds realm!
+QUEST COMPLETE: Destroy the heart crystal
+Surge: Finally was able to complete this quest... man did it take me forever"
+
 [node name="Local" type="Panel" parent="uiControl/chatpanel/TabContainer"]
 visible = false
 anchor_right = 1.0
@@ -155,16 +183,6 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="ScrollContainer2" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Local"]
-anchor_right = 1.0
-anchor_bottom = 0.854
-margin_top = 5.0
-margin_right = -0.00012207
-margin_bottom = 4.99597
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LineEdit2" type="LineEdit" parent="uiControl/chatpanel/TabContainer/Local"]
 anchor_top = 0.872
@@ -204,15 +222,6 @@ margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="uiControl/chatpanel/TabContainer/Party"]
-anchor_right = 1.0
-anchor_bottom = 0.854
-margin_right = -0.00012207
-margin_bottom = -0.00402832
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="LineEdit2" type="LineEdit" parent="uiControl/chatpanel/TabContainer/Party"]
 anchor_top = 0.872
 anchor_right = 0.745
@@ -241,7 +250,7 @@ __meta__ = {
 }
 
 [node name="stats" type="Panel" parent="uiControl"]
-self_modulate = Color( 0.054902, 1, 0, 1 )
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 0.266
 anchor_bottom = 0.176
 margin_right = 0.643982
@@ -269,8 +278,12 @@ text = "LVL
 8"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="uiControl/stats"]
+self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.297
 anchor_right = 1.0
 anchor_bottom = 0.741
@@ -279,13 +292,15 @@ margin_bottom = -0.0350113
 
 [node name="hpbar" type="ProgressBar" parent="uiControl/stats/Panel"]
 anchor_left = 0.016
-anchor_top = 0.05
+anchor_top = 0.14
 anchor_right = 0.984
-anchor_bottom = 0.27
+anchor_bottom = 0.36
 margin_left = -0.0960002
+margin_top = 2.86102e-06
 margin_right = 0.0960083
-custom_styles/fg = SubResource( 5 )
-custom_styles/bg = SubResource( 6 )
+margin_bottom = 3.8147e-06
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
 value = 100.0
 percent_visible = false
 
@@ -304,12 +319,13 @@ stretch_mode = 6
 
 [node name="manabar" type="ProgressBar" parent="uiControl/stats/Panel"]
 anchor_left = 0.016
-anchor_top = 0.73
+anchor_top = 0.63
 anchor_right = 0.984
-anchor_bottom = 0.95
+anchor_bottom = 0.85
 margin_left = -0.0960002
+margin_top = -7.62939e-06
 margin_right = 0.095993
-margin_bottom = -7.62939e-06
+margin_bottom = -1.52588e-05
 percent_visible = false
 
 [node name="TextureRect" type="TextureRect" parent="uiControl/stats/Panel/manabar"]
@@ -352,12 +368,14 @@ texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
 
-[node name="Panel" type="Panel" parent="uiControl"]
+[node name="hotbar" type="Panel" parent="uiControl"]
 anchor_top = 0.914
 anchor_right = 0.773
 anchor_bottom = 1.0
-margin_top = 0.0479736
-margin_right = 0.0819092
+margin_left = -1.0
+margin_top = 0.0480957
+margin_right = -0.918091
+margin_bottom = 0.00012207
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -368,7 +386,7 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 4 )
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -517,7 +535,7 @@ __meta__ = {
 
 [node name="animatedInteractions" type="AnimationPlayer" parent="uiControl/npcinteraction"]
 anims/iw_sw_wolf-surge-confused = ExtResource( 7 )
-anims/iw_sw_wolf-surge-scared = SubResource( 2 )
+anims/iw_sw_wolf-surge-scared = SubResource( 5 )
 
 [node name="Timer" type="Timer" parent="uiControl/npcinteraction"]
 
@@ -540,7 +558,7 @@ margin_left = 0.247742
 margin_top = -0.327381
 margin_right = 0.635742
 margin_bottom = 0.360619
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 text = "Game Paused"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -559,7 +577,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Return to Game"
-script = SubResource( 4 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "resume"
@@ -578,7 +596,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to menu"
-script = SubResource( 4 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-mm"
@@ -597,7 +615,7 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "Save and quit to desktop"
-script = SubResource( 4 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "exit-ds"

@@ -215,7 +215,7 @@ texture = ExtResource( 19 )
 [node name="animatedInteractions" parent="objects/playerRoot/uiControl/uiControl/npcinteraction" index="2"]
 anims/iw_siw_wolf-surge-confused = SubResource( 2 )
 
-[node name="pause" parent="objects/playerRoot/uiControl/uiControl" index="3"]
+[node name="pause" parent="objects/playerRoot/uiControl/uiControl" index="4"]
 margin_left = 0.0344238
 margin_top = -0.186279
 margin_right = 0.0344238

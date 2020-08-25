@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://animations/reg/plr-run.anim" type="Animation" id=1]
 [ext_resource path="res://animations/reg/plr-idle.anim" type="Animation" id=2]
@@ -10,6 +10,16 @@
 [ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=8]
 [ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=9]
 [ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=10]
+[ext_resource path="res://images/character/sky/torso-idle.png" type="Texture" id=11]
+[ext_resource path="res://images/character/sky/legsS-idle.png" type="Texture" id=12]
+[ext_resource path="res://images/character/sky/torsoS-idle.png" type="Texture" id=13]
+[ext_resource path="res://images/character/sky/horns-idle.png" type="Texture" id=14]
+[ext_resource path="res://images/character/sky/eyec-idle.png" type="Texture" id=15]
+[ext_resource path="res://images/character/sky/legs-idle.png" type="Texture" id=16]
+[ext_resource path="res://images/character/sky/head-idle.png" type="Texture" id=17]
+[ext_resource path="res://images/character/sky/tailS-idle.png" type="Texture" id=18]
+[ext_resource path="res://images/character/sky/tail-idle.png" type="Texture" id=19]
+[ext_resource path="res://images/character/sky/wings-idle.png" type="Texture" id=20]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.0
@@ -32,27 +42,52 @@ texture = ExtResource( 7 )
 position = Vector2( -76, -76 )
 scale = Vector2( 0.5, 0.5 )
 
-[node name="body" type="Sprite" parent="reg"]
-position = Vector2( 2, 0 )
-texture = ExtResource( 8 )
+[node name="bodyshad" type="Sprite" parent="reg"]
+texture = ExtResource( 13 )
+hframes = 6
 
-[node name="bodys" type="Sprite" parent="reg"]
-position = Vector2( 2, 0 )
-texture = ExtResource( 10 )
+[node name="tailshad" type="Sprite" parent="reg"]
+texture = ExtResource( 18 )
+hframes = 6
 
-[node name="wings" type="Sprite" parent="reg"]
-position = Vector2( 2, 0 )
-texture = ExtResource( 3 )
+[node name="legshad" type="Sprite" parent="reg"]
+texture = ExtResource( 12 )
+hframes = 6
 
 [node name="horns" type="Sprite" parent="reg"]
-position = Vector2( 2, 0 )
-texture = ExtResource( 5 )
+texture = ExtResource( 14 )
+hframes = 6
 
-[node name="eyes" type="Sprite" parent="reg"]
-position = Vector2( 2, 0 )
-texture = ExtResource( 9 )
+[node name="head" type="Sprite" parent="reg"]
+texture = ExtResource( 17 )
+hframes = 6
+
+[node name="body" type="Sprite" parent="reg"]
+texture = ExtResource( 11 )
+hframes = 6
+
+[node name="tail" type="Sprite" parent="reg"]
+texture = ExtResource( 19 )
+hframes = 6
+
+[node name="legs" type="Sprite" parent="reg"]
+texture = ExtResource( 16 )
+hframes = 6
+
+[node name="wings" type="Sprite" parent="reg"]
+texture = ExtResource( 20 )
+hframes = 6
+
+[node name="eyec" type="Sprite" parent="reg"]
+texture = ExtResource( 15 )
+hframes = 6
+
+[node name="eyepup" type="Sprite" parent="reg"]
+texture = ExtResource( 15 )
+hframes = 6
 
 [node name="flip" type="Node2D" parent="."]
+visible = false
 position = Vector2( 77, -76 )
 scale = Vector2( 0.5, 0.5 )
 
@@ -90,8 +125,9 @@ current = true
 
 [node name="uiControl" parent="." instance=ExtResource( 6 )]
 
-[node name="inventory" parent="uiControl/uiControl" index="0"]
-visible = false
+[node name="uiControl" parent="uiControl" index="0"]
+margin_top = -384.0
+margin_bottom = 384.0
 
 [node name="fireballFlip" type="Position2D" parent="."]
 position = Vector2( -72, -103 )

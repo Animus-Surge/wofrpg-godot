@@ -1,6 +1,7 @@
 extends Node
 
 enum REMOVE_REASONS {DROP, QUEST, DIED}
+enum TRIBES_BUILTIN {NIGHTWING, SKYWING}
 
 const DEFAULT_SAVE_DATA = {
 	"character-location":{

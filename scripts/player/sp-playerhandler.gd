@@ -12,19 +12,7 @@ var flipped = false
 var fbcooldown = false
 
 func _ready():
-	if !globalvars.debug:
-		get_node("reg/body").modulate = spgs.body
-		get_node("reg/bodys").modulate = spgs.body
-		get_node("reg/wings").modulate = spgs.wings
-		get_node("reg/horns").modulate = spgs.horns
-		get_node("reg/eyes").modulate = spgs.eyes
-		
-		get_node("flip/body").modulate = spgs.body
-		get_node("flip/bodys").modulate = spgs.body
-		get_node("flip/wings").modulate = spgs.wings
-		get_node("flip/horns").modulate = spgs.horns
-		get_node("flip/eyes").modulate = spgs.eyes
-		
+	if !globalvars.debug: #TODO: implement shader handling here
 		position = spgs.pos
 		
 		print("Loaded character colors")

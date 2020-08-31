@@ -1,27 +1,58 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://animations/reg/plr-run.anim" type="Animation" id=1]
 [ext_resource path="res://animations/reg/plr-idle.anim" type="Animation" id=2]
-[ext_resource path="res://animations/reg/idle/base-wings/frame_0_delay-0.5s.png" type="Texture" id=3]
+[ext_resource path="res://images/character/sky/idle/sw-legs-mask.png" type="Texture" id=3]
 [ext_resource path="res://scripts/player/sp-playerhandler.gd" type="Script" id=4]
-[ext_resource path="res://animations/reg/idle/base-horns/frame_0_delay-0.5s.png" type="Texture" id=5]
+[ext_resource path="res://images/character/sky/idle/sw-wings-mask.png" type="Texture" id=5]
 [ext_resource path="res://objects/ui/playerUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://entity-shadow.png" type="Texture" id=7]
-[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=8]
-[ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=9]
-[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=10]
-[ext_resource path="res://images/character/sky/torso-idle.png" type="Texture" id=11]
-[ext_resource path="res://images/character/sky/legsS-idle.png" type="Texture" id=12]
-[ext_resource path="res://images/character/sky/torsoS-idle.png" type="Texture" id=13]
-[ext_resource path="res://images/character/sky/horns-idle.png" type="Texture" id=14]
-[ext_resource path="res://images/character/sky/eyec-idle.png" type="Texture" id=15]
-[ext_resource path="res://images/character/sky/legs-idle.png" type="Texture" id=16]
-[ext_resource path="res://images/character/sky/head-idle.png" type="Texture" id=17]
-[ext_resource path="res://images/character/sky/tailS-idle.png" type="Texture" id=18]
-[ext_resource path="res://images/character/sky/tail-idle.png" type="Texture" id=19]
-[ext_resource path="res://images/character/sky/wings-idle.png" type="Texture" id=20]
+[ext_resource path="res://images/character/palettes/body_leg_tail-palette.png" type="Texture" id=8]
+[ext_resource path="res://images/character/sky/idle/sw-body-mask.png" type="Texture" id=9]
+[ext_resource path="res://images/character/sky/idle/sw-tail-mask.png" type="Texture" id=10]
+[ext_resource path="res://images/character/sky/idle/sw-body.png" type="Texture" id=11]
+[ext_resource path="res://images/character/night/idle/nw-spikes.png" type="Texture" id=12]
+[ext_resource path="res://images/character/sky/idle/sw-legs.png" type="Texture" id=13]
+[ext_resource path="res://images/character/sky/idle/sw-head.png" type="Texture" id=14]
+[ext_resource path="res://images/character/night/idle/nw-eyedrop.png" type="Texture" id=15]
+[ext_resource path="res://images/character/sky/idle/sw-tail.png" type="Texture" id=16]
+[ext_resource path="res://images/character/sky/idle/sw-wings.png" type="Texture" id=17]
+[ext_resource path="res://images/character/palettes/head-palette.png" type="Texture" id=18]
+[ext_resource path="res://images/character/sky/idle/sw-head-mask.png" type="Texture" id=19]
+[ext_resource path="res://images/character/palettes/wing-palette.png" type="Texture" id=20]
+[ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=21]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 21 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 8 )
+shader_param/mask = ExtResource( 9 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 21 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 18 )
+shader_param/mask = ExtResource( 19 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 21 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 8 )
+shader_param/mask = ExtResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 21 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 8 )
+shader_param/mask = ExtResource( 10 )
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 21 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 20 )
+shader_param/mask = ExtResource( 5 )
+
+[sub_resource type="CapsuleShape2D" id=6]
 radius = 12.0
 height = 112.0
 
@@ -39,86 +70,107 @@ scale = Vector2( 0.496094, 0.144531 )
 texture = ExtResource( 7 )
 
 [node name="reg" type="Node2D" parent="."]
-position = Vector2( -76, -76 )
+position = Vector2( -24, -66 )
 scale = Vector2( 0.5, 0.5 )
 
-[node name="bodyshad" type="Sprite" parent="reg"]
-texture = ExtResource( 13 )
-hframes = 6
-
-[node name="tailshad" type="Sprite" parent="reg"]
-texture = ExtResource( 18 )
-hframes = 6
-
-[node name="legshad" type="Sprite" parent="reg"]
+[node name="neck-deco" type="Sprite" parent="reg"]
+visible = false
+scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 12 )
 hframes = 6
 
-[node name="horns" type="Sprite" parent="reg"]
-texture = ExtResource( 14 )
-hframes = 6
-
-[node name="head" type="Sprite" parent="reg"]
-texture = ExtResource( 17 )
-hframes = 6
-
 [node name="body" type="Sprite" parent="reg"]
+material = SubResource( 1 )
+scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 11 )
 hframes = 6
 
-[node name="tail" type="Sprite" parent="reg"]
-texture = ExtResource( 19 )
+[node name="head" type="Sprite" parent="reg"]
+material = SubResource( 2 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 14 )
+hframes = 6
+
+[node name="head-deco" type="Sprite" parent="reg"]
+visible = false
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 15 )
 hframes = 6
 
 [node name="legs" type="Sprite" parent="reg"]
+material = SubResource( 3 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 13 )
+hframes = 6
+
+[node name="tail" type="Sprite" parent="reg"]
+material = SubResource( 4 )
+scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 16 )
 hframes = 6
 
 [node name="wings" type="Sprite" parent="reg"]
-texture = ExtResource( 20 )
-hframes = 6
-
-[node name="eyec" type="Sprite" parent="reg"]
-texture = ExtResource( 15 )
-hframes = 6
-
-[node name="eyepup" type="Sprite" parent="reg"]
-texture = ExtResource( 15 )
+material = SubResource( 5 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 17 )
 hframes = 6
 
 [node name="flip" type="Node2D" parent="."]
-visible = false
-position = Vector2( 77, -76 )
+position = Vector2( 24, -66 )
 scale = Vector2( 0.5, 0.5 )
 
-[node name="body" type="Sprite" parent="flip"]
-position = Vector2( -2, 0 )
-texture = ExtResource( 8 )
+[node name="neck-deco" type="Sprite" parent="flip"]
+visible = false
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 12 )
 flip_h = true
+hframes = 6
 
-[node name="bodys" type="Sprite" parent="flip"]
-position = Vector2( -2, 0 )
-texture = ExtResource( 10 )
+[node name="body" type="Sprite" parent="flip"]
+material = SubResource( 1 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 11 )
 flip_h = true
+hframes = 6
+
+[node name="head" type="Sprite" parent="flip"]
+material = SubResource( 2 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 14 )
+flip_h = true
+hframes = 6
+
+[node name="head-deco" type="Sprite" parent="flip"]
+visible = false
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 15 )
+flip_h = true
+hframes = 6
+
+[node name="legs" type="Sprite" parent="flip"]
+material = SubResource( 3 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 13 )
+flip_h = true
+hframes = 6
+
+[node name="tail" type="Sprite" parent="flip"]
+material = SubResource( 4 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 16 )
+flip_h = true
+hframes = 6
 
 [node name="wings" type="Sprite" parent="flip"]
-position = Vector2( -2, 0 )
-texture = ExtResource( 3 )
+material = SubResource( 5 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 17 )
 flip_h = true
-
-[node name="horns" type="Sprite" parent="flip"]
-position = Vector2( -2, 0 )
-texture = ExtResource( 5 )
-flip_h = true
-
-[node name="eyes" type="Sprite" parent="flip"]
-position = Vector2( -2, 0 )
-texture = ExtResource( 9 )
-flip_h = true
+hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 6 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -130,10 +182,10 @@ margin_top = -384.0
 margin_bottom = 384.0
 
 [node name="fireballFlip" type="Position2D" parent="."]
-position = Vector2( -72, -103 )
+position = Vector2( -63, -94 )
 
 [node name="fireballReg" type="Position2D" parent="."]
-position = Vector2( 72, -103 )
+position = Vector2( 64, -94 )
 
 [node name="Timer" type="Timer" parent="."]
 [connection signal="timeout" from="Timer" to="." method="cooldownExpire"]

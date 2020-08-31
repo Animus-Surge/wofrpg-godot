@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -16,14 +16,28 @@
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
 [ext_resource path="res://scripts/ui/sphandler.gd" type="Script" id=15]
 [ext_resource path="res://scripts/ui/menuhandler.gd" type="Script" id=16]
-[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s.png" type="Texture" id=17]
-[ext_resource path="res://animations/reg/idle/base-wings/frame_0_delay-0.5s.png" type="Texture" id=18]
-[ext_resource path="res://animations/reg/idle/base-horns/frame_0_delay-0.5s.png" type="Texture" id=19]
-[ext_resource path="res://animations/reg/idle/base-eyes/frame_0_delay-0.5s.png" type="Texture" id=20]
-[ext_resource path="res://animations/reg/idle/base-body/frame_0_delay-0.5s-SHADOW.png" type="Texture" id=21]
+[ext_resource path="res://images/character/palettes/body_leg_tail-palette.png" type="Texture" id=17]
+[ext_resource path="res://images/character/palettes/head-palette.png" type="Texture" id=18]
+[ext_resource path="res://images/character/palettes/wing-palette.png" type="Texture" id=19]
+[ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=20]
+[ext_resource path="res://images/character/night/idle/nw-legs-mask.png" type="Texture" id=21]
 [ext_resource path="res://images/ui/buttons/mmbutton-graphic.png" type="Texture" id=22]
 [ext_resource path="res://scripts/ui/charactercreator.gd" type="Script" id=23]
 [ext_resource path="res://scripts/gameselect.gd" type="Script" id=24]
+[ext_resource path="res://images/character/night/idle/nw-body.png" type="Texture" id=25]
+[ext_resource path="res://images/character/night/idle/nw-legs.png" type="Texture" id=26]
+[ext_resource path="res://images/character/night/idle/nw-head-mask.png" type="Texture" id=27]
+[ext_resource path="res://images/character/night/idle/nw-tail-mask.png" type="Texture" id=28]
+[ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=29]
+[ext_resource path="res://images/character/night/idle/nw-wings-mask.png" type="Texture" id=30]
+[ext_resource path="res://images/character/night/idle/nw-head.png" type="Texture" id=31]
+[ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=32]
+[ext_resource path="res://images/character/night/idle/nw-body-mask.png" type="Texture" id=33]
+[ext_resource path="res://images/character/night/idle/nw-eyedrop.png" type="Texture" id=34]
+[ext_resource path="res://images/character/night/idle/nw-spikes.png" type="Texture" id=35]
+[ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=36]
+[ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=37]
+[ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=38]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends HBoxContainer
@@ -85,57 +99,211 @@ bg_color = Color( 0, 0, 0, 0.686275 )
 
 [sub_resource type="StyleBoxEmpty" id=9]
 
-[sub_resource type="StyleBoxEmpty" id=10]
-
-[sub_resource type="StyleBoxEmpty" id=11]
-
-[sub_resource type="StyleBoxEmpty" id=12]
-
-[sub_resource type="StyleBoxEmpty" id=13]
-
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Control
 
-onready var body = get_node(\"TextureRect\")
-onready var bodys = get_node(\"TextureRect2\")
+export (Texture) var body
+export (Texture) var wing
+export (Texture) var head
 
-onready var wings = get_node(\"TextureRect3\")
+var bc
+var wc
+var hc
 
-onready var horns = get_node(\"TextureRect4\")
-
-onready var eyes = get_node(\"TextureRect5\")
-
-onready var bodyc = get_node(\"../TabContainer/Colors/ColorPickerButton\")
-onready var wingc = get_node(\"../TabContainer/Colors/ColorPickerButton2\")
-onready var hornc = get_node(\"../TabContainer/Colors/ColorPickerButton3\")
-onready var eyec = get_node(\"../TabContainer/Colors/ColorPickerButton4\")
-
-func updateColors(_color: Color):
-	body.modulate = bodyc.color
-	bodys.modulate = bodyc.color
+func _ready():
+	bc = ImageTexture.new()
+	bc.create_from_image(body.get_data())
 	
-	wings.modulate = wingc.color
+	wc = ImageTexture.new()
+	wc.create_from_image(wing.get_data())
 	
-	horns.modulate = hornc.color
+	hc = ImageTexture.new()
+	hc.create_from_image(head.get_data())
 	
-	eyes.modulate = eyec.color
+	$spikes.visible = false
+	$edrop.visible = false
+
+func scalesChanged(color):
+	var body = bc.get_data()
+	var head = hc.get_data()
+	var darkened = Color(color.r - 0.08, color.g - 0.08, color.b - 0.08)
+	
+	body.lock()
+	body.set_pixel(0, 0, darkened)
+	body.set_pixel(1, 0, color)
+	body.unlock()
+	
+	head.lock()
+	head.set_pixel(1,0,color)
+	head.unlock()
+	
+	var h = ImageTexture.new()
+	h.create_from_image(head,0)
+	h.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	
+	var b = ImageTexture.new()
+	b.create_from_image(body,0)
+	b.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	
+	$head.get_material().set_shader_param(\"palette\", h)
+	$legs.get_material().set_shader_param(\"palette\", b)
+	$tail.get_material().set_shader_param(\"palette\", b)
+	$body.get_material().set_shader_param(\"palette\", b)
+	
+	hc = h
+	bc = b
+
+func hornsChanged(color):
+	var image = hc.get_data()
+	image.lock()
+	image.set_pixel(0,0,color)
+	image.unlock()
+	
+	var h = ImageTexture.new()
+	h.create_from_image(image,0)
+	h.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	
+	$head.get_material().set_shader_param(\"palette\", h)
+	
+	hc = h
+
+func eyesChanged(color):
+	var image = hc.get_data()
+	image.lock()
+	image.set_pixel(2,0,color)
+	image.unlock()
+	
+	var h = ImageTexture.new()
+	h.create_from_image(image,0)
+	h.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	$head.get_material().set_shader_param(\"palette\", h)
+	
+	hc = h
+
+func wingsChanged(color):
+	var image = wc.get_data()
+	var darkened = Color(color.r - 0.08, color.g - 0.08, color.b - 0.08)
+	
+	image.lock()
+	image.set_pixel(0,0,darkened)
+	image.set_pixel(1,0,color)
+	image.unlock()
+	
+	var w = ImageTexture.new()
+	w.create_from_image(image,0)
+	w.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	$wings.get_material().set_shader_param(\"palette\",w)
+	
+	wc = w
+
+func spikesChanged(color):
+	$spikes.self_modulate = color
+
+func bodyTypeChanged(index):
+	match index:
+		globalvars.TRIBES_BUILTIN.NIGHTWING:
+			$body.texture = load(\"res://images/character/night/idle/nw-body.png\")
+			$body.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-body-mask.png\"))
+		globalvars.TRIBES_BUILTIN.SKYWING:
+			$body.texture = load(\"res://images/character/sky/idle/sw-body.png\")
+			$body.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-body-mask.png\"))
+
+func headTypeChanged(index):
+	match index:
+		globalvars.TRIBES_BUILTIN.NIGHTWING:
+			$head.texture = load(\"res://images/character/night/idle/nw-head.png\")
+			$head.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-head-mask.png\"))
+		globalvars.TRIBES_BUILTIN.SKYWING:
+			$head.texture = load(\"res://images/character/sky/idle/sw-head.png\")
+			$head.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-head-mask.png\"))
+
+func wingTypeChanged(index):
+	match index:
+		globalvars.TRIBES_BUILTIN.NIGHTWING:
+			$wings.texture = load(\"res://images/character/night/idle/nw-wings.png\")
+			$wings.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-wings-mask.png\"))
+		globalvars.TRIBES_BUILTIN.SKYWING:
+			$wings.texture = load(\"res://images/character/sky/idle/sw-wings.png\")
+			$wings.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-wings-mask.png\"))
+
+func tailTypeChanged(index):
+	match index:
+		globalvars.TRIBES_BUILTIN.NIGHTWING:
+			$tail.texture = load(\"res://images/character/night/idle/nw-tail.png\")
+			$tail.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-tail-mask.png\"))
+		globalvars.TRIBES_BUILTIN.SKYWING:
+			$tail.texture = load(\"res://images/character/sky/idle/sw-tail.png\")
+			$tail.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-tail-mask.png\"))
+
+func legsTypeChanged(index):
+	match index:
+		globalvars.TRIBES_BUILTIN.NIGHTWING:
+			$legs.texture = load(\"res://images/character/night/idle/nw-legs.png\")
+			$legs.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-legs-mask.png\"))
+		globalvars.TRIBES_BUILTIN.SKYWING:
+			$legs.texture = load(\"res://images/character/sky/idle/sw-legs.png\")
+			$legs.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-legs-mask.png\"))
+
+func spikesToggled(button_pressed):
+	$spikes.visible = button_pressed
+
+func _on_tdscalevis_toggled(button_pressed):
+	$edrop.visible = button_pressed
 "
 
-[sub_resource type="StyleBoxEmpty" id=15]
+[sub_resource type="ShaderMaterial" id=11]
+shader = ExtResource( 20 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 28 )
 
-[sub_resource type="DynamicFont" id=16]
-size = 60
-font_data = ExtResource( 1 )
+[sub_resource type="ShaderMaterial" id=12]
+shader = ExtResource( 20 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 33 )
 
-[sub_resource type="StyleBoxFlat" id=17]
-bg_color = Color( 0, 0, 0, 0.541176 )
+[sub_resource type="ShaderMaterial" id=13]
+shader = ExtResource( 20 )
+shader_param/palette_size = 4.0
+shader_param/palette = ExtResource( 18 )
+shader_param/mask = ExtResource( 27 )
+
+[sub_resource type="ShaderMaterial" id=14]
+shader = ExtResource( 20 )
+shader_param/palette_size = 4.0
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 21 )
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = ExtResource( 20 )
+shader_param/palette_size = 4.0
+shader_param/palette = ExtResource( 19 )
+shader_param/mask = ExtResource( 30 )
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxEmpty" id=17]
 
 [sub_resource type="StyleBoxEmpty" id=18]
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[sub_resource type="StyleBoxEmpty" id=25]
+
+[sub_resource type="DynamicFont" id=26]
+size = 60
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=27]
+bg_color = Color( 0, 0, 0, 0.541176 )
+
+[sub_resource type="StyleBoxEmpty" id=28]
+
+[sub_resource type="StyleBoxFlat" id=29]
 bg_color = Color( 0, 0, 0, 0.686275 )
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=30]
 script/source = "extends Button
 
 func _pressed():
@@ -144,7 +312,7 @@ func _pressed():
 		get_node(\"../../../..\").visible = false
 "
 
-[sub_resource type="GDScript" id=21]
+[sub_resource type="GDScript" id=31]
 script/source = "extends Button
 
 func _pressed():
@@ -152,14 +320,14 @@ func _pressed():
 		get_node(\"../../../..\").visible = false
 "
 
-[sub_resource type="StyleBoxFlat" id=22]
+[sub_resource type="StyleBoxFlat" id=32]
 bg_color = Color( 0, 0, 0, 0.54902 )
 
-[sub_resource type="StyleBoxEmpty" id=23]
+[sub_resource type="StyleBoxEmpty" id=33]
 
-[sub_resource type="StyleBoxEmpty" id=24]
+[sub_resource type="StyleBoxEmpty" id=34]
 
-[sub_resource type="StyleBoxEmpty" id=25]
+[sub_resource type="StyleBoxEmpty" id=35]
 
 [node name="menus" type="Control"]
 margin_right = 1366.0
@@ -463,7 +631,6 @@ align = 1
 valign = 2
 
 [node name="sp" type="PanelContainer" parent="Control"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -500,9 +667,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2"]
-margin_top = 80.0
+visible = false
+margin_top = 46.0
 margin_right = 1131.0
-margin_bottom = 688.0
+margin_bottom = 382.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
@@ -647,7 +815,6 @@ __meta__ = {
 }
 
 [node name="Panel2" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2"]
-visible = false
 margin_top = 80.0
 margin_right = 1131.0
 margin_bottom = 688.0
@@ -690,6 +857,72 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="preview" type="Control" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
+anchor_left = 0.026
+anchor_top = 0.437
+anchor_right = 0.553
+anchor_bottom = 0.957
+margin_left = -0.406
+margin_top = 0.303986
+margin_right = 0.556946
+margin_bottom = 0.143982
+script = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+body = ExtResource( 17 )
+wing = ExtResource( 19 )
+head = ExtResource( 18 )
+
+[node name="spikes" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 35 )
+hframes = 6
+
+[node name="tail" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+material = SubResource( 11 )
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 32 )
+hframes = 6
+
+[node name="body" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+material = SubResource( 12 )
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 25 )
+hframes = 6
+
+[node name="head" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+material = SubResource( 13 )
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 31 )
+hframes = 6
+
+[node name="edrop" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 34 )
+hframes = 6
+
+[node name="legs" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+material = SubResource( 14 )
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 26 )
+hframes = 6
+
+[node name="wings" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+material = SubResource( 15 )
+position = Vector2( 329.6, 146.8 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 29 )
+hframes = 6
+
 [node name="TabContainer" type="TabContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.034
 anchor_top = 0.125
@@ -698,7 +931,7 @@ anchor_bottom = 0.395
 margin_left = -0.454002
 margin_right = 0.418945
 margin_bottom = -0.160004
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 16 )
 custom_fonts/font = ExtResource( 13 )
 tab_align = 0
 __meta__ = {
@@ -706,12 +939,13 @@ __meta__ = {
 }
 
 [node name="Basic Details" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 11 )
+custom_styles/panel = SubResource( 17 )
 
 [node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_top = 6.0
@@ -789,67 +1023,139 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 12 )
+custom_styles/panel = SubResource( 18 )
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 20.0
-margin_top = 65.0
-margin_right = 68.0
-margin_bottom = 113.0
+[node name="scales" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 533.0
+margin_top = 403.0
+margin_right = 606.0
+margin_bottom = 456.0
 focus_mode = 0
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 enabled_focus_mode = 0
 color = Color( 1, 1, 1, 1 )
-edit_alpha = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPickerButton2" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 153.0
-margin_top = 65.0
-margin_right = 201.0
-margin_bottom = 113.0
+[node name="horns" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 533.0
+margin_top = 147.0
+margin_right = 606.0
+margin_bottom = 200.0
 focus_mode = 0
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 enabled_focus_mode = 0
 color = Color( 1, 1, 1, 1 )
-edit_alpha = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPickerButton3" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 285.0
-margin_top = 65.0
-margin_right = 333.0
-margin_bottom = 113.0
+[node name="eyes" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 533.0
+margin_top = 267.0
+margin_right = 606.0
+margin_bottom = 320.0
 focus_mode = 0
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 enabled_focus_mode = 0
 color = Color( 1, 1, 1, 1 )
-edit_alpha = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPickerButton4" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 415.0
-margin_top = 65.0
-margin_right = 463.0
-margin_bottom = 113.0
+[node name="wings" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 135.0
+margin_top = 147.0
+margin_right = 208.0
+margin_bottom = 200.0
 focus_mode = 0
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 enabled_focus_mode = 0
 color = Color( 1, 1, 1, 1 )
-edit_alpha = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="spikes" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 273.0
+margin_top = 147.0
+margin_right = 346.0
+margin_bottom = 200.0
+focus_mode = 0
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
+enabled_focus_mode = 0
+color = Color( 1, 1, 1, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 11.0
-margin_top = 21.0
-margin_right = 470.0
-margin_bottom = 53.0
-custom_fonts/font = ExtResource( 2 )
-text = "Body      Wings     Horns      Eyes"
+margin_left = 152.0
+margin_top = 144.0
+margin_right = 193.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 13 )
+text = "Wings"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 287.0
+margin_top = 144.0
+margin_right = 332.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 13 )
+text = "Spikes"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 548.0
+margin_top = 144.0
+margin_right = 593.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 13 )
+text = "Horns"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 548.0
+margin_top = 263.0
+margin_right = 593.0
+margin_bottom = 282.0
+custom_fonts/font = ExtResource( 13 )
+text = "Eyes"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
+margin_left = 545.0
+margin_top = 400.0
+margin_right = 592.0
+margin_bottom = 419.0
+custom_fonts/font = ExtResource( 13 )
+text = "Scales"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -861,7 +1167,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 13 )
+custom_styles/panel = SubResource( 24 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
 margin_left = 578.0
@@ -879,75 +1185,119 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Appearances" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 13 )
+custom_styles/panel = SubResource( 24 )
 
-[node name="preview" type="Control" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-anchor_left = 0.026
-anchor_top = 0.437
-anchor_right = 0.553
-anchor_bottom = 0.957
-margin_left = -0.406
-margin_top = 0.303986
-margin_right = 0.556946
-margin_bottom = 0.143982
-script = SubResource( 14 )
+[node name="body" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 135.0
+margin_top = 16.0
+margin_right = -780.0
+margin_bottom = -94.0
+custom_fonts/font = ExtResource( 13 )
+text = "NightWing"
+items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
+selected = 0
+
+[node name="head" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 135.0
+margin_top = 53.0
+margin_right = -780.0
+margin_bottom = -57.0
+custom_fonts/font = ExtResource( 13 )
+text = "NightWing"
+items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
+selected = 0
+
+[node name="wing" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 135.0
+margin_top = 90.0
+margin_right = -780.0
+margin_bottom = -20.0
+custom_fonts/font = ExtResource( 13 )
+text = "NightWing"
+items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
+selected = 0
+
+[node name="tail" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 402.0
+margin_top = 16.0
+margin_right = -513.0
+margin_bottom = -94.0
+custom_fonts/font = ExtResource( 13 )
+text = "NightWing"
+items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
+selected = 0
+
+[node name="legs" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 402.0
+margin_top = 53.0
+margin_right = -513.0
+margin_bottom = -57.0
+custom_fonts/font = ExtResource( 13 )
+text = "NightWing"
+items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
+selected = 0
+
+[node name="spvis" type="CheckButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+margin_left = 533.0
+margin_top = 7.0
+margin_right = 735.0
+margin_bottom = 47.0
+custom_fonts/font = ExtResource( 13 )
+text = "Spikes"
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 17 )
-expand = true
-stretch_mode = 5
+[node name="tdscalevis" type="CheckButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+margin_left = 533.0
+margin_top = 47.0
+margin_right = 658.0
+margin_bottom = 87.0
+custom_fonts/font = ExtResource( 13 )
+text = "Teardrop SCale"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect2" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 21 )
-expand = true
-stretch_mode = 5
+[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+margin_left = 50.0
+margin_top = 12.0
+margin_right = 133.0
+margin_bottom = 119.0
+custom_fonts/font = ExtResource( 13 )
+text = "Body Type
+
+Head Type
+
+Wing Tyoe"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect3" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 18 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
+margin_left = 325.0
+margin_top = 15.0
+margin_right = 398.0
+margin_bottom = 78.0
+custom_fonts/font = ExtResource( 13 )
+text = "Tail Type
 
-[node name="TextureRect4" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 19 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect5" type="TextureRect" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 20 )
-expand = true
-stretch_mode = 5
+Leg Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -979,6 +1329,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
 [node name="mp" type="PanelContainer" parent="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 5 )
@@ -1117,7 +1468,7 @@ margin_left = 3.85537
 margin_top = 4.2409
 margin_right = 1361.88
 margin_bottom = 764.016
-custom_styles/panel = SubResource( 15 )
+custom_styles/panel = SubResource( 25 )
 
 [node name="TextureButton2" type="TextureButton" parent="Control/set/Panel"]
 margin_left = -3.85537
@@ -1167,7 +1518,7 @@ margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 26 )
 text = "Credits"
 align = 1
 valign = 1
@@ -1205,7 +1556,7 @@ margin_top = 60.0
 margin_right = 1131.0
 margin_bottom = 620.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 17 )
+custom_styles/panel = SubResource( 27 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel"]
 anchor_right = 1.0
@@ -1220,7 +1571,7 @@ margin_right = 1131.0
 margin_bottom = 560.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 18 )
+custom_styles/panel = SubResource( 28 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer"]
 margin_right = 1119.0
@@ -1306,7 +1657,7 @@ custom_fonts/font = ExtResource( 2 )
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 19 )
+custom_styles/panel = SubResource( 29 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1349,7 +1700,7 @@ margin_right = 407.0
 margin_bottom = 229.0
 custom_fonts/font = ExtResource( 2 )
 text = "Confirm"
-script = SubResource( 20 )
+script = SubResource( 30 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1361,7 +1712,7 @@ margin_right = 131.0
 margin_bottom = 229.0
 custom_fonts/font = ExtResource( 2 )
 text = "Cancel"
-script = SubResource( 21 )
+script = SubResource( 31 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1496,7 +1847,7 @@ __meta__ = {
 [node name="savename" type="Panel" parent="Control/gameselect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 32 )
 
 [node name="Panel" type="Panel" parent="Control/gameselect/savename"]
 anchor_left = 0.367
@@ -1515,9 +1866,9 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -9.5
 margin_bottom = 9.5
-custom_styles/read_only = SubResource( 23 )
-custom_styles/focus = SubResource( 24 )
-custom_styles/normal = SubResource( 25 )
+custom_styles/read_only = SubResource( 33 )
+custom_styles/focus = SubResource( 34 )
+custom_styles/normal = SubResource( 35 )
 custom_fonts/font = ExtResource( 13 )
 align = 1
 placeholder_text = "A wonderful save name"
@@ -1571,10 +1922,18 @@ autowrap = true
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/play" to="Control/sp/HBoxContainer/VBoxContainer2" method="onPlay"]
 [connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/ItemList" to="Control/sp/HBoxContainer/VBoxContainer2" method="charItemSelected"]
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="Control/sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton2" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton3" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/ColorPickerButton4" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="updateColors"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/scales" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="scalesChanged"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/horns" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="hornsChanged"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/eyes" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="eyesChanged"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/wings" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="wingsChanged"]
+[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/spikes" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="spikesChanged"]
+[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/body" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="bodyTypeChanged"]
+[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/head" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="headTypeChanged"]
+[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/wing" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="wingTypeChanged"]
+[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/tail" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="tailTypeChanged"]
+[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/legs" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="legsTypeChanged"]
+[connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/spvis" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="spikesToggled"]
+[connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/tdscalevis" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="_on_tdscalevis_toggled"]
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
 [connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/set/Panel/TextureButton2" to="Control" method="hideAll"]

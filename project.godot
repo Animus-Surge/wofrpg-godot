@@ -36,6 +36,7 @@ gloader="*res://scripts/global/globalLoader.gd"
 spgs="*res://scripts/global/spgamestate.gd"
 gfm="*res://scripts/filemanager/gameFileHandler.gd"
 logcat="*res://scripts/global/logger.gd"
+fb="*res://scripts/global/firebase.gd"
 
 [debug]
 
@@ -150,6 +151,10 @@ file_logging/enable_file_logging=true
 [memory]
 
 limits/message_queue/max_size_kb=4096
+
+[network]
+
+ssl/certificates="res://wofrpg.crt"
 
 [rendering]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -110,6 +110,12 @@ var bc
 var wc
 var hc
 
+var bt
+var wt
+var tt  #TO BE USED WITH CHARACTER CREATOR
+var wit
+var ht
+
 func _ready():
 	bc = ImageTexture.new()
 	bc.create_from_image(body.get_data())
@@ -122,6 +128,12 @@ func _ready():
 	
 	$spikes.visible = false
 	$edrop.visible = false
+	
+	bt = 0
+	wt = 0
+	tt = 0
+	wit = 0
+	ht = 0
 
 func scalesChanged(color):
 	var body = bc.get_data()
@@ -249,6 +261,12 @@ func spikesToggled(button_pressed):
 
 func _on_tdscalevis_toggled(button_pressed):
 	$edrop.visible = button_pressed
+
+func playAnimsToggle(button_pressed):
+	if button_pressed:
+		$AnimationPlayer.play(\"prev-idle\")
+	else: 
+		$AnimationPlayer.stop()
 "
 
 [sub_resource type="ShaderMaterial" id=11]
@@ -281,29 +299,119 @@ shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 19 )
 shader_param/mask = ExtResource( 30 )
 
-[sub_resource type="StyleBoxEmpty" id=16]
+[sub_resource type="Animation" id=16]
+resource_name = "prev-idle"
+length = 1.2
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("spikes:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("tail:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("body:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("head:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("edrop:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("legs:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("wings:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
 
 [sub_resource type="StyleBoxEmpty" id=17]
 
 [sub_resource type="StyleBoxEmpty" id=18]
 
-[sub_resource type="StyleBoxEmpty" id=24]
+[sub_resource type="StyleBoxEmpty" id=19]
 
-[sub_resource type="StyleBoxEmpty" id=25]
+[sub_resource type="StyleBoxEmpty" id=20]
 
-[sub_resource type="DynamicFont" id=26]
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="DynamicFont" id=22]
 size = 60
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=27]
+[sub_resource type="StyleBoxFlat" id=23]
 bg_color = Color( 0, 0, 0, 0.541176 )
 
-[sub_resource type="StyleBoxEmpty" id=28]
+[sub_resource type="StyleBoxEmpty" id=24]
 
-[sub_resource type="StyleBoxFlat" id=29]
+[sub_resource type="StyleBoxFlat" id=25]
 bg_color = Color( 0, 0, 0, 0.686275 )
 
-[sub_resource type="GDScript" id=30]
+[sub_resource type="GDScript" id=26]
 script/source = "extends Button
 
 func _pressed():
@@ -312,7 +420,7 @@ func _pressed():
 		get_node(\"../../../..\").visible = false
 "
 
-[sub_resource type="GDScript" id=31]
+[sub_resource type="GDScript" id=27]
 script/source = "extends Button
 
 func _pressed():
@@ -320,14 +428,14 @@ func _pressed():
 		get_node(\"../../../..\").visible = false
 "
 
-[sub_resource type="StyleBoxFlat" id=32]
+[sub_resource type="StyleBoxFlat" id=28]
 bg_color = Color( 0, 0, 0, 0.54902 )
 
-[sub_resource type="StyleBoxEmpty" id=33]
+[sub_resource type="StyleBoxEmpty" id=29]
 
-[sub_resource type="StyleBoxEmpty" id=34]
+[sub_resource type="StyleBoxEmpty" id=30]
 
-[sub_resource type="StyleBoxEmpty" id=35]
+[sub_resource type="StyleBoxEmpty" id=31]
 
 [node name="menus" type="Control"]
 margin_right = 1366.0
@@ -923,6 +1031,9 @@ scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 29 )
 hframes = 6
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
+anims/prev-idle = SubResource( 16 )
+
 [node name="TabContainer" type="TabContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
 anchor_left = 0.034
 anchor_top = 0.125
@@ -931,7 +1042,7 @@ anchor_bottom = 0.395
 margin_left = -0.454002
 margin_right = 0.418945
 margin_bottom = -0.160004
-custom_styles/panel = SubResource( 16 )
+custom_styles/panel = SubResource( 17 )
 custom_fonts/font = ExtResource( 13 )
 tab_align = 0
 __meta__ = {
@@ -939,13 +1050,12 @@ __meta__ = {
 }
 
 [node name="Basic Details" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 17 )
+custom_styles/panel = SubResource( 18 )
 
 [node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
 margin_top = 6.0
@@ -1023,7 +1133,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 18 )
+custom_styles/panel = SubResource( 19 )
 
 [node name="scales" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
 margin_left = 533.0
@@ -1167,7 +1277,7 @@ anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 24 )
+custom_styles/panel = SubResource( 20 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
 margin_left = 578.0
@@ -1185,12 +1295,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Appearances" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 29.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 24 )
+custom_styles/panel = SubResource( 20 )
 
 [node name="body" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
 anchor_right = 1.0
@@ -1309,6 +1420,19 @@ margin_right = 1063.0
 margin_bottom = 579.0
 custom_fonts/font = ExtResource( 2 )
 text = "Create Character"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckButton" type="CheckButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
+margin_left = 38.0
+margin_top = 541.0
+margin_right = 235.0
+margin_bottom = 581.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 13 )
+enabled_focus_mode = 0
+text = "Preview Idle"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1468,7 +1592,7 @@ margin_left = 3.85537
 margin_top = 4.2409
 margin_right = 1361.88
 margin_bottom = 764.016
-custom_styles/panel = SubResource( 25 )
+custom_styles/panel = SubResource( 21 )
 
 [node name="TextureButton2" type="TextureButton" parent="Control/set/Panel"]
 margin_left = -3.85537
@@ -1518,7 +1642,7 @@ margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 10.0
-custom_fonts/font = SubResource( 26 )
+custom_fonts/font = SubResource( 22 )
 text = "Credits"
 align = 1
 valign = 1
@@ -1556,7 +1680,7 @@ margin_top = 60.0
 margin_right = 1131.0
 margin_bottom = 620.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 27 )
+custom_styles/panel = SubResource( 23 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel"]
 anchor_right = 1.0
@@ -1571,7 +1695,7 @@ margin_right = 1131.0
 margin_bottom = 560.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 28 )
+custom_styles/panel = SubResource( 24 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer"]
 margin_right = 1119.0
@@ -1657,7 +1781,7 @@ custom_fonts/font = ExtResource( 2 )
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 29 )
+custom_styles/panel = SubResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1700,7 +1824,7 @@ margin_right = 407.0
 margin_bottom = 229.0
 custom_fonts/font = ExtResource( 2 )
 text = "Confirm"
-script = SubResource( 30 )
+script = SubResource( 26 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1712,7 +1836,7 @@ margin_right = 131.0
 margin_bottom = 229.0
 custom_fonts/font = ExtResource( 2 )
 text = "Cancel"
-script = SubResource( 31 )
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1847,7 +1971,7 @@ __meta__ = {
 [node name="savename" type="Panel" parent="Control/gameselect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 32 )
+custom_styles/panel = SubResource( 28 )
 
 [node name="Panel" type="Panel" parent="Control/gameselect/savename"]
 anchor_left = 0.367
@@ -1866,9 +1990,9 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -9.5
 margin_bottom = 9.5
-custom_styles/read_only = SubResource( 33 )
-custom_styles/focus = SubResource( 34 )
-custom_styles/normal = SubResource( 35 )
+custom_styles/read_only = SubResource( 29 )
+custom_styles/focus = SubResource( 30 )
+custom_styles/normal = SubResource( 31 )
 custom_fonts/font = ExtResource( 13 )
 align = 1
 placeholder_text = "A wonderful save name"
@@ -1935,6 +2059,7 @@ autowrap = true
 [connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/spvis" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="spikesToggled"]
 [connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/tdscalevis" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="_on_tdscalevis_toggled"]
 [connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
+[connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/CheckButton" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="playAnimsToggle"]
 [connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/set/Panel/TextureButton2" to="Control" method="hideAll"]
 [connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="Control" method="hideAll"]

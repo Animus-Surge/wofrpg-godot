@@ -2,6 +2,10 @@ extends Control
 
 func _ready():
 	hideAll()
+	if globalvars.loggedIn:
+		$main/VBoxContainer/HBoxContainer2/Label/Label2.text = "Welcome, " + fb.username
+	else:
+		$main/VBoxContainer/HBoxContainer2/Label/Label2.text = "SINGLEPLAYER ONLY"
 
 func _show(menu: String):
 	if menu == "sp":

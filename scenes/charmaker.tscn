@@ -1,0 +1,106 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=1]
+[ext_resource path="res://images/ui/backgrounds/lsbkg.png" type="Texture" id=2]
+[ext_resource path="res://images/ui/buttons/back-btn-pressed.png" type="Texture" id=3]
+[ext_resource path="res://images/ui/buttons/back-btn-hover.png" type="Texture" id=4]
+[ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=5]
+[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=6]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="bg"]
+margin_left = 68.0
+margin_top = 101.0
+margin_right = 1338.0
+margin_bottom = 744.0
+custom_styles/panel = ExtResource( 6 )
+custom_fonts/font = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Basic Information" type="Panel" parent="bg/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.2776
+margin_top = 89.0603
+margin_right = -33.4376
+margin_bottom = -63.9176
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="charname" type="LineEdit" parent="bg/TabContainer/Basic Information"]
+margin_left = 113.0
+margin_top = 18.0
+margin_right = 383.0
+margin_bottom = 47.0
+custom_fonts/font = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Colors" type="Panel" parent="bg/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="Appearance" type="Panel" parent="bg/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="Skills" type="Panel" parent="bg/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="Label" type="Label" parent="bg"]
+margin_left = 519.0
+margin_top = 16.0
+margin_right = 851.0
+margin_bottom = 48.0
+custom_fonts/font = ExtResource( 1 )
+text = "Create A New Character"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_left = 21.0
+margin_top = 16.0
+margin_right = 104.0
+margin_bottom = 99.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 4 )
+expand = true
+stretch_mode = 5

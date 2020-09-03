@@ -106,7 +106,6 @@ __meta__ = {
 }
 
 [node name="Log In" type="Panel" parent="Panel/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 42.0
@@ -220,6 +219,7 @@ __meta__ = {
 }
 
 [node name="Sign up" type="Panel" parent="Panel/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 42.0
@@ -363,6 +363,14 @@ stretch_mode = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/TabContainer/Sign up/Panel"]
 anims/loginanim = SubResource( 8 )
+
+[node name="Button" type="Button" parent="Panel"]
+margin_left = 546.0
+margin_top = 682.0
+margin_right = 817.0
+margin_bottom = 720.0
+custom_fonts/font = ExtResource( 4 )
+text = "Play Offline"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 [connection signal="pressed" from="Panel/TabContainer/Log In/Button" to="." method="loginPressed"]

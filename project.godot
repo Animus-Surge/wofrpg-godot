@@ -37,6 +37,7 @@ spgs="*res://scripts/global/spgamestate.gd"
 gfm="*res://scripts/filemanager/gameFileHandler.gd"
 logcat="*res://scripts/global/logger.gd"
 fb="*res://scripts/global/firebase.gd"
+http="*res://objects/request.tscn"
 
 [debug]
 

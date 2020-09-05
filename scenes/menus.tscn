@@ -1,445 +1,30 @@
-[gd_scene load_steps=70 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
-[ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=3]
+[ext_resource path="res://scripts/mainmenu.gd" type="Script" id=3]
 [ext_resource path="res://godot-resources/bg1.tres" type="StyleBox" id=4]
-[ext_resource path="res://images/ui/buttons/amino.png" type="Texture" id=5]
-[ext_resource path="res://images/ui/buttons/discord.png" type="Texture" id=6]
 [ext_resource path="res://icon.png" type="Texture" id=7]
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=8]
-[ext_resource path="res://images/ui/buttons/back-btn-pressed.png" type="Texture" id=9]
-[ext_resource path="res://images/ui/buttons/back-btn-hover.png" type="Texture" id=10]
-[ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=11]
-[ext_resource path="res://images/ui/buttons/yt.png" type="Texture" id=12]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
-[ext_resource path="res://scripts/ui/sphandler.gd" type="Script" id=15]
-[ext_resource path="res://scripts/ui/menuhandler.gd" type="Script" id=16]
-[ext_resource path="res://images/character/palettes/body_leg_tail-palette.png" type="Texture" id=17]
-[ext_resource path="res://images/character/palettes/head-palette.png" type="Texture" id=18]
-[ext_resource path="res://images/character/palettes/wing-palette.png" type="Texture" id=19]
-[ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=20]
-[ext_resource path="res://images/character/night/idle/nw-legs-mask.png" type="Texture" id=21]
-[ext_resource path="res://images/ui/buttons/mmbutton-graphic.png" type="Texture" id=22]
-[ext_resource path="res://scripts/ui/charactercreator.gd" type="Script" id=23]
-[ext_resource path="res://scripts/gameselect.gd" type="Script" id=24]
-[ext_resource path="res://images/character/night/idle/nw-body.png" type="Texture" id=25]
-[ext_resource path="res://images/character/night/idle/nw-legs.png" type="Texture" id=26]
-[ext_resource path="res://images/character/night/idle/nw-head-mask.png" type="Texture" id=27]
-[ext_resource path="res://images/character/night/idle/nw-tail-mask.png" type="Texture" id=28]
-[ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=29]
-[ext_resource path="res://images/character/night/idle/nw-wings-mask.png" type="Texture" id=30]
-[ext_resource path="res://images/character/night/idle/nw-head.png" type="Texture" id=31]
-[ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=32]
-[ext_resource path="res://images/character/night/idle/nw-body-mask.png" type="Texture" id=33]
-[ext_resource path="res://images/character/night/idle/nw-eyedrop.png" type="Texture" id=34]
-[ext_resource path="res://images/character/night/idle/nw-spikes.png" type="Texture" id=35]
 [ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=36]
 [ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=37]
 [ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=38]
 
-[sub_resource type="GDScript" id=1]
-script/source = "extends HBoxContainer
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0.313726 )
 
-const nohov = preload(\"res://images/ui/buttons/mmbutton-graphic-blank.png\")
-const hover = preload(\"res://images/ui/buttons/mmbutton-graphic.png\")
-const click = preload(\"res://images/ui/buttons/mmbutton-graphic-click.png\")
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 0.694118 )
 
-func _ready():
-# warning-ignore:unsafe_property_access
-	get_node(\"TextureRect\").texture = nohov
-
-func mouseOver():
-# warning-ignore:unsafe_property_access
-	get_node(\"TextureRect\").texture = hover
-
-func mouseExit():
-# warning-ignore:unsafe_property_access
-	get_node(\"TextureRect\").texture = nohov
-
-func _gui_input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT and event.pressed:
-# warning-ignore:unsafe_property_access
-			get_node(\"TextureRect\").texture = click
-# warning-ignore:unsafe_method_access
-			get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()._show(name)
-		else:
-# warning-ignore:unsafe_property_access
-			get_node(\"TextureRect\").texture = hover
-"
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends TextureButton
-
-func _pressed():
-	OS.shell_open(\"http://discord.gg/63vHEFV\")
-"
-
-[sub_resource type="GDScript" id=3]
-script/source = "extends TextureButton
-
-func _pressed():
-	OS.shell_open(\"https://www.youtube.com/channel/UCE73mNQPoVEeAU6Y_lFfwnA\")
-"
-
-[sub_resource type="DynamicFont" id=4]
-size = 15
+[sub_resource type="DynamicFont" id=3]
+size = 21
 font_data = ExtResource( 1 )
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0, 0, 0, 0.686275 )
-
-[sub_resource type="StyleBoxEmpty" id=6]
-
-[sub_resource type="StyleBoxEmpty" id=7]
-
-[sub_resource type="StyleBoxEmpty" id=8]
-
-[sub_resource type="StyleBoxEmpty" id=9]
-
-[sub_resource type="GDScript" id=10]
-script/source = "extends Control
-
-export (Texture) var body
-export (Texture) var wing
-export (Texture) var head
-
-var bc
-var wc
-var hc
-
-var bt
-var wt
-var tt  #TO BE USED WITH CHARACTER CREATOR
-var wit
-var ht
-
-func _ready():
-	bc = ImageTexture.new()
-	bc.create_from_image(body.get_data())
-	
-	wc = ImageTexture.new()
-	wc.create_from_image(wing.get_data())
-	
-	hc = ImageTexture.new()
-	hc.create_from_image(head.get_data())
-	
-	$spikes.visible = false
-	$edrop.visible = false
-	
-	bt = 0
-	wt = 0
-	tt = 0
-	wit = 0
-	ht = 0
-
-func scalesChanged(color):
-	var body = bc.get_data()
-	var head = hc.get_data()
-	var darkened = Color(color.r - 0.08, color.g - 0.08, color.b - 0.08)
-	
-	body.lock()
-	body.set_pixel(0, 0, darkened)
-	body.set_pixel(1, 0, color)
-	body.unlock()
-	
-	head.lock()
-	head.set_pixel(1,0,color)
-	head.unlock()
-	
-	var h = ImageTexture.new()
-	h.create_from_image(head,0)
-	h.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	var b = ImageTexture.new()
-	b.create_from_image(body,0)
-	b.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	$head.get_material().set_shader_param(\"palette\", h)
-	$legs.get_material().set_shader_param(\"palette\", b)
-	$tail.get_material().set_shader_param(\"palette\", b)
-	$body.get_material().set_shader_param(\"palette\", b)
-	
-	hc = h
-	bc = b
-
-func hornsChanged(color):
-	var image = hc.get_data()
-	image.lock()
-	image.set_pixel(0,0,color)
-	image.unlock()
-	
-	var h = ImageTexture.new()
-	h.create_from_image(image,0)
-	h.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	$head.get_material().set_shader_param(\"palette\", h)
-	
-	hc = h
-
-func eyesChanged(color):
-	var image = hc.get_data()
-	image.lock()
-	image.set_pixel(2,0,color)
-	image.unlock()
-	
-	var h = ImageTexture.new()
-	h.create_from_image(image,0)
-	h.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	$head.get_material().set_shader_param(\"palette\", h)
-	
-	hc = h
-
-func wingsChanged(color):
-	var image = wc.get_data()
-	var darkened = Color(color.r - 0.08, color.g - 0.08, color.b - 0.08)
-	
-	image.lock()
-	image.set_pixel(0,0,darkened)
-	image.set_pixel(1,0,color)
-	image.unlock()
-	
-	var w = ImageTexture.new()
-	w.create_from_image(image,0)
-	w.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	$wings.get_material().set_shader_param(\"palette\",w)
-	
-	wc = w
-
-func spikesChanged(color):
-	$spikes.self_modulate = color
-
-func bodyTypeChanged(index):
-	match index:
-		globalvars.TRIBES_BUILTIN.NIGHTWING:
-			$body.texture = load(\"res://images/character/night/idle/nw-body.png\")
-			$body.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-body-mask.png\"))
-		globalvars.TRIBES_BUILTIN.SKYWING:
-			$body.texture = load(\"res://images/character/sky/idle/sw-body.png\")
-			$body.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-body-mask.png\"))
-
-func headTypeChanged(index):
-	match index:
-		globalvars.TRIBES_BUILTIN.NIGHTWING:
-			$head.texture = load(\"res://images/character/night/idle/nw-head.png\")
-			$head.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-head-mask.png\"))
-		globalvars.TRIBES_BUILTIN.SKYWING:
-			$head.texture = load(\"res://images/character/sky/idle/sw-head.png\")
-			$head.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-head-mask.png\"))
-
-func wingTypeChanged(index):
-	match index:
-		globalvars.TRIBES_BUILTIN.NIGHTWING:
-			$wings.texture = load(\"res://images/character/night/idle/nw-wings.png\")
-			$wings.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-wings-mask.png\"))
-		globalvars.TRIBES_BUILTIN.SKYWING:
-			$wings.texture = load(\"res://images/character/sky/idle/sw-wings.png\")
-			$wings.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-wings-mask.png\"))
-
-func tailTypeChanged(index):
-	match index:
-		globalvars.TRIBES_BUILTIN.NIGHTWING:
-			$tail.texture = load(\"res://images/character/night/idle/nw-tail.png\")
-			$tail.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-tail-mask.png\"))
-		globalvars.TRIBES_BUILTIN.SKYWING:
-			$tail.texture = load(\"res://images/character/sky/idle/sw-tail.png\")
-			$tail.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-tail-mask.png\"))
-
-func legsTypeChanged(index):
-	match index:
-		globalvars.TRIBES_BUILTIN.NIGHTWING:
-			$legs.texture = load(\"res://images/character/night/idle/nw-legs.png\")
-			$legs.get_material().set_shader_param(\"mask\", load(\"res://images/character/night/idle/nw-legs-mask.png\"))
-		globalvars.TRIBES_BUILTIN.SKYWING:
-			$legs.texture = load(\"res://images/character/sky/idle/sw-legs.png\")
-			$legs.get_material().set_shader_param(\"mask\", load(\"res://images/character/sky/idle/sw-legs-mask.png\"))
-
-func spikesToggled(button_pressed):
-	$spikes.visible = button_pressed
-
-func _on_tdscalevis_toggled(button_pressed):
-	$edrop.visible = button_pressed
-
-func playAnimsToggle(button_pressed):
-	if button_pressed:
-		$AnimationPlayer.play(\"prev-idle\")
-	else: 
-		$AnimationPlayer.stop()
-"
-
-[sub_resource type="ShaderMaterial" id=11]
-shader = ExtResource( 20 )
-shader_param/palette_size = null
-shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 28 )
-
-[sub_resource type="ShaderMaterial" id=12]
-shader = ExtResource( 20 )
-shader_param/palette_size = null
-shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 33 )
-
-[sub_resource type="ShaderMaterial" id=13]
-shader = ExtResource( 20 )
-shader_param/palette_size = 4.0
-shader_param/palette = ExtResource( 18 )
-shader_param/mask = ExtResource( 27 )
-
-[sub_resource type="ShaderMaterial" id=14]
-shader = ExtResource( 20 )
-shader_param/palette_size = 4.0
-shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 21 )
-
-[sub_resource type="ShaderMaterial" id=15]
-shader = ExtResource( 20 )
-shader_param/palette_size = 4.0
-shader_param/palette = ExtResource( 19 )
-shader_param/mask = ExtResource( 30 )
-
-[sub_resource type="Animation" id=16]
-resource_name = "prev-idle"
-length = 1.2
-loop = true
-step = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("spikes:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("tail:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("body:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("head:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("edrop:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("legs:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("wings:frame")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-
-[sub_resource type="StyleBoxEmpty" id=17]
-
-[sub_resource type="StyleBoxEmpty" id=18]
-
-[sub_resource type="StyleBoxEmpty" id=19]
-
-[sub_resource type="StyleBoxEmpty" id=20]
-
-[sub_resource type="StyleBoxEmpty" id=21]
-
-[sub_resource type="DynamicFont" id=22]
-size = 60
-font_data = ExtResource( 1 )
-
-[sub_resource type="StyleBoxFlat" id=23]
-bg_color = Color( 0, 0, 0, 0.541176 )
-
-[sub_resource type="StyleBoxEmpty" id=24]
-
-[sub_resource type="StyleBoxFlat" id=25]
-bg_color = Color( 0, 0, 0, 0.686275 )
-
-[sub_resource type="GDScript" id=26]
-script/source = "extends Button
-
-func _pressed():
-	if name == \"conf\":
-		get_tree().call_group(\"charlist\", \"confdelete\")
-		get_node(\"../../../..\").visible = false
-"
-
-[sub_resource type="GDScript" id=27]
-script/source = "extends Button
-
-func _pressed():
-	if name == \"canc\":
-		get_node(\"../../../..\").visible = false
-"
-
-[sub_resource type="StyleBoxFlat" id=28]
-bg_color = Color( 0, 0, 0, 0.54902 )
-
-[sub_resource type="StyleBoxEmpty" id=29]
-
-[sub_resource type="StyleBoxEmpty" id=30]
-
-[sub_resource type="StyleBoxEmpty" id=31]
 
 [node name="menus" type="Control"]
-margin_right = 1366.0
-margin_bottom = 768.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -449,1638 +34,231 @@ __meta__ = {
 }
 sceneName = "menus"
 
-[node name="Control" type="Control" parent="."]
+[node name="mainmenu" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 16 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="main" type="PanelContainer" parent="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 1
 custom_styles/panel = ExtResource( 4 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/main"]
-margin_right = 1366.0
-margin_bottom = 768.0
+[node name="buttonpanel" type="Panel" parent="mainmenu"]
+anchor_left = 0.028
+anchor_right = 0.341
+anchor_bottom = 1.0
+margin_left = -0.248001
+margin_right = 0.19397
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Label" type="Label" parent="Control/main/VBoxContainer"]
-margin_right = 1366.0
-margin_bottom = 42.0
-size_flags_vertical = 3
-percent_visible = 0.0
-max_lines_visible = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/main/VBoxContainer"]
-margin_top = 46.0
-margin_right = 1366.0
-margin_bottom = 257.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 5.0
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/HBoxContainer"]
-margin_right = 38.0
-margin_bottom = 211.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.2
-
-[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/HBoxContainer"]
-margin_left = 42.0
-margin_right = 197.0
-margin_bottom = 211.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.8
+[node name="TextureRect" type="TextureRect" parent="mainmenu/buttonpanel"]
+anchor_left = 0.296
+anchor_top = 0.083
+anchor_right = 0.704
+anchor_bottom = 0.311
+margin_left = -0.188004
+margin_top = 0.255997
+margin_right = 0.187988
+margin_bottom = 0.151978
 texture = ExtResource( 7 )
 expand = true
-stretch_mode = 6
-
-[node name="Label2" type="Label" parent="Control/main/VBoxContainer/HBoxContainer"]
-margin_left = 201.0
-margin_right = 1366.0
-margin_bottom = 211.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 6.0
-
-[node name="Label2" type="Label" parent="Control/main/VBoxContainer"]
-margin_top = 261.0
-margin_right = 1366.0
-margin_bottom = 366.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.5
-percent_visible = 0.0
-max_lines_visible = 0
-
-[node name="bottom" type="HBoxContainer" parent="Control/main/VBoxContainer"]
-margin_top = 370.0
-margin_right = 1366.0
-margin_bottom = 708.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 8.0
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom"]
-margin_right = 1021.0
-margin_bottom = 338.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-percent_visible = 0.0
-max_lines_visible = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom"]
-margin_left = 1025.0
-margin_right = 1366.0
-margin_bottom = 338.0
-size_flags_horizontal = 3
-alignment = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer"]
-margin_right = 341.0
-margin_bottom = 338.0
-size_flags_horizontal = 3
-custom_constants/separation = 0
-alignment = 2
-
-[node name="sp" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
-margin_right = 341.0
-margin_bottom = 67.0
-size_flags_vertical = 3
-script = SubResource( 1 )
-
-[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
-margin_right = 112.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-texture = ExtResource( 22 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp"]
-margin_left = 116.0
-margin_right = 341.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "Singleplayer"
-valign = 1
-
-[node name="mp" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
-margin_top = 67.0
-margin_right = 341.0
-margin_bottom = 134.0
-size_flags_vertical = 3
-script = SubResource( 1 )
-
-[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
-margin_right = 112.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-texture = ExtResource( 22 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp"]
-margin_left = 116.0
-margin_right = 341.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "Multiplayer"
-valign = 1
-
-[node name="set" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
-margin_top = 134.0
-margin_right = 341.0
-margin_bottom = 201.0
-size_flags_vertical = 3
-script = SubResource( 1 )
-
-[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
-margin_right = 112.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-texture = ExtResource( 22 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set"]
-margin_left = 116.0
-margin_right = 341.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "Settings"
-valign = 1
-
-[node name="cred" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
-margin_top = 201.0
-margin_right = 341.0
-margin_bottom = 268.0
-size_flags_vertical = 3
-script = SubResource( 1 )
-
-[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
-margin_right = 112.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-texture = ExtResource( 22 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred"]
-margin_left = 116.0
-margin_right = 341.0
-margin_bottom = 67.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "Credits"
-valign = 1
-
-[node name="exit" type="HBoxContainer" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer"]
-margin_top = 268.0
-margin_right = 341.0
-margin_bottom = 338.0
-size_flags_vertical = 3
-script = SubResource( 1 )
-
-[node name="TextureRect" type="TextureRect" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
-margin_right = 112.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-texture = ExtResource( 22 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit"]
-margin_left = 116.0
-margin_right = 341.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "Exit"
-valign = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/main/VBoxContainer"]
-margin_top = 712.0
-margin_right = 1366.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.25
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/main/VBoxContainer/HBoxContainer2"]
-margin_right = 207.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.18
-
-[node name="TextureButton" type="TextureButton" parent="Control/main/VBoxContainer/HBoxContainer2/HBoxContainer"]
-margin_right = 101.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-texture_normal = ExtResource( 6 )
-expand = true
-stretch_mode = 5
-script = SubResource( 2 )
-
-[node name="TextureButton2" type="TextureButton" parent="Control/main/VBoxContainer/HBoxContainer2/HBoxContainer"]
-margin_left = 105.0
-margin_right = 207.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-texture_normal = ExtResource( 12 )
-expand = true
-stretch_mode = 5
-script = SubResource( 3 )
-
-[node name="TextureButton3" type="TextureButton" parent="Control/main/VBoxContainer/HBoxContainer2/HBoxContainer"]
-visible = false
-margin_left = 140.0
-margin_right = 207.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-texture_normal = ExtResource( 5 )
-expand = true
-stretch_mode = 5
-
-[node name="Label" type="HBoxContainer" parent="Control/main/VBoxContainer/HBoxContainer2"]
-margin_left = 211.0
-margin_right = 1366.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-
-[node name="Label" type="Label" parent="Control/main/VBoxContainer/HBoxContainer2/Label"]
-margin_right = 575.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
-text = "dev-0.181.6313"
-align = 1
-valign = 2
-
-[node name="Label2" type="Label" parent="Control/main/VBoxContainer/HBoxContainer2/Label"]
-margin_left = 579.0
-margin_right = 1155.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
-text = "Welcome, %USER%"
-align = 1
-valign = 2
-autowrap = true
-max_lines_visible = 3
-
-[node name="sp" type="PanelContainer" parent="Control"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/sp"]
-margin_right = 1366.0
-margin_bottom = 768.0
-
-[node name="Margin" type="Label" parent="Control/sp/HBoxContainer"]
-margin_right = 113.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-percent_visible = 0.0
-max_lines_visible = 0
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/sp/HBoxContainer" groups=[
-"charlist",
-]]
-margin_left = 117.0
-margin_right = 1248.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-script = ExtResource( 15 )
-
-[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2"]
-margin_right = 1131.0
-margin_bottom = 76.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2"]
-visible = false
-margin_top = 46.0
-margin_right = 1131.0
-margin_bottom = 382.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 8.0
-custom_styles/panel = ExtResource( 8 )
-
-[node name="TextureButton" type="TextureButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.022
-anchor_top = 0.016
-anchor_right = 0.057
-anchor_bottom = 0.082
-margin_left = 0.117998
-margin_top = 0.271999
-margin_right = -0.467003
-margin_bottom = 0.143997
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-expand = true
 stretch_mode = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.217
-anchor_top = 0.023
-anchor_right = 0.357
-anchor_bottom = 0.076
-margin_left = -0.427002
-margin_top = 0.0159988
-margin_right = 0.232971
-margin_bottom = -0.208004
-custom_fonts/font = ExtResource( 2 )
-text = "Singleplayer"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="create" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.034
-anchor_top = 0.89
-anchor_right = 0.314
-anchor_bottom = 0.952
-margin_left = -0.454002
-margin_top = -0.120056
-margin_right = -0.134003
-margin_bottom = 0.18396
-custom_fonts/font = ExtResource( 2 )
-text = "Create New Character"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="delete" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.766
-anchor_top = 0.89
-anchor_right = 0.849
-anchor_bottom = 0.952
-margin_left = -0.346008
-margin_top = -0.120056
-margin_right = -0.219055
-margin_bottom = 0.18396
-custom_fonts/font = ExtResource( 2 )
-text = "Delete"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="play" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.866
-anchor_top = 0.89
-anchor_right = 0.95
-anchor_bottom = 0.952
-margin_left = 0.553955
-margin_top = -0.120056
-margin_right = -0.450073
-margin_bottom = 0.18396
-custom_fonts/font = ExtResource( 2 )
-text = "Play"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ItemList" type="ItemList" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.034
-anchor_top = 0.122
-anchor_right = 0.401
-anchor_bottom = 0.863
-margin_left = -0.454002
-margin_top = -0.176003
-margin_right = -0.531036
-margin_bottom = 0.295959
-custom_styles/selected_focus = SubResource( 6 )
-custom_styles/bg_focus = SubResource( 7 )
-custom_styles/selected = SubResource( 8 )
-custom_styles/bg = SubResource( 9 )
-custom_fonts/font = ExtResource( 13 )
-custom_colors/font_color_selected = Color( 0.898039, 1, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.421
-anchor_top = 0.148
-anchor_right = 0.504
-anchor_bottom = 0.546
-margin_left = -0.151031
-margin_top = 0.0159988
-margin_right = -0.0239868
-margin_bottom = 0.0319824
-custom_fonts/font = ExtResource( 2 )
-text = "Name
-Gender
-Role
-Tribes"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="details" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel"]
-anchor_left = 0.535
-anchor_top = 0.148
-anchor_right = 0.727
-anchor_bottom = 0.546
-margin_left = -0.085022
-margin_top = 0.0159988
-margin_right = -123.237
-margin_bottom = 0.0319824
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
-text = "Nothing selected
-
-
-
-
-
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel2" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2"]
-margin_top = 80.0
-margin_right = 1131.0
-margin_bottom = 688.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 8.0
-custom_styles/panel = ExtResource( 8 )
-script = ExtResource( 23 )
-
-[node name="TextureButton" type="TextureButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-anchor_left = 0.022
-anchor_top = 0.016
-anchor_right = 0.057
-anchor_bottom = 0.082
-margin_left = 0.117998
-margin_top = 0.271999
-margin_right = -0.467003
-margin_bottom = 0.143997
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-anchor_left = 0.217
-anchor_top = 0.023
-anchor_right = 0.427
-anchor_bottom = 0.076
-margin_left = -0.427002
-margin_top = 0.0159988
-margin_right = 0.0629883
-margin_bottom = -0.208004
-custom_fonts/font = ExtResource( 2 )
-text = "Create Character"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="preview" type="Control" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-anchor_left = 0.026
-anchor_top = 0.437
-anchor_right = 0.553
-anchor_bottom = 0.957
-margin_left = -0.406
-margin_top = 0.303986
-margin_right = 0.556946
-margin_bottom = 0.143982
-script = SubResource( 10 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-body = ExtResource( 17 )
-wing = ExtResource( 19 )
-head = ExtResource( 18 )
-
-[node name="spikes" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 35 )
-hframes = 6
-
-[node name="tail" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-material = SubResource( 11 )
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 32 )
-hframes = 6
-
-[node name="body" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-material = SubResource( 12 )
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 25 )
-hframes = 6
-
-[node name="head" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-material = SubResource( 13 )
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 31 )
-hframes = 6
-
-[node name="edrop" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 34 )
-hframes = 6
-
-[node name="legs" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-material = SubResource( 14 )
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 26 )
-hframes = 6
-
-[node name="wings" type="Sprite" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-material = SubResource( 15 )
-position = Vector2( 329.6, 146.8 )
-scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 29 )
-hframes = 6
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview"]
-anims/prev-idle = SubResource( 16 )
-
-[node name="TabContainer" type="TabContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-anchor_left = 0.034
-anchor_top = 0.125
-anchor_right = 0.951
-anchor_bottom = 0.395
-margin_left = -0.454002
-margin_right = 0.418945
-margin_bottom = -0.160004
-custom_styles/panel = SubResource( 17 )
-custom_fonts/font = ExtResource( 13 )
-tab_align = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Basic Details" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 29.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 18 )
-
-[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_top = 6.0
-margin_right = 760.0
-margin_bottom = 38.0
-custom_fonts/font = ExtResource( 2 )
-text = "Name                    Gender                        Role"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_left = 540.632
-margin_top = 53.0
-margin_right = 764.632
-margin_bottom = 85.0
-custom_fonts/font = ExtResource( 2 )
-text = "Tribes (Required)"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="name" type="LineEdit" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_left = 87.0
-margin_top = 7.0
-margin_right = 280.0
-margin_bottom = 36.0
-custom_fonts/font = ExtResource( 13 )
-placeholder_text = "Required"
-caret_blink = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Gender" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_left = 402.0
-margin_top = 7.0
-margin_right = 627.0
-margin_bottom = 36.0
-custom_fonts/font = ExtResource( 13 )
-text = "Male"
-items = [ "Male", null, false, 0, null, "Female", null, false, 1, null ]
-selected = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Role" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_left = 717.0
-margin_top = 7.0
-margin_right = 942.0
-margin_bottom = 36.0
-custom_fonts/font = ExtResource( 13 )
-text = "Commoner"
-items = [ "Commoner", null, false, 0, null, "Rogue", null, false, 1, null, "Servant", null, false, 2, null, "Animus", null, false, 3, null, "Royalty", null, false, 4, null, "Soldier", null, false, 5, null ]
-selected = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="tribes" type="ItemList" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Basic Details"]
-margin_left = 775.0
-margin_top = 53.0
-margin_right = 1025.0
-margin_bottom = 420.0
-select_mode = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Colors" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 29.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 19 )
-
-[node name="scales" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 533.0
-margin_top = 403.0
-margin_right = 606.0
-margin_bottom = 456.0
-focus_mode = 0
+[node name="Button" type="Button" parent="mainmenu/buttonpanel"]
+anchor_left = 0.192
+anchor_top = 0.385
+anchor_right = 0.808
+anchor_bottom = 0.475
+margin_left = -0.176003
+margin_top = 0.319977
+margin_right = 0.175995
+margin_bottom = 0.199982
 custom_styles/hover = ExtResource( 36 )
 custom_styles/pressed = ExtResource( 37 )
 custom_styles/normal = ExtResource( 38 )
-enabled_focus_mode = 0
-color = Color( 1, 1, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="horns" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 533.0
-margin_top = 147.0
-margin_right = 606.0
-margin_bottom = 200.0
-focus_mode = 0
-custom_styles/hover = ExtResource( 36 )
-custom_styles/pressed = ExtResource( 37 )
-custom_styles/normal = ExtResource( 38 )
-enabled_focus_mode = 0
-color = Color( 1, 1, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="eyes" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 533.0
-margin_top = 267.0
-margin_right = 606.0
-margin_bottom = 320.0
-focus_mode = 0
-custom_styles/hover = ExtResource( 36 )
-custom_styles/pressed = ExtResource( 37 )
-custom_styles/normal = ExtResource( 38 )
-enabled_focus_mode = 0
-color = Color( 1, 1, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="wings" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 135.0
-margin_top = 147.0
-margin_right = 208.0
-margin_bottom = 200.0
-focus_mode = 0
-custom_styles/hover = ExtResource( 36 )
-custom_styles/pressed = ExtResource( 37 )
-custom_styles/normal = ExtResource( 38 )
-enabled_focus_mode = 0
-color = Color( 1, 1, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="spikes" type="ColorPickerButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 273.0
-margin_top = 147.0
-margin_right = 346.0
-margin_bottom = 200.0
-focus_mode = 0
-custom_styles/hover = ExtResource( 36 )
-custom_styles/pressed = ExtResource( 37 )
-custom_styles/normal = ExtResource( 38 )
-enabled_focus_mode = 0
-color = Color( 1, 1, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 152.0
-margin_top = 144.0
-margin_right = 193.0
-margin_bottom = 163.0
-custom_fonts/font = ExtResource( 13 )
-text = "Wings"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 287.0
-margin_top = 144.0
-margin_right = 332.0
-margin_bottom = 163.0
-custom_fonts/font = ExtResource( 13 )
-text = "Spikes"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label3" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 548.0
-margin_top = 144.0
-margin_right = 593.0
-margin_bottom = 163.0
-custom_fonts/font = ExtResource( 13 )
-text = "Horns"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label4" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 548.0
-margin_top = 263.0
-margin_right = 593.0
-margin_bottom = 282.0
-custom_fonts/font = ExtResource( 13 )
-text = "Eyes"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label5" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors"]
-margin_left = 545.0
-margin_top = 400.0
-margin_right = 592.0
-margin_bottom = 419.0
-custom_fonts/font = ExtResource( 13 )
-text = "Scales"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Skills" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 29.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 20 )
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills"]
-margin_left = 578.0
-margin_top = 12.0
-margin_right = 1038.0
-margin_bottom = 415.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ItemList" type="ItemList" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Skills/ScrollContainer"]
-margin_right = 460.0
-margin_bottom = 403.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Appearances" type="Panel" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 29.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 20 )
-
-[node name="body" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 135.0
-margin_top = 16.0
-margin_right = -780.0
-margin_bottom = -94.0
-custom_fonts/font = ExtResource( 13 )
-text = "NightWing"
-items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
-selected = 0
-
-[node name="head" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 135.0
-margin_top = 53.0
-margin_right = -780.0
-margin_bottom = -57.0
-custom_fonts/font = ExtResource( 13 )
-text = "NightWing"
-items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
-selected = 0
-
-[node name="wing" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 135.0
-margin_top = 90.0
-margin_right = -780.0
-margin_bottom = -20.0
-custom_fonts/font = ExtResource( 13 )
-text = "NightWing"
-items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
-selected = 0
-
-[node name="tail" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 402.0
-margin_top = 16.0
-margin_right = -513.0
-margin_bottom = -94.0
-custom_fonts/font = ExtResource( 13 )
-text = "NightWing"
-items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
-selected = 0
-
-[node name="legs" type="OptionButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 402.0
-margin_top = 53.0
-margin_right = -513.0
-margin_bottom = -57.0
-custom_fonts/font = ExtResource( 13 )
-text = "NightWing"
-items = [ "NightWing", null, false, 0, null, "SkyWing", null, false, 1, null ]
-selected = 0
-
-[node name="spvis" type="CheckButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-margin_left = 533.0
-margin_top = 7.0
-margin_right = 735.0
-margin_bottom = 47.0
-custom_fonts/font = ExtResource( 13 )
-text = "Spikes"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="tdscalevis" type="CheckButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-margin_left = 533.0
-margin_top = 47.0
-margin_right = 658.0
-margin_bottom = 87.0
-custom_fonts/font = ExtResource( 13 )
-text = "Teardrop SCale"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-margin_left = 50.0
-margin_top = 12.0
-margin_right = 133.0
-margin_bottom = 119.0
-custom_fonts/font = ExtResource( 13 )
-text = "Body Type
-
-Head Type
-
-Wing Tyoe"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances"]
-margin_left = 325.0
-margin_top = 15.0
-margin_right = 398.0
-margin_bottom = 78.0
-custom_fonts/font = ExtResource( 13 )
-text = "Tail Type
-
-Leg Type"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-margin_left = 813.0
-margin_top = 541.0
-margin_right = 1063.0
-margin_bottom = 579.0
-custom_fonts/font = ExtResource( 2 )
-text = "Create Character"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CheckButton" type="CheckButton" parent="Control/sp/HBoxContainer/VBoxContainer2/Panel2"]
-margin_left = 38.0
-margin_top = 541.0
-margin_right = 235.0
-margin_bottom = 581.0
-focus_mode = 0
-custom_fonts/font = ExtResource( 13 )
-enabled_focus_mode = 0
-text = "Preview Idle"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/sp/HBoxContainer/VBoxContainer2"]
-margin_top = 692.0
-margin_right = 1131.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Margin2" type="Label" parent="Control/sp/HBoxContainer"]
-margin_left = 1252.0
-margin_right = 1366.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="mp" type="PanelContainer" parent="Control"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/mp"]
-margin_right = 1366.0
-margin_bottom = 768.0
-
-[node name="Margin" type="Label" parent="Control/mp/HBoxContainer2"]
-margin_right = 113.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-percent_visible = 0.0
-max_lines_visible = 0
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/mp/HBoxContainer2"]
-margin_left = 117.0
-margin_right = 1248.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="Control/mp/HBoxContainer2/VBoxContainer2"]
-margin_right = 1131.0
-margin_bottom = 76.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="Control/mp/HBoxContainer2/VBoxContainer2"]
-margin_top = 80.0
-margin_right = 1131.0
-margin_bottom = 688.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 8.0
-custom_styles/panel = ExtResource( 8 )
-
-[node name="TextureButton" type="TextureButton" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
-anchor_left = 0.022
-anchor_top = 0.016
-anchor_right = 0.057
-anchor_bottom = 0.082
-margin_left = 0.117998
-margin_top = 0.271999
-margin_right = -0.467003
-margin_bottom = 0.143997
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
-anchor_left = 0.437
-anchor_top = 0.023
-anchor_right = 0.563
-anchor_bottom = 0.076
-margin_left = -0.247009
-margin_top = 0.0159988
-margin_right = 0.246948
-margin_bottom = -0.208004
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Multiplayer"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+custom_colors/font_color_hover = Color( 0.101961, 0, 0.415686, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Play"
 
-[node name="LineEdit" type="LineEdit" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
-margin_left = 419.0
-margin_top = 74.0
-margin_right = 712.0
-margin_bottom = 116.0
+[node name="Button2" type="Button" parent="mainmenu/buttonpanel"]
+anchor_left = 0.192
+anchor_top = 0.5
+anchor_right = 0.808
+anchor_bottom = 0.594
+margin_left = -0.176003
+margin_right = 0.175995
+margin_bottom = -3.19202
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 custom_fonts/font = ExtResource( 2 )
-placeholder_text = "IP Address"
-caret_blink = true
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.101961, 0, 0.415686, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Expansions"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
-margin_left = 721.0
-margin_top = 144.0
-margin_right = 842.0
-margin_bottom = 182.0
+[node name="Button3" type="Button" parent="mainmenu/buttonpanel"]
+anchor_left = 0.192
+anchor_top = 0.615
+anchor_right = 0.808
+anchor_bottom = 0.704
+margin_left = -0.176003
+margin_top = -0.320007
+margin_right = 0.175995
+margin_bottom = 0.327942
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 custom_fonts/font = ExtResource( 2 )
-text = "Connect"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.101961, 0, 0.415686, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Settings"
 
-[node name="Button2" type="Button" parent="Control/mp/HBoxContainer2/VBoxContainer2/Panel"]
-margin_left = 875.0
-margin_top = 144.0
-margin_right = 996.0
-margin_bottom = 182.0
+[node name="Button4" type="Button" parent="mainmenu/buttonpanel"]
+anchor_left = 0.192
+anchor_top = 0.729
+anchor_right = 0.808
+anchor_bottom = 0.819
+margin_left = -0.176003
+margin_top = 0.127991
+margin_right = 0.175995
+margin_bottom = 0.00793457
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 custom_fonts/font = ExtResource( 2 )
-text = "Disconnect"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/mp/HBoxContainer2/VBoxContainer2"]
-margin_top = 692.0
-margin_right = 1131.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Margin2" type="Label" parent="Control/mp/HBoxContainer2"]
-margin_left = 1252.0
-margin_right = 1366.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="set" type="PanelContainer" parent="Control"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Control/set"]
-margin_left = 3.85537
-margin_top = 4.2409
-margin_right = 1361.88
-margin_bottom = 764.016
-custom_styles/panel = SubResource( 21 )
-
-[node name="TextureButton2" type="TextureButton" parent="Control/set/Panel"]
-margin_left = -3.85537
-margin_top = -4.2409
-margin_right = 119.145
-margin_bottom = 79.7591
-size_flags_horizontal = 3
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="cred" type="PanelContainer" parent="Control"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = ExtResource( 4 )
-
-[node name="content" type="VBoxContainer" parent="Control/cred"]
-margin_right = 1366.0
-margin_bottom = 768.0
-
-[node name="bar" type="HBoxContainer" parent="Control/cred/content"]
-margin_right = 1366.0
-margin_bottom = 84.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-
-[node name="TextureButton" type="TextureButton" parent="Control/cred/content/bar"]
-margin_right = 123.0
-margin_bottom = 84.0
-size_flags_horizontal = 3
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Control/cred/content/bar"]
-margin_left = 127.0
-margin_right = 1366.0
-margin_bottom = 84.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 10.0
-custom_fonts/font = SubResource( 22 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.101961, 0, 0.415686, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Credits"
-align = 1
-valign = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/cred/content"]
-margin_top = 88.0
-margin_right = 1366.0
-margin_bottom = 768.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer"]
-margin_right = 113.0
-margin_bottom = 680.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
+[node name="Button5" type="Button" parent="mainmenu/buttonpanel"]
+anchor_left = 0.192
+anchor_top = 0.844
+anchor_right = 0.808
+anchor_bottom = 0.934
+margin_left = -0.176003
+margin_top = -0.192017
+margin_right = 0.175995
+margin_bottom = -0.312012
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.101961, 0, 0.415686, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Quit"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/cred/content/HBoxContainer"]
-margin_left = 117.0
-margin_right = 1248.0
-margin_bottom = 680.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer"]
-margin_right = 1131.0
-margin_bottom = 56.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="Panel" type="Panel" parent="Control/cred/content/HBoxContainer/VBoxContainer"]
-margin_top = 60.0
-margin_right = 1131.0
-margin_bottom = 620.0
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 23 )
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel"]
+[node name="newspanel" type="Panel" parent="mainmenu"]
+anchor_left = 0.687
+anchor_top = 0.656
 anchor_right = 1.0
 anchor_bottom = 1.0
-scroll_horizontal_enabled = false
+margin_left = -0.442078
+margin_top = 0.191986
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer"]
-margin_right = 1131.0
-margin_bottom = 560.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 24 )
+[node name="settingspanel" type="Panel" parent="mainmenu"]
+anchor_left = 0.388
+anchor_top = 0.061
+anchor_right = 0.939
+anchor_bottom = 0.935
+margin_left = -0.00799561
+margin_top = 0.151997
+margin_right = -0.674072
+margin_bottom = -0.0800781
+custom_styles/panel = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer"]
-margin_right = 1119.0
-margin_bottom = 855.0
-
-[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer"]
-margin_right = 21.0
-margin_bottom = 855.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.02
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer"]
-margin_left = 25.0
-margin_right = 1093.0
-margin_bottom = 855.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer/VBoxContainer"]
-margin_right = 1068.0
-margin_bottom = 14.0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.03
-
-[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer/VBoxContainer"]
-margin_top = 18.0
-margin_right = 1068.0
-margin_bottom = 855.0
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 2 )
-text = "Development Team
----------------
-Surge - Lead Programmer
-Asteri - Animator
-Auryn - Tile and map designer
-Magma Studios - Audio Designer
-Cacti - Voice Actor
-Kayak - Audio Designer
-Jellyfoosh - Concept Artist and Creature Designer
-ambivalent - Map Tile Designer
-PaintbrushWonder - Concept Artist
-Lord Crow - Concept Artist
-Cal - Concept Artist
-
-Special Thanks to our Patrons!
------------------------
-aarise
-
-
-Dedicated servers hosted using Microsoft Azure
-
-
-Portions of this software are copyright © 2020 The FreeType Project (www.freetype.org). All rights reserved."
-align = 1
-autowrap = true
-
-[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer/Panel/ScrollContainer/PanelContainer/HBoxContainer"]
-margin_left = 1097.0
-margin_right = 1119.0
-margin_bottom = 855.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.02
-
-[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer/VBoxContainer"]
-margin_top = 624.0
-margin_right = 1131.0
-margin_bottom = 680.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-
-[node name="Label2" type="Label" parent="Control/cred/content/HBoxContainer"]
-margin_left = 1252.0
-margin_right = 1366.0
-margin_bottom = 680.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-custom_fonts/font = ExtResource( 2 )
-
-[node name="conf-dialogue" type="PanelContainer" parent="Control"]
+[node name="dialogue" type="Panel" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 25 )
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/conf-dialogue"]
-margin_right = 1366.0
-margin_bottom = 768.0
-
-[node name="Label" type="Label" parent="Control/conf-dialogue/HBoxContainer"]
-margin_right = 452.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/conf-dialogue/HBoxContainer"]
-margin_left = 456.0
-margin_right = 908.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer"]
-margin_right = 452.0
-margin_bottom = 253.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer"]
-self_modulate = Color( 1, 0.815686, 0.580392, 1 )
-margin_top = 257.0
-margin_right = 452.0
-margin_bottom = 510.0
-size_flags_vertical = 3
+[node name="Panel" type="Panel" parent="dialogue"]
+self_modulate = Color( 0.498039, 0.498039, 0.498039, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 496.5
+margin_top = 235.0
+margin_right = -496.5
+margin_bottom = -235.0
 custom_styles/panel = ExtResource( 8 )
-
-[node name="conf" type="Button" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
-margin_left = 289.0
-margin_top = 191.0
-margin_right = 407.0
-margin_bottom = 229.0
-custom_fonts/font = ExtResource( 2 )
-text = "Confirm"
-script = SubResource( 26 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="canc" type="Button" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
-margin_left = 32.0
-margin_top = 191.0
-margin_right = 131.0
-margin_bottom = 229.0
-custom_fonts/font = ExtResource( 2 )
-text = "Cancel"
-script = SubResource( 27 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
-anchor_right = 1.0
-margin_bottom = 58.0
-custom_fonts/font = ExtResource( 2 )
-text = "CONFIRM"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer/Panel"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -33.5
-margin_bottom = 33.5
-custom_fonts/font = ExtResource( 2 )
-text = "Are you sure you want to do 
-this?"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="Control/conf-dialogue/HBoxContainer/VBoxContainer"]
-margin_top = 514.0
-margin_right = 452.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label2" type="Label" parent="Control/conf-dialogue/HBoxContainer"]
-margin_left = 912.0
-margin_right = 1366.0
-margin_bottom = 768.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="gameselect" type="Panel" parent="Control"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = ExtResource( 4 )
-script = ExtResource( 24 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Control/gameselect"]
-anchor_left = 0.132
-anchor_top = 0.113
-anchor_right = 0.868
-anchor_bottom = 0.887
-margin_left = 0.188004
-margin_top = -0.284004
-margin_right = -0.187988
-margin_bottom = 0.283997
-custom_styles/panel = ExtResource( 8 )
-
-[node name="TextureButton" type="TextureButton" parent="Control/gameselect/Panel"]
-anchor_left = 0.024
-anchor_top = 0.018
-anchor_right = 0.064
-anchor_bottom = 0.085
-margin_left = 0.266016
-margin_top = -0.198793
-margin_right = 0.0660172
-margin_bottom = -0.0637932
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 9 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 4
-
-[node name="Button" type="Button" parent="Control/gameselect/Panel"]
-margin_left = 30.5
-margin_top = 534.5
-margin_right = 183.5
-margin_bottom = 572.5
-custom_fonts/font = ExtResource( 2 )
-text = "New Game"
-
-[node name="Button2" type="Button" parent="Control/gameselect/Panel"]
-margin_left = 196.498
-margin_top = 534.0
-margin_right = 290.498
-margin_bottom = 572.0
-custom_fonts/font = ExtResource( 2 )
-text = "Delete"
-
-[node name="Button3" type="Button" parent="Control/gameselect/Panel"]
-margin_left = 300.349
-margin_top = 534.0
-margin_right = 459.349
-margin_bottom = 572.0
-custom_fonts/font = ExtResource( 2 )
-text = "Load Game"
-
-[node name="ItemList" type="ItemList" parent="Control/gameselect/Panel"]
-anchor_left = 0.031
-anchor_top = 0.118
-anchor_right = 0.457
-anchor_bottom = 0.871
-margin_left = -0.155001
-margin_top = -0.210007
-margin_right = -0.285004
-margin_bottom = -0.245056
-
-[node name="Label" type="Label" parent="Control/gameselect/Panel"]
-margin_left = 507.0
-margin_top = 74.0
-margin_right = 931.0
-margin_bottom = 518.0
+[node name="Label" type="Label" parent="dialogue/Panel"]
+anchor_left = 0.479
+anchor_top = 0.104
+anchor_right = 0.479
+anchor_bottom = 0.104
+margin_left = -156.667
+margin_top = -10.992
+margin_right = 156.333
+margin_bottom = 11.008
 custom_fonts/font = ExtResource( 13 )
-text = "Level: 2
-XP: 35/1200
-
-HP: 100/100
-Mana: 0/0
-
-Location: ?????"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="savename" type="Panel" parent="Control/gameselect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = SubResource( 28 )
-
-[node name="Panel" type="Panel" parent="Control/gameselect/savename"]
-anchor_left = 0.367
-anchor_top = 0.331
-anchor_right = 0.633
-anchor_bottom = 0.669
-margin_left = -0.322021
-margin_top = -0.208023
-margin_right = 0.32196
-margin_bottom = 0.208008
-custom_styles/panel = ExtResource( 3 )
-
-[node name="saveName" type="LineEdit" parent="Control/gameselect/savename/Panel"]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -9.5
-margin_bottom = 9.5
-custom_styles/read_only = SubResource( 29 )
-custom_styles/focus = SubResource( 30 )
-custom_styles/normal = SubResource( 31 )
-custom_fonts/font = ExtResource( 13 )
+text = "This feature isn't implemented yet!"
 align = 1
-placeholder_text = "A wonderful save name"
 
-[node name="Button" type="Button" parent="Control/gameselect/savename/Panel"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -38.0
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.0784314, 1, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 1, 0.717647, 1 )
-custom_colors/font_color_pressed = Color( 0.0431373, 0.443137, 0, 1 )
-enabled_focus_mode = 0
-text = "Create New Game"
-flat = true
-
-[node name="Button2" type="Button" parent="Control/gameselect/savename/Panel"]
-anchor_top = 0.85
-anchor_right = 1.0
-anchor_bottom = 0.85
-margin_top = -38.0
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Cancel"
-flat = true
-
-[node name="Label" type="Label" parent="Control/gameselect/savename/Panel"]
-anchor_right = 1.0
-margin_bottom = 67.0
-custom_fonts/font = ExtResource( 2 )
-text = "Enter the name for your new save:"
+[node name="Label2" type="Label" parent="dialogue/Panel"]
+anchor_left = 0.129
+anchor_top = 0.349
+anchor_right = 0.858
+anchor_bottom = 0.57
+margin_left = -0.117004
+margin_top = -0.0019989
+margin_right = -0.0340271
+margin_bottom = 0.139984
+custom_fonts/font = SubResource( 3 )
+text = "Sorry! This feature currently isn't implemented. It should be soon, though!"
 align = 1
 autowrap = true
-[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseOver"]
-[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/sp" method="mouseExit"]
-[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseOver"]
-[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/mp" method="mouseExit"]
-[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" method="mouseOver"]
-[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/set" method="mouseExit"]
-[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseOver"]
-[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/cred" method="mouseExit"]
-[connection signal="mouse_entered" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseOver"]
-[connection signal="mouse_exited" from="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" to="Control/main/VBoxContainer/bottom/HBoxContainer/VBoxContainer/exit" method="mouseExit"]
-[connection signal="visibility_changed" from="Control/sp" to="Control/sp/HBoxContainer/VBoxContainer2" method="onParentVisibilityChanged"]
-[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/TextureButton" to="Control" method="hideAll"]
-[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/create" to="Control/sp/HBoxContainer/VBoxContainer2" method="showCreateMenu"]
-[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/delete" to="Control/sp/HBoxContainer/VBoxContainer2" method="onDelete"]
-[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/play" to="Control/sp/HBoxContainer/VBoxContainer2" method="onPlay"]
-[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel/ItemList" to="Control/sp/HBoxContainer/VBoxContainer2" method="charItemSelected"]
-[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TextureButton" to="Control/sp/HBoxContainer/VBoxContainer2" method="showSelectMenu"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/scales" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="scalesChanged"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/horns" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="hornsChanged"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/eyes" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="eyesChanged"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/wings" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="wingsChanged"]
-[connection signal="color_changed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Colors/spikes" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="spikesChanged"]
-[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/body" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="bodyTypeChanged"]
-[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/head" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="headTypeChanged"]
-[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/wing" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="wingTypeChanged"]
-[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/tail" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="tailTypeChanged"]
-[connection signal="item_selected" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/legs" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="legsTypeChanged"]
-[connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/spvis" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="spikesToggled"]
-[connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/TabContainer/Appearances/tdscalevis" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="_on_tdscalevis_toggled"]
-[connection signal="pressed" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/Button" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2" method="createChar"]
-[connection signal="toggled" from="Control/sp/HBoxContainer/VBoxContainer2/Panel2/CheckButton" to="Control/sp/HBoxContainer/VBoxContainer2/Panel2/preview" method="playAnimsToggle"]
-[connection signal="pressed" from="Control/mp/HBoxContainer2/VBoxContainer2/Panel/TextureButton" to="Control" method="hideAll"]
-[connection signal="pressed" from="Control/set/Panel/TextureButton2" to="Control" method="hideAll"]
-[connection signal="pressed" from="Control/cred/content/bar/TextureButton" to="Control" method="hideAll"]
-[connection signal="pressed" from="Control/gameselect/Panel/TextureButton" to="Control/gameselect" method="hideMenu"]
-[connection signal="pressed" from="Control/gameselect/Panel/Button" to="Control/gameselect" method="newsave"]
-[connection signal="pressed" from="Control/gameselect/Panel/Button2" to="Control/gameselect" method="removesave"]
-[connection signal="pressed" from="Control/gameselect/Panel/Button3" to="Control/gameselect" method="loadsave"]
-[connection signal="item_selected" from="Control/gameselect/Panel/ItemList" to="Control/gameselect" method="onSelectItem"]
-[connection signal="pressed" from="Control/gameselect/savename/Panel/Button" to="Control/gameselect" method="createsave"]
-[connection signal="pressed" from="Control/gameselect/savename/Panel/Button2" to="Control/gameselect" method="cancelcreate"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="dialogue/Panel"]
+anchor_left = 0.09
+anchor_top = 0.752
+anchor_right = 0.859
+anchor_bottom = 0.96
+margin_left = -0.0699997
+margin_top = -0.0960083
+margin_right = 0.0929871
+margin_bottom = 0.112793
+custom_styles/hover = ExtResource( 36 )
+custom_styles/pressed = ExtResource( 37 )
+custom_styles/normal = ExtResource( 38 )
+custom_fonts/font = ExtResource( 13 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0.0313726, 0.223529, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Okay!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="mainmenu/buttonpanel/Button3" to="mainmenu" method="onSettings"]

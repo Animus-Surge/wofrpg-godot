@@ -1,7 +1,19 @@
 extends Panel
 
 func _ready():
-	pass
+	$settingspanel.hide()
 
 func onSettings():
-	$settingspanel.rect_position = Vector2(530,47)
+	$settingspanel.show()
+
+func onPlay():
+	pass
+
+func onExpansions():
+	get_node("../dialogue").show()
+
+func onCredits():
+	pass
+
+func onQuit():
+	get_tree().quit(0)

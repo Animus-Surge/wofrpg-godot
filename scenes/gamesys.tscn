@@ -1,0 +1,555 @@
+[gd_scene load_steps=39 format=2]
+
+[ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=1]
+[ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=2]
+[ext_resource path="res://images/character/night/idle/nw-head.png" type="Texture" id=3]
+[ext_resource path="res://images/character/night/idle/nw-legs.png" type="Texture" id=4]
+[ext_resource path="res://images/character/night/idle/nw-body.png" type="Texture" id=5]
+[ext_resource path="res://images/character/night/idle/nw-spikes.png" type="Texture" id=6]
+[ext_resource path="res://images/ui/backgrounds/scroll-tab-select.png" type="Texture" id=7]
+[ext_resource path="res://images/ui/backgrounds/scroll-tab-noselect.png" type="Texture" id=8]
+[ext_resource path="res://images/ui/backgrounds/sw-customizationscreen.png" type="Texture" id=9]
+[ext_resource path="res://images/character/night/idle/nw-wings-mask.png" type="Texture" id=10]
+[ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=11]
+[ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=12]
+[ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://images/character/palettes/head-palette.png" type="Texture" id=14]
+[ext_resource path="res://images/character/night/idle/nw-tail-mask.png" type="Texture" id=15]
+[ext_resource path="res://images/character/palettes/wing-palette.png" type="Texture" id=16]
+[ext_resource path="res://images/character/palettes/body_leg_tail-palette.png" type="Texture" id=17]
+[ext_resource path="res://images/character/night/idle/nw-head-mask.png" type="Texture" id=18]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=19]
+[ext_resource path="res://images/character/night/idle/nw-eyedrop.png" type="Texture" id=20]
+[ext_resource path="res://images/character/night/idle/nw-legs-mask.png" type="Texture" id=21]
+[ext_resource path="res://images/character/night/idle/nw-body-mask.png" type="Texture" id=22]
+[ext_resource path="res://images/ui/buttons/radio-btn.png" type="Texture" id=23]
+[ext_resource path="res://images/ui/backgrounds/lineedit-bg.png" type="Texture" id=24]
+[ext_resource path="res://scripts/ui/checkbox.tres.gd" type="Script" id=25]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 7 )
+region_rect = Rect2( 8, 0, 112, 64 )
+margin_left = 16.1433
+margin_right = 16.0884
+margin_top = 8.15803
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 8 )
+region_rect = Rect2( 8, 0, 112, 64 )
+margin_left = 16.1433
+margin_right = 16.0884
+margin_top = 8.15803
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+font_data = ExtResource( 13 )
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 24 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends Control
+
+var genderIndex
+
+func _ready():
+	$fcheck.self_modulate = Color(1, 0.5, 0)
+	$mcheck.self_modulate = Color(1, 0.5, 0)
+
+func _mcheck(button_pressed):
+	if button_pressed:
+		$fcheck.pressed = false
+		$fcheck.disabled = false
+		$mcheck.disabled = true
+		$fcheck.self_modulate = Color(1, 0.5, 0)
+		$mcheck.self_modulate = Color(0.5, 1, 1)
+		genderIndex = 0
+
+func _fcheck(button_pressed):
+	if button_pressed:
+		$mcheck.pressed = false
+		$mcheck.disabled = false
+		$fcheck.disabled = true
+		$mcheck.self_modulate = Color(1, 0.5, 0)
+		$fcheck.self_modulate = Color(0.5, 1, 1)
+		genderIndex = 1
+
+func mcheckHover():
+	if !$mcheck.pressed:
+		$mcheck.self_modulate = Color(0,1,1)
+
+func mcheckUnhover():
+	if !$mcheck.pressed:
+		$mcheck.self_modulate = Color(1,0.5,0)
+
+func fcheckHover():
+	if !$fcheck.pressed:
+		$fcheck.self_modulate = Color(0,1,1)
+
+func fcheckUnhover():
+	if !$fcheck.pressed:
+		$fcheck.self_modulate = Color(1,0.5,0)
+"
+
+[sub_resource type="GDScript" id=13]
+script/source = "extends GridContainer
+
+const maxSelectedTribes = 3
+
+var selectedTribes
+
+func updateSelection():
+	selectedTribes = 0
+	for tribe in get_children():
+		tribe.disabled = false
+		if tribe.pressed:
+			selectedTribes += 1
+	if selectedTribes >= maxSelectedTribes:
+		for tribeUnselected in get_children():
+			if !tribeUnselected.pressed:
+				tribeUnselected.disabled = true
+
+func getSelectedTribes() -> Array:
+	var selected = []
+	for tribe in get_children():
+		if tribe.pressed:
+			selected.append(tribe.name)
+	
+	return selected
+
+func resetSelected():
+	for tribe in get_children():
+		tribe.pressed = false
+	selectedTribes = 0
+"
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 22 )
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 21 )
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 15 )
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 14 )
+shader_param/mask = ExtResource( 18 )
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 16 )
+shader_param/mask = ExtResource( 10 )
+
+[node name="gamesys" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 9 )
+expand = true
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ui" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="customization" type="Panel" parent="ui"]
+self_modulate = Color( 0.94902, 0.929412, 0.607843, 1 )
+anchor_left = 1.0
+anchor_top = 0.209
+anchor_right = 1.0
+anchor_bottom = 0.791
+margin_left = -385.0
+margin_top = -0.0119934
+margin_bottom = 0.0119629
+custom_styles/panel = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="ui/customization"]
+self_modulate = Color( 0.94902, 0.929412, 0.607843, 1 )
+anchor_left = 0.091
+anchor_right = 0.904
+anchor_bottom = 0.944
+margin_left = -0.0350037
+margin_top = -22.0
+margin_right = -0.0400085
+margin_bottom = 0.0319824
+custom_styles/tab_fg = SubResource( 1 )
+custom_styles/tab_bg = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color_bg = Color( 0, 0, 0, 1 )
+custom_colors/font_color_fg = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 27.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="cname" type="LineEdit" parent="ui/customization/TabContainer/Basic Info"]
+self_modulate = Color( 0.890196, 0.72549, 0.223529, 1 )
+anchor_left = 0.014
+anchor_top = 0.038
+anchor_right = 0.986
+anchor_bottom = 0.115
+margin_left = 0.618
+margin_top = 0.116
+margin_right = 0.381989
+margin_bottom = -0.0699997
+custom_styles/read_only = SubResource( 6 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+placeholder_text = "Character Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="groupGender" type="Control" parent="ui/customization/TabContainer/Basic Info"]
+anchor_left = 0.014
+anchor_top = 0.153
+anchor_right = 0.519
+anchor_bottom = 0.225
+margin_left = 0.118
+margin_top = 0.0459938
+margin_right = 0.0529785
+margin_bottom = -0.0500031
+script = SubResource( 7 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="mcheck" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/groupGender"]
+margin_right = 68.0
+margin_bottom = 30.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Male"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fcheck" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/groupGender"]
+margin_left = 68.0
+margin_right = 158.0
+margin_bottom = 30.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0.431373, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Female"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ui/customization/TabContainer/Basic Info"]
+anchor_top = 0.588
+anchor_right = 0.748
+anchor_bottom = 0.948
+margin_top = -0.0534973
+margin_right = -85.124
+margin_bottom = -0.173523
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Basic Info/ScrollContainer"]
+margin_right = 234.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+script = SubResource( 13 )
+
+[node name="iw" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_right = 119.0
+margin_bottom = 30.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "IceWing"
+script = ExtResource( 25 )
+
+[node name="mw" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_left = 123.0
+margin_right = 234.0
+margin_bottom = 30.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "MudWing"
+script = ExtResource( 25 )
+
+[node name="nw" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_top = 34.0
+margin_right = 119.0
+margin_bottom = 64.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "NightWing"
+script = ExtResource( 25 )
+
+[node name="rw" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_left = 123.0
+margin_top = 34.0
+margin_right = 234.0
+margin_bottom = 64.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "RainWing"
+script = ExtResource( 25 )
+
+[node name="saw" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_top = 68.0
+margin_right = 119.0
+margin_bottom = 98.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "SandWing"
+script = ExtResource( 25 )
+
+[node name="sew" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_left = 123.0
+margin_top = 68.0
+margin_right = 234.0
+margin_bottom = 98.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "SeaWing"
+script = ExtResource( 25 )
+
+[node name="skw" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer"]
+margin_top = 102.0
+margin_right = 119.0
+margin_bottom = 132.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 23 )
+custom_icons/checked = ExtResource( 23 )
+custom_icons/radio_unchecked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "SkyWing"
+script = ExtResource( 25 )
+
+[node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 27.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Skills" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 27.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="character" type="Control" parent="ui"]
+anchor_left = 0.071
+anchor_top = 0.27
+anchor_right = 0.681
+anchor_bottom = 0.879
+margin_left = 0.0056839
+margin_top = -0.245697
+margin_right = -0.254395
+margin_bottom = 0.0422974
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="spikes" type="NinePatchRect" parent="ui/character"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="body" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 8 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="legs" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 9 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tail" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 10 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="head" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 11 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wings" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 12 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="eyedrop" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 12 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
+[connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/fcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="fcheckHover"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/fcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="fcheckUnhover"]
+[connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/fcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_fcheck"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/iw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/iw" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/iw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/iw" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/mw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/mw" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/mw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/mw" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/nw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/nw" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/nw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/nw" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/rw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/rw" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/rw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/rw" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/saw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/saw" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/saw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/saw" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/sew" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/sew" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/sew" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/sew" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/skw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/skw" method="_mouse_entered"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/skw" to="ui/customization/TabContainer/Basic Info/ScrollContainer/GridContainer/skw" method="_mouse_exited"]

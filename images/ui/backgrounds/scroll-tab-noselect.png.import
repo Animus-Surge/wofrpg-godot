@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/radio-btn-uncheck.png-ee7dde7fc94cf13613f832ad6298984f.stex"
+path="res://.import/scroll-tab-noselect.png-775f227343eba41f026aa64ea19d80b0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/ui/buttons/radio-btn-uncheck.png"
-dest_files=[ "res://.import/radio-btn-uncheck.png-ee7dde7fc94cf13613f832ad6298984f.stex" ]
+source_file="res://images/ui/backgrounds/scroll-tab-noselect.png"
+dest_files=[ "res://.import/scroll-tab-noselect.png-775f227343eba41f026aa64ea19d80b0.stex" ]
 
 [params]
 

@@ -125,6 +125,9 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.101961, 0, 0.415686, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button4" type="Button" parent="mainmenu/buttonpanel"]
 anchor_left = 0.192
@@ -262,3 +265,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="mainmenu/buttonpanel/Button3" to="mainmenu" method="onSettings"]
+[connection signal="pressed" from="mainmenu/buttonpanel/Button5" to="mainmenu" method="onQuit"]

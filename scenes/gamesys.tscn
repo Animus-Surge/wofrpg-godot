@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=2]
@@ -160,35 +160,89 @@ func resetSelected():
 	selectedTribes = 0
 "
 
-[sub_resource type="GDScript" id=12]
-script/source = "extends GridContainer
+[sub_resource type="GDScript" id=19]
+script/source = "extends Button
+
+func _ready():
+	$ScrollContainer.visible = false
+
+func _toggled(button_pressed):
+	$ScrollContainer.visible = button_pressed
+	if !button_pressed:
+		pass #TODO
 "
 
-[sub_resource type="ShaderMaterial" id=13]
-shader = ExtResource( 12 )
-shader_param/palette_size = null
-shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 22 )
+[sub_resource type="GDScript" id=12]
+script/source = "extends GridContainer
+
+var roleIndex
+
+func radioPressed(id):
+	for child in get_children():
+		if child.id != id:
+			child.disabled = false
+			child.pressed = false
+		else:
+			child.disabled = true
+	
+	roleIndex = id
+"
+
+[sub_resource type="GDScript" id=13]
+script/source = "extends CheckBox
+
+export (int) var id
+
+var mouseOver = false
+
+func _toggled(button_pressed):
+	if button_pressed:
+		disabled = true
+		get_parent().call(\"radioPressed\", id)
+
+func _mouse_enter():
+	if !disabled:
+		mouseOver = true
+		self_modulate = Color(0,1,1)
+
+func _mouse_exit():
+	mouseOver = false
+	self_modulate = Color(1,0.5,0)
+
+func _process(delta):
+	if pressed:
+		if !mouseOver:
+			self_modulate = Color(0,1,0)
+	else:
+		if !mouseOver:
+			self_modulate = Color(1,0.5,0)
+"
 
 [sub_resource type="ShaderMaterial" id=14]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 21 )
+shader_param/mask = ExtResource( 22 )
 
 [sub_resource type="ShaderMaterial" id=15]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 15 )
+shader_param/mask = ExtResource( 21 )
 
 [sub_resource type="ShaderMaterial" id=16]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 15 )
+
+[sub_resource type="ShaderMaterial" id=17]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 18 )
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="ShaderMaterial" id=18]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 16 )
@@ -333,14 +387,14 @@ __meta__ = {
 
 [node name="tribesbtn" type="Button" parent="ui/customization/TabContainer/Basic Info"]
 self_modulate = Color( 0.92549, 0.862745, 0, 1 )
-anchor_left = 0.016
-anchor_top = 0.297
-anchor_right = 0.802
-anchor_bottom = 0.447
-margin_left = -0.00800037
-margin_top = 0.151001
-margin_right = -0.026001
-margin_bottom = -0.0447998
+anchor_left = -0.022
+anchor_top = 0.89
+anchor_right = 0.498
+anchor_bottom = 1.039
+margin_left = -0.113999
+margin_top = -0.130005
+margin_right = 0.125992
+margin_bottom = 0.0911865
 focus_mode = 0
 custom_styles/hover = SubResource( 8 )
 custom_styles/pressed = SubResource( 8 )
@@ -359,6 +413,7 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui/customization/TabContainer/Basic Info/tribesbtn"]
+visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -501,14 +556,14 @@ script = ExtResource( 25 )
 
 [node name="rolesbtn" type="Button" parent="ui/customization/TabContainer/Basic Info"]
 self_modulate = Color( 0.92549, 0.862745, 0, 1 )
-anchor_left = 0.016
-anchor_top = 0.451
-anchor_right = 0.802
-anchor_bottom = 0.6
-margin_left = -0.00800037
-margin_top = -0.0670166
-margin_right = -0.0260162
-margin_bottom = 0.15419
+anchor_left = 0.604
+anchor_top = 0.89
+anchor_right = 1.016
+anchor_bottom = 1.039
+margin_left = -0.0520172
+margin_top = -0.130005
+margin_right = -0.00799561
+margin_bottom = 0.0911865
 focus_mode = 0
 custom_styles/hover = SubResource( 8 )
 custom_styles/pressed = SubResource( 8 )
@@ -521,16 +576,19 @@ custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 toggle_mode = true
 enabled_focus_mode = 0
 text = "Roles"
-script = SubResource( 9 )
+script = SubResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui/customization/TabContainer/Basic Info/rolesbtn"]
+visible = false
+anchor_left = -0.86
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -0.354187
+margin_left = -0.0599976
+margin_top = -0.354202
 margin_bottom = 101.646
 custom_styles/bg = SubResource( 10 )
 scroll_horizontal_enabled = false
@@ -540,16 +598,17 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer"]
-margin_right = 246.0
-margin_bottom = 102.0
+margin_right = 240.0
+margin_bottom = 132.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 script = SubResource( 12 )
 
-[node name="CheckBox" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+[node name="commoner" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
 margin_right = 128.0
 margin_bottom = 30.0
+focus_mode = 0
 custom_icons/checked = ExtResource( 23 )
 custom_icons/unchecked = ExtResource( 23 )
 custom_fonts/font = ExtResource( 19 )
@@ -558,7 +617,145 @@ custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
 text = "Commoner"
+script = SubResource( 13 )
+
+[node name="rogue" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+margin_left = 132.0
+margin_right = 227.0
+margin_bottom = 30.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Rogue"
+script = SubResource( 13 )
+id = 1
+
+[node name="servant" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+margin_top = 34.0
+margin_right = 128.0
+margin_bottom = 64.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Servant"
+script = SubResource( 13 )
+id = 2
+
+[node name="noble" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+margin_left = 132.0
+margin_top = 34.0
+margin_right = 227.0
+margin_bottom = 64.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Noble"
+script = SubResource( 13 )
+id = 3
+
+[node name="animus" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+margin_top = 68.0
+margin_right = 128.0
+margin_bottom = 98.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Animus"
+script = SubResource( 13 )
+id = 4
+
+[node name="paladin" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+margin_left = 132.0
+margin_top = 68.0
+margin_right = 227.0
+margin_bottom = 98.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Paladin"
+script = SubResource( 13 )
+id = 5
+
+[node name="merchant" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
+margin_top = 102.0
+margin_right = 128.0
+margin_bottom = 132.0
+focus_mode = 0
+custom_icons/checked = ExtResource( 23 )
+custom_icons/unchecked = ExtResource( 23 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+enabled_focus_mode = 0
+text = "Merchant"
+script = SubResource( 13 )
+id = 6
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ui/customization/TabContainer/Basic Info"]
+margin_left = -7.0
+margin_top = 121.0
+margin_right = 313.0
+margin_bottom = 364.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Basic Info/ScrollContainer"]
+margin_right = 320.0
+margin_bottom = 243.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = " Power: 0
+ Stamina: 0
+ Mana: 0
+ Flight Duration: 0s
+TODO"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
 visible = false
@@ -597,7 +794,7 @@ __meta__ = {
 }
 
 [node name="body" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 13 )
+material = SubResource( 14 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
@@ -607,7 +804,7 @@ __meta__ = {
 }
 
 [node name="legs" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 14 )
+material = SubResource( 15 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
@@ -617,7 +814,7 @@ __meta__ = {
 }
 
 [node name="tail" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 15 )
+material = SubResource( 16 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -627,7 +824,7 @@ __meta__ = {
 }
 
 [node name="head" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 16 )
+material = SubResource( 17 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
@@ -637,7 +834,7 @@ __meta__ = {
 }
 
 [node name="wings" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 17 )
+material = SubResource( 18 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -647,7 +844,7 @@ __meta__ = {
 }
 
 [node name="eyedrop" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 17 )
+material = SubResource( 18 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 20 )
@@ -675,3 +872,17 @@ __meta__ = {
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer/sew" to="ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer/sew" method="_mouse_exited"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer/skw" to="ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer/skw" method="_mouse_entered"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer/skw" to="ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer/skw" method="_mouse_exited"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" method="_mouse_exit"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/rogue" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/rogue" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/rogue" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/rogue" method="_mouse_exit"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/servant" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/servant" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/servant" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/servant" method="_mouse_exit"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/noble" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/noble" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/noble" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/noble" method="_mouse_exit"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/animus" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/animus" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/animus" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/animus" method="_mouse_exit"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/paladin" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/paladin" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/paladin" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/paladin" method="_mouse_exit"]
+[connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" method="_mouse_enter"]
+[connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" method="_mouse_exit"]

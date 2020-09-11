@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=2]
@@ -26,6 +26,9 @@
 [ext_resource path="res://images/ui/backgrounds/lineedit-bg.png" type="Texture" id=24]
 [ext_resource path="res://scripts/ui/checkbox.tres.gd" type="Script" id=25]
 [ext_resource path="res://images/ui/buttons/button-toggleable.png" type="Texture" id=26]
+[ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=27]
+[ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=28]
+[ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=29]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 7 )
@@ -160,7 +163,7 @@ func resetSelected():
 	selectedTribes = 0
 "
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Button
 
 func _ready():
@@ -172,7 +175,7 @@ func _toggled(button_pressed):
 		pass #TODO
 "
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=13]
 script/source = "extends GridContainer
 
 var roleIndex
@@ -188,7 +191,7 @@ func radioPressed(id):
 	roleIndex = id
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=14]
 script/source = "extends CheckBox
 
 export (int) var id
@@ -218,31 +221,43 @@ func _process(delta):
 			self_modulate = Color(1,0.5,0)
 "
 
-[sub_resource type="ShaderMaterial" id=14]
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxEmpty" id=19]
+
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="ShaderMaterial" id=21]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 22 )
 
-[sub_resource type="ShaderMaterial" id=15]
+[sub_resource type="ShaderMaterial" id=22]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 21 )
 
-[sub_resource type="ShaderMaterial" id=16]
+[sub_resource type="ShaderMaterial" id=23]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 15 )
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="ShaderMaterial" id=24]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 18 )
 
-[sub_resource type="ShaderMaterial" id=18]
+[sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 16 )
@@ -306,6 +321,7 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -576,7 +592,7 @@ custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 toggle_mode = true
 enabled_focus_mode = 0
 text = "Roles"
-script = SubResource( 19 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -603,7 +619,7 @@ margin_bottom = 132.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
-script = SubResource( 12 )
+script = SubResource( 13 )
 
 [node name="commoner" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
 margin_right = 128.0
@@ -619,7 +635,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Commoner"
-script = SubResource( 13 )
+script = SubResource( 14 )
 
 [node name="rogue" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
 margin_left = 132.0
@@ -636,7 +652,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Rogue"
-script = SubResource( 13 )
+script = SubResource( 14 )
 id = 1
 
 [node name="servant" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -654,7 +670,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Servant"
-script = SubResource( 13 )
+script = SubResource( 14 )
 id = 2
 
 [node name="noble" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -673,7 +689,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Noble"
-script = SubResource( 13 )
+script = SubResource( 14 )
 id = 3
 
 [node name="animus" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -691,7 +707,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Animus"
-script = SubResource( 13 )
+script = SubResource( 14 )
 id = 4
 
 [node name="paladin" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -710,7 +726,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Paladin"
-script = SubResource( 13 )
+script = SubResource( 14 )
 id = 5
 
 [node name="merchant" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -728,7 +744,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Merchant"
-script = SubResource( 13 )
+script = SubResource( 14 )
 id = 6
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui/customization/TabContainer/Basic Info"]
@@ -758,11 +774,150 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
 custom_styles/panel = SubResource( 5 )
+
+[node name="TabContainer" type="TabContainer" parent="ui/customization/TabContainer/Appearance"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/tab_fg = SubResource( 15 )
+custom_styles/tab_disabled = SubResource( 16 )
+custom_styles/tab_bg = SubResource( 17 )
+custom_styles/panel = SubResource( 18 )
+custom_fonts/font = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Colors" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 19 )
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_right = 54.0
+margin_bottom = 54.1928
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton"]
+margin_left = 59.5636
+margin_top = 16.7144
+margin_right = 114.564
+margin_bottom = 38.7144
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Scales"
+
+[node name="ColorPickerButton2" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 54.1928
+margin_right = 54.0
+margin_bottom = 108.386
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton2"]
+margin_left = 59.5636
+margin_top = 16.7144
+margin_right = 114.564
+margin_bottom = 38.7144
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Eyes"
+
+[node name="ColorPickerButton3" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 108.386
+margin_right = 54.0
+margin_bottom = 162.578
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton3"]
+margin_left = 59.5636
+margin_top = 16.7144
+margin_right = 114.564
+margin_bottom = 38.7144
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Wings"
+
+[node name="ColorPickerButton4" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 162.5
+margin_right = 54.0
+margin_bottom = 216.693
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton4"]
+margin_left = 59.5636
+margin_top = 16.7144
+margin_right = 114.564
+margin_bottom = 38.7144
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Horns"
+
+[node name="ColorPickerButton5" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 216.5
+margin_right = 54.0
+margin_bottom = 270.693
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton5"]
+margin_left = 59.5636
+margin_top = 16.7144
+margin_right = 114.564
+margin_bottom = 38.7144
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Ruff/Spikes"
+
+[node name="|" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 20 )
+
+[node name="Looks" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 19 )
 
 [node name="Skills" type="Panel" parent="ui/customization/TabContainer"]
 visible = false
@@ -794,7 +949,7 @@ __meta__ = {
 }
 
 [node name="body" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 14 )
+material = SubResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
@@ -804,7 +959,7 @@ __meta__ = {
 }
 
 [node name="legs" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 15 )
+material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
@@ -814,7 +969,7 @@ __meta__ = {
 }
 
 [node name="tail" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 16 )
+material = SubResource( 23 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -824,7 +979,7 @@ __meta__ = {
 }
 
 [node name="head" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 17 )
+material = SubResource( 24 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
@@ -834,7 +989,7 @@ __meta__ = {
 }
 
 [node name="wings" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 18 )
+material = SubResource( 25 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -844,7 +999,7 @@ __meta__ = {
 }
 
 [node name="eyedrop" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 18 )
+material = SubResource( 25 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 20 )

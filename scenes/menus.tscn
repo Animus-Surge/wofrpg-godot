@@ -12,6 +12,8 @@
 [ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=37]
 [ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=38]
 
+
+
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0.313726 )
 

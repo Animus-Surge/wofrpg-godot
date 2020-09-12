@@ -5,32 +5,45 @@ const ctribesPath = "user://localuserdata/tribes"
 
 const itemDict = "user://data/base/items/itemdict.json"
 
-var baseTribes: Array
+var loadedtribes: Dictionary
 var itemdict: Array
 
-func startLoad():
-	loadBaseTribes()
+func startLoad(): 
+	loadTribes()
+	logcat.stdout("All stuff loaded.", logcat.DEBUG)
 
-func loadBaseTribes():
-	var dir = Directory.new()
-	if !dir.dir_exists(tribesPath):
-		logcat.stdout("No base tribes have been defined!", logcat.ERROR) #replace this with an in game message
-		return
-	dir.open(tribesPath)
-	logcat.stdout("Loading base tribes...", logcat.INFO)
-	dir.list_dir_begin()
-	var file = dir.get_next()
-	while file != "":
-		if !file.begins_with("."):
-			var f = File.new()
-			f.open(tribesPath + file, File.READ)
-			baseTribes.append(JSON.parse(f.get_as_text()).result)
-			f.close()
-		file = dir.get_next()
-	if baseTribes.size() == 0:
-		logcat.stdout("No base tribes have been defined!", logcat.ERROR)
-		return
-	logcat.stdout("Base tribes loaded", logcat.INFO)
+#All tribes stored in user://data/tribes
+
+func loadTribes():
+	var tribesDir = Directory.new()
+	tribesDir.open("user://data/tribes")
+	tribesDir.list_dir_begin()
+	
+	var currentTribe = tribesDir.get_next()
+	var tribes = []
+	
+	while currentTribe != "":
+		if currentTribe.begins_with("."):
+			currentTribe = tribesDir.get_next()
+		else:
+			if currentTribe.ends_with(".json"):
+				tribes.append(currentTribe)
+			currentTribe = tribesDir.get_next()
+	
+	for tribe in tribes:
+		#parse the tribe data into master dictionary
+		var tribeFile = File.new()
+		tribeFile.open("user://data/tribes/" + tribe, File.READ)
+		if tribeFile.get_as_text() == "":
+			logcat.stdout("Tribe file: " + tribe + " empty.", logcat.ERROR)
+			continue
+		var data = JSON.parse(tribeFile.get_as_text()).result
+		if data != {}:
+			loadedtribes[data.tribename] = data
+		else:
+			logcat.stdout("Invalid tribe file: " + tribe, logcat.ERROR)
+			continue
+		logcat.stdout("Loaded tribe: " + data.tribename + " from expansion: " + data.addon, logcat.INFO)
 
 func loadSkillset(characterSkills: Array) -> Array:
 	var cskills = []

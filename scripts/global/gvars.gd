@@ -57,7 +57,11 @@ func _ready():
 		cfm.startLoad()
 		scenes.load_scene("res://scenes/useracct.tscn")
 	else:
+		gloader.startLoad()
 		logcat.stdout("DEBUG MODE ACTIVE", logcat.DEBUG)
+
+func decodeTribe(a):
+	pass
 
 func setCurrentScene(scene):
 	current = scene

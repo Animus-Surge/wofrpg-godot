@@ -1,74 +1,35 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/useracct.gd" type="Script" id=1]
 [ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=2]
-[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=4]
-[ext_resource path="res://animations/ui/loadingScreen/frame_03_delay-0.14s.png" type="Texture" id=5]
-[ext_resource path="res://animations/ui/loadingScreen/frame_07_delay-0.14s.png" type="Texture" id=6]
-[ext_resource path="res://animations/ui/loadingScreen/frame_02_delay-0.14s.png" type="Texture" id=7]
-[ext_resource path="res://animations/ui/loadingScreen/frame_01_delay-0.14s.png" type="Texture" id=8]
-[ext_resource path="res://animations/ui/loadingScreen/frame_04_delay-0.14s.png" type="Texture" id=9]
-[ext_resource path="res://animations/ui/loadingScreen/frame_05_delay-0.14s.png" type="Texture" id=10]
-[ext_resource path="res://animations/ui/loadingScreen/frame_09_delay-0.14s.png" type="Texture" id=11]
-[ext_resource path="res://animations/ui/loadingScreen/frame_00_delay-0.14s.png" type="Texture" id=12]
-[ext_resource path="res://animations/ui/loadingScreen/frame_06_delay-0.14s.png" type="Texture" id=13]
-[ext_resource path="res://animations/ui/loadingScreen/frame_08_delay-0.14s.png" type="Texture" id=14]
+[ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=5]
+[ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=6]
+[ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=7]
+[ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 0, 0, 0.454902 )
+bg_color = Color( 0.6, 0.6, 0.6, 0.54902 )
 
-[sub_resource type="StyleBoxEmpty" id=2]
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0, 0, 0, 0.235294 )
-
-[sub_resource type="StyleBoxEmpty" id=4]
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0, 0, 0, 0.541176 )
-
-[sub_resource type="GDScript" id=6]
-script/source = "extends Panel
-
-func selfVisibilityChanged():
-	if visible:
-		$AnimationPlayer.play(\"loginanim\")
-	else:
-		$AnimationPlayer.stop()
-"
-
-[sub_resource type="Animation" id=7]
-resource_name = "loginanim"
-loop = true
+[sub_resource type="Animation" id=2]
+resource_name = "lipanel"
+length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/path = NodePath("lipanel:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 12 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 6 ), ExtResource( 14 ), ExtResource( 11 ) ]
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 536, 819.5 ), Vector2( 536, 131.5 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "loginanim"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("TextureRect:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 12 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 6 ), ExtResource( 14 ), ExtResource( 11 ) ]
-}
+[sub_resource type="Animation" id=3]
+resource_name = "supanel"
 
 [node name="useracct" type="Control"]
 anchor_right = 1.0
@@ -83,297 +44,85 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
 expand = true
-stretch_mode = 5
 
 [node name="Panel" type="Panel" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 386.0
+margin_bottom = 768.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TabContainer" type="TabContainer" parent="Panel"]
-margin_left = 299.0
-margin_top = 192.0
-margin_right = 1077.0
-margin_bottom = 576.0
-custom_styles/tab_disabled = SubResource( 2 )
-custom_styles/panel = SubResource( 3 )
+[node name="su" type="Button" parent="Panel"]
+anchor_left = 0.162
+anchor_top = 0.371
+anchor_right = 0.838
+anchor_bottom = 0.465
+margin_left = -0.0320015
+margin_top = -0.0244141
+margin_right = 0.0319824
+margin_bottom = -0.0236206
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 6 )
 custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Sign Up"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Log In" type="Panel" parent="Panel/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 42.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 4 )
-
-[node name="email" type="LineEdit" parent="Panel/TabContainer/Log In"]
-margin_left = 247.0
-margin_top = 57.0
-margin_right = 518.0
-margin_bottom = 86.0
-custom_fonts/font = ExtResource( 3 )
-align = 1
-placeholder_text = "Email"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="pass" type="LineEdit" parent="Panel/TabContainer/Log In"]
-margin_left = 247.0
-margin_top = 107.0
-margin_right = 518.0
-margin_bottom = 136.0
-custom_fonts/font = ExtResource( 3 )
-align = 1
-secret = true
-placeholder_text = "Password"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="Panel/TabContainer/Log In"]
-margin_left = 247.0
-margin_top = 235.0
-margin_right = 518.0
-margin_bottom = 273.0
+[node name="li" type="Button" parent="Panel"]
+anchor_left = 0.162
+anchor_top = 0.53
+anchor_right = 0.838
+anchor_bottom = 0.624
+margin_left = -0.0320015
+margin_top = -0.136444
+margin_right = 0.0319824
+margin_bottom = -0.13559
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 6 )
 custom_fonts/font = ExtResource( 4 )
-text = "Login"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Log In"
 
-[node name="CheckBox" type="CheckBox" parent="Panel/TabContainer/Log In"]
-margin_left = 247.0
-margin_top = 191.0
-margin_right = 518.0
-margin_bottom = 218.0
-custom_fonts/font = ExtResource( 3 )
-text = "Log me in automatically"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Panel/TabContainer/Log In"]
-visible = false
-anchor_top = -0.143
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -0.093998
-custom_styles/panel = SubResource( 5 )
-script = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Panel/TabContainer/Log In/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -106.5
-margin_top = -16.0
-margin_right = 106.5
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 4 )
-text = "Logging you in..."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="Panel/TabContainer/Log In/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -31.0
-margin_top = 64.0
-margin_right = 27.0
-margin_bottom = 101.0
-texture = ExtResource( 12 )
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+anchor_left = 0.206
+anchor_top = 0.025
+anchor_right = 0.794
+anchor_bottom = 0.32
+margin_left = -0.0160065
+margin_top = -0.200001
+margin_right = 0.0159912
+margin_bottom = 0.23999
+texture = ExtResource( 3 )
 expand = true
-stretch_mode = 6
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/TabContainer/Log In/Panel"]
-anims/loginanim = SubResource( 7 )
-
-[node name="error" type="Label" parent="Panel/TabContainer/Log In"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -71.5874
-margin_top = 19.0488
-margin_right = 68.4126
-margin_bottom = 38.0488
-custom_fonts/font = ExtResource( 3 )
-custom_colors/font_color = Color( 0.941176, 0.207843, 0.207843, 1 )
-text = "%ERRORMESSAGE%"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sign up" type="Panel" parent="Panel/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 42.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 4 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/lipanel = SubResource( 2 )
+anims/supanel = SubResource( 3 )
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Sign up"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -70.0
-margin_top = 9.0
-margin_right = 70.0
-margin_bottom = 28.0
-custom_fonts/font = ExtResource( 3 )
-custom_colors/font_color = Color( 1, 0.258824, 0.258824, 1 )
-text = "%ERRORMESSAGE%"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="uname" type="LineEdit" parent="Panel/TabContainer/Sign up"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -96.5
-margin_top = 55.0
-margin_right = 96.5
-margin_bottom = 79.0
-custom_fonts/font = ExtResource( 3 )
-align = 1
-placeholder_text = "Username"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="email" type="LineEdit" parent="Panel/TabContainer/Sign up"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -96.5
-margin_top = 91.0
-margin_right = 96.5
-margin_bottom = 115.0
-custom_fonts/font = ExtResource( 3 )
-align = 1
-placeholder_text = "Email"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="pass" type="LineEdit" parent="Panel/TabContainer/Sign up"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -96.5
-margin_top = 126.0
-margin_right = 96.5
-margin_bottom = 150.0
-custom_fonts/font = ExtResource( 3 )
-align = 1
-secret = true
-placeholder_text = "Password"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="passc" type="LineEdit" parent="Panel/TabContainer/Sign up"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -96.5
-margin_top = 163.0
-margin_right = 96.5
-margin_bottom = 187.0
-custom_fonts/font = ExtResource( 3 )
-align = 1
-secret = true
-placeholder_text = "Confirm Password"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="Panel/TabContainer/Sign up"]
-margin_left = 292.5
-margin_top = 247.5
-margin_right = 485.5
-margin_bottom = 272.5
-custom_fonts/font = ExtResource( 3 )
-text = "Create Account"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CheckBox" type="CheckBox" parent="Panel/TabContainer/Sign up"]
-margin_left = 282.155
-margin_top = 204.264
-margin_right = 499.155
-margin_bottom = 231.264
-custom_fonts/font = ExtResource( 3 )
-text = "Sign me in automatically"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Panel/TabContainer/Sign up"]
-visible = false
-anchor_top = -0.143
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -0.093998
-custom_styles/panel = SubResource( 5 )
-script = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Panel/TabContainer/Sign up/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -163.0
-margin_top = -16.0
-margin_right = 163.0
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 4 )
-text = "Creating your account..."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="Panel/TabContainer/Sign up/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -31.0
-margin_top = 64.0
-margin_right = 27.0
-margin_bottom = 101.0
-texture = ExtResource( 12 )
-expand = true
-stretch_mode = 6
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/TabContainer/Sign up/Panel"]
-anims/loginanim = SubResource( 8 )
-
-[node name="Button" type="Button" parent="Panel"]
-margin_left = 546.0
-margin_top = 682.0
-margin_right = 817.0
-margin_bottom = 720.0
-custom_fonts/font = ExtResource( 4 )
-text = "Play Offline"
-
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
-[connection signal="pressed" from="Panel/TabContainer/Log In/Button" to="." method="loginPressed"]
-[connection signal="visibility_changed" from="Panel/TabContainer/Log In/Panel" to="Panel/TabContainer/Log In/Panel" method="selfVisibilityChanged"]
-[connection signal="pressed" from="Panel/TabContainer/Sign up/Button" to="." method="registerPressed"]
-[connection signal="visibility_changed" from="Panel/TabContainer/Sign up/Panel" to="Panel/TabContainer/Sign up/Panel" method="selfVisibilityChanged"]
+[node name="lipanel" type="Panel" parent="."]
+self_modulate = Color( 1, 0.878431, 0.329412, 1 )
+anchor_left = 0.392
+anchor_top = 0.171
+anchor_right = 0.877
+anchor_bottom = 0.829
+margin_left = 0.527954
+margin_top = 0.171997
+margin_right = 0.0179443
+margin_bottom = -0.172241
+custom_styles/panel = ExtResource( 8 )
+[connection signal="pressed" from="Panel/su" to="." method="showSignup"]
+[connection signal="pressed" from="Panel/li" to="." method="showLogin"]

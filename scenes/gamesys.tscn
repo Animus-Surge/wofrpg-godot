@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=2]
@@ -29,6 +29,7 @@
 [ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=27]
 [ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=28]
 [ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=29]
+[ext_resource path="res://scripts/character.gd" type="Script" id=30]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 7 )
@@ -221,7 +222,25 @@ func _process(delta):
 			self_modulate = Color(1,0.5,0)
 "
 
-[sub_resource type="StyleBoxEmpty" id=15]
+[sub_resource type="GDScript" id=15]
+script/source = "extends Panel
+
+func _ready():
+	pass
+
+func colorChanged(color: Color, part: int):
+	match part:
+		0: #scales
+			get_node(\"../../../character\").call(\"scalesChangeC\", color)
+		1: #eyes
+			get_node(\"../../../character\").call(\"eyesChangeC\", color)
+		2: #horns
+			get_node(\"../../../character\").call(\"hornsChangeC\", color)
+		3: #wings
+			get_node(\"../../../character\").call(\"wingsChangeC\", color)
+		4: #spine
+			get_node(\"../../../character\").call(\"spineChangeC\", color)
+"
 
 [sub_resource type="StyleBoxEmpty" id=16]
 
@@ -233,35 +252,56 @@ func _process(delta):
 
 [sub_resource type="StyleBoxEmpty" id=20]
 
-[sub_resource type="ShaderMaterial" id=21]
-shader = ExtResource( 12 )
-shader_param/palette_size = null
-shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 22 )
+[sub_resource type="GDScript" id=27]
+script/source = "extends ColorPickerButton
+
+export (int) var part
+
+func _ready():
+	color = Color(1,1,1)
+
+func _color_changed(color):
+	get_parent().get_parent().get_parent().call(\"colorChanged\", color, part)
+"
+
+[sub_resource type="StyleBoxEmpty" id=21]
 
 [sub_resource type="ShaderMaterial" id=22]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 21 )
+shader_param/mask = ExtResource( 22 )
 
 [sub_resource type="ShaderMaterial" id=23]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
-shader_param/mask = ExtResource( 15 )
+shader_param/mask = ExtResource( 21 )
 
 [sub_resource type="ShaderMaterial" id=24]
+shader = ExtResource( 12 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 17 )
+shader_param/mask = ExtResource( 15 )
+
+[sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 18 )
 
-[sub_resource type="ShaderMaterial" id=25]
+[sub_resource type="ShaderMaterial" id=26]
 shader = ExtResource( 12 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 16 )
 shader_param/mask = ExtResource( 10 )
+
+[sub_resource type="StyleBoxTexture" id=28]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 128, 64 )
+margin_left = 16.2901
+margin_right = 18.7336
+margin_top = 48.8704
 
 [node name="gamesys" type="Control"]
 anchor_right = 1.0
@@ -778,14 +818,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
 custom_styles/panel = SubResource( 5 )
+script = SubResource( 15 )
 
 [node name="TabContainer" type="TabContainer" parent="ui/customization/TabContainer/Appearance"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/tab_fg = SubResource( 15 )
-custom_styles/tab_disabled = SubResource( 16 )
-custom_styles/tab_bg = SubResource( 17 )
-custom_styles/panel = SubResource( 18 )
+custom_styles/tab_fg = SubResource( 16 )
+custom_styles/tab_disabled = SubResource( 17 )
+custom_styles/tab_bg = SubResource( 18 )
+custom_styles/panel = SubResource( 19 )
 custom_fonts/font = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -797,19 +838,21 @@ anchor_bottom = 1.0
 margin_top = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 19 )
+custom_styles/panel = SubResource( 20 )
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+[node name="scales" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
 margin_right = 54.0
 margin_bottom = 54.1928
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+edit_alpha = false
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton"]
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/scales"]
 margin_left = 59.5636
 margin_top = 16.7144
 margin_right = 114.564
@@ -818,18 +861,20 @@ custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Scales"
 
-[node name="ColorPickerButton2" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
-margin_top = 54.1928
+[node name="scales2" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 56.5
 margin_right = 54.0
-margin_bottom = 108.386
+margin_bottom = 110.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+edit_alpha = false
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton2"]
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/scales2"]
 margin_left = 59.5636
 margin_top = 16.7144
 margin_right = 114.564
@@ -837,39 +882,24 @@ margin_bottom = 38.7144
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Eyes"
-
-[node name="ColorPickerButton3" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
-margin_top = 108.386
-margin_right = 54.0
-margin_bottom = 162.578
-custom_styles/hover = ExtResource( 28 )
-custom_styles/pressed = ExtResource( 27 )
-custom_styles/normal = ExtResource( 29 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton3"]
-margin_left = 59.5636
-margin_top = 16.7144
-margin_right = 114.564
-margin_bottom = 38.7144
-custom_fonts/font = ExtResource( 19 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Wings"
-
-[node name="ColorPickerButton4" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
-margin_top = 162.5
+[node name="scales3" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 112.5
 margin_right = 54.0
-margin_bottom = 216.693
+margin_bottom = 166.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+edit_alpha = false
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton4"]
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/scales3"]
 margin_left = 59.5636
 margin_top = 16.7144
 margin_right = 114.564
@@ -878,25 +908,49 @@ custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Horns"
 
-[node name="ColorPickerButton5" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
-margin_top = 216.5
+[node name="scales4" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 168.5
 margin_right = 54.0
-margin_bottom = 270.693
+margin_bottom = 222.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+edit_alpha = false
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/ColorPickerButton5"]
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/scales4"]
 margin_left = 59.5636
 margin_top = 16.7144
 margin_right = 114.564
 margin_bottom = 38.7144
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Ruff/Spikes"
+text = "Wings"
+
+[node name="scales5" type="ColorPickerButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors"]
+margin_top = 224.5
+margin_right = 54.0
+margin_bottom = 278.693
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+edit_alpha = false
+script = SubResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Colors/scales5"]
+margin_left = 59.5636
+margin_top = 16.7144
+margin_right = 114.564
+margin_bottom = 38.7144
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Spikes/Ruff"
 
 [node name="|" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
 visible = false
@@ -905,19 +959,16 @@ anchor_bottom = 1.0
 margin_top = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 20 )
+custom_styles/panel = SubResource( 21 )
 
 [node name="Looks" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_top = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 19 )
+custom_styles/panel = SubResource( 20 )
 
 [node name="Skills" type="Panel" parent="ui/customization/TabContainer"]
 visible = false
@@ -935,6 +986,7 @@ margin_left = 0.0056839
 margin_top = -0.245697
 margin_right = -0.254395
 margin_bottom = 0.0422974
+script = ExtResource( 30 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -949,7 +1001,7 @@ __meta__ = {
 }
 
 [node name="body" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 21 )
+material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
@@ -959,7 +1011,7 @@ __meta__ = {
 }
 
 [node name="legs" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 22 )
+material = SubResource( 23 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
@@ -969,7 +1021,7 @@ __meta__ = {
 }
 
 [node name="tail" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 23 )
+material = SubResource( 24 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -979,7 +1031,7 @@ __meta__ = {
 }
 
 [node name="head" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 24 )
+material = SubResource( 25 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
@@ -989,7 +1041,7 @@ __meta__ = {
 }
 
 [node name="wings" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 25 )
+material = SubResource( 26 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -999,7 +1051,7 @@ __meta__ = {
 }
 
 [node name="eyedrop" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 25 )
+material = SubResource( 26 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 20 )
@@ -1007,6 +1059,21 @@ region_rect = Rect2( 0, 0, 796, 448 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Panel" type="Panel" parent="ui"]
+self_modulate = Color( 0.909804, 0.984314, 0.486275, 0.54902 )
+anchor_left = 0.761
+anchor_top = 0.911
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.526001
+margin_top = 0.351929
+rect_rotation = 359.999
+custom_styles/panel = SubResource( 28 )
+
+[node name="Label" type="Label" parent="ui/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

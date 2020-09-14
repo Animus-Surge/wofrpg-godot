@@ -7,13 +7,13 @@ func onSettings():
 	$settingspanel.show()
 
 func onPlay():
-	pass
+	pass #TODO
 
 func onExpansions():
 	get_node("../dialogue").show()
 
 func onCredits():
-	pass
+	pass #TODO (remake this thing)
 
 func onQuit():
 	get_tree().quit(0)

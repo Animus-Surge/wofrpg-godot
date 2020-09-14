@@ -1,11 +1,14 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/mainmenu.gd" type="Script" id=3]
 [ext_resource path="res://godot-resources/bg1.tres" type="StyleBox" id=4]
-[ext_resource path="res://icon.png" type="Texture" id=7]
+[ext_resource path="res://images/ui/buttons/back-btn-hover.png" type="Texture" id=5]
+[ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=6]
+[ext_resource path="res://images/ui/buttons/back-btn-pressed.png" type="Texture" id=7]
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=8]
+[ext_resource path="res://images/ui/icons/mm-icon.png" type="Texture" id=9]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
 [ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=36]
@@ -55,15 +58,13 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="mainmenu/buttonpanel"]
-anchor_left = 0.296
-anchor_top = 0.083
-anchor_right = 0.704
-anchor_bottom = 0.311
-margin_left = -0.188004
-margin_top = 0.255997
-margin_right = 0.187988
-margin_bottom = 0.151978
-texture = ExtResource( 7 )
+anchor_left = 0.199
+anchor_right = 0.801
+anchor_bottom = 0.336
+margin_left = -0.172012
+margin_right = 0.171997
+margin_bottom = -0.0480347
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 5
 __meta__ = {
@@ -189,7 +190,6 @@ __meta__ = {
 }
 
 [node name="settingspanel" type="Panel" parent="mainmenu"]
-visible = false
 anchor_left = 0.388
 anchor_top = 0.061
 anchor_right = 0.939
@@ -203,8 +203,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="mainmenu/settingspanel"]
+anchor_left = 0.43
+anchor_top = 0.012
+anchor_right = 0.57
+anchor_bottom = 0.06
+margin_left = 0.139984
+margin_top = -0.0519991
+margin_right = -0.140045
+margin_bottom = -0.259998
+custom_fonts/font = ExtResource( 2 )
+text = "Settings"
+
+[node name="TextureButton" type="TextureButton" parent="mainmenu/settingspanel"]
+anchor_left = 0.037
+anchor_top = 0.007
+anchor_right = 0.109
+anchor_bottom = 0.087
+margin_left = -0.0401878
+margin_top = -0.264627
+margin_right = -0.184189
+margin_bottom = 0.0553741
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 5 )
+expand = true
+
 [node name="dialogue" type="Panel" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 2 )
@@ -279,3 +304,5 @@ __meta__ = {
 [connection signal="pressed" from="mainmenu/buttonpanel/Button2" to="mainmenu" method="onExpansions"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button3" to="mainmenu" method="onSettings"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button5" to="mainmenu" method="onQuit"]
+[connection signal="pressed" from="mainmenu/settingspanel/TextureButton" to="mainmenu" method="onSettingsHide"]
+[connection signal="pressed" from="dialogue/Panel/Button" to="mainmenu" method="dialogueHide"]

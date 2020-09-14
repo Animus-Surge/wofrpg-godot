@@ -60,6 +60,7 @@ func getFromDB(field):
 		print("DBGET: OK")
 		if loggingIn:
 			loginWithEmail(JSON.parse(result[3].get_string_from_ascii()).result.email)
+			loggingIn = false
 		else:
 			emit_signal("dbComplete", jsonresult)
 

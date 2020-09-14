@@ -1,7 +1,12 @@
 extends Panel
 
 func _ready():
+	fb.connect("dbComplete", self, "dbComplete")
 	$settingspanel.hide()
+	fb.getFromDB("newsinfo")
+
+func dbComplete(result):
+	$newspanel/RichTextLabel.bbcode_text = result.text
 
 func onSettings():
 	$settingspanel.show()

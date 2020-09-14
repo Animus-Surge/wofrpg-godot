@@ -177,6 +177,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="RichTextLabel" type="RichTextLabel" parent="mainmenu/newspanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/normal_font = ExtResource( 13 )
+bbcode_enabled = true
+bbcode_text = "[color=#f00]Uh oh! I couldn't get any game info! Please try again later."
+text = "Uh oh! I couldn't get any game info! Please try again later."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="settingspanel" type="Panel" parent="mainmenu"]
 visible = false
 anchor_left = 0.388

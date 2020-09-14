@@ -15,15 +15,19 @@ var username
 
 signal failed(reason, action)
 signal completed(action)
+signal dbComplete(result)
 
 var tuname
 var tpass
 
 var dbNeeded
 
+var loggingIn = false
+
 func userLogin(uname, password):
 	tuname = uname
 	tpass = password
+	loggingIn = true
 	getFromDB("users/" + tuname + ".json")
 
 func userSignup(email, uname, password):
@@ -54,7 +58,10 @@ func getFromDB(field):
 			emit_signal("failed", "{\"error\":\"Invalid username (username not found)!\"}", "dbGet")
 			return
 		print("DBGET: OK")
-		loginWithEmail(JSON.parse(result[3].get_string_from_ascii()).result.email)
+		if loggingIn:
+			loginWithEmail(JSON.parse(result[3].get_string_from_ascii()).result.email)
+		else:
+			emit_signal("dbComplete", jsonresult)
 
 func storeToDB(field, data: Dictionary):
 	http.request("https://wofrpg-main.firebaseio.com/" + field + "?auth=" + uid, [], false, HTTPClient.METHOD_PUT, to_json(data))

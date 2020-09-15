@@ -10,7 +10,42 @@ var itemdict: Array
 
 func startLoad(): 
 	loadTribes()
+	loadSettings()
 	logcat.stdout("All stuff loaded.", logcat.DEBUG)
+
+#settings stored in user://settings.json
+
+func loadSettings():
+	var setfile = File.new()
+	var error = setfile.open("user://settings.json", File.READ)
+	if error != OK:
+		logcat.stdout("Unable to open settings file. ERROR: " + error, logcat.ERROR)
+		return
+	var settings = JSON.parse(setfile.get_as_text()).result
+	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fullscreen) + " Resolution Index: " + String(settings.resolution), logcat.DEBUG)
+	OS.window_fullscreen = settings.fullscreen
+	match settings.resolution:
+		0: #1920x1080
+			OS.window_size = Vector2(1920,1080)
+		1: #DEFAULT: 1366x768
+			OS.window_size = Vector2(1366,768)
+		2: #1440x900
+			OS.window_size = Vector2(1440,900)
+		3: #1536x864
+			OS.window_size = Vector2(1536,864)
+		4: #2560x1440
+			OS.window_size = Vector2(2560,1440)
+		5: #1680x1050
+			OS.window_size = Vector2(1680,1050)
+		6: #1280x720
+			OS.window_size = Vector2(1280,720)
+		7: #1280x800
+			OS.window_size = Vector2(1280,800)
+		8: #1600x900
+			OS.window_size = Vector2(1600,900)
+
+func saveSettings():
+	pass
 
 #All tribes stored in user://data/tribes
 

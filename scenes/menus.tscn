@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -18,10 +18,22 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0.313726 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="GDScript" id=2]
+script/source = "extends Panel
+
+onready var fsCheck = $CheckBox
+
+func applySettings():
+	if fsCheck.pressed:
+		OS.window_fullscreen = true
+	else:
+		OS.window_fullscreen = false
+"
+
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0, 0, 0, 0.694118 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 21
 font_data = ExtResource( 1 )
 
@@ -199,6 +211,7 @@ margin_top = 0.151997
 margin_right = -0.674072
 margin_bottom = -0.0800781
 custom_styles/panel = ExtResource( 8 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -229,10 +242,29 @@ texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 5 )
 expand = true
 
+[node name="CheckBox" type="CheckBox" parent="mainmenu/settingspanel"]
+anchor_left = 0.037
+anchor_top = 0.103
+anchor_right = 0.191
+anchor_bottom = 0.147
+margin_left = -0.0401878
+margin_top = -0.203194
+margin_right = 0.15181
+margin_bottom = 0.272812
+custom_fonts/font = ExtResource( 13 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+pressed = true
+text = "Fullscreen"
+
 [node name="dialogue" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -272,7 +304,7 @@ margin_left = -0.117004
 margin_top = -0.0019989
 margin_right = -0.0340271
 margin_bottom = 0.139984
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Sorry! This feature currently isn't implemented. It should be soon, though!"
 align = 1
 autowrap = true

@@ -19,9 +19,10 @@ func loadSettings():
 	var setfile = File.new()
 	var error = setfile.open("user://settings.json", File.READ)
 	if error != OK:
-		logcat.stdout("Unable to open settings file. ERROR: " + error, logcat.ERROR)
+		logcat.stdout("Unable to open settings file. ERROR: " + String(error), logcat.ERROR)
 		return
 	var settings = JSON.parse(setfile.get_as_text()).result
+	print(settings)
 	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fullscreen) + " Resolution Index: " + String(settings.resolution), logcat.DEBUG)
 	OS.window_fullscreen = settings.fullscreen
 	match settings.resolution:

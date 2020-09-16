@@ -27,6 +27,9 @@ func _process(delta):
 		if err == ERR_FILE_EOF:
 			var resource = scn.get_resource()
 			scn = null
+			timer.wait_time = 2
+			timer.start()
+			yield(timer, "timeout")
 			get_node("/root").add_child(resource.instance())
 			get_node("/root/loadscreen").hide()
 			break

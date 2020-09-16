@@ -1,6 +1,7 @@
 extends Control
 
 func _ready():
+	globalvars.current = "useracct"
 	$statusPanel.hide()
 	$statusPanel/AnimationPlayer.stop()
 

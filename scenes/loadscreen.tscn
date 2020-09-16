@@ -34,7 +34,13 @@ script/source = "extends TextureRect
 
 func _ready():
 	randomize()
-	prints(round(rand_range(1,10)), round(rand_range(1,10)), round(rand_range(1,10)))
+	var rand = int(round(rand_range(1,4)))
+	texture = load(\"res://images/ui/backgrounds/loadingscreen/lsbg-\" + String(rand) + \".png\")
+
+func _visibility_changed():
+	randomize()
+	var rand = int(round(rand_range(1,4)))
+	texture = load(\"res://images/ui/backgrounds/loadingscreen/lsbg-\" + String(rand) + \".png\")
 "
 
 [sub_resource type="GDScript" id=3]
@@ -58,8 +64,8 @@ method_call_mode = 1
 anims/loadscreen-icon = SubResource( 1 )
 
 [node name="bg" type="TextureRect" parent="."]
-margin_right = 1366.0
-margin_bottom = 768.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 1 )
 expand = true
 script = SubResource( 2 )
@@ -68,6 +74,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color( 0.474903, 0.815396, 1, 1 )
 anchor_left = 0.836
 anchor_top = 0.014
 anchor_right = 0.952
@@ -82,3 +89,4 @@ script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="visibility_changed" from="bg" to="bg" method="_visibility_changed"]

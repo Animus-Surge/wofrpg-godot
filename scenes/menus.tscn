@@ -56,13 +56,13 @@ func applySettings():
 			OS.window_size = Vector2(1600,900)
 "
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0, 0, 0, 0.666667 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0, 0, 0, 0.694118 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 21
 font_data = ExtResource( 1 )
 
@@ -209,6 +209,7 @@ __meta__ = {
 }
 
 [node name="settingspanel" type="Panel" parent="mainmenu"]
+visible = false
 anchor_left = 0.388
 anchor_top = 0.061
 anchor_right = 0.939
@@ -306,13 +307,14 @@ margin_bottom = -0.123016
 custom_fonts/font = ExtResource( 13 )
 text = "Apply Settings"
 
-[node name="TextureRect" type="TextureRect" parent="mainmenu"]
+[node name="creditspanel" type="TextureRect" parent="mainmenu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 10 )
 expand = true
 
-[node name="Panel" type="Panel" parent="mainmenu/TextureRect"]
+[node name="Panel" type="Panel" parent="mainmenu/creditspanel"]
 anchor_left = 0.213
 anchor_top = 0.092
 anchor_right = 0.787
@@ -321,23 +323,145 @@ margin_left = 0.541992
 margin_top = 0.343994
 margin_right = -0.542114
 margin_bottom = -0.344055
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="mainmenu/TextureRect/Panel"]
+[node name="RichTextLabel" type="RichTextLabel" parent="mainmenu/creditspanel/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_fonts/normal_font = ExtResource( 13 )
 bbcode_enabled = true
-bbcode_text = "[color=#0ff]Lead Programmer: Surge"
-text = "Lead Programmer: Surge"
+bbcode_text = "[center]
+[color=#fcff88]Development Team[/color]
+
+[color=#ff0]Programmers[/color]
+
+[color=#0ff]Surge - Lead[/color]
+
+[color=#ff0]Art Team[/color]
+
+[color=#0f0]Animators[/color]
+
+Auryn  [color=#41FEC6]AsteriTheVeloci[/color]  [color=#fff]Lake[/color]  Jellyfoosh  [color=#fff]PaintbrushWonder[/color]
+Swamp  LemonFox
+
+[color=#0f0]Concept Artists[/color]
+
+[color=#b3d9ff]FrenchToast[/color]  Ambivalent  Cal  flur  Seaweed
+
+[color=#FF0]Audio Designers[/color]
+
+kayak  Magma Studios
+
+[color=#f70]Special thanks to our patrons![/color]
+
+aarise
+
+[color=#478CBF]Made using the Godot game engine, a free and open source game engine.[/color]
+
+[color=#ff0]Third Party Licenses[/color]
+
+[color=#0f0]MbedTLS[/color]
+
+MBedTLS is Copyright (C) 2013-2019 ARM
+
+Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+[color=#0f0]ENet[/color]
+
+Copyright (c) 2002-2016 Lee Salzman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+[color=#0f0]FreeType[/color]
+
+Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved."
+text = "
+Development Team
+
+Programmers
+
+Surge - Lead
+
+Art Team
+
+Animators
+
+Auryn  AsteriTheVeloci  Lake  Jellyfoosh  PaintbrushWonder
+Swamp  LemonFox
+
+Concept Artists
+
+FrenchToast  Ambivalent  Cal  flur  Seaweed
+
+Audio Designers
+
+kayak  Magma Studios
+
+Special thanks to our patrons!
+
+aarise
+
+Made using the Godot game engine, a free and open source game engine.
+
+Third Party Licenses
+
+MbedTLS
+
+MBedTLS is Copyright (C) 2013-2019 ARM
+
+Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+ENet
+
+Copyright (c) 2002-2016 Lee Salzman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+FreeType
+
+Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved."
+
+[node name="TextureButton" type="TextureButton" parent="mainmenu/creditspanel"]
+anchor_left = 0.017
+anchor_top = 0.038
+anchor_right = 0.075
+anchor_bottom = 0.141
+margin_left = 0.37483
+margin_top = 0.0760994
+margin_right = 0.146828
+margin_bottom = -0.0279007
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="dialogue" type="Panel" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -377,7 +501,7 @@ margin_left = -0.117004
 margin_top = -0.0019989
 margin_right = -0.0340271
 margin_bottom = 0.139984
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Sorry! This feature currently isn't implemented. It should be soon, though!"
 align = 1
 autowrap = true
@@ -408,7 +532,9 @@ __meta__ = {
 }
 [connection signal="pressed" from="mainmenu/buttonpanel/Button2" to="mainmenu" method="onExpansions"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button3" to="mainmenu" method="onSettings"]
+[connection signal="pressed" from="mainmenu/buttonpanel/Button4" to="mainmenu" method="onCredits"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button5" to="mainmenu" method="onQuit"]
 [connection signal="pressed" from="mainmenu/settingspanel/TextureButton" to="mainmenu" method="onSettingsHide"]
 [connection signal="pressed" from="mainmenu/settingspanel/Button" to="mainmenu/settingspanel" method="applySettings"]
+[connection signal="pressed" from="mainmenu/creditspanel/TextureButton" to="mainmenu" method="creditsHide"]
 [connection signal="pressed" from="dialogue/Panel/Button" to="mainmenu" method="dialogueHide"]

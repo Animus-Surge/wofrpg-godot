@@ -21,7 +21,7 @@ func onSettingsHide():
 	$settingspanel.hide()
 
 func onPlay():
-	pass #TODO
+	scenes.load_scene("res://scenes/gamesys.tscn")
 
 func onExpansions():
 	get_node("../dialogue").show()

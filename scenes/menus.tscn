@@ -57,7 +57,7 @@ func applySettings():
 "
 
 [sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0, 0, 0, 0.666667 )
+bg_color = Color( 0.305882, 0.305882, 0.305882, 0.835294 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0, 0, 0, 0.694118 )
@@ -124,6 +124,9 @@ margin_bottom = 0.199982
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color_hover = Color( 0.501961, 0.368627, 0.913725, 1 )
 text = "Play"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button2" type="Button" parent="mainmenu/buttonpanel"]
 anchor_left = 0.192
@@ -344,22 +347,26 @@ bbcode_text = "[center]
 
 [color=#0f0]Animators[/color]
 
-Auryn  [color=#41FEC6]AsteriTheVeloci[/color]  [color=#fff]Lake[/color]  Jellyfoosh  [color=#fff]PaintbrushWonder[/color]
+Auryn  [color=#41FEC6]AsteriTheVeloci[/color]  [color=#fff]Lake[/color]  [color=#f700ff]Jellyfoosh[/color]  [color=#82eefd]PaintbrushWonder[/color]
 Swamp  LemonFox
 
 [color=#0f0]Concept Artists[/color]
 
-[color=#b3d9ff]FrenchToast[/color]  Ambivalent  Cal  flur  Seaweed
+[color=#b3d9ff]FrenchToast[/color]  Ambivalent  Cal  flur  Seaweed  [color=#800000]Lord Crow[/color]
+
+[color=#0f0]Item Designers[/color]
+
+[color=#7ff]Glaze[/color]
 
 [color=#FF0]Audio Designers[/color]
 
-kayak  Magma Studios
+kayak  [color=#f70]Magma Studios[/color]
 
 [color=#f70]Special thanks to our patrons![/color]
 
 aarise
 
-[color=#478CBF]Made using the Godot game engine, a free and open source game engine.[/color]
+[color=#478CBF]Made using the Godot Engine, a free and open source game engine.[/color]
 
 [color=#ff0]Third Party Licenses[/color]
 
@@ -402,7 +409,11 @@ Swamp  LemonFox
 
 Concept Artists
 
-FrenchToast  Ambivalent  Cal  flur  Seaweed
+FrenchToast  Ambivalent  Cal  flur  Seaweed  Lord Crow
+
+Item Designers
+
+Glaze
 
 Audio Designers
 
@@ -412,7 +423,7 @@ Special thanks to our patrons!
 
 aarise
 
-Made using the Godot game engine, a free and open source game engine.
+Made using the Godot Engine, a free and open source game engine.
 
 Third Party Licenses
 
@@ -530,6 +541,7 @@ text = "Okay!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="mainmenu/buttonpanel/Button" to="mainmenu" method="onPlay"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button2" to="mainmenu" method="onExpansions"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button3" to="mainmenu" method="onSettings"]
 [connection signal="pressed" from="mainmenu/buttonpanel/Button4" to="mainmenu" method="onCredits"]

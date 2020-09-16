@@ -212,7 +212,6 @@ __meta__ = {
 }
 
 [node name="settingspanel" type="Panel" parent="mainmenu"]
-visible = false
 anchor_left = 0.388
 anchor_top = 0.061
 anchor_right = 0.939

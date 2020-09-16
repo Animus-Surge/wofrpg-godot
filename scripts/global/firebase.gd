@@ -38,26 +38,27 @@ func userSignup(email, uname, password):
 	http.request(authSU, [], false, HTTPClient.METHOD_POST, to_json(body))
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
-		print("SIGNUP: OK")
+		logcat.stdout("SIGNUP: OK", logcat.DEBUG)
 		username = uname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.idToken
 		storeToDB("users/" + uname + ".json", {"email":email,"verified":false})
 	else:
-		print("SIGNUP: FAILED")
+		logcat.stdout("SIGNUP: FAIL", logcat.DEBUG)
 		emit_signal("failed", result[3].get_string_from_ascii(), "signup")
 
 func getFromDB(field):
 	http.request("https://wofrpg-main.firebaseio.com/" + field, [], false, HTTPClient.METHOD_GET, "{}")
 	var result = yield(http, "request_completed") as Array
 	if result[1] != 200:
-		print("DBGET: FAILED")
+		logcat.stdout("DBGET: FAIL", logcat.DEBUG)
 		emit_signal("failed", result[3].get_string_from_ascii(), "dbGet")
 	else:
 		var jsonresult = JSON.parse(result[3].get_string_from_ascii()).result
 		if jsonresult == null:
+			logcat.stdout("DBGET: FAIL", logcat.DEBUG)
 			emit_signal("failed", "{\"error\":\"Invalid username (username not found)!\"}", "dbGet")
 			return
-		print("DBGET: OK")
+		logcat.stdout("DBGET: OK", logcat.DEBUG)
 		if loggingIn:
 			loginWithEmail(JSON.parse(result[3].get_string_from_ascii()).result.email)
 			loggingIn = false
@@ -68,10 +69,10 @@ func storeToDB(field, data: Dictionary):
 	http.request("https://wofrpg-main.firebaseio.com/" + field + "?auth=" + uid, [], false, HTTPClient.METHOD_PUT, to_json(data))
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
-		print("DBSTORE: OK")
+		logcat.stdout("DBSTORE: OK", logcat.DEBUG)
 		emit_signal("completed", "dbStore")
 	else:
-		print(result[3].get_string_from_ascii())
+		logcat.stdout("DBSTORE: FAIL", logcat.DEBUG)
 		emit_signal("failed", result[3].get_string_from_ascii(), "dbStore")
 	
 
@@ -80,10 +81,10 @@ func loginWithEmail(email):
 	http.request(authSI, [], false, HTTPClient.METHOD_POST, to_json(body))
 	var result = yield(http, "request_completed") as Array
 	if result[1] != 200:
-		print(result[3].get_string_from_ascii())
+		logcat.stdout("LOGIN: FAIL", logcat.DEBUG)
 		emit_signal("failed", result[3].get_string_from_ascii(), "login")
 	else:
-		print("LOGIN: OK")
+		logcat.stdout("LOGIN: OK", logcat.DEBUG)
 		username = tuname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.localId
 		tuname = ""

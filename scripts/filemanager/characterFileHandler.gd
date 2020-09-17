@@ -26,6 +26,16 @@ const blankChar = {
 
 var characters = []
 
+var headPal
+var scalePal
+var wingPal
+
+func loadCharacterPalettes(charid: int):
+	var path = "user://characters/slot-" + String(charid) + "/"
+
+func saveCharacterPalettes(head: Image, scales: Image, wings: Image):
+	pass
+
 func startLoad():
 	loadCharList()
 

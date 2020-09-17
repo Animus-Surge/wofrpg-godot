@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/useracct.gd" type="Script" id=1]
 [ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=2]
@@ -24,46 +24,14 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0.54902 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "lipanel"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/path = NodePath("lipanel:rect_position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 536, 819.5 ), Vector2( 536, 131.5 ) ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "supanel"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/path = NodePath("supanel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 536, 820 ), Vector2( 536, 131.5 ) ]
-}
-
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 0.607843 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 60
 font_data = ExtResource( 20 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "lsicon"
 loop = true
 tracks/0/type = "value"
@@ -160,10 +128,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/lipanel = SubResource( 2 )
-anims/supanel = SubResource( 3 )
-
 [node name="lipanel" type="Panel" parent="."]
 self_modulate = Color( 0.662745, 0.627451, 0.454902, 1 )
 anchor_left = 0.392
@@ -171,9 +135,9 @@ anchor_top = 0.171
 anchor_right = 0.877
 anchor_bottom = 0.829
 margin_left = 0.528015
-margin_top = 688.172
+margin_top = 0.171997
 margin_right = 0.0180664
-margin_bottom = 687.828
+margin_bottom = -0.171997
 custom_styles/panel = ExtResource( 8 )
 
 [node name="liuname" type="LineEdit" parent="lipanel"]
@@ -267,9 +231,9 @@ anchor_top = 0.171
 anchor_right = 0.877
 anchor_bottom = 0.829
 margin_left = 0.528015
-margin_top = 688.672
+margin_top = 0.171997
 margin_right = 0.0180664
-margin_bottom = 688.327
+margin_bottom = -0.172974
 custom_styles/panel = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -390,7 +354,7 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="Label" type="Label" parent="statusPanel"]
 anchor_left = 0.341
@@ -401,7 +365,7 @@ margin_left = 0.19397
 margin_top = -0.279999
 margin_right = -0.194031
 margin_bottom = -0.0240173
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 text = "Logging you in..."
 align = 1
 valign = 1
@@ -410,7 +374,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="statusPanel"]
-anims/lsicon = SubResource( 6 )
+anims/lsicon = SubResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="statusPanel"]
 anchor_left = 0.438

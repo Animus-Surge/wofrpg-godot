@@ -269,7 +269,7 @@ func colorChanged(color: Color, part: int):
 
 func bodyChanged(index):
 	var tribeCode = 0
-	get_node(\"../../../character\").call(\"partChanged\", 0, index) #TODO: decode the tribe
+	get_node(\"../../../character\").call(\"partChange\", 0, index) #TODO: decode the tribe
 
 func wingsChanged(index):
 	pass
@@ -447,7 +447,6 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -900,6 +899,7 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -919,7 +919,6 @@ __meta__ = {
 }
 
 [node name="Colors" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -1053,6 +1052,7 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 23 )
 
 [node name="Looks" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0

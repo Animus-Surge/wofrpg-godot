@@ -17,20 +17,20 @@ onready var wingpalette = load("res://images/character/palettes/wing-palette.png
 func _ready():
 	pass
 
-func scalesChangedC(color):
+func scalesChangeC(color):
 	pass
 
-func eyesChangedC(color):
+func eyesChangeC(color):
 	pass
 
-func hornsChangedC(color):
+func hornsChangeC(color):
 	pass
 
-func wingsChangedC(color):
+func wingsChangeC(color):
 	pass
 
-func spineChangedC(color):
+func spineChangeC(color):
 	pass
 
-func partChanged(part, tribe):
+func partChange(part, tribe):
 	pass

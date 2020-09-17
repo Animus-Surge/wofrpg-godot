@@ -2,8 +2,9 @@ extends Control
 
 func _ready():
 	globalvars.current = "useracct"
+	$supanel.hide()
+	$lipanel.hide()
 	$statusPanel.hide()
-	$statusPanel/AnimationPlayer.stop()
 
 func completed(action):
 	fb.disconnect("completed", self, "completed")
@@ -31,11 +32,11 @@ var shownAlready = false
 func showLogin():
 	if !shownAlready:
 		shownAlready = true
-		$AnimationPlayer.play("lipanel")
+		$lipanel.show()
 
 func hideLogin():
 	shownAlready = false
-	$AnimationPlayer.play_backwards("lipanel")
+	$lipanel.hide()
 	$lipanel/CheckBox.pressed = false
 	$lipanel/lipass.text = ""
 	$lipanel/liuname.text = ""
@@ -45,11 +46,11 @@ func hideLogin():
 func showSignup():
 	if !shownAlready:
 		shownAlready = true
-		$AnimationPlayer.play("supanel")
+		$supanel.show()
 
 func hideSignup():
 	shownAlready = false
-	$AnimationPlayer.play_backwards("supanel")
+	$supanel.hide()
 	$supanel/CheckBox.pressed = false
 	$supanel/suemail.text = ""
 	$supanel/supass.text = ""

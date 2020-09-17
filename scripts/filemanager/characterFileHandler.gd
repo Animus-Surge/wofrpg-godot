@@ -35,12 +35,33 @@ func loadCharList():
 	var c1 = File.new()
 	var c2 = File.new()
 	var c3 = File.new()
+	var dir = Directory.new()
 	var e1 = c1.open("user://characters/slot-0/slot-0.json", File.READ)
 	var e2 = c2.open("user://characters/slot-1/slot-1.json", File.READ)
 	var e3 = c3.open("user://characters/slot-2/slot-2.json", File.READ)
 	
 	if e1 != OK or e2 != OK or e3 != OK:
-		logcat.stdout("Error opening a character file", logcat.ERROR)
+		if e1 == ERR_FILE_NOT_FOUND:
+			logcat.stdout("Character file not found: slot-0.json Creating...", logcat.WARNING)
+			c1.close()
+			dir.make_dir("user://characters/slot-0")
+			c1.open("user://characters/slot-0/slot-0.json", File.WRITE)
+			c1.store_line(to_json(blankChar))
+			c1.close()
+		if e2 == ERR_FILE_NOT_FOUND:
+			logcat.stdout("Character file not found: slot-1.json Creating...", logcat.WARNING)
+			c2.close()
+			dir.make_dir("user://characters/slot-1")
+			c2.open("user://characters/slot-1/slot-1.json", File.WRITE)
+			c2.store_line(to_json(blankChar))
+			c2.close()
+		if e3 == ERR_FILE_NOT_FOUND:
+			logcat.stdout("Character file not found: slot-2.json Creating...", logcat.WARNING)
+			c3.close()
+			dir.make_dir("user://characters/slot-2")
+			c3.open("user://characters/slot-2/slot-2.json", File.WRITE)
+			c3.store_line(to_json(blankChar))
+			c3.close()
 		return
 	
 	characters.append(JSON.parse(c1.get_as_text()).result)

@@ -87,6 +87,11 @@ func loadCharList():
 func deleteChar(slotid: int):
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(slotid) + "/slot-" + String(slotid) + ".json")
+	var cfile = File.new()
+	cfile.open("user://characters/slot-" + String(slotid) + "/slot-" + String(slotid) + ".json", File.WRITE)
+	cfile.store_line(to_json(blankChar))
+	cfile.close()
+	logcat.stdout("Successfully deleted character in slot: " + String(slotid), logcat.INFO)
 
 func loadCharacter(charname) -> Dictionary:
 	return {}

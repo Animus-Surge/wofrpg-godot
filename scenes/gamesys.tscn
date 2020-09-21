@@ -40,10 +40,13 @@ var selectedPlayer
 
 func _ready():
 	globalvars.current = \"gamesys\"
-	$ui/unamepanel/Label.text = fb.username
-	$ui/cs1.call(\"updateName\", cfm.characters[0].name)
-	$ui/cs2.call(\"updateName\", cfm.characters[1].name)
-	$ui/cs3.call(\"updateName\", cfm.characters[2].name)
+	if globalvars.debug:
+		$ui/unamepanel/Label.text = \"DEBUG\"
+	else:
+		$ui/unamepanel/Label.text = fb.username
+		$ui/cs1.call(\"updateName\", cfm.characters[0].name)
+		$ui/cs2.call(\"updateName\", cfm.characters[1].name)
+		$ui/cs3.call(\"updateName\", cfm.characters[2].name)
 
 func characterSave():
 	pass #Actions to take when the save button is pressed: pass all the details of the player
@@ -61,7 +64,10 @@ func playbtnPressed():
 	pass
 
 func cbpressed():
-	scenes.load_scene(\"res://scenes/menus.tscn\")
+	if globalvars.debug:
+		get_tree().quit(0)
+	else:
+		scenes.load_scene(\"res://scenes/menus.tscn\")
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -323,31 +329,31 @@ func _color_changed(color):
 
 [sub_resource type="ShaderMaterial" id=24]
 shader = ExtResource( 12 )
-shader_param/palette_size = null
+shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 22 )
 
 [sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 12 )
-shader_param/palette_size = null
+shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 21 )
 
 [sub_resource type="ShaderMaterial" id=26]
 shader = ExtResource( 12 )
-shader_param/palette_size = null
+shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 15 )
 
 [sub_resource type="ShaderMaterial" id=27]
 shader = ExtResource( 12 )
-shader_param/palette_size = null
+shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 18 )
 
 [sub_resource type="ShaderMaterial" id=28]
 shader = ExtResource( 12 )
-shader_param/palette_size = null
+shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 16 )
 shader_param/mask = ExtResource( 10 )
 
@@ -944,6 +950,7 @@ margin_bottom = 54.1928
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+color = Color( 1, 1, 1, 1 )
 edit_alpha = false
 script = SubResource( 22 )
 __meta__ = {
@@ -966,6 +973,7 @@ margin_bottom = 109.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+color = Color( 1, 1, 1, 1 )
 edit_alpha = false
 script = SubResource( 22 )
 __meta__ = {
@@ -992,6 +1000,7 @@ margin_bottom = 165.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+color = Color( 1, 1, 1, 1 )
 edit_alpha = false
 script = SubResource( 22 )
 __meta__ = {
@@ -1015,6 +1024,7 @@ margin_bottom = 221.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+color = Color( 1, 1, 1, 1 )
 edit_alpha = false
 script = SubResource( 22 )
 __meta__ = {
@@ -1038,6 +1048,7 @@ margin_bottom = 277.693
 custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
+color = Color( 1, 1, 1, 1 )
 edit_alpha = false
 script = SubResource( 22 )
 __meta__ = {

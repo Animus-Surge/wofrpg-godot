@@ -51,10 +51,10 @@ func scalesChangeC(color):
 	var scaletemp = ImageTexture.new()
 	var headtemp = ImageTexture.new()
 	
-	scaletemp.create_from_image(tempa)
+	scaletemp.create_from_image(tempa, 0)
 	scaletemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	
-	headtemp.create_from_image(tempb)
+	headtemp.create_from_image(tempb, 0)
 	headtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	
 	$body.get_material().set_shader_param("palette", scaletemp)
@@ -74,7 +74,7 @@ func eyesChangeC(color):
 	temp.unlock()
 	
 	var headtemp = ImageTexture.new()
-	headtemp.create_from_image(temp)
+	headtemp.create_from_image(temp, 0)
 	headtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	
 	$head.get_material().set_shader_param("palette", headtemp)
@@ -89,7 +89,7 @@ func hornsChangeC(color):
 	temp.unlock()
 	
 	var headtemp = ImageTexture.new()
-	headtemp.create_from_image(temp)
+	headtemp.create_from_image(temp, 0)
 	headtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	
 	$head.get_material().set_shader_param("palette", headtemp)
@@ -106,7 +106,7 @@ func wingsChangeC(color):
 	temp.unlock()
 	
 	var wingtemp = ImageTexture.new()
-	wingtemp.create_from_image(temp)
+	wingtemp.create_from_image(temp, 0)
 	wingtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	
 	$wings.get_material().set_shader_param("palette", wingtemp)

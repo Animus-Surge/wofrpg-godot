@@ -32,6 +32,7 @@
 [ext_resource path="res://scripts/character.gd" type="Script" id=30]
 [ext_resource path="res://images/ui/buttons/tb-closebtn.png" type="Texture" id=31]
 [ext_resource path="res://images/ui/buttons/tb-closebtn-hover.png" type="Texture" id=32]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=33]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -468,6 +469,7 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -920,7 +922,6 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -1413,6 +1414,32 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="profilepanel" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="Panel" parent="profilepanel"]
+self_modulate = Color( 0.890196, 0.627451, 0, 1 )
+anchor_left = 0.072
+anchor_top = 0.046
+anchor_right = 0.928
+anchor_bottom = 0.954
+margin_left = -0.352005
+margin_top = 0.171997
+margin_right = 0.351929
+margin_bottom = -0.172058
+custom_styles/panel = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cbtn" type="Button" parent="profilepanel/Panel"]
+margin_right = 12.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 33 )
+text = "Close"
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

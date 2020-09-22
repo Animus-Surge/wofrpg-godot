@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://images/character/night/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/night/idle/nw-wings.png" type="Texture" id=2]
@@ -405,6 +405,9 @@ func updateName(cname):
 	$Label.text = cname
 	storedCharName = cname
 "
+
+[sub_resource type="StyleBoxFlat" id=32]
+bg_color = Color( 0, 0, 0, 0.529412 )
 
 [node name="gamesys" type="Control"]
 anchor_right = 1.0
@@ -1390,17 +1393,19 @@ __meta__ = {
 
 [node name="toolbar" type="Panel" parent="ui"]
 anchor_right = 1.0
-anchor_bottom = 0.035
-margin_bottom = 0.119999
+anchor_bottom = 0.068
+margin_bottom = -0.224003
+custom_styles/panel = SubResource( 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TextureButton" type="TextureButton" parent="ui/toolbar"]
-anchor_left = 1.0
+anchor_left = 0.964
 anchor_right = 1.0
-margin_left = -26.0
-margin_bottom = 27.0
+anchor_bottom = 0.981
+margin_left = 0.175903
+margin_bottom = -0.0120049
 texture_normal = ExtResource( 31 )
 texture_pressed = ExtResource( 31 )
 texture_hover = ExtResource( 32 )

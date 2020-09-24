@@ -158,6 +158,8 @@ func _ready():
 
 func _toggled(button_pressed):
 	$ScrollContainer.visible = button_pressed
+	if !button_pressed:
+		print(get_node(\"ScrollContainer/GridContainer\").getSelectedTribes())
 "
 
 [sub_resource type="StyleBoxFlat" id=11]
@@ -169,6 +171,8 @@ script/source = "extends GridContainer
 const maxSelectedTribes = 3
 
 var selectedTribes
+
+signal emitSelectedTribes(tribes)
 
 func _ready():
 	for tribe in gloader.loadedtribes:
@@ -820,7 +824,6 @@ __meta__ = {
 }
 
 [node name="Colors" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -959,6 +962,7 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 23 )
 
 [node name="Looks" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -975,7 +979,7 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer"]
-margin_right = 301.0
+margin_right = 313.0
 margin_bottom = 524.0
 size_flags_horizontal = 3
 

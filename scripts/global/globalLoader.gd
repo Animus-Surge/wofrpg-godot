@@ -5,15 +5,15 @@ const ctribesPath = "user://localuserdata/tribes"
 
 const itemDict = "user://data/base/items/itemdict.json"
 
-var loadedtribes: Dictionary
+var loadedtribes: Array
+var tribeindexes: Array
 var itemdict: Array
 
-func startLoad(): 
-	loadTribes()
+func startLoad():
 	loadSettings()
+	loadAddons()
+	loadTribes()
 	logcat.stdout("All stuff loaded.", logcat.DEBUG)
-
-#settings stored in user://settings.json
 
 func loadSettings():
 	var setfile = File.new()
@@ -22,7 +22,6 @@ func loadSettings():
 		logcat.stdout("Unable to open settings file. ERROR: " + String(error), logcat.ERROR)
 		return
 	var settings = JSON.parse(setfile.get_as_text()).result
-	print(settings)
 	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fullscreen) + " Resolution Index: " + String(settings.resolution), logcat.DEBUG)
 	OS.window_fullscreen = settings.fullscreen
 	match settings.resolution:
@@ -48,53 +47,27 @@ func loadSettings():
 func saveSettings():
 	pass
 
-#All tribes stored in user://data/tribes
+#Addons stored in user://addons
+
+func loadAddons():
+	var addondir = Directory.new()
+	#TODO
+
+#All tribes stored in res://data/tribes
 
 func loadTribes():
-	var tribesDir = Directory.new()
-	tribesDir.open("user://data/tribes")
-	tribesDir.list_dir_begin()
-	
-	var currentTribe = tribesDir.get_next()
-	var tribes = []
-	
-	while currentTribe != "":
-		if currentTribe.begins_with("."):
-			currentTribe = tribesDir.get_next()
-		else:
-			if currentTribe.ends_with(".json"):
-				tribes.append(currentTribe)
-			currentTribe = tribesDir.get_next()
-	
-	for tribe in tribes:
-		#parse the tribe data into master dictionary
-		var tribeFile = File.new()
-		tribeFile.open("user://data/tribes/" + tribe, File.READ)
-		if tribeFile.get_as_text() == "":
-			logcat.stdout("Tribe file: " + tribe + " empty.", logcat.ERROR)
+	var tribesdir = Directory.new()
+	tribesdir.open("res://data/tribes")
+	tribesdir.list_dir_begin()
+	var tribe = tribesdir.get_next()
+	while tribe != "":
+		if tribe.begins_with("."):
+			tribe = tribesdir.get_next()
 			continue
-		var data = JSON.parse(tribeFile.get_as_text()).result
-		if data != {}:
-			loadedtribes[data.tribename] = data
-		else:
-			logcat.stdout("Invalid tribe file: " + tribe, logcat.ERROR)
-			continue
-		logcat.stdout("Loaded tribe: " + data.tribename + " from expansion: " + data.addon, logcat.INFO)
-
-func loadSkillset(characterSkills: Array) -> Array:
-	var cskills = []
-	for skill in characterSkills:
-		var skillFile = File.new()
-		skillFile.open("user://data/base/skills/" + skill.id.split("-", true, 1)[1] + ".json") #TODO: skill handling
-		var fileParseResult = JSON.parse(skillFile.get_as_text()).result
-		cskills.append(fileParseResult)
-	return cskills
-
-func loadItem(itemid) -> Dictionary:
-	var dict = File.new()
-	dict.open("res://data/itemDictionary.json", File.READ) #TODO: make the naming convention consistent
-	var dictjson = JSON.parse(dict.get_as_text()).result
-	if dictjson.has(itemid):
-		return dictjson.get(itemid)
-	else:
-		return {}
+		var tfile = File.new()
+		tfile.open("res://data/tribes/" + tribe, File.READ)
+		var tribedata = JSON.parse(tfile.get_as_text()).result
+		loadedtribes.append(tribedata)
+		tribeindexes.append(tribedata.tribename)
+		logcat.stdout("Loaded tribe: " + tribedata.modid + ":" + tribedata.tribename, logcat.INFO)
+		tribe = tribesdir.get_next()

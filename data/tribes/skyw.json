@@ -1,0 +1,26 @@
+{
+	"modid":"base",
+	"tribeid":"skyw",
+	"tribename":"SkyWing",
+	"appearancesidle":[
+		"res://images/character/skyw/idle/sw-head.png",
+		"res://images/character/skyw/idle/sw-legs.png",
+		"res://images/character/skyw/idle/sw-body.png",
+		"res://images/character/skyw/idle/sw-tail.png",
+		"res://images/character/skyw/idle/sw-wings.png"
+	],
+	"appearancesidlemask":[
+		"res://images/character/skyw/idle/sw-head-mask.png",
+		"res://images/character/skyw/idle/sw-legs-mask.png",
+		"res://images/character/skyw/idle/sw-body-mask.png",
+		"res://images/character/skyw/idle/sw-tail-mask.png",
+		"res://images/character/skyw/idle/sw-wings-mask.png"
+	],
+	"appearancesrun":[
+		"res://images/character/skyw/run/sw-base-run.png"
+	],
+	"appearancesrunmask":[
+		"res://images/character/skyw/run/sw-base-run-mask.png"
+	],
+	"decoflags":[]
+}

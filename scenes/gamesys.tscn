@@ -153,13 +153,15 @@ margin_bottom = 20.4765
 [sub_resource type="GDScript" id=10]
 script/source = "extends Button
 
+signal selected(tribes)
+
 func _ready():
 	$ScrollContainer.visible = false
 
 func _toggled(button_pressed):
 	$ScrollContainer.visible = button_pressed
 	if !button_pressed:
-		print(get_node(\"ScrollContainer/GridContainer\").getSelectedTribes())
+		emit_signal(\"selected\", $ScrollContainer/GridContainer.getSelectedTribes())
 "
 
 [sub_resource type="StyleBoxFlat" id=11]
@@ -472,7 +474,6 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -805,6 +806,7 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0

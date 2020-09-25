@@ -39,12 +39,6 @@ fb="*res://scripts/global/firebase.gd"
 http="*res://objects/request.tscn"
 timer="*res://objects/systimer.tscn"
 
-[debug]
-
-gdscript/warnings/unsafe_property_access=true
-gdscript/warnings/unsafe_method_access=true
-gdscript/warnings/unsafe_call_argument=true
-
 [display]
 
 window/size/width=1366

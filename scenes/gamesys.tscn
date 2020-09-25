@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://images/character/nigw/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/nigw/idle/nw-wings.png" type="Texture" id=2]
@@ -162,6 +162,18 @@ func _toggled(button_pressed):
 	$ScrollContainer.visible = button_pressed
 	if !button_pressed:
 		emit_signal(\"selected\", $ScrollContainer/GridContainer.getSelectedTribes())
+
+func _on_TabContainer_tab_changed(_tab):
+	if pressed:
+		$ScrollContainer.visible = false
+		pressed = false
+		emit_signal(\"selected\", $ScrollContainer/GridContainer.getSelectedTribes())
+
+func _on_rolesbtn_pressed():
+	if pressed:
+		$ScrollContainer.visible = false
+		pressed = false
+		emit_signal(\"selected\", $ScrollContainer/GridContainer.getSelectedTribes())
 "
 
 [sub_resource type="StyleBoxFlat" id=11]
@@ -173,8 +185,6 @@ script/source = "extends GridContainer
 const maxSelectedTribes = 3
 
 var selectedTribes
-
-signal emitSelectedTribes(tribes)
 
 func _ready():
 	for tribe in gloader.loadedtribes:
@@ -219,6 +229,15 @@ func _toggled(button_pressed):
 	$ScrollContainer.visible = button_pressed
 	if !button_pressed:
 		pass #TODO
+
+func _on_tribesbtn_pressed():
+	pressed = false
+	$ScrollContainer.visible = false
+
+func _on_TabContainer_tab_changed(_tab):
+	if pressed:
+		$ScrollContainer.visible = false
+		pressed = false
 "
 
 [sub_resource type="GDScript" id=14]
@@ -332,6 +351,76 @@ func _color_changed(color):
 "
 
 [sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="GDScript" id=33]
+script/source = "extends ScrollContainer
+
+onready var bodydd = $GridContainer/body
+onready var wingdd = $GridContainer/wings
+onready var taildd = $GridContainer/tail
+onready var headdd = $GridContainer/head
+onready var legsdd = $GridContainer/legs
+onready var spinedd = $GridContainer/spine
+onready var tdecdd = $GridContainer/td
+
+onready var edtog = $GridContainer/eyedroptoggle
+onready var sptog = $GridContainer/spinetoggle
+onready var tdtog = $GridContainer/tdtoggle
+
+var containsTailDeco = false
+var containsEyedrop = false
+var containsSpikeDeco = false
+
+func updateSelectedTribes(tribes):
+	bodydd.clear()
+	wingdd.clear()
+	taildd.clear()
+	headdd.clear()
+	legsdd.clear()
+	spinedd.clear()
+	
+	sptog.visible = false
+	edtog.visible = false
+	tdtog.visible = false
+	
+	containsTailDeco = false
+	containsEyedrop = false
+	containsSpikeDeco = false
+	
+	var index = 0
+	
+	for tribeid in tribes:
+		for tribeDict in gloader.loadedtribes:
+			if tribeDict.tribeid == tribeid:
+				bodydd.add_item(tribeDict.tribename)
+				wingdd.add_item(tribeDict.tribename)
+				taildd.add_item(tribeDict.tribename)
+				headdd.add_item(tribeDict.tribename)
+				legsdd.add_item(tribeDict.tribename)
+				for decoflag in tribeDict.decoflags:
+					if decoflag == \"spikes\":
+						containsSpikeDeco = true
+						spinedd.add_item(tribeDict.tribename)
+					elif decoflag == \"eyedrop\":
+						containsEyedrop = true
+					elif decoflag == \"taildeco\":
+						containsTailDeco = true
+						tdecdd.add_item(tribeDict.tribename)
+					#TODO: add more of them
+		index += 1
+	
+	if containsSpikeDeco:
+		sptog.visible = true
+		sptog.pressed = false
+	
+	if containsEyedrop:
+		edtog.visible = true
+		edtog.pressed = false
+	
+	if containsTailDeco:
+		tdtog.visible = true
+		tdtog.pressed = false
+"
 
 [sub_resource type="ShaderMaterial" id=24]
 shader = ExtResource( 12 )
@@ -474,6 +563,7 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -806,7 +896,6 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -826,6 +915,7 @@ __meta__ = {
 }
 
 [node name="Colors" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -964,7 +1054,6 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 23 )
 
 [node name="Looks" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -976,14 +1065,16 @@ custom_styles/panel = SubResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 scroll_horizontal_enabled = false
+script = SubResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer"]
-margin_right = 313.0
-margin_bottom = 524.0
+margin_right = 301.0
+margin_bottom = 590.0
 size_flags_horizontal = 3
+columns = 2
 
 [node name="body" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_right = 223.0
@@ -996,10 +1087,18 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Body Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 20.0
+margin_right = 272.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Body"
 
 [node name="wings" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_top = 66.0
@@ -1013,10 +1112,18 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Wing Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label2" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 86.0
+margin_right = 272.0
+margin_bottom = 108.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Wing"
 
 [node name="tail" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_top = 132.0
@@ -1030,10 +1137,18 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Tail Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label3" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 152.0
+margin_right = 272.0
+margin_bottom = 174.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Tail"
 
 [node name="head" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_top = 198.0
@@ -1047,10 +1162,18 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Head Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label4" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 218.0
+margin_right = 272.0
+margin_bottom = 240.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Head"
 
 [node name="legs" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_top = 264.0
@@ -1064,10 +1187,18 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Leg Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label5" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 284.0
+margin_right = 272.0
+margin_bottom = 306.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Leg"
 
 [node name="spine" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_top = 330.0
@@ -1081,15 +1212,50 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Spine Type"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="eyedroptoggle" type="CheckButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+[node name="Label6" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 337.0
+margin_right = 272.0
+margin_bottom = 384.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Neck
+Deco"
+
+[node name="td" type="OptionButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
 margin_top = 396.0
 margin_right = 223.0
-margin_bottom = 436.0
+margin_bottom = 458.193
+custom_styles/hover = ExtResource( 28 )
+custom_styles/pressed = ExtResource( 27 )
+custom_styles/normal = ExtResource( 29 )
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label7" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 403.0
+margin_right = 272.0
+margin_bottom = 450.0
+custom_fonts/font = ExtResource( 19 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Tail
+Deco"
+
+[node name="eyedroptoggle" type="CheckButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_top = 462.0
+margin_right = 223.0
+margin_bottom = 502.0
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
@@ -1101,10 +1267,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label8" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 475.0
+margin_right = 272.0
+margin_bottom = 489.0
+
 [node name="spinetoggle" type="CheckButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
-margin_top = 440.0
+margin_top = 506.0
 margin_right = 223.0
-margin_bottom = 480.0
+margin_bottom = 546.0
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
@@ -1116,10 +1288,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label9" type="Label" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
+margin_left = 227.0
+margin_top = 519.0
+margin_right = 272.0
+margin_bottom = 533.0
+
 [node name="tdtoggle" type="CheckButton" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer"]
-margin_top = 484.0
+margin_top = 550.0
 margin_right = 223.0
-margin_bottom = 524.0
+margin_bottom = 590.0
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
@@ -1392,12 +1570,17 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/fcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="fcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/fcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="fcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/fcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_fcheck"]
+[connection signal="pressed" from="ui/customization/TabContainer/Basic Info/tribesbtn" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_tribesbtn_pressed"]
+[connection signal="selected" from="ui/customization/TabContainer/Basic Info/tribesbtn" to="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer" method="updateSelectedTribes"]
+[connection signal="pressed" from="ui/customization/TabContainer/Basic Info/rolesbtn" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_rolesbtn_pressed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" method="_mouse_enter"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/commoner" method="_mouse_exit"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/rogue" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/rogue" method="_mouse_enter"]

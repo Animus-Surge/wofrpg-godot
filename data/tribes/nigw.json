@@ -8,7 +8,7 @@
 		"res://images/character/nigw/idle/nw-body.png",
 		"res://images/character/nigw/idle/nw-tail.png",
 		"res://images/character/nigw/idle/nw-wings.png",
-		"res://images/character/nigw/idle/nw-spikes.png",
+		"res://images/character/nigw/idle/nw-spine.png",
 		"res://images/character/nigw/idle/nw-eyedrop.png"
 	],
 	"appearancesidlemask":[
@@ -21,7 +21,7 @@
 	"appearancesrun":[
 		"res://images/character/nigw/run/nw-base-run.png",
 		"res://images/character/nigw/run/nw-head-run.png",
-		"res://images/character/nigw/run/nw-spikes-run.png",
+		"res://images/character/nigw/run/nw-spine-run.png",
 		"res://images/character/nigw/run/nw-wings-run.png",
 		"res://images/character/nigw/run/nw-eyedrop-run.png"
 	],

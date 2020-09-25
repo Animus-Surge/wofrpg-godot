@@ -5,7 +5,7 @@
 [ext_resource path="res://images/character/nigw/idle/nw-head.png" type="Texture" id=3]
 [ext_resource path="res://images/character/nigw/idle/nw-legs.png" type="Texture" id=4]
 [ext_resource path="res://images/character/nigw/idle/nw-body.png" type="Texture" id=5]
-[ext_resource path="res://images/character/nigw/idle/nw-spikes.png" type="Texture" id=6]
+[ext_resource path="res://images/character/nigw/idle/nw-spine.png" type="Texture" id=6]
 [ext_resource path="res://images/ui/backgrounds/scroll-tab-select.png" type="Texture" id=7]
 [ext_resource path="res://images/ui/backgrounds/scroll-tab-noselect.png" type="Texture" id=8]
 [ext_resource path="res://images/ui/backgrounds/sw-customizationscreen.png" type="Texture" id=9]
@@ -352,7 +352,7 @@ func _color_changed(color):
 
 [sub_resource type="StyleBoxEmpty" id=23]
 
-[sub_resource type="GDScript" id=33]
+[sub_resource type="GDScript" id=24]
 script/source = "extends ScrollContainer
 
 onready var bodydd = $GridContainer/body
@@ -371,6 +371,14 @@ var containsTailDeco = false
 var containsEyedrop = false
 var containsSpikeDeco = false
 
+func _ready():
+	bodydd.add_item(\"Select...\", -1)
+	wingdd.add_item(\"Select...\", -1)
+	taildd.add_item(\"Select...\", -1)
+	headdd.add_item(\"Select...\", -1)
+	legsdd.add_item(\"Select...\", -1)
+	spinedd.add_item(\"Select...\", -1)
+
 func updateSelectedTribes(tribes):
 	bodydd.clear()
 	wingdd.clear()
@@ -386,6 +394,13 @@ func updateSelectedTribes(tribes):
 	containsTailDeco = false
 	containsEyedrop = false
 	containsSpikeDeco = false
+	
+	bodydd.add_item(\"Select...\", -1)
+	wingdd.add_item(\"Select...\", -1)
+	taildd.add_item(\"Select...\", -1)
+	headdd.add_item(\"Select...\", -1)
+	legsdd.add_item(\"Select...\", -1)
+	spinedd.add_item(\"Select...\", -1)
 	
 	var index = 0
 	
@@ -409,6 +424,13 @@ func updateSelectedTribes(tribes):
 					#TODO: add more of them
 		index += 1
 	
+	bodydd.select(-1)
+	wingdd.select(-1)
+	taildd.select(-1)
+	headdd.select(-1)
+	legsdd.select(-1)
+	spinedd.select(-1)
+	
 	if containsSpikeDeco:
 		sptog.visible = true
 		sptog.pressed = false
@@ -422,44 +444,44 @@ func updateSelectedTribes(tribes):
 		tdtog.pressed = false
 "
 
-[sub_resource type="ShaderMaterial" id=24]
+[sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 12 )
 shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 22 )
 
-[sub_resource type="ShaderMaterial" id=25]
+[sub_resource type="ShaderMaterial" id=26]
 shader = ExtResource( 12 )
 shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 21 )
 
-[sub_resource type="ShaderMaterial" id=26]
+[sub_resource type="ShaderMaterial" id=27]
 shader = ExtResource( 12 )
 shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 15 )
 
-[sub_resource type="ShaderMaterial" id=27]
+[sub_resource type="ShaderMaterial" id=28]
 shader = ExtResource( 12 )
 shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 18 )
 
-[sub_resource type="ShaderMaterial" id=28]
+[sub_resource type="ShaderMaterial" id=29]
 shader = ExtResource( 12 )
 shader_param/palette_size = 4.0
 shader_param/palette = ExtResource( 16 )
 shader_param/mask = ExtResource( 10 )
 
-[sub_resource type="StyleBoxTexture" id=29]
+[sub_resource type="StyleBoxTexture" id=30]
 texture = ExtResource( 8 )
 region_rect = Rect2( 0, 0, 128, 64 )
 margin_left = 16.2901
 margin_right = 18.7336
 margin_top = 48.8704
 
-[sub_resource type="GDScript" id=30]
+[sub_resource type="GDScript" id=31]
 script/source = "extends Panel
 
 func _ready():
@@ -473,7 +495,7 @@ func mouseExit():
 	self_modulate = Color(0.9, 0.98, 0.48, 0.54)
 "
 
-[sub_resource type="GDScript" id=31]
+[sub_resource type="GDScript" id=32]
 script/source = "extends Panel
 
 var storedCharName
@@ -501,7 +523,7 @@ func updateName(cname):
 	storedCharName = cname
 "
 
-[sub_resource type="StyleBoxFlat" id=32]
+[sub_resource type="StyleBoxFlat" id=33]
 bg_color = Color( 0, 0, 0, 0.529412 )
 
 [node name="gamesys" type="Control"]
@@ -563,7 +585,6 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -896,6 +917,7 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -915,7 +937,6 @@ __meta__ = {
 }
 
 [node name="Colors" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -1054,6 +1075,7 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 23 )
 
 [node name="Looks" type="Panel" parent="ui/customization/TabContainer/Appearance/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 22.0
@@ -1065,13 +1087,13 @@ custom_styles/panel = SubResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 scroll_horizontal_enabled = false
-script = SubResource( 33 )
+script = SubResource( 24 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer"]
-margin_right = 301.0
+margin_right = 313.0
 margin_bottom = 590.0
 size_flags_horizontal = 3
 columns = 2
@@ -1340,7 +1362,7 @@ __meta__ = {
 }
 
 [node name="body" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 24 )
+material = SubResource( 25 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
@@ -1350,7 +1372,7 @@ __meta__ = {
 }
 
 [node name="legs" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 25 )
+material = SubResource( 26 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
@@ -1360,7 +1382,7 @@ __meta__ = {
 }
 
 [node name="tail" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 26 )
+material = SubResource( 27 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -1370,7 +1392,7 @@ __meta__ = {
 }
 
 [node name="head" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 27 )
+material = SubResource( 28 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
@@ -1380,7 +1402,7 @@ __meta__ = {
 }
 
 [node name="wings" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 28 )
+material = SubResource( 29 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -1390,7 +1412,7 @@ __meta__ = {
 }
 
 [node name="eyedrop" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 28 )
+material = SubResource( 29 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 20 )
@@ -1408,8 +1430,8 @@ anchor_bottom = 1.0
 margin_left = -0.526001
 margin_top = 0.351929
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 29 )
-script = SubResource( 30 )
+custom_styles/panel = SubResource( 30 )
+script = SubResource( 31 )
 
 [node name="Label" type="Label" parent="ui/unamepanel"]
 anchor_right = 1.0
@@ -1430,8 +1452,8 @@ margin_left = 0.195984
 margin_top = 0.351929
 margin_right = -0.644043
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 29 )
-script = SubResource( 31 )
+custom_styles/panel = SubResource( 30 )
+script = SubResource( 32 )
 
 [node name="Label" type="Label" parent="ui/cs1"]
 anchor_right = 1.0
@@ -1452,8 +1474,8 @@ margin_left = 0.0359802
 margin_top = 0.351929
 margin_right = 0.561951
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 29 )
-script = SubResource( 31 )
+custom_styles/panel = SubResource( 30 )
+script = SubResource( 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1477,8 +1499,8 @@ margin_left = -0.124001
 margin_top = 0.351929
 margin_right = 0.401978
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 29 )
-script = SubResource( 31 )
+custom_styles/panel = SubResource( 30 )
+script = SubResource( 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1501,7 +1523,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 0.068
 margin_bottom = -0.224003
-custom_styles/panel = SubResource( 32 )
+custom_styles/panel = SubResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1570,8 +1592,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
@@ -1595,4 +1617,10 @@ expand = true
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/paladin" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/paladin" method="_mouse_exit"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" method="_mouse_enter"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" to="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer/merchant" method="_mouse_exit"]
+[connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body" to="ui/character" method="bodyChanged"]
+[connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings" to="ui/character" method="wingsChanged"]
+[connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail" to="ui/character" method="tailChanged"]
+[connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head" to="ui/character" method="headChanged"]
+[connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs" to="ui/character" method="legsChanged"]
+[connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine" to="ui/character" method="spineChanged"]
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]

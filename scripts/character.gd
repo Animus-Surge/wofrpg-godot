@@ -29,6 +29,19 @@ func _ready():
 	
 	sc = ImageTexture.new()
 	sc.create_from_image(scalepalette.get_data())
+	
+	$body.texture = null
+	$body.get_material().set_shader_param("mask", null)
+	$wings.texture = null
+	$wings.get_material().set_shader_param("mask", null)
+	$legs.texture = null
+	$legs.get_material().set_shader_param("mask", null)
+	$tail.texture = null
+	$tail.get_material().set_shader_param("mask", null)
+	$head.texture = null
+	$head.get_material().set_shader_param("mask", null)
+	$spine.texture = null
+	$eyedrop.visible = false
 
 func loadDataFromFiles(cslot):
 	pass
@@ -116,5 +129,87 @@ func wingsChangeC(color):
 func spineChangeC(color):
 	$spine.self_modulate = color
 
-func partChange(part, tribe):
-	pass #TODO
+func bodyChanged(index): #index is the tribe index
+	if index == 0:
+		$body.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[index-1]
+	for part in tdataind.appearancesidle:
+		if "body" in part:
+			$body.texture = load(part)
+			break
+	for partmask in tdataind.appearancesidlemask:
+		if "body" in partmask:
+			$body.get_material().set_shader_param("mask", load(partmask))
+			break
+
+func wingsChanged(index):
+	if index == 0:
+		$wings.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[index-1]
+	for part in tdataind.appearancesidle:
+		if "wings" in part:
+			$wings.texture = load(part)
+			break
+	for partmask in tdataind.appearancesidlemask:
+		if "wings" in partmask:
+			$wings.get_material().set_shader_param("mask", load(partmask))
+			break
+
+func tailChanged(index):
+	if index == 0:
+		$wings.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[index-1]
+	for part in tdataind.appearancesidle:
+		if "tail" in part:
+			$tail.texture = load(part)
+			break
+	for partmask in tdataind.appearancesidlemask:
+		if "tail" in partmask:
+			$tail.get_material().set_shader_param("mask", load(partmask))
+			break
+
+func headChanged(index):
+	if index == 0:
+		$head.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[index-1]
+	for part in tdataind.appearancesidle:
+		if "head" in part:
+			$head.texture = load(part)
+			break
+	for partmask in tdataind.appearancesidlemask:
+		if "head" in partmask:
+			$head.get_material().set_shader_param("mask", load(partmask))
+			break
+
+func legsChanged(index):
+	if index == 0:
+		$legs.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[index-1]
+	for part in tdataind.appearancesidle:
+		if "legs" in part:
+			$legs.texture = load(part)
+			break
+	for partmask in tdataind.appearancesidlemask:
+		if "legs" in partmask:
+			$legs.get_material().set_shader_param("mask", load(partmask))
+			break
+
+func spineChanged(index):
+	if index == 0:
+		$spine.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[index - 1]
+	for part in tdataind.appearancesidle:
+		if "spine" in part:
+			$legs.texture = load(part)

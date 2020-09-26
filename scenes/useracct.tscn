@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scripts/useracct.gd" type="Script" id=1]
 [ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=2]
@@ -24,15 +24,21 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0.54902 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+func _pressed():
+	scenes.load_scene(\"res://scenes/menus.tscn\")
+"
+
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0, 0, 0, 0.607843 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 60
 font_data = ExtResource( 20 )
 
-[sub_resource type="Animation" id=4]
-resource_name = "lsicon"
+[sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect:texture")
@@ -63,6 +69,15 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="TextureRect"]
+anchor_left = 0.958
+anchor_top = 0.982
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.628052
+margin_top = -0.176025
+text = "pre-0.1.1"
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 386.0
@@ -112,6 +127,26 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Log In"
+
+[node name="sp" type="Button" parent="Panel"]
+anchor_left = 0.163
+anchor_top = 0.871
+anchor_right = 0.839
+anchor_bottom = 0.965
+margin_left = 0.0820007
+margin_top = 0.0719604
+margin_right = 0.145966
+margin_bottom = 0.072876
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 6 )
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+text = "Play Offline"
+script = SubResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
 anchor_left = 0.206
@@ -354,7 +389,7 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="Label" type="Label" parent="statusPanel"]
 anchor_left = 0.341
@@ -365,7 +400,7 @@ margin_left = 0.19397
 margin_top = -0.279999
 margin_right = -0.194031
 margin_bottom = -0.0240173
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Logging you in..."
 align = 1
 valign = 1
@@ -374,7 +409,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="statusPanel"]
-anims/lsicon = SubResource( 4 )
+anims/lsicon = SubResource( 5 )
 
 [node name="TextureRect" type="TextureRect" parent="statusPanel"]
 anchor_left = 0.438

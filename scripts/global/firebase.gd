@@ -41,6 +41,7 @@ func userSignup(email, uname, password):
 		logcat.stdout("SIGNUP: OK", logcat.DEBUG)
 		username = uname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.idToken
+		globalvars.loggedIn = true
 		storeToDB("users/" + uname + ".json", {"email":email,"verified":false})
 	else:
 		logcat.stdout("SIGNUP: FAIL", logcat.DEBUG)
@@ -89,4 +90,5 @@ func loginWithEmail(email):
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.localId
 		tuname = ""
 		tpass = ""
+		globalvars.loggedIn = true
 		emit_signal("completed", "login")

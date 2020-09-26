@@ -42,6 +42,7 @@ func _ready():
 	$head.get_material().set_shader_param("mask", null)
 	$spine.texture = null
 	$eyedrop.visible = false
+	$spine.visible = false
 
 func loadDataFromFiles(cslot):
 	pass
@@ -212,4 +213,10 @@ func spineChanged(index):
 	var tdataind = gloader.loadedtribes[index - 1]
 	for part in tdataind.appearancesidle:
 		if "spine" in part:
-			$legs.texture = load(part)
+			$spine.texture = load(part)
+
+func spineToggle(button_pressed):
+	$spine.visible = button_pressed
+
+func edropToggle(button_pressed):
+	$eyedrop.visible = button_pressed

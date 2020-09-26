@@ -43,10 +43,13 @@ func _ready():
 	if globalvars.debug:
 		$ui/unamepanel/Label.text = \"DEBUG\"
 	else:
-		$ui/unamepanel/Label.text = fb.username
-		$ui/cs1.call(\"updateName\", cfm.characters[0].name)
-		$ui/cs2.call(\"updateName\", cfm.characters[1].name)
-		$ui/cs3.call(\"updateName\", cfm.characters[2].name)
+		if globalvars.loggedIn:
+			$ui/unamepanel/Label.text = fb.username
+			$ui/cs1.call(\"updateName\", cfm.characters[0].name)
+			$ui/cs2.call(\"updateName\", cfm.characters[1].name)
+			$ui/cs3.call(\"updateName\", cfm.characters[2].name)
+		else:
+			$ui/unamepanel.hide()
 
 func characterSave():
 	pass #Actions to take when the save button is pressed: pass all the details of the player
@@ -1592,8 +1595,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
@@ -1623,4 +1626,6 @@ expand = true
 [connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head" to="ui/character" method="headChanged"]
 [connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs" to="ui/character" method="legsChanged"]
 [connection signal="item_selected" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine" to="ui/character" method="spineChanged"]
+[connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/eyedroptoggle" to="ui/character" method="edropToggle"]
+[connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spinetoggle" to="ui/character" method="spineToggle"]
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]

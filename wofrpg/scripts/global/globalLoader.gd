@@ -22,6 +22,13 @@ func loadSettings():
 	var error = setfile.open("user://settings.json", File.READ)
 	if error != OK:
 		logcat.stdout("Unable to open settings file. ERROR: " + String(error), 3)
+		#OS.window_size = Vector2(1366,768)
+		#OS.window_fullscreen = true
+		#if error == ERR_FILE_NOT_FOUND:
+		#	setfile.open("user://settings.json", File.WRITE)
+		#	setfile.store_line(to_json({"fullscreen":true,"resolution":1}))
+		#	setfile.close()
+		#	return
 		return
 	var settings = JSON.parse(setfile.get_as_text()).result
 	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fullscreen) + " Resolution Index: " + String(settings.resolution), 0)
@@ -45,6 +52,7 @@ func loadSettings():
 			OS.window_size = Vector2(1280,800)
 		8: #1600x900
 			OS.window_size = Vector2(1600,900)
+	setfile.close()
 
 func saveSettings():
 	pass

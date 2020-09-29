@@ -1,34 +1,38 @@
 extends Node
 
 func _ready():
+	$AnimationPlayer.play("lsanim")
 	print("AUTOUPDATE: Checking for updates...")
 	var http = $HTTPRequest
 	http.request("https://wofrpg-main.firebaseio.com/release-latest.json")
 	var result = yield(http, "request_completed") as Array
 	if result[1] != 200:
 		print("AUTOUPDATE: HTTP request error - " + String(result[1]))
+		fail()
 	else:
 		if result[3].get_string_from_ascii() != "null":
 			var jres = JSON.parse(result[3].get_string_from_ascii()).result
 			var verfile = File.new()
 			var err = verfile.open("user://version.json", File.READ)
 			if err == ERR_FILE_NOT_FOUND:
+				$status.text = "Downloading assets..."
 				print("AUTOUPDATE: Version file not found, assuming fresh install")
 				http.request(jres.url)
 				result = yield(http, "request_completed") as Array
 				if result[1] == 200:
+					$status.text = "Writing new data..."
 					var gamepckfile = File.new()
-					print("Request complete. Writing data to pck file...")
-					err = gamepckfile.open("user://bin/wofrpg.pck", File.WRITE)
-					if err != OK:
-						print("AUTOUPDATE: Failed finding directory to contain pck file.")
-						get_tree().quit()
+					print("AUTOUPDATE: Request complete. Writing data to pck file...")
+					var dir = Directory.new()
+					if not dir.dir_exists("user://bin"): dir.make_dir("user://bin")
+					gamepckfile.open("user://bin/wofrpg.pck", File.WRITE)
 					gamepckfile.store_buffer(result[3])
 					gamepckfile.close()
 					verfile.open("user://version.json", File.WRITE)
 					verfile.store_line(to_json({"version":jres.version}))
 					verfile.close()
-					if ProjectSettings.load_resource_pack("user://bin/wofrpg.pck"):
+					if ProjectSettings.load_resource_pack("user://bin/wofrpg.pck", false):
+						$status.text = "Loading..."
 						var lcat = Node.new()
 						lcat.set_script(load("res://scripts/global/logger.gd"))
 						lcat.name = "logcat"
@@ -69,13 +73,16 @@ func _ready():
 						firebase.name = "fb"
 						get_tree().get_root().add_child(firebase)
 						print("AUTOUPDATE: Loaded singletons")
+						get_parent().queue_free()
 					else:
 						print("AUTOUPDATE: Failed to load resource pack")
+						$status.text = "PCK loading failed. Aborting..."
 						get_tree().quit()
 			elif err == OK:
 				if JSON.parse(verfile.get_as_text()).result.version == jres.version:
 					print("AUTOUPDATE: No update needed. Loading resource pack")
-					if ProjectSettings.load_resource_pack("user://bin/wofrpg.pck"):
+					if ProjectSettings.load_resource_pack("user://bin/wofrpg.pck", false):
+						$status.text = "Loading..."
 						var lcat = Node.new()
 						lcat.set_script(load("res://scripts/global/logger.gd"))
 						lcat.name = "logcat"
@@ -114,27 +121,32 @@ func _ready():
 						firebase.set_script(load("res://scripts/global/firebase.gd"))
 						firebase.name = "fb"
 						get_tree().get_root().add_child(firebase)
+						
 						print("AUTOUPDATE: Loaded singletons")
+						get_parent().queue_free()
 					else:
 						print("AUTOUPDATE: Failed to load resource pack")
+						$status.text = "PCK loading failed. Aborting..."
 						get_tree().quit()
 				else:
 					print("AUTOUPDATE: Update needed")
+					$status.text = "Update found. Downloading new assets..."
 					var gamepckfile = File.new()
 					http.request(jres.url)
 					result = yield(http, "request_completed") as Array
 					if result[1] == 200:
-						print("Request complete. Writing data to pck file...")
-						err = gamepckfile.open("user://bin/wofrpg.pck", File.WRITE)
-						if err != OK:
-							print("AUTOUPDATE: Failed finding directory to contain pck file.")
-							get_tree().quit()
+						print("AUTOUPDATE: Request completed. Writing data to pck file...")
+						$status.text = "Writing new data..."
+						var dir = Directory.new()
+						if not dir.dir_exists("user://bin"): dir.make_dir("user://bin")
+						gamepckfile.open("user://bin/wofrpg.pck", File.WRITE)
 						gamepckfile.store_buffer(result[3])
 						gamepckfile.close()
 						verfile.open("user://version.json", File.WRITE)
 						verfile.store_line(to_json({"version":jres.version}))
 						verfile.close()
-						if ProjectSettings.load_resource_pack("user://bin/wofrpg.pck"):
+						if ProjectSettings.load_resource_pack("user://bin/wofrpg.pck", false):
+							$status.text = "Loading..."
 							var lcat = Node.new()
 							lcat.set_script(load("res://scripts/global/logger.gd"))
 							lcat.name = "logcat"
@@ -175,9 +187,16 @@ func _ready():
 							get_tree().get_root().add_child(loadingscreen.instance())
 							
 							print("AUTOUPDATE: Loaded singletons")
+							get_parent().queue_free()
 						else:
 							print("AUTOUPDATE: Failed to load resource pack")
-							get_tree().quit()
+						fail()
 					else:
 						print("AUTOUPDATE: request failed. " + String(result[1]))
-						get_tree().quit()
+						fail()
+
+func fail():
+	$Timer.wait_time = 1.5
+	$Timer.start()
+	yield($Timer, "timeout")
+	get_tree().quit()

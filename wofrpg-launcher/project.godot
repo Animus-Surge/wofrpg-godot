@@ -16,9 +16,20 @@ _global_script_class_icons={
 [application]
 
 config/name="WoFRPG"
+config/description="Launcher for the Wings of Fire RPG"
 run/main_scene="res://main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="WoFRPG"
+boot_splash/image="res://programwings-logo_trans.png"
+boot_splash/use_filter=false
+config/icon="res://icon.png"
+config/macos_native_icon="res://icon-scaled-256p.icns"
+config/windows_native_icon="res://favicon.ico"
+
+[logging]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="user://logs/update.log"
 
 [rendering]
 

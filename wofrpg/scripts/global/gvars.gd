@@ -6,6 +6,7 @@ onready var scenes = ""
 onready var logcat = get_tree().get_root().get_node("logcat")
 onready var fb = get_tree().get_root().get_node("fb")
 onready var timer = get_tree().get_root().get_node("timer")
+onready var test = get_node("/root/Test")
 
 const DEFAULT_SAVE_DATA = {
 	"character-location":{
@@ -57,8 +58,9 @@ var current = "loadscreen"
 func _ready():
 	
 	if !debug:
-		if Test.debug:
-			Test.connect("complete", self, "_complete")
+		if is_instance_valid(test):
+			if test.debug:
+				test.connect("complete", self, "_complete")
 		print("==============> GAME START <==============")
 		gloader.startLoad()
 		cfm.startLoad()

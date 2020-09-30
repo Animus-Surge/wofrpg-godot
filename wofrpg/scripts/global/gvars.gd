@@ -66,12 +66,15 @@ func _ready():
 		cfm.startLoad()
 		load_scene("res://scenes/useracct.tscn")
 	else:
-		gloader.startLoad()
-		logcat.stdout("DEBUG MODE ACTIVE", 0)
+		test.connect("complete", self, "debugComplete")
 
 func _complete():
 	fb = get_tree().get_root().get_node("fb")
 	load_scene("res://scenes/useracct.tscn")
+
+func debugComplete():
+	gloader.startLoad()
+	logcat.stdout("DEBUG MODE ACTIVE", 0)
 
 func setCurrentScene(scene):
 	current = scene

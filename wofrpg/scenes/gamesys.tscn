@@ -44,6 +44,9 @@ onready var cfm = get_tree().get_root().get_node(\"cfm\")
 
 func _ready():
 	globalvars.setCurrentScene(\"gamesys\")
+	get_node(\"ui/cs1\").connect(\"clicked\", self, \"slotPressed\")
+	get_node(\"ui/cs2\").connect(\"clicked\", self, \"slotPressed\")
+	get_node(\"ui/cs3\").connect(\"clicked\", self, \"slotPressed\")
 	if globalvars.debug:
 		$ui/unamepanel/Label.text = \"DEBUG\"
 	else:
@@ -56,9 +59,8 @@ func _ready():
 			$ui/unamepanel.hide()
 
 func characterSave():
-	pass #Actions to take when the save button is pressed: pass all the details of the player
-	#into CFM as a dictionary. CFM will choose the selected slot number and rewrite 
-	#user://characters/slot-#/slot-#.json accordingly. Also saves the shader palettes.
+	var charPalettes = get_node(\"ui/character\").getPalettes()
+	
 	$ui/customization.hide()
 
 func showProfile():
@@ -75,6 +77,18 @@ func cbpressed():
 		get_tree().quit(0)
 	else:
 		globalvars.load_scene(\"res://scenes/menus.tscn\")
+
+func resetAll():
+	get_node(\"ui/customization/TabContainer/Basic Info/groupGender\").reset()
+	get_node(\"ui/customization/TabContainer/Basic Info/tribesbtn\").reset()
+	get_node(\"ui/customization/TabContainer/Basic Info/rolesbtn\").reset()
+	get_node(\"ui/customization/TabContainer/Basic Info/cname\").text = \"\"
+
+func slotPressed(slot: int):
+	resetAll()
+	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
+		get_node(\"ui/customization\").show()
+		
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -113,6 +127,12 @@ var genderIndex
 func _ready():
 	$fcheck.self_modulate = Color(1, 0.5, 0)
 	$mcheck.self_modulate = Color(1, 0.5, 0)
+
+func reset():
+	$fcheck.pressed = false
+	$mcheck.pressed = false
+	$fcheck.disabled = false
+	$mcheck.disabled = false
 
 func _mcheck(button_pressed):
 	if button_pressed:
@@ -263,6 +283,11 @@ func radioPressed(id):
 			child.disabled = true
 	
 	roleIndex = id
+
+func reset():
+	for child in get_children():
+		child.disabled = false
+		child.pressed = false
 "
 
 [sub_resource type="GDScript" id=15]
@@ -317,24 +342,6 @@ func colorChanged(color: Color, part: int):
 func bodyChanged(index):
 	var tribeCode = 0
 	get_node(\"../../../character\").call(\"partChange\", 0, index) #TODO: decode the tribe
-
-func wingsChanged(index):
-	pass
-
-func tailChanged(index):
-	pass
-
-func headChanged(index):
-	pass
-
-func legsChanged(index):
-	pass
-
-func spineChanged(index):
-	pass
-
-func eyedropToggle(button_pressed):
-	pass
 "
 
 [sub_resource type="StyleBoxEmpty" id=17]
@@ -389,6 +396,14 @@ func _ready():
 	headdd.add_item(\"Select...\", -1)
 	legsdd.add_item(\"Select...\", -1)
 	spinedd.add_item(\"Select...\", -1)
+	tdecdd.add_item(\"Select...\", -1)
+	
+	sptog.visible = false
+	edtog.visible = false
+	tdtog.visible = false
+
+func reset():
+	updateSelectedTribes([])
 
 func updateSelectedTribes(tribes):
 	bodydd.clear()
@@ -402,6 +417,9 @@ func updateSelectedTribes(tribes):
 	edtog.visible = false
 	tdtog.visible = false
 	
+	spinedd.visible = false
+	tdecdd.visible = false
+	
 	containsTailDeco = false
 	containsEyedrop = false
 	containsSpikeDeco = false
@@ -412,6 +430,7 @@ func updateSelectedTribes(tribes):
 	headdd.add_item(\"Select...\", -1)
 	legsdd.add_item(\"Select...\", -1)
 	spinedd.add_item(\"Select...\", -1)
+	tdecdd.add_item(\"Select\", -1)
 	
 	var index = 0
 	
@@ -441,10 +460,12 @@ func updateSelectedTribes(tribes):
 	headdd.select(-1)
 	legsdd.select(-1)
 	spinedd.select(-1)
+	tdecdd.select(-1)
 	
 	if containsSpikeDeco:
 		sptog.visible = true
 		sptog.pressed = false
+		spinedd.visible = true
 	
 	if containsEyedrop:
 		edtog.visible = true
@@ -453,6 +474,7 @@ func updateSelectedTribes(tribes):
 	if containsTailDeco:
 		tdtog.visible = true
 		tdtog.pressed = false
+		tdecdd.visible = true
 "
 
 [sub_resource type="ShaderMaterial" id=25]
@@ -511,6 +533,10 @@ script/source = "extends Panel
 
 var storedCharName
 
+export (int) var slotid = 0
+
+signal clicked(id)
+
 func _ready():
 	connect(\"mouse_entered\", self, \"mouseEnter\")
 	connect(\"mouse_exited\", self, \"mouseExit\")
@@ -524,10 +550,7 @@ func mouseExit():
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
-			if storedCharName == \"[empty]\":
-				get_parent().get_node(\"customization\").show()
-			else:
-				pass #load the character details to the details panel and load colors
+			emit_signal(\"clicked\", slotid)
 
 func updateName(cname):
 	$Label.text = cname
@@ -1490,6 +1513,7 @@ script = SubResource( 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+slotid = 1
 
 [node name="Label" type="Label" parent="ui/cs2"]
 anchor_right = 1.0
@@ -1515,6 +1539,7 @@ script = SubResource( 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+slotid = 2
 
 [node name="Label" type="Label" parent="ui/cs3"]
 anchor_right = 1.0
@@ -1603,8 +1628,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

@@ -10,15 +10,19 @@ onready var eyedrop = get_node("eyedrop")
 
 onready var gloader = get_tree().get_root().get_node("gloader")
 
+var palh
+var pals
+var palw
+
 var hc
 var wc
 var sc
 #TODO: have it load from previously used slot (FileManager TODO) and have the four character slots
 
 func _ready():
-	var palh = load("res://images/character/palettes/head-pal.tex")
-	var pals = load("res://images/character/palettes/body-leg-tail-pal.tex")
-	var palw = load("res://images/character/palettes/wing-pal.tex")
+	palh = load("res://images/character/palettes/head-pal.tex")
+	pals = load("res://images/character/palettes/body-leg-tail-pal.tex")
+	palw = load("res://images/character/palettes/wing-pal.tex")
 	
 	hc = palh
 	wc = palw
@@ -37,6 +41,27 @@ func _ready():
 	$spine.texture = null
 	$eyedrop.visible = false
 	$spine.visible = false
+
+func reset():
+	hc = palh
+	wc = palw
+	sc = pals
+	
+	scalesChangeC(Color.white)
+	wingsChangeC(Color.white)
+	eyesChangeC(Color.white)
+	hornsChangeC(Color.white)
+	spineChangeC(Color.white)
+	
+	headChanged(0)
+	bodyChanged(0)
+	wingsChanged(0)
+	spineChanged(0)
+	legsChanged(0)
+	tailChanged(0)
+	
+	spineToggle(false)
+	edropToggle(false)
 
 func loadDataFromFiles(cslot):
 	pass
@@ -214,3 +239,6 @@ func spineToggle(button_pressed):
 
 func edropToggle(button_pressed):
 	$eyedrop.visible = button_pressed
+
+func getPalettes() -> Array:
+	return [hc, sc, wc]

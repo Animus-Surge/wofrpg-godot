@@ -16,18 +16,13 @@ var sc
 #TODO: have it load from previously used slot (FileManager TODO) and have the four character slots
 
 func _ready():
-	var palh = load("res://images/character/palettes/head-palette.png")
-	var pals = load("res://images/character/palettes/body_leg_tail-palette.png")
-	var palw = load("res://images/character/palettes/wing-palette.png")
+	var palh = load("res://images/character/palettes/head-pal.tex")
+	var pals = load("res://images/character/palettes/body-leg-tail-pal.tex")
+	var palw = load("res://images/character/palettes/wing-pal.tex")
 	
-	hc = ImageTexture.new()
-	hc.create_from_image(palh, 0)
-	
-	wc = ImageTexture.new()
-	wc.create_from_image(palw, 0)
-	
-	sc = ImageTexture.new()
-	sc.create_from_image(pals, 0)
+	hc = palh
+	wc = palw
+	sc = pals
 	
 	$body.texture = null
 	$body.get_material().set_shader_param("mask", null)

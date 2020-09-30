@@ -469,16 +469,19 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="mainmenu"]
-anchor_left = 0.479
+anchor_left = 0.341
 anchor_top = 0.982
-anchor_right = 0.521
+anchor_right = 0.687
 anchor_bottom = 1.0
-margin_left = -0.314026
+margin_left = 0.19397
 margin_top = -0.176025
-margin_right = 0.313965
-text = "pre-0.1.1"
+margin_right = -0.442078
+text = "pre-0.1.21"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="dialogue" type="Panel" parent="."]
 visible = false

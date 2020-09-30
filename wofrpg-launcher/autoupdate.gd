@@ -73,7 +73,7 @@ func _ready():
 						firebase.name = "fb"
 						get_tree().get_root().add_child(firebase)
 						print("AUTOUPDATE: Loaded singletons")
-						get_parent().queue_free()
+						queue_free()
 					else:
 						print("AUTOUPDATE: Failed to load resource pack")
 						$status.text = "PCK loading failed. Aborting..."
@@ -123,7 +123,7 @@ func _ready():
 						get_tree().get_root().add_child(firebase)
 						
 						print("AUTOUPDATE: Loaded singletons")
-						get_parent().queue_free()
+						queue_free()
 					else:
 						print("AUTOUPDATE: Failed to load resource pack")
 						$status.text = "PCK loading failed. Aborting..."
@@ -187,7 +187,7 @@ func _ready():
 							get_tree().get_root().add_child(loadingscreen.instance())
 							
 							print("AUTOUPDATE: Loaded singletons")
-							get_parent().queue_free()
+							queue_free()
 						else:
 							print("AUTOUPDATE: Failed to load resource pack")
 						fail()

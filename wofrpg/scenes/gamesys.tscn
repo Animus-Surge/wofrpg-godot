@@ -80,12 +80,26 @@ func cbpressed():
 
 func resetAll():
 	get_node(\"ui/customization/TabContainer/Basic Info/groupGender\").reset()
-	get_node(\"ui/customization/TabContainer/Basic Info/tribesbtn\").reset()
-	get_node(\"ui/customization/TabContainer/Basic Info/rolesbtn\").reset()
+	get_node(\"ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer\").resetSelected()
+	get_node(\"ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer\").reset()
 	get_node(\"ui/customization/TabContainer/Basic Info/cname\").text = \"\"
+	get_node(\"ui/character\").reset()
 
 func slotPressed(slot: int):
 	resetAll()
+	match slot:
+		0:
+			$ui/cs1.enable()
+			$ui/cs2.disable()
+			$ui/cs3.disable()
+		1:
+			$ui/cs1.disable()
+			$ui/cs2.enable()
+			$ui/cs3.disable()
+		2:
+			$ui/cs1.disable()
+			$ui/cs2.disable()
+			$ui/cs3.enable()
 	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
 		get_node(\"ui/customization\").show()
 		
@@ -339,9 +353,13 @@ func colorChanged(color: Color, part: int):
 		4: #spine
 			get_node(\"../../../character\").call(\"spineChangeC\", color)
 
-func bodyChanged(index):
-	var tribeCode = 0
-	get_node(\"../../../character\").call(\"partChange\", 0, index) #TODO: decode the tribe
+func reset():
+	$TabContainer/Colors/eyes.color = Color.white
+	$TabContainer/Colors/scales.color = Color.white
+	$TabContainer/Colors/horns.color = Color.white
+	$TabContainer/Colors/wings.color = Color.white
+	$TabContainer/Colors/spine.color = Color.white
+	get_node(\"TabContainer/Looks/ScrollContainer\").reset()
 "
 
 [sub_resource type="StyleBoxEmpty" id=17]
@@ -401,6 +419,8 @@ func _ready():
 	sptog.visible = false
 	edtog.visible = false
 	tdtog.visible = false
+	tdecdd.visible = false
+	get_node(\"GridContainer/Label7\").visible = false
 
 func reset():
 	updateSelectedTribes([])
@@ -412,10 +432,13 @@ func updateSelectedTribes(tribes):
 	headdd.clear()
 	legsdd.clear()
 	spinedd.clear()
+	taildd.clear()
 	
 	sptog.visible = false
 	edtog.visible = false
 	tdtog.visible = false
+	
+	get_node(\"GridContainer/Label7\").visible = false
 	
 	spinedd.visible = false
 	tdecdd.visible = false
@@ -475,6 +498,7 @@ func updateSelectedTribes(tribes):
 		tdtog.visible = true
 		tdtog.pressed = false
 		tdecdd.visible = true
+		get_node(\"GridContainer/Label7\").visible = true
 "
 
 [sub_resource type="ShaderMaterial" id=25]
@@ -532,6 +556,8 @@ func mouseExit():
 script/source = "extends Panel
 
 var storedCharName
+var selected = false
+var mouseOver = false
 
 export (int) var slotid = 0
 
@@ -541,20 +567,39 @@ func _ready():
 	connect(\"mouse_entered\", self, \"mouseEnter\")
 	connect(\"mouse_exited\", self, \"mouseExit\")
 
+func _process(delta):
+	if selected:
+		if mouseOver:
+			self_modulate = Color(0.9, 0.98, 0.48, 0.75)
+		else:
+			self_modulate = Color(1, 0.8, 0, 0.75)
+	else:
+		if mouseOver:
+			self_modulate = Color(0.9, 0.98, 0.48, 0.75)
+		else:
+			self_modulate = Color(0.9, 0.98, 0.48, 0.54)
+
 func mouseEnter():
-	self_modulate = Color(0.9, 0.98, 0.48, 0.75)
+	mouseOver = true
 
 func mouseExit():
-	self_modulate = Color(0.9, 0.98, 0.48, 0.54)
+	mouseOver = false
 
 func _gui_input(event):
-	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT and event.pressed:
-			emit_signal(\"clicked\", slotid)
+	if !selected:
+		if event is InputEventMouseButton:
+			if event.button_index == BUTTON_LEFT and event.pressed:
+				emit_signal(\"clicked\", slotid)
 
 func updateName(cname):
 	$Label.text = cname
 	storedCharName = cname
+
+func enable():
+	selected = true
+
+func disable():
+	selected = false
 "
 
 [sub_resource type="StyleBoxFlat" id=33]
@@ -1477,7 +1522,7 @@ valign = 1
 autowrap = true
 
 [node name="cs1" type="Panel" parent="ui"]
-self_modulate = Color( 0.909804, 0.984314, 0.486275, 0.54902 )
+self_modulate = Color( 0.984314, 0.953187, 0.486275, 0.54902 )
 anchor_left = 0.494
 anchor_top = 0.911
 anchor_right = 0.734
@@ -1488,6 +1533,9 @@ margin_right = -0.644043
 rect_rotation = 359.999
 custom_styles/panel = SubResource( 30 )
 script = SubResource( 32 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Label" type="Label" parent="ui/cs1"]
 anchor_right = 1.0
@@ -1511,6 +1559,7 @@ rect_rotation = 359.999
 custom_styles/panel = SubResource( 30 )
 script = SubResource( 32 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 slotid = 1
@@ -1537,6 +1586,7 @@ rect_rotation = 359.999
 custom_styles/panel = SubResource( 30 )
 script = SubResource( 32 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 slotid = 2
@@ -1628,8 +1678,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

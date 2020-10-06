@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const MOVEMENT_SPEED = 500
+const MOVEMENT_SPEED = 300
 
 var vel = Vector2.ZERO
 
@@ -18,6 +18,11 @@ func _physics_process(delta):
 	elif vect.x < 0:
 		for x in range(6):
 			$graphics.get_child(x).flip_h = true
+	
+	if vect == Vector2.ZERO:
+		$graphics/AnimationPlayer.play("test-idle")
+	else:
+		pass
 	
 	vel = vect.normalized() * MOVEMENT_SPEED
 	

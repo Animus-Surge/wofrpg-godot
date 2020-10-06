@@ -6,3 +6,5 @@
 #packages
 *.zip
 *.pck
+*.exe
+*.x86_64

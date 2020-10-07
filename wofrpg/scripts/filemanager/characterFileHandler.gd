@@ -5,21 +5,19 @@ const blankChar = {
 	"tribes":[],
 	"role":null,
 	"appearances":{
-		"head":"nw",
-		"body":"nw",
-		"tail":"nw",
-		"legs":"nw",
-		"wings":"nw",
+		"head":null,
+		"body":null,
+		"tail":null,
+		"legs":null,
+		"wings":null,
 		"showSpine":false,
 		"showTeardrop":false,
 		"showBarb":false
 	},
 	"colors":{
-		"scales":{"r":1,"g":1,"b":1},
-		"wings":{"r":1,"g":1,"b":1},
-		"horns":{"r":1,"g":1,"b":1},
-		"eyes":{"r":1,"g":1,"b":1},
-		"spine":{"r":1,"g":1,"b":1}
+		"body":"bodypal.png",
+		"head":"headpal.png",
+		"wing":"wingpal.png"
 	},
 	"skills":{}
 }
@@ -97,3 +95,12 @@ func deleteChar(slotid: int):
 
 func loadCharacter(charname) -> Dictionary:
 	return {}
+
+func saveCharacter(charslot: int, chardata: Dictionary):
+	var slot = Directory.new()
+	slot.remove("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json")
+	var cfile = File.new()
+	cfile.open("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json", File.WRITE)
+	var cdata = blankChar
+	cdata["name"] = chardata["name"]
+	cdata["appearances"].head = chardata["headapp"]

@@ -8,6 +8,21 @@ onready var fb = get_tree().get_root().get_node("fb")
 onready var timer = get_tree().get_root().get_node("timer")
 onready var test = get_node("/root/Test")
 
+const LOCALHOST = "127.0.0.1"
+
+var plrbody setget setBodyPalette
+var plrhead setget setHeadPalette
+var plrwing setget setWingPalette
+
+func setBodyPalette(palette):
+	plrbody = palette
+
+func setHeadPalette(palette):
+	plrbody = palette
+
+func setWingPalette(palette):
+	plrbody = palette
+
 const DEFAULT_SAVE_DATA = {
 	"character-location":{
 		"x":0,	
@@ -56,7 +71,6 @@ var loggedIn = false
 var current = "loadscreen"
 
 func _ready():
-	
 	if !debug:
 		if is_instance_valid(test):
 			if test.debug:
@@ -65,12 +79,14 @@ func _ready():
 		gloader.startLoad()
 		cfm.startLoad()
 		load_scene("res://scenes/useracct.tscn")
-	else:
-		test.connect("complete", self, "debugComplete")
 
 func _complete():
-	fb = get_tree().get_root().get_node("fb")
-	load_scene("res://scenes/useracct.tscn")
+	if test.testscenes:
+		fb = get_tree().get_root().get_node("fb")
+		gloader.startLoad()
+		logcat.stdout("DEBUG MODE ACTIVE", 0)
+	else:
+		load_scene("res://scenes/useracct.tscn")
 
 func debugComplete():
 	gloader.startLoad()
@@ -95,7 +111,7 @@ func loadConfigFile():
 	var details = cfgFile.get_as_text().split(' ')
 	fb.login(details[0], details[1])
 
-#Scene Loader System
+#=====Scene Loader System=====
 
 var scn
 var wait
@@ -136,3 +152,4 @@ func _process(delta):
 			scn = null
 			logcat.stdout("An error occured while loading a scene.", 4)
 			break #TODO
+

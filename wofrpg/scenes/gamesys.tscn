@@ -43,6 +43,7 @@ onready var fb = get_tree().get_root().get_node(\"fb\")
 onready var cfm = get_tree().get_root().get_node(\"cfm\")
 
 func _ready():
+	$ui/customization.hide()
 	globalvars.setCurrentScene(\"gamesys\")
 	get_node(\"ui/cs1\").connect(\"clicked\", self, \"slotPressed\")
 	get_node(\"ui/cs2\").connect(\"clicked\", self, \"slotPressed\")
@@ -60,7 +61,7 @@ func _ready():
 
 func characterSave():
 	var charPalettes = get_node(\"ui/character\").getPalettes()
-	
+	get_node(\"ui/cs\" + String(selectedPlayer+1) + \"/Label\").text = get_node(\"ui/customization/TabContainer/Basic Info/cname\").text
 	$ui/customization.hide()
 
 func showProfile():
@@ -87,6 +88,7 @@ func resetAll():
 
 func slotPressed(slot: int):
 	resetAll()
+	selectedPlayer = slot
 	match slot:
 		0:
 			$ui/cs1.enable()
@@ -102,7 +104,12 @@ func slotPressed(slot: int):
 			$ui/cs3.enable()
 	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
 		get_node(\"ui/customization\").show()
-		
+
+func spPressed():
+	pass
+
+func mpPressed():
+	pass
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -1628,6 +1635,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Button" type="Button" parent="ui/toolbar"]
+margin_left = 5.61232
+margin_top = 7.296
+margin_right = 176.612
+margin_bottom = 45.296
+custom_fonts/font = ExtResource( 33 )
+text = "Singleplayer"
+
+[node name="Button2" type="Button" parent="ui/toolbar"]
+margin_left = 188.574
+margin_top = 7.296
+margin_right = 359.574
+margin_bottom = 45.296
+custom_fonts/font = ExtResource( 33 )
+text = "Multiplayer"
+
+[node name="Button3" type="Button" parent="ui/toolbar"]
+margin_left = 375.464
+margin_top = 7.296
+margin_right = 546.464
+margin_bottom = 45.296
+custom_fonts/font = ExtResource( 33 )
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="profilepanel" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
@@ -1678,8 +1712,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

@@ -81,3 +81,18 @@ func loadTribes():
 		tribeindexes.append(tribedata.tribename)
 		logcat.stdout("Loaded tribe: " + tribedata.modid + ":" + tribedata.tribename, 1)
 		tribe = tribesdir.get_next()
+
+#=====MULTIPLAYER=====
+
+func openSPserver():
+	logcat.stdout("Opening singleplayer server instance", 1)
+	var peer= NetworkedMultiplayerENet.new()
+	peer.create_server(25622, 1)
+	get_tree().network_peer = peer
+	get_tree().connect("network_peer_connected", self, "onClientConnect")
+
+func onClientConnect(id):
+	logcat.stdout("Client: " + String(id) + " joined the game", 1)
+
+remote func setPlayerDetails(id, data: Dictionary):
+	print(data)

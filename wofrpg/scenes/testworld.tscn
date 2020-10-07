@@ -8,11 +8,12 @@ script/source = "extends Node
 
 export (String) var sceneName
 
-onready var glvars = get_tree().get_root().get_node(\"globalvars\")
 onready var test = get_node(\"/root/Test\")
+var glvars
 var globalvars
 
 func _ready():
+	glvars = get_tree().get_root().get_node(\"globalvars\")
 	if !is_instance_valid(glvars):
 		if test.debug:
 			test.connect(\"complete\", self, \"_complete\")
@@ -20,6 +21,12 @@ func _ready():
 			glvars.setCurrentScene(sceneName)
 	else:
 		glvars.setCurrentScene(sceneName)
+
+func _process(_delta):
+	if !is_instance_valid(glvars):
+		glvars = get_tree().get_root().get_node(\"globalvars\")
+	else:
+		set_process(false)
 
 func _complete():
 	globalvars = get_tree().get_root().get_node(\"globalvars\")
@@ -31,6 +38,7 @@ remote func loadPlayers():
 
 [node name="testworld" type="Node2D"]
 script = SubResource( 1 )
+sceneName = "testworld"
 
 [node name="world" type="Node2D" parent="."]
 

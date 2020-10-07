@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://images/character/nigw/idle/nw-spine.png" type="Texture" id=1]
 [ext_resource path="res://images/character/nigw/idle/nw-wings.png" type="Texture" id=2]
@@ -12,6 +12,12 @@
 [ext_resource path="res://images/character/nigw/run/nw-head-run.png" type="Texture" id=10]
 [ext_resource path="res://scripts/entity/player.gd" type="Script" id=11]
 [ext_resource path="res://scripts/plrui.gd" type="Script" id=12]
+[ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=13]
+[ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=14]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=15]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 0.588235 )
 
 [sub_resource type="Animation" id=1]
 resource_name = "test-idle"
@@ -163,7 +169,7 @@ tracks/11/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "test-run"
 length = 0.6
 loop = true
@@ -265,7 +271,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 15.877
 height = 218.54
 
@@ -281,19 +287,91 @@ current = true
 zoom = Vector2( 2.3, 2.3 )
 
 [node name="UI" type="Control" parent="Camera2D"]
-margin_left = -683.0
-margin_top = -383.999
-margin_right = 683.0
-margin_bottom = 384.001
+margin_left = -684.0
+margin_top = -384.0
+margin_right = 684.0
+margin_bottom = 384.0
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Camera2D/UI"]
-margin_right = 12.0
-margin_bottom = 20.0
-text = "Exit to Main Menu"
+[node name="hotbar" type="Panel" parent="Camera2D/UI"]
+visible = false
+anchor_top = 0.948
+anchor_right = 0.801
+anchor_bottom = 1.0
+margin_top = -0.0640869
+margin_right = -0.166138
+custom_styles/panel = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chatpanel" type="Panel" parent="Camera2D/UI"]
+anchor_left = 0.801
+anchor_top = 0.581
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.166138
+margin_top = -0.208008
+custom_styles/panel = ExtResource( 13 )
+
+[node name="Label" type="Label" parent="Camera2D/UI/chatpanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -0.398071
+custom_fonts/font = ExtResource( 15 )
+text = "CONTROLS:
+
+WASD or arrow keys - Move around
+
+Escape key - Pause the game"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="questingpanel" type="Panel" parent="Camera2D/UI"]
+visible = false
+anchor_right = 0.146
+anchor_bottom = 0.436
+margin_right = -0.43602
+margin_bottom = 0.151978
+
+[node name="inventory" type="Panel" parent="Camera2D/UI"]
+visible = false
+self_modulate = Color( 0.866667, 0.772549, 0.403922, 1 )
+anchor_left = 0.658
+anchor_right = 1.0
+anchor_bottom = 0.56
+margin_left = 0.171936
+margin_bottom = -0.0800171
+custom_styles/panel = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pausemenu" type="Panel" parent="Camera2D/UI"]
+visible = false
+anchor_right = 0.348
+anchor_bottom = 1.0
+margin_right = -0.368042
+custom_styles/panel = SubResource( 4 )
+
+[node name="Button" type="Button" parent="Camera2D/UI/pausemenu"]
+anchor_left = 0.053
+anchor_top = 0.037
+anchor_right = 0.467
+anchor_bottom = 0.092
+margin_left = 0.155359
+margin_top = -0.14061
+margin_right = 0.217224
+margin_bottom = -0.380615
+custom_fonts/font = ExtResource( 15 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="graphics" type="Node2D" parent="."]
 position = Vector2( 0, -89.1493 )
@@ -336,9 +414,9 @@ hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
 anims/test-idle = SubResource( 1 )
-anims/test-run = SubResource( 3 )
+anims/test-run = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 2 )
-[connection signal="pressed" from="Camera2D/UI/Button" to="Camera2D/UI" method="_on_Button_pressed"]
+shape = SubResource( 3 )
+[connection signal="pressed" from="Camera2D/UI/pausemenu/Button" to="Camera2D/UI" method="quit"]

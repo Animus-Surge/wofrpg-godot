@@ -2,7 +2,6 @@ extends Node
 
 onready var gloader = get_tree().get_root().get_node("gloader")
 onready var cfm = get_tree().get_root().get_node("cfm")
-onready var scenes = ""
 onready var logcat = get_tree().get_root().get_node("logcat")
 onready var fb = get_tree().get_root().get_node("fb")
 onready var timer = get_tree().get_root().get_node("timer")
@@ -68,9 +67,12 @@ var playerFlip
 var debug = false
 var loggedIn = false
 
+var paused = false
+
 var current = "loadscreen"
 
 func _ready():
+	fb = get_tree().get_root().get_node("fb")
 	if !debug:
 		if is_instance_valid(test):
 			if test.debug:
@@ -118,7 +120,10 @@ var wait
 var tmax = 100
 
 func load_scene(scene: String):
+	print("Bop")
+	print(current)
 	if current != "loadscreen":
+		print("Current is not loadscreen")
 		get_node("/root/" + current).queue_free()
 		get_node("/root/loadscreen").show()
 	scn = ResourceLoader.load_interactive(scene)
@@ -133,7 +138,6 @@ func _process(delta):
 	if wait > 0:
 		wait -= 1
 		return
-	
 	var t = OS.get_ticks_msec()
 	while OS.get_ticks_msec() < t + tmax:
 		var err = scn.poll()
@@ -147,6 +151,7 @@ func _process(delta):
 			get_node("/root/loadscreen").hide()
 			break
 		elif err == OK:
+			print("Beep boop")
 			continue
 		else:
 			scn = null

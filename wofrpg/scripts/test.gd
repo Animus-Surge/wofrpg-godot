@@ -1,7 +1,7 @@
 extends Node
 
 const debug = true
-const testscenes = false
+const testscenes = true
 
 onready var globalvars = load("res://scripts/global/gvars.gd")
 onready var fb = load("res://scripts/global/firebase.gd")
@@ -35,13 +35,13 @@ func _ready():
 			charfile.set_script(load("res://scripts/filemanager/characterFileHandler.gd"))
 			charfile.name = "cfm"
 			
-			var gvars = Node.new()
-			gvars.set_script(load("res://scripts/global/gvars.gd"))
-			gvars.name = "globalvars"
-			
 			var firebase = Node.new()
 			firebase.set_script(load("res://scripts/global/firebase.gd"))
 			firebase.name = "fb"
+			
+			var gvars = Node.new()
+			gvars.set_script(load("res://scripts/global/gvars.gd"))
+			gvars.name = "globalvars"
 			
 			get_tree().get_root().call_deferred("add_child", lcat)
 			get_tree().get_root().call_deferred("add_child", glhttp)
@@ -72,13 +72,13 @@ func _ready():
 			charfile.set_script(load("res://scripts/filemanager/characterFileHandler.gd"))
 			charfile.name = "cfm"
 			
-			var gvars = Node.new()
-			gvars.set_script(load("res://scripts/global/gvars.gd"))
-			gvars.name = "globalvars"
-			
 			var firebase = Node.new()
 			firebase.set_script(load("res://scripts/global/firebase.gd"))
 			firebase.name = "fb"
+			
+			var gvars = Node.new()
+			gvars.set_script(load("res://scripts/global/gvars.gd"))
+			gvars.name = "globalvars"
 			
 			get_tree().get_root().call_deferred("add_child", lcat)
 			get_tree().get_root().call_deferred("add_child", glhttp)

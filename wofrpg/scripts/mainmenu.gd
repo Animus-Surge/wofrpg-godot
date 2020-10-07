@@ -11,6 +11,7 @@ func _ready():
 	$creditspanel.hide()
 	get_node("../dialogue").hide()
 	fb.getFromDB("newsinfo.json")
+	globalvars.setCurrentScene("menus")
 
 func dbComplete(result):
 	$newspanel/RichTextLabel.bbcode_text = result.text

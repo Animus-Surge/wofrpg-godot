@@ -64,7 +64,7 @@ var save = "test-save"
 
 var playerFlip
 
-var debug = false
+var debug = true
 var loggedIn = false
 
 var paused = false

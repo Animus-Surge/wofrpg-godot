@@ -13,13 +13,15 @@ const blankChar = {
 		"tdec":null,
 		"sshow":false,
 		"eshow":false,
-		"tshow":false
+		"tshow":false,
+		"ishow":false
 	},
 	"colors":{
 		"body":"bodypal.png",
 		"head":"headpal.png",
 		"wing":"wingpal.png",
-		"spineRaw":[0,0,0]
+		"spineRaw":[0,0,0],
+		"gscaleRaw":[0,0,0]
 	},
 	"skills":{}
 }
@@ -32,11 +34,11 @@ var headPal
 var scalePal
 var wingPal
 
+func _ready():
+	startLoad()
+
 func loadCharacterPalettes(charid: int):
 	var path = "user://characters/slot-" + String(charid) + "/"
-
-func saveCharacterPalettes(head: Image, scales: Image, wings: Image):
-	pass
 
 func startLoad():
 	loadCharList()
@@ -95,10 +97,10 @@ func deleteChar(slotid: int):
 	cfile.close()
 	logcat.stdout("Successfully deleted character in slot: " + String(slotid), 1)
 
-func loadCharacter(charname) -> Dictionary:
-	return {}
+func loadCharacter(cindex:int) -> Array:
+	return [characters[cindex], load("user://characters/slot-" + String(cindex) + "/headpal.png"), load("user://characters/slot-" + String(cindex) + "/bodypal.png"), load("user://characters/slot-" + String(cindex) + "/wingpal.png")]
 
-func saveCharacter(charslot: int, chardata: Dictionary):
+func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array):
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json")
 	var cfile = File.new()
@@ -107,6 +109,11 @@ func saveCharacter(charslot: int, chardata: Dictionary):
 		cfile.store_line(to_json(chardata))
 		characters[charslot] = chardata
 		cfile.close()
+		#palette order: head, body, wings
+		charpals[0].get_data().save_png("user://characters/slot-" + String(charslot) + "/headpal.png")
+		charpals[1].get_data().save_png("user://characters/slot-" + String(charslot) + "/bodypal.png")
+		charpals[2].get_data().save_png("user://characters/slot-" + String(charslot) + "/wingpal.png")
 		logcat.stdout("Character successfully saved to slot: " + String(charslot) + ".", 1)
+		loadCharList()
 	else:
 		logcat.stdout("An error has occoured whilst saving a character in slot: " + String(charslot) + ".", 3);

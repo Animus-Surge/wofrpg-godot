@@ -43,6 +43,10 @@ onready var fb = get_tree().get_root().get_node(\"fb\")
 onready var cfm = get_tree().get_root().get_node(\"cfm\")
 
 func _ready():
+	$ui/toolbar/mp.disabled = true
+	$ui/toolbar/rmchar.disabled = true
+	$ui/toolbar/sp.disabled = true
+	$ui/toolbar/save.disabled = true
 	$ui/customization.hide()
 	globalvars.setCurrentScene(\"gamesys\")
 	get_node(\"ui/cs1\").connect(\"clicked\", self, \"slotPressed\")
@@ -62,21 +66,22 @@ func _ready():
 
 func characterSave():
 	print(\"Saving character\")
+	print(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_selected_id())
 	var charPalettes = get_node(\"ui/character\").getPalettes()
 	get_node(\"ui/cs\" + String(selectedPlayer+1) + \"/Label\").text = get_node(\"ui/customization/TabContainer/Basic Info/cname\").text
 	$ui/customization.hide()
-	var charData = {
+	var charData = { 
 		\"name\":get_node(\"ui/customization/TabContainer/Basic Info/cname\").text,
 		\"tribes\":get_node(\"ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer\").getSelectedTribes(),
 		\"role\":get_node(\"ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer\").getSelectedRole(),
 		\"appearances\":{
-			\"head\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_selected_id()),
-			\"body\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body\").get_selected_id()),
-			\"legs\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs\").get_selected_id()),
-			\"tail\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail\").get_selected_id()),
-			\"wings\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings\").get_selected_id()),
-			\"spine\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine\").get_selected_id()),
-			\"tdec\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td\").get_selected_id()),
+			\"head\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").selected),
+			\"body\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body\").selected),
+			\"legs\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs\").selected),
+			\"tail\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail\").selected),
+			\"wings\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings\").selected),
+			\"spine\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine\").selected),
+			\"tdec\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td\").selected),
 			\"sshow\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spinetoggle\").pressed,
 			\"eshow\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/eyedroptoggle\").pressed,
 			\"tshow\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tdtoggle\").pressed
@@ -85,10 +90,10 @@ func characterSave():
 			\"body\":\"bodypal.png\", #filenames
 			\"head\":\"headpal.png\",
 			\"wing\":\"wingpal.png\",
-			\"spineRaw\":[0,0,0] #float - RGB
+			\"spineRaw\":get_node(\"ui/character/spine\").self_modulate #float - RGB
 		}
 	}
-	cfm.saveCharacter(selectedPlayer, charData)
+	cfm.saveCharacter(selectedPlayer, charData, [get_node(\"ui/character/head\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/body\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/wings\").get_material().get_shader_param(\"palette\")])
 
 func showProfile():
 	pass
@@ -116,9 +121,17 @@ func slotPressed(slot: int):
 	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
 		$ui/toolbar/sp.disabled = true
 		$ui/toolbar/mp.disabled = true
+		$ui/toolbar/save.disabled = false
+		$ui/toolbar/rmchar.disabled = true
+		get_node(\"ui/customization\").show()
 	else:
 		$ui/toolbar/sp.disabled = false
 		$ui/toolbar/mp.disabled = false
+		$ui/toolbar/save.disabled = true
+		$ui/toolbar/rmchar.disabled = false #add a dialogue with this one
+		get_node(\"ui/customization\").hide()
+		#load player looks
+		#set player colors
 	resetAll()
 	selectedPlayer = slot
 	match slot:
@@ -134,13 +147,14 @@ func slotPressed(slot: int):
 			$ui/cs1.disable()
 			$ui/cs2.disable()
 			$ui/cs3.enable()
-	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
-		get_node(\"ui/customization\").show()
 
-func spPressed():
+func spPressed(): #assumes empty character isn't selected
 	pass
 
 func mpPressed():
+	pass
+
+func rmcharPressed():
 	pass
 "
 
@@ -1761,8 +1775,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

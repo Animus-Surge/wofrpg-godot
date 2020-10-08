@@ -61,12 +61,12 @@ func reset():
 	hornsChangeC(Color.white)
 	spineChangeC(Color.white)
 	
-	headChanged(0)
-	bodyChanged(0)
-	wingsChanged(0)
-	spineChanged(0)
-	legsChanged(0)
-	tailChanged(0)
+	headChanged(255)
+	bodyChanged(255)
+	wingsChanged(255)
+	spineChanged(255)
+	legsChanged(255)
+	tailChanged(255)
 	
 	spineToggle(false)
 	edropToggle(false)
@@ -244,7 +244,7 @@ func spineChanged(index):
 
 func tdecChanged(index):
 	if ddtdec.get_selected_id() == 255:
-		$body.texture = null
+		$spine.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddtdec.get_selected_id()]

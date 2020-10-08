@@ -10,14 +10,16 @@ const blankChar = {
 		"tail":null,
 		"legs":null,
 		"wings":null,
-		"showSpine":false,
-		"showTeardrop":false,
-		"showBarb":false
+		"tdec":null,
+		"sshow":false,
+		"eshow":false,
+		"tshow":false
 	},
 	"colors":{
 		"body":"bodypal.png",
 		"head":"headpal.png",
-		"wing":"wingpal.png"
+		"wing":"wingpal.png",
+		"spineRaw":[0,0,0]
 	},
 	"skills":{}
 }
@@ -100,7 +102,11 @@ func saveCharacter(charslot: int, chardata: Dictionary):
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json")
 	var cfile = File.new()
-	cfile.open("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json", File.WRITE)
-	var cdata = blankChar
-	cdata["name"] = chardata["name"]
-	cdata["appearances"].head = chardata["headapp"]
+	var err = cfile.open("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json", File.WRITE)
+	if err == OK:
+		cfile.store_line(to_json(chardata))
+		characters[charslot] = chardata
+		cfile.close()
+		logcat.stdout("Character successfully saved to slot: " + String(charslot) + ".", 1)
+	else:
+		logcat.stdout("An error has occoured whilst saving a character in slot: " + String(charslot) + ".", 3);

@@ -120,10 +120,10 @@ var wait
 var tmax = 100
 
 func load_scene(scene: String):
-	print("Bop")
-	print(current)
+	#print("Bop")
+	#print(current)
 	if current != "loadscreen":
-		print("Current is not loadscreen")
+		#print("Current is not loadscreen")
 		get_node("/root/" + current).queue_free()
 		get_node("/root/loadscreen").show()
 	scn = ResourceLoader.load_interactive(scene)
@@ -151,7 +151,7 @@ func _process(delta):
 			get_node("/root/loadscreen").hide()
 			break
 		elif err == OK:
-			print("Beep boop")
+			#print("Beep boop")
 			continue
 		else:
 			scn = null

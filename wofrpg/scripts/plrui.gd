@@ -5,7 +5,7 @@ func quit():
 	if Test.testscenes and gvars.debug:
 		get_tree().quit(0)
 	else: #TODO: make this better
-		print("blah")
+		#print("blah")
 		gvars.load_scene("res://scenes/menus.tscn")
 
 func _input(event):

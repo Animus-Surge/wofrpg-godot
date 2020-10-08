@@ -53,16 +53,42 @@ func _ready():
 	else:
 		if globalvars.loggedIn:
 			$ui/unamepanel/Label.text = fb.username
-			$ui/cs1.call(\"updateName\", cfm.characters[0].name)
-			$ui/cs2.call(\"updateName\", cfm.characters[1].name)
-			$ui/cs3.call(\"updateName\", cfm.characters[2].name)
 		else:
 			$ui/unamepanel.hide()
+			$ui/toolbar/mp.disabled = true
+		$ui/cs1.call(\"updateName\", cfm.characters[0].name)
+		$ui/cs2.call(\"updateName\", cfm.characters[1].name)
+		$ui/cs3.call(\"updateName\", cfm.characters[2].name)
 
 func characterSave():
+	print(\"Saving character\")
 	var charPalettes = get_node(\"ui/character\").getPalettes()
 	get_node(\"ui/cs\" + String(selectedPlayer+1) + \"/Label\").text = get_node(\"ui/customization/TabContainer/Basic Info/cname\").text
 	$ui/customization.hide()
+	var charData = {
+		\"name\":get_node(\"ui/customization/TabContainer/Basic Info/cname\").text,
+		\"tribes\":get_node(\"ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer\").getSelectedTribes(),
+		\"role\":get_node(\"ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer\").getSelectedRole(),
+		\"appearances\":{
+			\"head\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_selected_id()),
+			\"body\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body\").get_selected_id()),
+			\"legs\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs\").get_selected_id()),
+			\"tail\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail\").get_selected_id()),
+			\"wings\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings\").get_selected_id()),
+			\"spine\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine\").get_selected_id()),
+			\"tdec\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td\").get_selected_id()),
+			\"sshow\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spinetoggle\").pressed,
+			\"eshow\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/eyedroptoggle\").pressed,
+			\"tshow\":get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tdtoggle\").pressed
+		},
+		\"colors\":{
+			\"body\":\"bodypal.png\", #filenames
+			\"head\":\"headpal.png\",
+			\"wing\":\"wingpal.png\",
+			\"spineRaw\":[0,0,0] #float - RGB
+		}
+	}
+	cfm.saveCharacter(selectedPlayer, charData)
 
 func showProfile():
 	pass
@@ -71,7 +97,7 @@ func createbtnPressed():
 	pass
 
 func playbtnPressed():
-	pass
+	globalvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func cbpressed():
 	if globalvars.debug:
@@ -87,6 +113,12 @@ func resetAll():
 	get_node(\"ui/character\").reset()
 
 func slotPressed(slot: int):
+	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
+		$ui/toolbar/sp.disabled = true
+		$ui/toolbar/mp.disabled = true
+	else:
+		$ui/toolbar/sp.disabled = false
+		$ui/toolbar/mp.disabled = false
 	resetAll()
 	selectedPlayer = slot
 	match slot:
@@ -260,7 +292,6 @@ func getSelectedTribes() -> Array:
 	for tribe in get_children():
 		if tribe.pressed:
 			selected.append(tribe.tslotid)
-	
 	return selected
 
 func resetSelected():
@@ -304,6 +335,9 @@ func radioPressed(id):
 			child.disabled = true
 	
 	roleIndex = id
+
+func getSelectedRole() -> String:
+	return get_child(roleIndex).text #will be decoded in gloader
 
 func reset():
 	for child in get_children():
@@ -415,13 +449,13 @@ var containsEyedrop = false
 var containsSpikeDeco = false
 
 func _ready():
-	bodydd.add_item(\"Select...\", -1)
-	wingdd.add_item(\"Select...\", -1)
-	taildd.add_item(\"Select...\", -1)
-	headdd.add_item(\"Select...\", -1)
-	legsdd.add_item(\"Select...\", -1)
-	spinedd.add_item(\"Select...\", -1)
-	tdecdd.add_item(\"Select...\", -1)
+	bodydd.add_item(\"Select...\", 255)
+	wingdd.add_item(\"Select...\", 255)
+	taildd.add_item(\"Select...\", 255)
+	headdd.add_item(\"Select...\", 255)
+	legsdd.add_item(\"Select...\", 255)
+	spinedd.add_item(\"Select...\", 255)
+	tdecdd.add_item(\"Select...\", 255)
 	
 	sptog.visible = false
 	edtog.visible = false
@@ -454,33 +488,33 @@ func updateSelectedTribes(tribes):
 	containsEyedrop = false
 	containsSpikeDeco = false
 	
-	bodydd.add_item(\"Select...\", -1)
-	wingdd.add_item(\"Select...\", -1)
-	taildd.add_item(\"Select...\", -1)
-	headdd.add_item(\"Select...\", -1)
-	legsdd.add_item(\"Select...\", -1)
-	spinedd.add_item(\"Select...\", -1)
-	tdecdd.add_item(\"Select\", -1)
+	bodydd.add_item(\"Select...\", 255)
+	wingdd.add_item(\"Select...\", 255)
+	taildd.add_item(\"Select...\", 255)
+	headdd.add_item(\"Select...\", 255)
+	legsdd.add_item(\"Select...\", 255)
+	spinedd.add_item(\"Select...\", 255)
+	tdecdd.add_item(\"Select...\", 255)
 	
 	var index = 0
 	
 	for tribeid in tribes:
 		for tribeDict in gloader.loadedtribes:
 			if tribeDict.tribeid == tribeid:
-				bodydd.add_item(tribeDict.tribename)
-				wingdd.add_item(tribeDict.tribename)
-				taildd.add_item(tribeDict.tribename)
-				headdd.add_item(tribeDict.tribename)
-				legsdd.add_item(tribeDict.tribename)
+				bodydd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
+				wingdd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
+				taildd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
+				headdd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
+				legsdd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
 				for decoflag in tribeDict.decoflags:
 					if decoflag == \"spikes\":
 						containsSpikeDeco = true
-						spinedd.add_item(tribeDict.tribename)
+						spinedd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
 					elif decoflag == \"eyedrop\":
 						containsEyedrop = true
 					elif decoflag == \"taildeco\":
 						containsTailDeco = true
-						tdecdd.add_item(tribeDict.tribename)
+						tdecdd.add_item(tribeDict.tribename, gloader.loadedtribes.find(tribeDict))
 					#TODO: add more of them
 		index += 1
 	
@@ -617,7 +651,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = SubResource( 1 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [  ]
 }
 
 [node name="bg" type="TextureRect" parent="."]
@@ -1635,7 +1670,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="ui/toolbar"]
+[node name="sp" type="Button" parent="ui/toolbar"]
 margin_left = 5.61232
 margin_top = 7.296
 margin_right = 176.612
@@ -1643,21 +1678,35 @@ margin_bottom = 45.296
 custom_fonts/font = ExtResource( 33 )
 text = "Singleplayer"
 
-[node name="Button2" type="Button" parent="ui/toolbar"]
+[node name="mp" type="Button" parent="ui/toolbar"]
 margin_left = 188.574
 margin_top = 7.296
 margin_right = 359.574
 margin_bottom = 45.296
 custom_fonts/font = ExtResource( 33 )
 text = "Multiplayer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Button3" type="Button" parent="ui/toolbar"]
+[node name="save" type="Button" parent="ui/toolbar"]
 margin_left = 375.464
 margin_top = 7.296
 margin_right = 546.464
 margin_bottom = 45.296
 custom_fonts/font = ExtResource( 33 )
 text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="rmchar" type="Button" parent="ui/toolbar"]
+margin_left = 829.822
+margin_top = 7.296
+margin_right = 1000.82
+margin_bottom = 45.296
+custom_fonts/font = ExtResource( 33 )
+text = "Remove"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1712,8 +1761,8 @@ margin_top = 22.5
 margin_right = 1117.0
 margin_bottom = 354.5
 expand = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
@@ -1746,3 +1795,4 @@ expand = true
 [connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/eyedroptoggle" to="ui/character" method="edropToggle"]
 [connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spinetoggle" to="ui/character" method="spineToggle"]
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]
+[connection signal="pressed" from="ui/toolbar/save" to="." method="characterSave"]

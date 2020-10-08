@@ -8,6 +8,14 @@ onready var head = get_node("head")
 onready var wings = get_node("wings")
 onready var eyedrop = get_node("eyedrop")
 
+onready var ddhead = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head")
+onready var ddbody = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/body")
+onready var ddwings = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/wings")
+onready var ddtail = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/tail")
+onready var ddlegs = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/legs")
+onready var ddspine = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spine")
+onready var ddtdec = get_parent().get_node("customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/td")
+
 onready var gloader = get_tree().get_root().get_node("gloader")
 
 var palh
@@ -149,12 +157,12 @@ func wingsChangeC(color):
 func spineChangeC(color):
 	$spine.self_modulate = color
 
-func bodyChanged(index): #index is the tribe index
-	if index == 0:
+func bodyChanged(_index):
+	if ddbody.get_selected_id() == 255:
 		$body.texture = null
 		return
 	
-	var tdataind = gloader.loadedtribes[index-1]
+	var tdataind = gloader.loadedtribes[ddbody.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "body" in part:
 			$body.texture = load(part)
@@ -165,11 +173,11 @@ func bodyChanged(index): #index is the tribe index
 			break
 
 func wingsChanged(index):
-	if index == 0:
-		$wings.texture = null
+	if ddwings.get_selected_id() == 255:
+		$body.texture = null
 		return
 	
-	var tdataind = gloader.loadedtribes[index-1]
+	var tdataind = gloader.loadedtribes[ddwings.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "wings" in part:
 			$wings.texture = load(part)
@@ -180,11 +188,11 @@ func wingsChanged(index):
 			break
 
 func tailChanged(index):
-	if index == 0:
-		$wings.texture = null
+	if ddtail.get_selected_id() == 255:
+		$body.texture = null
 		return
 	
-	var tdataind = gloader.loadedtribes[index-1]
+	var tdataind = gloader.loadedtribes[ddtail.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "tail" in part:
 			$tail.texture = load(part)
@@ -195,11 +203,11 @@ func tailChanged(index):
 			break
 
 func headChanged(index):
-	if index == 0:
-		$head.texture = null
+	if ddhead.get_selected_id() == 255:
+		$body.texture = null
 		return
 	
-	var tdataind = gloader.loadedtribes[index-1]
+	var tdataind = gloader.loadedtribes[ddhead.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "head" in part:
 			$head.texture = load(part)
@@ -210,11 +218,11 @@ func headChanged(index):
 			break
 
 func legsChanged(index):
-	if index == 0:
-		$legs.texture = null
+	if ddlegs.get_selected_id() == 255:
+		$body.texture = null
 		return
 	
-	var tdataind = gloader.loadedtribes[index-1]
+	var tdataind = gloader.loadedtribes[ddlegs.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "legs" in part:
 			$legs.texture = load(part)
@@ -225,14 +233,22 @@ func legsChanged(index):
 			break
 
 func spineChanged(index):
-	if index == 0:
-		$spine.texture = null
+	if ddspine.get_selected_id() == 255:
+		$body.texture = null
 		return
 	
-	var tdataind = gloader.loadedtribes[index - 1]
+	var tdataind = gloader.loadedtribes[ddspine.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "spine" in part:
 			$spine.texture = load(part)
+
+func tdecChanged(index):
+	if ddtdec.get_selected_id() == 255:
+		$body.texture = null
+		return
+	
+	var tdataind = gloader.loadedtribes[ddtdec.get_selected_id()]
+	#TODO
 
 func spineToggle(button_pressed):
 	$spine.visible = button_pressed

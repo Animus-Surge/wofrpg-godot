@@ -26,7 +26,7 @@ func onSettingsHide():
 
 func onPlay():
 	#globalvars.load_scene("res://scenes/gamesys.tscn")
-	globalvars.load_scene("res://scenes/testworld.tscn")
+	globalvars.load_scene("res://scenes/gamesys.tscn")
 
 func onExpansions():
 	get_node("../dialogue").show()

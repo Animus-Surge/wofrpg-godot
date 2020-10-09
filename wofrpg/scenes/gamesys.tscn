@@ -155,7 +155,12 @@ func slotPressed(slot: int):
 			$ui/cs3.enable()
 
 func spPressed(): #assumes empty character isn't selected
-	pass
+	var cdata = cfm.loadCharacter(selectedPlayer)
+	globalvars.setHeadPalette(cdata[1])
+	globalvars.setBodyPalette(cdata[2])
+	globalvars.setWingPalette(cdata[3])
+	globalvars.setPlayerData(cdata[0])
+	globalvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func mpPressed():
 	pass
@@ -1756,6 +1761,9 @@ margin_right = 176.612
 margin_bottom = 45.296
 custom_fonts/font = ExtResource( 33 )
 text = "Singleplayer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="mp" type="Button" parent="ui/toolbar"]
 margin_left = 188.574
@@ -1985,8 +1993,8 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
@@ -2019,6 +2027,7 @@ __meta__ = {
 [connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/eyedroptoggle" to="ui/character" method="edropToggle"]
 [connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spinetoggle" to="ui/character" method="spineToggle"]
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]
+[connection signal="pressed" from="ui/toolbar/sp" to="." method="spPressed"]
 [connection signal="pressed" from="ui/toolbar/save" to="." method="characterSave"]
 [connection signal="pressed" from="ui/toolbar/rmchar" to="." method="rmcharPressed"]
 [connection signal="pressed" from="dialogue/yesno/cfbtn" to="dialogue" method="ynConfirm"]

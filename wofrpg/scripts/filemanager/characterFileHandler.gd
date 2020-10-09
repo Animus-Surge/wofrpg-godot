@@ -112,7 +112,7 @@ func loadCharacter(cindex:int) -> Array:
 	var wpimg = ImageTexture.new()
 	wpimg.load("user://characters/slot-" + String(cindex) + "/wingpal.png")
 	wpimg.flags = 0
-	#var hpal = load("user://characters/slot-" + String(cindex) + "/headpal.png")
+	
 	return [characters[cindex], hpimg, bpimg, wpimg]
 
 func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array) -> bool:

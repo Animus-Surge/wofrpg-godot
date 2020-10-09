@@ -12,15 +12,19 @@ const LOCALHOST = "127.0.0.1"
 var plrbody setget setBodyPalette
 var plrhead setget setHeadPalette
 var plrwing setget setWingPalette
+var plrdata setget setPlayerData
 
 func setBodyPalette(palette):
 	plrbody = palette
 
 func setHeadPalette(palette):
-	plrbody = palette
+	plrhead = palette
 
 func setWingPalette(palette):
-	plrbody = palette
+	plrwing = palette
+
+func setPlayerData(data):
+	plrdata = data
 
 const DEFAULT_SAVE_DATA = {
 	"character-location":{

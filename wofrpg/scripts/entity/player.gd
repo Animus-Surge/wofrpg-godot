@@ -87,12 +87,12 @@ func _physics_process(delta):
 					$graphics.get_child(x).flip_h = true
 			
 			if vect == Vector2.ZERO:
-				$graphics/AnimationPlayer.play("test-idle")
+				#$graphics/AnimationPlayer.play("test-idle")
 				$graphics/tail.show()
 				$graphics/legs.show()
 				#$graphics/body.get_material().set_shader_param("mask", bodymaskNWi)
 			else:
-				$graphics/AnimationPlayer.play("test-run")
+				#$graphics/AnimationPlayer.play("test-run")
 				$graphics/tail.hide()
 				$graphics/legs.hide()
 				#$graphics/body.get_material().set_shader_param("mask", bodymaskNWr)

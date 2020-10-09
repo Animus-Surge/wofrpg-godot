@@ -29,37 +29,37 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.588235 )
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 16 )
 shader_param/mask = ExtResource( 20 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 18 )
 shader_param/mask = ExtResource( 25 )
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 16 )
 shader_param/mask = ExtResource( 21 )
 
-[sub_resource type="ShaderMaterial" id=8]
+[sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 16 )
 shader_param/mask = ExtResource( 24 )
 
-[sub_resource type="ShaderMaterial" id=9]
+[sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
 shader_param/palette = ExtResource( 17 )
 shader_param/mask = ExtResource( 23 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=7]
 length = 1.08
 loop = true
 step = 0.02
@@ -208,7 +208,7 @@ tracks/11/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=8]
 length = 0.6
 loop = true
 step = 0.02
@@ -309,7 +309,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=9]
 radius = 15.877
 height = 218.54
 
@@ -421,35 +421,35 @@ texture = ExtResource( 1 )
 hframes = 6
 
 [node name="body" type="Sprite" parent="graphics"]
-material = SubResource( 5 )
+material = SubResource( 2 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 3 )
 hframes = 6
 
 [node name="head" type="Sprite" parent="graphics"]
-material = SubResource( 6 )
+material = SubResource( 3 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 9 )
 hframes = 6
 
 [node name="legs" type="Sprite" parent="graphics"]
-material = SubResource( 7 )
+material = SubResource( 4 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 5 )
 hframes = 6
 
 [node name="tail" type="Sprite" parent="graphics"]
-material = SubResource( 8 )
+material = SubResource( 5 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 4 )
 hframes = 6
 
 [node name="wings" type="Sprite" parent="graphics"]
-material = SubResource( 9 )
+material = SubResource( 6 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 2 )
@@ -462,10 +462,10 @@ texture = ExtResource( 22 )
 hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
-anims/test-idle = SubResource( 2 )
-anims/test-run = SubResource( 3 )
+anims/test-idle = SubResource( 7 )
+anims/test-run = SubResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 4 )
+shape = SubResource( 9 )
 [connection signal="pressed" from="Camera2D/UI/pausemenu/Button" to="Camera2D/UI" method="quit"]

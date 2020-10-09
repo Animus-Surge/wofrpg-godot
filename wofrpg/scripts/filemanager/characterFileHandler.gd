@@ -91,6 +91,9 @@ func loadCharList():
 func deleteChar(slotid: int):
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(slotid) + "/slot-" + String(slotid) + ".json")
+	slot.remove("user://characters/slot-" + String(slotid) + "/headpal.png")
+	slot.remove("user://characters/slot-" + String(slotid) + "/bodypal.png")
+	slot.remove("user://characters/slot-" + String(slotid) + "/wingpal.png")
 	var cfile = File.new()
 	cfile.open("user://characters/slot-" + String(slotid) + "/slot-" + String(slotid) + ".json", File.WRITE)
 	cfile.store_line(to_json(blankChar))
@@ -98,9 +101,21 @@ func deleteChar(slotid: int):
 	logcat.stdout("Successfully deleted character in slot: " + String(slotid), 1)
 
 func loadCharacter(cindex:int) -> Array:
-	return [characters[cindex], load("user://characters/slot-" + String(cindex) + "/headpal.png"), load("user://characters/slot-" + String(cindex) + "/bodypal.png"), load("user://characters/slot-" + String(cindex) + "/wingpal.png")]
+	var hpimg = ImageTexture.new()
+	hpimg.load("user://characters/slot-" + String(cindex) + "/headpal.png")
+	hpimg.flags = 0
+	
+	var bpimg = ImageTexture.new()
+	bpimg.load("user://characters/slot-" + String(cindex) + "/bodypal.png")
+	bpimg.flags = 0
+	
+	var wpimg = ImageTexture.new()
+	wpimg.load("user://characters/slot-" + String(cindex) + "/wingpal.png")
+	wpimg.flags = 0
+	#var hpal = load("user://characters/slot-" + String(cindex) + "/headpal.png")
+	return [characters[cindex], hpimg, bpimg, wpimg]
 
-func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array):
+func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array) -> bool:
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json")
 	var cfile = File.new()
@@ -115,5 +130,7 @@ func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array):
 		charpals[2].get_data().save_png("user://characters/slot-" + String(charslot) + "/wingpal.png")
 		logcat.stdout("Character successfully saved to slot: " + String(charslot) + ".", 1)
 		loadCharList()
+		return true
 	else:
 		logcat.stdout("An error has occoured whilst saving a character in slot: " + String(charslot) + ".", 3);
+		return false

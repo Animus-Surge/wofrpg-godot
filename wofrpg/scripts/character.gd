@@ -61,18 +61,76 @@ func reset():
 	hornsChangeC(Color.white)
 	spineChangeC(Color.white)
 	
-	headChanged(255)
-	bodyChanged(255)
-	wingsChanged(255)
-	spineChanged(255)
-	legsChanged(255)
-	tailChanged(255)
+	$head.texture = null
+	$body.texture = null
+	$wings.texture = null
+	$legs.texture = null
+	$tail.texture = null
+	$spine.texture = null
 	
 	spineToggle(false)
 	edropToggle(false)
 
-func loadDataFromFiles(cslot):
-	pass
+func loadDataFromFiles(dataarr):
+	$body.get_material().set_shader_param("palette", dataarr[2])
+	$legs.get_material().set_shader_param("palette", dataarr[2])
+	$tail.get_material().set_shader_param("palette", dataarr[2])
+	$head.get_material().set_shader_param("palette", dataarr[1])
+	$wings.get_material().set_shader_param("palette", dataarr[3])
+	
+	var index = 0
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.body:
+			$body.texture = load(tribe.appearancesidle[2])
+			$body.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[2]))
+			break
+		index += 1
+	index = 0
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.wings:
+			$wings.texture = load(tribe.appearancesidle[4])
+			$wings.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[4]))
+			break
+		index += 1
+	index = 0
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.tail:
+			$tail.texture = load(tribe.appearancesidle[3])
+			$tail.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[3]))
+			break
+		index += 1
+	index = 0
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.head:
+			$head.texture = load(tribe.appearancesidle[0])
+			$head.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[0]))
+			break
+		index += 1
+	index = 0
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.legs:
+			$legs.texture = load(tribe.appearancesidle[1])
+			$legs.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[1]))
+			break
+		index += 1
+	index = 0
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.spine:
+			$spine.texture = load(tribe.appearancesidle[5])
+			break
+		index += 1
+	index = 0
+	#for tribe in gloader.loadedtribes:
+	#	if tribe.tribename == dataarr[0].appearances.body:
+	#		bodyChanged(index)  #TODO: implement tail decoration (Fantribes, SandWing, IceWing, LeafWing, HiveWing)
+	#		break
+	#	index += 1
+	
+	$spine.visible = dataarr[0].appearances.sshow
+	$eyedrop.visible = dataarr[0].appearances.eshow
+	
+	spineChangeC(Color(dataarr[0].colors.spineRaw[0], dataarr[0].colors.spineRaw[1], dataarr[0].colors.spineRaw[2]))
+	
 
 func scalesChangeC(color):
 	var tempa = sc.get_data()
@@ -158,7 +216,7 @@ func spineChangeC(color):
 	$spine.self_modulate = color
 
 func bodyChanged(_index):
-	if ddbody.get_selected_id() == 255:
+	if ddbody.get_selected_id() >= 255:
 		$body.texture = null
 		return
 	
@@ -173,8 +231,8 @@ func bodyChanged(_index):
 			break
 
 func wingsChanged(index):
-	if ddwings.get_selected_id() == 255:
-		$body.texture = null
+	if ddwings.get_selected_id() >= 255:
+		$wings.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddwings.get_selected_id()]
@@ -188,8 +246,8 @@ func wingsChanged(index):
 			break
 
 func tailChanged(index):
-	if ddtail.get_selected_id() == 255:
-		$body.texture = null
+	if ddtail.get_selected_id() >= 255:
+		$tail.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddtail.get_selected_id()]
@@ -203,8 +261,8 @@ func tailChanged(index):
 			break
 
 func headChanged(index):
-	if ddhead.get_selected_id() == 255:
-		$body.texture = null
+	if ddhead.get_selected_id() >= 255:
+		$head.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddhead.get_selected_id()]
@@ -218,8 +276,8 @@ func headChanged(index):
 			break
 
 func legsChanged(index):
-	if ddlegs.get_selected_id() == 255:
-		$body.texture = null
+	if ddlegs.get_selected_id() >= 255:
+		$legs.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddlegs.get_selected_id()]
@@ -233,8 +291,8 @@ func legsChanged(index):
 			break
 
 func spineChanged(index):
-	if ddspine.get_selected_id() == 255:
-		$body.texture = null
+	if ddspine.get_selected_id() >= 255:
+		$spine.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddspine.get_selected_id()]
@@ -243,8 +301,8 @@ func spineChanged(index):
 			$spine.texture = load(part)
 
 func tdecChanged(index):
-	if ddtdec.get_selected_id() == 255:
-		$spine.texture = null
+	if ddtdec.get_selected_id() >= 255:
+		$tdec.texture = null
 		return
 	
 	var tdataind = gloader.loadedtribes[ddtdec.get_selected_id()]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://images/character/nigw/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/nigw/idle/nw-wings.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://images/character/nigw/idle/nw-body-mask.png" type="Texture" id=22]
 [ext_resource path="res://images/ui/buttons/radio-btn.png" type="Texture" id=23]
 [ext_resource path="res://images/ui/backgrounds/lineedit-bg.png" type="Texture" id=24]
+[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=25]
 [ext_resource path="res://images/ui/buttons/button-toggleable.png" type="Texture" id=26]
 [ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=27]
 [ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=28]
@@ -68,7 +69,6 @@ func characterSave():
 	print(\"Saving character\")
 	print(get_node(\"ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/head\").get_selected_id())
 	var charPalettes = get_node(\"ui/character\").getPalettes()
-	get_node(\"ui/cs\" + String(selectedPlayer+1) + \"/Label\").text = get_node(\"ui/customization/TabContainer/Basic Info/cname\").text
 	$ui/customization.hide()
 	var charData = { 
 		\"name\":get_node(\"ui/customization/TabContainer/Basic Info/cname\").text,
@@ -90,19 +90,22 @@ func characterSave():
 			\"body\":\"bodypal.png\", #filenames
 			\"head\":\"headpal.png\",
 			\"wing\":\"wingpal.png\",
-			\"spineRaw\":get_node(\"ui/character/spine\").self_modulate #float - RGB
+			\"spineRaw\":[get_node(\"ui/character/spine\").self_modulate.r, get_node(\"ui/character/spine\").self_modulate.g, get_node(\"ui/character/spine\").self_modulate.b] #float - RGB
 		}
 	}
-	cfm.saveCharacter(selectedPlayer, charData, [get_node(\"ui/character/head\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/body\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/wings\").get_material().get_shader_param(\"palette\")])
+	var err = cfm.saveCharacter(selectedPlayer, charData, [get_node(\"ui/character/head\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/body\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/wings\").get_material().get_shader_param(\"palette\")])
+	if !err:
+		$dialogue.showDialogue(\"ERROR\", \"An error has occoured while trying to save a character.\", 0)
+		return
+	get_node(\"ui/cs\" + String(selectedPlayer+1) + \"/Label\").text = get_node(\"ui/customization/TabContainer/Basic Info/cname\").text
+	$ui/toolbar/sp.disabled = false
+	$ui/toolbar/save.disabled = true
+	$ui/toolbar/rmchar.disabled = false
+	if globalvars.loggedIn:
+		$ui/toolbar/mp.disabled = false
 
 func showProfile():
 	pass
-
-func createbtnPressed():
-	pass
-
-func playbtnPressed():
-	globalvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func cbpressed():
 	if globalvars.debug:
@@ -118,6 +121,7 @@ func resetAll():
 	get_node(\"ui/character\").reset()
 
 func slotPressed(slot: int):
+	resetAll()
 	if get_node(\"ui/cs\" + String(slot+1) + \"/Label\").text == \"[empty]\":
 		$ui/toolbar/sp.disabled = true
 		$ui/toolbar/mp.disabled = true
@@ -125,14 +129,16 @@ func slotPressed(slot: int):
 		$ui/toolbar/rmchar.disabled = true
 		get_node(\"ui/customization\").show()
 	else:
+		var data = cfm.loadCharacter(slot)
+		$ui/character.loadDataFromFiles(data)
 		$ui/toolbar/sp.disabled = false
-		$ui/toolbar/mp.disabled = false
+		if globalvars.loggedIn:
+			$ui/toolbar/mp.disabled = false
 		$ui/toolbar/save.disabled = true
 		$ui/toolbar/rmchar.disabled = false #add a dialogue with this one
 		get_node(\"ui/customization\").hide()
 		#load player looks
 		#set player colors
-	resetAll()
 	selectedPlayer = slot
 	match slot:
 		0:
@@ -155,7 +161,19 @@ func mpPressed():
 	pass
 
 func rmcharPressed():
-	pass
+	$dialogue.connect(\"confirmed\", self, \"rccnf\")
+	$dialogue.showDialogue(\"You sure?\", \"Are you sure you want to delete this character?\", 1)
+
+func rccnf():
+	$dialogue.disconnect(\"confirmed\", self, \"rccnf\")
+	cfm.deleteChar(selectedPlayer)
+	get_node(\"ui/cs\" + String(selectedPlayer+1) + \"/Label\").text = \"[empty]\"
+	$ui/toolbar/rmchar.disabled = true
+	$ui/toolbar/sp.disabled = true
+	$ui/toolbar/mp.disabled = true
+	$ui/customization.show()
+	$ui/toolbar/save.disabled = false
+	resetAll()
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -338,7 +356,7 @@ func _on_TabContainer_tab_changed(_tab):
 [sub_resource type="GDScript" id=14]
 script/source = "extends GridContainer
 
-var roleIndex
+var roleIndex = -1
 
 func radioPressed(id):
 	for child in get_children():
@@ -351,6 +369,8 @@ func radioPressed(id):
 	roleIndex = id
 
 func getSelectedRole() -> String:
+	if roleIndex == -1:
+		return \"\"
 	return get_child(roleIndex).text #will be decoded in gloader
 
 func reset():
@@ -666,19 +686,43 @@ bg_color = Color( 0, 0, 0, 0.647059 )
 [sub_resource type="GDScript" id=35]
 script/source = "extends Panel
 
+onready var yn = get_node(\"yesno\")
+onready var al = get_node(\"alert\")
 
+signal confirmed()
+signal cancelec()
+signal ok()
+
+func _ready():
+	hide()
 
 #0 - ERROR, 1 - YES/NO
-func showDialogue(message, type: int):
+func showDialogue(title, message, type: int):
+	show()
 	match type:
 		0:
-			pass
+			al.show()
+			al.get_node(\"title\").text = title
+			al.get_node(\"message\").text = message
 		1:
-			pass
+			yn.show()
+			yn.get_node(\"title\").text = title
+			yn.get_node(\"message\").text = message
 
-func _visibility_changed():
-	if !visible:
-		pass
+func ynConfirm():
+	emit_signal(\"confirmed\")
+	yn.hide()
+	hide()
+
+func ynCancel():
+	emit_signal(\"canceled\")
+	yn.hide()
+	hide()
+
+func alok():
+	emit_signal(\"ok\")
+	al.hide()
+	hide()
 "
 
 [node name="gamesys" type="Control"]
@@ -1798,18 +1842,146 @@ margin_bottom = 354.5
 expand = true
 
 [node name="dialogue" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 34 )
 script = SubResource( 35 )
 
 [node name="yesno" type="Panel" parent="dialogue"]
-margin_right = 40.0
-margin_bottom = 40.0
+visible = false
+self_modulate = Color( 0.376471, 0.376471, 0.376471, 1 )
+anchor_left = 0.353
+anchor_top = 0.303
+anchor_right = 0.647
+anchor_bottom = 0.697
+margin_left = -0.198029
+margin_top = 0.29599
+margin_right = 0.197998
+margin_bottom = -0.296021
+custom_styles/panel = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="error" type="Panel" parent="dialogue"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="title" type="Label" parent="dialogue/yesno"]
+anchor_left = 0.363
+anchor_top = 0.046
+anchor_right = 0.639
+anchor_bottom = 0.152
+margin_left = 0.0740051
+margin_top = 0.107999
+margin_right = 0.121979
+margin_bottom = 0.0959969
+custom_fonts/font = ExtResource( 33 )
+text = "CONFIRM"
+align = 1
+valign = 1
+
+[node name="message" type="Label" parent="dialogue/yesno"]
+anchor_left = 0.109
+anchor_top = 0.31
+anchor_right = 0.891
+anchor_bottom = 0.531
+margin_left = 0.181999
+margin_top = -0.120003
+margin_right = -0.182007
+margin_bottom = 0.138
+custom_fonts/font = ExtResource( 33 )
+text = "Are you sure you would like to do this?"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="cfbtn" type="Button" parent="dialogue/yesno"]
+anchor_left = 0.454
+anchor_top = 0.724
+anchor_right = 0.857
+anchor_bottom = 0.896
+margin_left = 0.126144
+margin_top = -0.14801
+margin_right = 0.120148
+margin_bottom = -0.0920105
+custom_fonts/font = ExtResource( 33 )
+text = "Confirm"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cnbtn" type="Button" parent="dialogue/yesno"]
+anchor_left = 0.066
+anchor_top = 0.724
+anchor_right = 0.469
+anchor_bottom = 0.896
+margin_left = 0.194929
+margin_top = -0.14801
+margin_right = 0.188919
+margin_bottom = -0.0920105
+custom_fonts/font = ExtResource( 33 )
+text = "Cancel"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="alert" type="Panel" parent="dialogue"]
+visible = false
+self_modulate = Color( 0.376471, 0.376471, 0.376471, 1 )
+anchor_left = 0.353
+anchor_top = 0.303
+anchor_right = 0.647
+anchor_bottom = 0.697
+margin_left = -0.198029
+margin_top = 0.29599
+margin_right = 0.197998
+margin_bottom = -0.296021
+custom_styles/panel = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="title" type="Label" parent="dialogue/alert"]
+anchor_left = 0.363
+anchor_top = 0.046
+anchor_right = 0.639
+anchor_bottom = 0.152
+margin_left = 0.0740051
+margin_top = 0.107999
+margin_right = 0.121979
+margin_bottom = 0.0959969
+custom_fonts/font = ExtResource( 33 )
+text = "Uh oh!"
+align = 1
+valign = 1
+
+[node name="message" type="Label" parent="dialogue/alert"]
+anchor_left = 0.109
+anchor_top = 0.31
+anchor_right = 0.891
+anchor_bottom = 0.531
+margin_left = 0.181999
+margin_top = -0.120003
+margin_right = -0.182007
+margin_bottom = 0.138
+custom_fonts/font = ExtResource( 33 )
+text = "An error happened!"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="okbtn" type="Button" parent="dialogue/alert"]
+anchor_left = 0.066
+anchor_top = 0.724
+anchor_right = 0.469
+anchor_bottom = 0.896
+margin_left = 0.194929
+margin_top = -0.14801
+margin_right = 0.188919
+margin_bottom = -0.0920105
+custom_fonts/font = ExtResource( 33 )
+text = "Okay"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1848,3 +2020,7 @@ __meta__ = {
 [connection signal="toggled" from="ui/customization/TabContainer/Appearance/TabContainer/Looks/ScrollContainer/GridContainer/spinetoggle" to="ui/character" method="spineToggle"]
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]
 [connection signal="pressed" from="ui/toolbar/save" to="." method="characterSave"]
+[connection signal="pressed" from="ui/toolbar/rmchar" to="." method="rmcharPressed"]
+[connection signal="pressed" from="dialogue/yesno/cfbtn" to="dialogue" method="ynConfirm"]
+[connection signal="pressed" from="dialogue/yesno/cnbtn" to="dialogue" method="ynCancel"]
+[connection signal="pressed" from="dialogue/alert/okbtn" to="dialogue" method="alok"]

@@ -21,8 +21,8 @@
 	"appearancesrun":[
 		"res://images/character/nigw/run/nw-base-run.png",
 		"res://images/character/nigw/run/nw-head-run.png",
-		"res://images/character/nigw/run/nw-spine-run.png",
 		"res://images/character/nigw/run/nw-wings-run.png",
+		"res://images/character/nigw/run/nw-spine-run.png",
 		"res://images/character/nigw/run/nw-eyedrop-run.png"
 	],
 	"appearancesrunmask":[

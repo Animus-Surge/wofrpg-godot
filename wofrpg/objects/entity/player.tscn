@@ -1,15 +1,11 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://images/character/nigw/idle/nw-spine.png" type="Texture" id=1]
 [ext_resource path="res://images/character/nigw/idle/nw-wings.png" type="Texture" id=2]
 [ext_resource path="res://images/character/nigw/idle/nw-body.png" type="Texture" id=3]
 [ext_resource path="res://images/character/nigw/idle/nw-tail.png" type="Texture" id=4]
 [ext_resource path="res://images/character/nigw/idle/nw-legs.png" type="Texture" id=5]
-[ext_resource path="res://images/character/nigw/run/nw-base-run.png" type="Texture" id=6]
-[ext_resource path="res://images/character/nigw/run/nw-wings-run.png" type="Texture" id=7]
-[ext_resource path="res://images/character/nigw/run/nw-spikes-run.png" type="Texture" id=8]
 [ext_resource path="res://images/character/nigw/idle/nw-head.png" type="Texture" id=9]
-[ext_resource path="res://images/character/nigw/run/nw-head-run.png" type="Texture" id=10]
 [ext_resource path="res://scripts/entity/player.gd" type="Script" id=11]
 [ext_resource path="res://scripts/plrui.gd" type="Script" id=12]
 [ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=13]
@@ -64,19 +60,19 @@ length = 1.08
 loop = true
 step = 0.02
 tracks/0/type = "value"
-tracks/0/path = NodePath("spine:texture")
+tracks/0/path = NodePath("spine:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.18, 0.36, 0.54, 0.72, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ) ]
+"values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("spine:frame")
+tracks/1/path = NodePath("body:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -88,19 +84,19 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("body:texture")
+tracks/2/path = NodePath("head:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.18, 0.36, 0.54, 0.72, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 3 ) ]
+"values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("body:frame")
+tracks/3/path = NodePath("legs:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -112,19 +108,19 @@ tracks/3/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("head:texture")
+tracks/4/path = NodePath("tail:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.18, 0.36, 0.54, 0.72, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 9 ) ]
+"values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("head:frame")
+tracks/5/path = NodePath("wings:frame")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -136,72 +132,12 @@ tracks/5/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("legs:texture")
+tracks/6/path = NodePath("edrop:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 5 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("legs:frame")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0, 0.18, 0.36, 0.54, 0.72, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("tail:texture")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 4 ) ]
-}
-tracks/9/type = "value"
-tracks/9/path = NodePath("tail:frame")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/keys = {
-"times": PoolRealArray( 0, 0.18, 0.36, 0.54, 0.72, 0.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("wings:texture")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 2 ) ]
-}
-tracks/11/type = "value"
-tracks/11/path = NodePath("wings:frame")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/keys = {
 "times": PoolRealArray( 0, 0.18, 0.36, 0.54, 0.72, 0.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
@@ -211,21 +147,21 @@ tracks/11/keys = {
 [sub_resource type="Animation" id=8]
 length = 0.6
 loop = true
-step = 0.02
+step = 0.12
 tracks/0/type = "value"
-tracks/0/path = NodePath("spine:texture")
+tracks/0/path = NodePath("spine:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.12, 0.24, 0.36, 0.48, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 8 ) ]
+"values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("spine:frame")
+tracks/1/path = NodePath("wings:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -237,19 +173,19 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("wings:texture")
+tracks/2/path = NodePath("head:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1.27456 ),
+"times": PoolRealArray( 0, 0.12, 0.24, 0.36, 0.48, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 7 ) ]
+"values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("wings:frame")
+tracks/3/path = NodePath("body:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -261,48 +197,12 @@ tracks/3/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("head:texture")
+tracks/4/path = NodePath("edrop:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 10 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("head:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 0.12, 0.24, 0.36, 0.48, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("body:texture")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 6 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("body:frame")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
 "times": PoolRealArray( 0, 0.12, 0.24, 0.36, 0.48, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
@@ -314,7 +214,6 @@ radius = 15.877
 height = 218.54
 
 [node name="player" type="KinematicBody2D"]
-position = Vector2( 0, 3019 )
 scale = Vector2( 1.99748, 1.99748 )
 script = ExtResource( 11 )
 
@@ -326,9 +225,9 @@ zoom = Vector2( 2.3, 2.3 )
 
 [node name="UI" type="Control" parent="Camera2D"]
 margin_left = -684.0
-margin_top = -384.0
+margin_top = -385.0
 margin_right = 684.0
-margin_bottom = 384.0
+margin_bottom = 385.0
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -442,6 +341,14 @@ texture = ExtResource( 5 )
 hframes = 6
 
 [node name="tail" type="Sprite" parent="graphics"]
+material = SubResource( 5 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 4 )
+hframes = 6
+
+[node name="tdec" type="Sprite" parent="graphics"]
+visible = false
 material = SubResource( 5 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )

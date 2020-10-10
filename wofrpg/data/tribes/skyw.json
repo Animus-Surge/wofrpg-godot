@@ -17,10 +17,14 @@
 		"res://images/character/skyw/idle/sw-wings-mask.png"
 	],
 	"appearancesrun":[
-		"res://images/character/skyw/run/sw-base-run.png"
+		"res://images/character/skyw/run/sw-body-run.png",
+		"res://images/character/skyw/run/sw-head-run.png",
+		"res://images/character/skyw/run/sw-wings-run.png"
 	],
 	"appearancesrunmask":[
-		"res://images/character/skyw/run/sw-base-run-mask.png"
+		"res://images/character/skyw/run/sw-body-run-mask.png",
+		"res://images/character/skyw/run/sw-head-run-mask.png",
+		"res://images/character/skyw/run/sw-wings-run-mask.png"
 	],
 	"decoflags":[]
 }

@@ -7,6 +7,7 @@ func quit():
 	else: #TODO: make this better
 		#print("blah")
 		gvars.load_scene("res://scenes/menus.tscn")
+		gvars.paused = false
 
 func _input(event):
 	if event is InputEventKey and event.pressed:

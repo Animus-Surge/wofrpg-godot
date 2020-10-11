@@ -5,15 +5,14 @@
 [ext_resource path="res://images/character/nigw/idle/nw-body.png" type="Texture" id=3]
 [ext_resource path="res://images/character/nigw/idle/nw-tail.png" type="Texture" id=4]
 [ext_resource path="res://images/character/nigw/idle/nw-legs.png" type="Texture" id=5]
+[ext_resource path="res://images/character/palettes/palette-main.png" type="Texture" id=6]
+[ext_resource path="res://images/character/nigw/idle/nw-spine-mask.png" type="Texture" id=7]
 [ext_resource path="res://images/character/nigw/idle/nw-head.png" type="Texture" id=9]
 [ext_resource path="res://scripts/entity/player.gd" type="Script" id=11]
 [ext_resource path="res://scripts/plrui.gd" type="Script" id=12]
 [ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=13]
 [ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=14]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=15]
-[ext_resource path="res://images/character/palettes/body-leg-tail-pal.tex" type="Texture" id=16]
-[ext_resource path="res://images/character/palettes/wing-pal.tex" type="Texture" id=17]
-[ext_resource path="res://images/character/palettes/head-pal.tex" type="Texture" id=18]
 [ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=19]
 [ext_resource path="res://images/character/nigw/idle/nw-body-mask.png" type="Texture" id=20]
 [ext_resource path="res://images/character/nigw/idle/nw-legs-mask.png" type="Texture" id=21]
@@ -27,35 +26,41 @@ bg_color = Color( 0, 0, 0, 0.588235 )
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 19 )
-shader_param/palette_size = null
-shader_param/palette = ExtResource( 16 )
-shader_param/mask = ExtResource( 20 )
+shader_param/palette_size = 32.0
+shader_param/palette = ExtResource( 6 )
+shader_param/mask = ExtResource( 7 )
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
-shader_param/palette = ExtResource( 18 )
-shader_param/mask = ExtResource( 25 )
+shader_param/palette = ExtResource( 6 )
+shader_param/mask = ExtResource( 20 )
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
-shader_param/palette = ExtResource( 16 )
-shader_param/mask = ExtResource( 21 )
+shader_param/palette = ExtResource( 6 )
+shader_param/mask = ExtResource( 25 )
 
 [sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
-shader_param/palette = ExtResource( 16 )
-shader_param/mask = ExtResource( 24 )
+shader_param/palette = ExtResource( 6 )
+shader_param/mask = ExtResource( 21 )
 
 [sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 19 )
 shader_param/palette_size = null
-shader_param/palette = ExtResource( 17 )
+shader_param/palette = ExtResource( 6 )
+shader_param/mask = ExtResource( 24 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 19 )
+shader_param/palette_size = null
+shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 23 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 1.08
 loop = true
 step = 0.02
@@ -144,7 +149,7 @@ tracks/6/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.6
 loop = true
 step = 0.12
@@ -209,7 +214,7 @@ tracks/4/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=9]
+[sub_resource type="CapsuleShape2D" id=10]
 radius = 15.877
 height = 218.54
 
@@ -314,34 +319,35 @@ __meta__ = {
 position = Vector2( 0, -89.1493 )
 
 [node name="spine" type="Sprite" parent="graphics"]
+material = SubResource( 2 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 1 )
 hframes = 6
 
 [node name="body" type="Sprite" parent="graphics"]
-material = SubResource( 2 )
+material = SubResource( 3 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 3 )
 hframes = 6
 
 [node name="head" type="Sprite" parent="graphics"]
-material = SubResource( 3 )
+material = SubResource( 4 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 9 )
 hframes = 6
 
 [node name="legs" type="Sprite" parent="graphics"]
-material = SubResource( 4 )
+material = SubResource( 5 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 5 )
 hframes = 6
 
 [node name="tail" type="Sprite" parent="graphics"]
-material = SubResource( 5 )
+material = SubResource( 6 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 4 )
@@ -349,14 +355,14 @@ hframes = 6
 
 [node name="tdec" type="Sprite" parent="graphics"]
 visible = false
-material = SubResource( 5 )
+material = SubResource( 6 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 4 )
 hframes = 6
 
 [node name="wings" type="Sprite" parent="graphics"]
-material = SubResource( 6 )
+material = SubResource( 7 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 2 )
@@ -369,10 +375,10 @@ texture = ExtResource( 22 )
 hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
-anims/test-idle = SubResource( 7 )
-anims/test-run = SubResource( 8 )
+anims/test-idle = SubResource( 8 )
+anims/test-run = SubResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 [connection signal="pressed" from="Camera2D/UI/pausemenu/Button" to="Camera2D/UI" method="quit"]

@@ -1,4 +1,11 @@
-- Implement the expansions store
-- Multiplayer
+- Redo customization system
+- MAYBE make it all into one sprite
 
-TODO: Add onto this
+0.1.5
+- Surge (NPC)
+- Possibility???
+- Asteri (NPC)
+- Cacti (NPC)
+- Aurora (shop)
+- Player inventory
+- Shops

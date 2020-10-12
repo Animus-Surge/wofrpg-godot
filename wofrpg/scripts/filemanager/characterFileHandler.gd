@@ -16,13 +16,6 @@ const blankChar = {
 		"tshow":false,
 		"ishow":false
 	},
-	"colors":{
-		"body":"bodypal.png",
-		"head":"headpal.png",
-		"wing":"wingpal.png",
-		"spineRaw":[0,0,0],
-		"gscaleRaw":[0,0,0]
-	},
 	"skills":{}
 }
 

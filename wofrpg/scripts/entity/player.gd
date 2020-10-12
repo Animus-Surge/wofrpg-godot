@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const MOVEMENT_SPEED = 600
+const MOVEMENT_SPEED = 750
 
 puppet var vel = Vector2.ZERO
 puppet var pos
@@ -20,6 +20,7 @@ var runhmask
 var runw
 var runwmask
 var runs
+var runsmask
 var rune
 var runt
 
@@ -30,6 +31,7 @@ var idlehmask
 var idlew
 var idlewmask
 var idles
+var idlesmask
 var idlee
 var idlet
 
@@ -82,8 +84,9 @@ sync func setplrdetails(data, palette):
 	for tribe in gloader.loadedtribes:
 		if data.appearances.spine == tribe.tribename:
 			idles = load(tribe.appearancesidle[5])
+			idlesmask = load(tribe.appearancesidlemask[5])
 			runs = load(tribe.appearancesrun[3])
-			
+			runsmask = load(tribe.appearancesrunmask[3])
 			break
 	for tribe in gloader.loadedtribes:
 		for df in tribe.decoflags:
@@ -92,9 +95,7 @@ sync func setplrdetails(data, palette):
 				idlee = load(tribe.appearancesidle[6])
 		
 	$graphics/spine.visible = data.appearances.sshow
-	$graphics/edrop.visible = false
-	
-	print(palette)
+	$graphics/edrop.visible = data.appearances.eshow
 	
 	$graphics/body.get_material().set_shader_param("palette", palette)
 	$graphics/tail.get_material().set_shader_param("palette", palette)
@@ -130,6 +131,7 @@ func _physics_process(_delta):
 				$graphics/wings.texture = idlew
 				$graphics/wings.get_material().set_shader_param("mask", idlewmask)
 				$graphics/spine.texture = idles
+				$graphics/spine.get_material().set_shader_param("mask", idlesmask)
 				$graphics/edrop.texture = idlee
 				for x in range(8):
 					$graphics.get_child(x).scale = Vector2(0.503, 0.503)
@@ -145,9 +147,10 @@ func _physics_process(_delta):
 				$graphics/wings.texture = runw
 				$graphics/wings.get_material().set_shader_param("mask", runwmask)
 				$graphics/spine.texture = runs
+				$graphics/spine.get_material().set_shader_param("mask", runsmask)
 				$graphics/edrop.texture = rune
 				for x in range(8):
-					$graphics.get_child(x).scale = Vector2(0.75, 0.75)
+					$graphics.get_child(x).scale = Vector2(0.65, 0.65)
 			vel = vect.normalized() * MOVEMENT_SPEED
 			
 			vel = move_and_slide(vel)

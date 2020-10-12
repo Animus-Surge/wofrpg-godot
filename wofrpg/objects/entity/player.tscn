@@ -16,7 +16,6 @@
 [ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=19]
 [ext_resource path="res://images/character/nigw/idle/nw-body-mask.png" type="Texture" id=20]
 [ext_resource path="res://images/character/nigw/idle/nw-legs-mask.png" type="Texture" id=21]
-[ext_resource path="res://images/character/nigw/idle/nw-eyedrop.png" type="Texture" id=22]
 [ext_resource path="res://images/character/nigw/idle/nw-wings-mask.png" type="Texture" id=23]
 [ext_resource path="res://images/character/nigw/idle/nw-tail-mask.png" type="Texture" id=24]
 [ext_resource path="res://images/character/nigw/idle/nw-head-mask.png" type="Texture" id=25]
@@ -54,7 +53,10 @@ shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 23 )
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="StreamTexture" id=8]
+load_path = "res://.import/nw-eyedrop.png-62d0430988bc2e55a3d0610db9fe6349.stex"
+
+[sub_resource type="Animation" id=9]
 length = 1.08
 loop = true
 step = 0.02
@@ -143,7 +145,7 @@ tracks/6/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.6
 loop = true
 step = 0.12
@@ -208,7 +210,7 @@ tracks/4/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=10]
+[sub_resource type="CapsuleShape2D" id=11]
 radius = 15.877
 height = 218.54
 
@@ -223,10 +225,10 @@ current = true
 zoom = Vector2( 2.3, 2.3 )
 
 [node name="UI" type="Control" parent="Camera2D"]
-margin_left = -684.0
-margin_top = -385.0
-margin_right = 684.0
-margin_bottom = 385.0
+margin_left = -684.174
+margin_top = -385.175
+margin_right = 683.826
+margin_bottom = 384.825
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -365,14 +367,14 @@ hframes = 6
 [node name="edrop" type="Sprite" parent="graphics"]
 position = Vector2( 6.10352e-05, 0 )
 scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 22 )
+texture = SubResource( 8 )
 hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
-anims/test-idle = SubResource( 8 )
-anims/test-run = SubResource( 9 )
+anims/test-idle = SubResource( 9 )
+anims/test-run = SubResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 [connection signal="pressed" from="Camera2D/UI/pausemenu/Button" to="Camera2D/UI" method="quit"]

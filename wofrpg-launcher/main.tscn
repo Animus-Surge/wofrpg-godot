@@ -50,6 +50,9 @@ margin_bottom = -0.200043
 text = "Checking for Updates..."
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color( 1, 0.882353, 0.258824, 1 )

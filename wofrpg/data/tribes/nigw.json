@@ -16,7 +16,8 @@
 		"res://images/character/nigw/idle/nw-legs-mask.png",
 		"res://images/character/nigw/idle/nw-body-mask.png",
 		"res://images/character/nigw/idle/nw-tail-mask.png",
-		"res://images/character/nigw/idle/nw-wings-mask.png"
+		"res://images/character/nigw/idle/nw-wings-mask.png",
+		"res://images/character/nigw/idle/nw-spine-mask.png"
 	],
 	"appearancesrun":[
 		"res://images/character/nigw/run/nw-base-run.png",
@@ -28,7 +29,8 @@
 	"appearancesrunmask":[
 		"res://images/character/nigw/run/nw-base-run-mask.png",
 		"res://images/character/nigw/run/nw-head-run-mask.png",
-		"res://images/character/nigw/run/nw-wings-run-mask.png"
+		"res://images/character/nigw/run/nw-wings-run-mask.png",
+		"res://images/character/nigw/run/nw-spine-run-mask.png"
 	],
 	"decoflags":["spikes", "eyedrop"]
 }

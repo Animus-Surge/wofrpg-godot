@@ -18,23 +18,12 @@ onready var ddtdec = get_parent().get_node("customization/TabContainer/Appearanc
 
 onready var gloader = get_tree().get_root().get_node("gloader")
 
-var palh
-var pals
-var palw
-
-var hc
-var wc
-var sc
-#TODO: have it load from previously used slot (FileManager TODO) and have the four character slots
+var mainPalette
+var mp
 
 func _ready():
-	palh = load("res://images/character/palettes/head-pal.tex")
-	pals = load("res://images/character/palettes/body-leg-tail-pal.tex")
-	palw = load("res://images/character/palettes/wing-pal.tex")
-	
-	hc = palh
-	wc = palw
-	sc = pals
+	mainPalette = load("res://images/character/palettes/palette-main.tex")
+	mp = mainPalette
 	
 	$body.texture = null
 	$body.get_material().set_shader_param("mask", null)
@@ -51,9 +40,7 @@ func _ready():
 	$spine.visible = false
 
 func reset():
-	hc = palh
-	wc = palw
-	sc = pals
+	mp = mainPalette
 	
 	scalesChangeC(Color.white)
 	wingsChangeC(Color.white)
@@ -132,88 +119,36 @@ func loadDataFromFiles(dataarr):
 	spineChangeC(Color(dataarr[0].colors.spineRaw[0], dataarr[0].colors.spineRaw[1], dataarr[0].colors.spineRaw[2]))
 	
 
-func scalesChangeC(color):
-	var tempa = sc.get_data()
-	var tempb = hc.get_data()
-	
-	var darker = Color(color.r-0.08, color.g-0.08, color.b-0.08)
-	
-	tempa.lock()
-	tempa.set_pixel(0,0,darker)
-	tempa.set_pixel(1,0,color)
-	tempa.unlock()
-	
-	tempb.lock()
-	tempb.set_pixel(1,0,color)
-	tempb.unlock()
-	
-	var scaletemp = ImageTexture.new()
-	var headtemp = ImageTexture.new()
-	
-	scaletemp.create_from_image(tempa, 0)
-	scaletemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	headtemp.create_from_image(tempb, 0)
-	headtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	$body.get_material().set_shader_param("palette", scaletemp)
-	$tail.get_material().set_shader_param("palette", scaletemp)
-	$legs.get_material().set_shader_param("palette", scaletemp)
-	
-	$head.get_material().set_shader_param("palette", headtemp)
-	
-	hc = headtemp
-	sc = scaletemp
-
-func eyesChangeC(color):
-	var temp = hc.get_data()
+func scalesChangeC(color): #0 and 1
+	var temp = mp.get_data()
+	var darker = Color(color.r - 0.03, color.g - 0.03, color.b - 0.03)
 	
 	temp.lock()
-	temp.set_pixel(2,0, color)
+	temp.set_pixel(0,0,color)
+	temp.set_pixel(1,0,darker)
 	temp.unlock()
 	
-	var headtemp = ImageTexture.new()
-	headtemp.create_from_image(temp, 0)
-	headtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	var temp2 = ImageTexture.new()
+	temp2.create_from_image(temp,0)
+	temp2.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	
-	$head.get_material().set_shader_param("palette", headtemp)
-	
-	hc = headtemp
+	mp = temp2
+	$body.get_material().set_shader_param("palette", temp2)
 
-func hornsChangeC(color):
-	var temp = hc.get_data()
-	
-	temp.lock()
-	temp.set_pixel(0,0, color)
-	temp.unlock()
-	
-	var headtemp = ImageTexture.new()
-	headtemp.create_from_image(temp, 0)
-	headtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	$head.get_material().set_shader_param("palette", headtemp)
-	
-	hc = headtemp
+func eyesChangeC(color): #3
+	pass
 
-func wingsChangeC(color):
-	var temp = wc.get_data()
-	var darker = Color(color.r-0.08, color.g-0.08, color.b-0.08)
-	
-	temp.lock()
-	temp.set_pixel(1,0, color)
-	temp.set_pixel(0,0, darker)
-	temp.unlock()
-	
-	var wingtemp = ImageTexture.new()
-	wingtemp.create_from_image(temp, 0)
-	wingtemp.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
-	
-	$wings.get_material().set_shader_param("palette", wingtemp)
-	
-	wc = wingtemp
+func hornsChangeC(color): #2
+	pass
 
-func spineChangeC(color):
-	$spine.self_modulate = color
+func wingsChangeC(color): #6 and 7
+	pass
+
+func spineChangeC(color): #4 and 5
+	pass
+
+func tdecChangeC(color): #8
+	pass
 
 func bodyChanged(_index):
 	if ddbody.get_selected_id() >= 255:
@@ -315,4 +250,4 @@ func edropToggle(button_pressed):
 	$eyedrop.visible = button_pressed
 
 func getPalettes() -> Array:
-	return [hc, sc, wc]
+	return []

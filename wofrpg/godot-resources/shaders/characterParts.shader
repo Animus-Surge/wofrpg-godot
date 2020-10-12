@@ -2,8 +2,6 @@ shader_type canvas_item;
 
 uniform sampler2D palette;
 
-uniform float palette_size;
-
 uniform sampler2D mask;
 
 void fragment() {

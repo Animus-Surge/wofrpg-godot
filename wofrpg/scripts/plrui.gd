@@ -1,8 +1,10 @@
 extends Control
 
+onready var test = get_tree().get_root().get_node("Test")
+
 func quit():
 	var gvars = get_tree().get_root().get_node("globalvars")
-	if Test.testscenes and gvars.debug:
+	if test.testscenes and gvars.debug:
 		get_tree().quit(0)
 	else: #TODO: make this better
 		#print("blah")

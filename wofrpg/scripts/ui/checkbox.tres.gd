@@ -4,7 +4,9 @@ var tslotid
 
 func _ready():
 	self_modulate = Color(1,0.5,0)
+# warning-ignore:return_value_discarded
 	connect("mouse_entered", self, "_mouse_entered")
+# warning-ignore:return_value_discarded
 	connect("mouse_exited", self, "_mouse_exited")
 	set("custom_icons/checked", load("res://images/ui/buttons/radio-btn.png"))
 	set("custom_icons/unchecked", load("res://images/ui/buttons/radio-btn.png"))

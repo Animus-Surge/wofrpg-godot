@@ -49,8 +49,11 @@ func _ready():
 	$ui/toolbar/save.disabled = true
 	$ui/customization.hide()
 	globalvars.setCurrentScene(\"gamesys\")
+# warning-ignore:return_value_discarded
 	get_node(\"ui/cs1\").connect(\"clicked\", self, \"slotPressed\")
+# warning-ignore:return_value_discarded
 	get_node(\"ui/cs2\").connect(\"clicked\", self, \"slotPressed\")
+# warning-ignore:return_value_discarded
 	get_node(\"ui/cs3\").connect(\"clicked\", self, \"slotPressed\")
 	if globalvars.debug:
 		$ui/unamepanel/Label.text = \"DEBUG\"
@@ -92,7 +95,7 @@ func characterSave():
 			\"spineRaw\":[get_node(\"ui/character/spine\").self_modulate.r, get_node(\"ui/character/spine\").self_modulate.g, get_node(\"ui/character/spine\").self_modulate.b] #float - RGB
 		}
 	}
-	var err = cfm.saveCharacter(selectedPlayer, charData, [get_node(\"ui/character/head\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/body\").get_material().get_shader_param(\"palette\"), get_node(\"ui/character/wings\").get_material().get_shader_param(\"palette\")])
+	var err = cfm.saveCharacter(selectedPlayer, charData, charPalettes)
 	if !err:
 		$dialogue.showDialogue(\"ERROR\", \"An error has occoured while trying to save a character.\", 0)
 		return
@@ -134,10 +137,8 @@ func slotPressed(slot: int):
 		if globalvars.loggedIn:
 			$ui/toolbar/mp.disabled = false
 		$ui/toolbar/save.disabled = true
-		$ui/toolbar/rmchar.disabled = false #add a dialogue with this one
+		$ui/toolbar/rmchar.disabled = false
 		get_node(\"ui/customization\").hide()
-		#load player looks
-		#set player colors
 	selectedPlayer = slot
 	match slot:
 		0:
@@ -155,9 +156,7 @@ func slotPressed(slot: int):
 
 func spPressed(): #assumes empty character isn't selected
 	var cdata = cfm.loadCharacter(selectedPlayer)
-	globalvars.setHeadPalette(cdata[1])
-	globalvars.setBodyPalette(cdata[2])
-	globalvars.setWingPalette(cdata[3])
+	globalvars.setPalette(cdata[1])
 	globalvars.setPlayerData(cdata[0])
 	globalvars.load_scene(\"res://scenes/testworld.tscn\")
 
@@ -165,6 +164,7 @@ func mpPressed():
 	pass
 
 func rmcharPressed():
+# warning-ignore:return_value_discarded
 	$dialogue.connect(\"confirmed\", self, \"rccnf\")
 	$dialogue.showDialogue(\"You sure?\", \"Are you sure you want to delete this character?\", 1)
 
@@ -404,7 +404,7 @@ func _mouse_exit():
 	mouseOver = false
 	self_modulate = Color(1,0.5,0)
 
-func _process(delta):
+func _process(_delta):
 	if pressed:
 		if !mouseOver:
 			self_modulate = Color(0,1,0)
@@ -534,6 +534,7 @@ func updateSelectedTribes(tribes):
 	spinedd.add_item(\"Select...\", 255)
 	tdecdd.add_item(\"Select...\", 255)
 	
+# warning-ignore:unused_variable
 	var index = 0
 	
 	for tribeid in tribes:
@@ -585,15 +586,15 @@ shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 16 )
 
-[sub_resource type="ShaderMaterial" id=26]
-shader = ExtResource( 12 )
-shader_param/palette = ExtResource( 14 )
-shader_param/mask = ExtResource( 22 )
-
 [sub_resource type="ShaderMaterial" id=27]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 21 )
+
+[sub_resource type="ShaderMaterial" id=26]
+shader = ExtResource( 12 )
+shader_param/palette = ExtResource( 14 )
+shader_param/mask = ExtResource( 22 )
 
 [sub_resource type="ShaderMaterial" id=28]
 shader = ExtResource( 12 )
@@ -621,7 +622,9 @@ margin_top = 48.8704
 script/source = "extends Panel
 
 func _ready():
+# warning-ignore:return_value_discarded
 	connect(\"mouse_entered\", self, \"mouseEnter\")
+# warning-ignore:return_value_discarded
 	connect(\"mouse_exited\", self, \"mouseExit\")
 
 func mouseEnter():
@@ -643,10 +646,12 @@ export (int) var slotid = 0
 signal clicked(id)
 
 func _ready():
+# warning-ignore:return_value_discarded
 	connect(\"mouse_entered\", self, \"mouseEnter\")
+# warning-ignore:return_value_discarded
 	connect(\"mouse_exited\", self, \"mouseExit\")
 
-func _process(delta):
+func _process(_delta):
 	if selected:
 		if mouseOver:
 			self_modulate = Color(0.9, 0.98, 0.48, 0.75)
@@ -694,6 +699,7 @@ onready var yn = get_node(\"yesno\")
 onready var al = get_node(\"alert\")
 
 signal confirmed()
+# warning-ignore:unused_signal
 signal cancelec()
 signal ok()
 
@@ -1566,21 +1572,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="body" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 26 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 796, 448 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="legs" type="NinePatchRect" parent="ui/character"]
 material = SubResource( 27 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="body" type="NinePatchRect" parent="ui/character"]
+material = SubResource( 26 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 796, 448 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1992,8 +1998,8 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

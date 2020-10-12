@@ -312,7 +312,6 @@ custom_fonts/font = ExtResource( 13 )
 text = "Apply Settings"
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 10 )
@@ -363,11 +362,25 @@ Swamp  LemonFox
 
 kayak  [color=#f70]Magma Studios[/color]
 
+[color=#ff0]Voice Actors[/color]
+
+Cacti
+
 [color=#f70]Special thanks to our patrons![/color]
 
 aarise
 
-[color=#478CBF]Made using the Godot Engine, a free and open source game engine.[/color]
+[color=#478CBF]Godot Engine[/color]
+
+This game uses Godot Engine, available under the following license:
+
+Copyright (c) 2007-2020 Juan Linietsky, Ariel Manzur. Copyright (c) 2014-2020 Godot Engine contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [color=#ff0]Third Party Licenses[/color]
 
@@ -393,7 +406,9 @@ THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 
 [color=#0f0]FreeType[/color]
 
-Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved."
+Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved.
+
+Wings of Fire, copyright (c) 2012 - 2020 Tui T. Sutherland"
 text = "
 Development Team
 
@@ -420,11 +435,25 @@ Audio Designers
 
 kayak  Magma Studios
 
+Voice Actors
+
+Cacti
+
 Special thanks to our patrons!
 
 aarise
 
-Made using the Godot Engine, a free and open source game engine.
+Godot Engine
+
+This game uses Godot Engine, available under the following license:
+
+Copyright (c) 2007-2020 Juan Linietsky, Ariel Manzur. Copyright (c) 2014-2020 Godot Engine contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Third Party Licenses
 
@@ -450,7 +479,9 @@ THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 
 FreeType
 
-Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved."
+Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved.
+
+Wings of Fire, copyright (c) 2012 - 2020 Tui T. Sutherland"
 
 [node name="TextureButton" type="TextureButton" parent="mainmenu/creditspanel"]
 anchor_left = 0.017

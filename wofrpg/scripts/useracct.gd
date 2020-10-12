@@ -9,14 +9,14 @@ func _ready():
 	$lipanel.hide()
 	$statusPanel.hide()
 
-func completed(action):
+func completed(_action):
 	fb.disconnect("completed", self, "completed")
 	fb.disconnect("failed", self, "failed")
 	$statusPanel.hide()
 	$statusPanel/AnimationPlayer.stop()
 	globalvars.load_scene("res://scenes/menus.tscn")
 
-func failed(reason, action):
+func failed(reason, _action):
 	fb.disconnect("completed", self, "completed")
 	fb.disconnect("failed", self, "failed")
 	$statusPanel.hide()

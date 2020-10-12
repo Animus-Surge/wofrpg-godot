@@ -3,70 +3,23 @@ extends Node
 onready var gloader = get_tree().get_root().get_node("gloader")
 onready var cfm = get_tree().get_root().get_node("cfm")
 onready var logcat = get_tree().get_root().get_node("logcat")
-onready var fb = get_tree().get_root().get_node("fb")
+var fb
 onready var timer = get_tree().get_root().get_node("timer")
 onready var test = get_node("/root/Test")
 
 const LOCALHOST = "127.0.0.1"
 
-var plrbody setget setBodyPalette
-var plrhead setget setHeadPalette
-var plrwing setget setWingPalette
-var plrdata setget setPlayerData
+var plrpalette: ImageTexture setget setPalette
+var plrdata:Dictionary setget setPlayerData
 
-func setBodyPalette(palette):
-	plrbody = palette
+func setPalette(palette: ImageTexture):
+	plrpalette = palette
 
-func setHeadPalette(palette):
-	plrhead = palette
-
-func setWingPalette(palette):
-	plrwing = palette
-
-func setPlayerData(data):
+func setPlayerData(data:Dictionary):
 	plrdata = data
-
-const DEFAULT_SAVE_DATA = {
-	"character-location":{
-		"x":0,	
-		"y":0
-	},
-	"character-scene":"possibility",
-	"skill-tree":"data/tree.json",
-	"stats":{
-		"level":0,
-		"xp":0,
-		"health":100,
-		"mana":0,
-		"max-health":100,
-		"max-mana":0
-	},
-	"stat-modifiers":{
-		"melee-atk":1,
-		"ranged-atk":1,
-		"flight-duration":1,
-		"speed":1,
-		"knockback":1
-	},
-	"character-inventory":{
-		"reg":[],
-		"arm-head":{},
-		"arm-neck":{},
-		"arm-body":{},
-		"arm-wing":{},
-		"arm-tail":{},
-		"arm-legs":{}
-	},
-	"gold-count":0
-}
 
 var sppaused = false
 var uiShowing = false
-
-var loadedCharacter
-var save = "test-save"
-
-var playerFlip
 
 var debug = false
 var loggedIn = false
@@ -76,7 +29,6 @@ var paused = false
 var current = "loadscreen"
 
 func _ready():
-	fb = get_tree().get_root().get_node("fb")
 	if !debug:
 		if is_instance_valid(test):
 			if test.debug:
@@ -92,6 +44,7 @@ func _complete():
 		gloader.startLoad()
 		logcat.stdout("DEBUG MODE ACTIVE", 0)
 	else:
+		fb = get_tree().get_root().get_node("fb")
 		load_scene("res://scenes/useracct.tscn")
 
 func debugComplete():
@@ -135,7 +88,7 @@ func load_scene(scene: String):
 	
 	wait = 1
 
-func _process(delta):
+func _process(_delta):
 	if scn == null:
 		set_process(false)
 		return

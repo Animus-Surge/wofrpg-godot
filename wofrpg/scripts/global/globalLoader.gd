@@ -60,6 +60,7 @@ func saveSettings():
 #Addons stored in user://addons
 
 func loadAddons():
+# warning-ignore:unused_variable
 	var addondir = Directory.new()
 	#TODO
 
@@ -89,10 +90,11 @@ func openSPserver():
 	var peer= NetworkedMultiplayerENet.new()
 	peer.create_server(25622, 1)
 	get_tree().network_peer = peer
+# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_connected", self, "onClientConnect")
 
 func onClientConnect(id):
 	logcat.stdout("Client: " + String(id) + " joined the game", 1)
 
-remote func setPlayerDetails(id, data: Dictionary):
+remote func setPlayerDetails(_id, data: Dictionary):
 	print(data)

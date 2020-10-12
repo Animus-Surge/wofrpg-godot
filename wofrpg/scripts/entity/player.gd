@@ -39,7 +39,7 @@ func _ready():
 
 func _process(_delta):
 	if is_instance_valid(gvars):
-		setplrdetails(gvars.plrdata, [gvars.plrhead, gvars.plrbody, gvars.plrwing])
+		setplrdetails(gvars.plrdata, gvars.plrpalette)
 		set_process(false);
 		ready = true
 		set_physics_process(true)
@@ -47,7 +47,7 @@ func _process(_delta):
 		gvars = get_tree().get_root().get_node("globalvars")
 
 #Get the player details from the server, unless network master. Called for EACH player object
-sync func setplrdetails(data, palettes): #palettes: [head, body, wing]
+sync func setplrdetails(data, palette):
 	for tribe in gloader.loadedtribes:
 		if data.appearances.body == tribe.tribename:
 			idleb = load(tribe.appearancesidle[2])
@@ -92,17 +92,19 @@ sync func setplrdetails(data, palettes): #palettes: [head, body, wing]
 				idlee = load(tribe.appearancesidle[6])
 		
 	$graphics/spine.visible = data.appearances.sshow
-	$graphics/edrop.visible = data.appearances.eshow
+	$graphics/edrop.visible = false
 	
-	$graphics/body.get_material().set_shader_param("palette", palettes[1])
-	$graphics/tail.get_material().set_shader_param("palette", palettes[1])
-	$graphics/legs.get_material().set_shader_param("palette", palettes[1])
-	$graphics/head.get_material().set_shader_param("palette", palettes[0])
-	$graphics/wings.get_material().set_shader_param("palette", palettes[2])
-	$graphics/spine.self_modulate = Color(data.colors.spineRaw[0], data.colors.spineRaw[1], data.colors.spineRaw[2])
+	print(palette)
+	
+	$graphics/body.get_material().set_shader_param("palette", palette)
+	$graphics/tail.get_material().set_shader_param("palette", palette)
+	$graphics/legs.get_material().set_shader_param("palette", palette)
+	$graphics/head.get_material().set_shader_param("palette", palette)
+	$graphics/wings.get_material().set_shader_param("palette", palette)
+	$graphics/spine.get_material().set_shader_param("palette", palette)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !get_tree().has_network_peer() and ready:
 		if !gvars.paused:
 			var vect = Vector2()
@@ -129,6 +131,8 @@ func _physics_process(delta):
 				$graphics/wings.get_material().set_shader_param("mask", idlewmask)
 				$graphics/spine.texture = idles
 				$graphics/edrop.texture = idlee
+				for x in range(8):
+					$graphics.get_child(x).scale = Vector2(0.503, 0.503)
 			else:
 				$graphics/AnimationPlayer.play("test-run")
 				$graphics/tail.hide()
@@ -142,6 +146,8 @@ func _physics_process(delta):
 				$graphics/wings.get_material().set_shader_param("mask", runwmask)
 				$graphics/spine.texture = runs
 				$graphics/edrop.texture = rune
+				for x in range(8):
+					$graphics.get_child(x).scale = Vector2(0.75, 0.75)
 			vel = vect.normalized() * MOVEMENT_SPEED
 			
 			vel = move_and_slide(vel)

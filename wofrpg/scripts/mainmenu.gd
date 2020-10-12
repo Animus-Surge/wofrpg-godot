@@ -16,7 +16,7 @@ func _ready():
 func dbComplete(result):
 	$newspanel/RichTextLabel.bbcode_text = result.text
 
-func failed(reason, action):
+func failed(reason, _action):
 	print(reason)
 
 func onSettings():

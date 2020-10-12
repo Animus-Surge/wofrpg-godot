@@ -37,9 +37,6 @@ var wingPal
 func _ready():
 	startLoad()
 
-func loadCharacterPalettes(charid: int):
-	var path = "user://characters/slot-" + String(charid) + "/"
-
 func startLoad():
 	loadCharList()
 
@@ -91,9 +88,7 @@ func loadCharList():
 func deleteChar(slotid: int):
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(slotid) + "/slot-" + String(slotid) + ".json")
-	slot.remove("user://characters/slot-" + String(slotid) + "/headpal.png")
-	slot.remove("user://characters/slot-" + String(slotid) + "/bodypal.png")
-	slot.remove("user://characters/slot-" + String(slotid) + "/wingpal.png")
+	slot.remove("user://characters/slot-" + String(slotid) + "/palette.png")
 	var cfile = File.new()
 	cfile.open("user://characters/slot-" + String(slotid) + "/slot-" + String(slotid) + ".json", File.WRITE)
 	cfile.store_line(to_json(blankChar))
@@ -102,20 +97,11 @@ func deleteChar(slotid: int):
 
 func loadCharacter(cindex:int) -> Array:
 	var hpimg = ImageTexture.new()
-	hpimg.load("user://characters/slot-" + String(cindex) + "/headpal.png")
+	hpimg.load("user://characters/slot-" + String(cindex) + "/palette.png")
 	hpimg.flags = 0
-	
-	var bpimg = ImageTexture.new()
-	bpimg.load("user://characters/slot-" + String(cindex) + "/bodypal.png")
-	bpimg.flags = 0
-	
-	var wpimg = ImageTexture.new()
-	wpimg.load("user://characters/slot-" + String(cindex) + "/wingpal.png")
-	wpimg.flags = 0
-	
-	return [characters[cindex], hpimg, bpimg, wpimg]
+	return [characters[cindex], hpimg]
 
-func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array) -> bool:
+func saveCharacter(charslot: int, chardata: Dictionary, charpals: ImageTexture) -> bool:
 	var slot = Directory.new()
 	slot.remove("user://characters/slot-" + String(charslot) + "/slot-" + String(charslot) + ".json")
 	var cfile = File.new()
@@ -125,9 +111,9 @@ func saveCharacter(charslot: int, chardata: Dictionary, charpals: Array) -> bool
 		characters[charslot] = chardata
 		cfile.close()
 		#palette order: head, body, wings
-		charpals[0].get_data().save_png("user://characters/slot-" + String(charslot) + "/headpal.png")
-		charpals[1].get_data().save_png("user://characters/slot-" + String(charslot) + "/bodypal.png")
-		charpals[2].get_data().save_png("user://characters/slot-" + String(charslot) + "/wingpal.png")
+# warning-ignore:return_value_discarded
+		charpals.get_data().save_png("user://characters/slot-" + String(charslot) + "/palette.png")
+		
 		logcat.stdout("Character successfully saved to slot: " + String(charslot) + ".", 1)
 		loadCharList()
 		return true

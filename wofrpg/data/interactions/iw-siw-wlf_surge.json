@@ -1,0 +1,17 @@
+{
+	"cname":"Surge",
+	"interaction":{
+		"start":{
+			"speech":null,
+			"text":"Hewwo!",
+			"face":"cute",
+			"opts":[
+				{
+					"text":"Close",
+					"goto":"%CLOSE",
+					"locked":false
+				}
+			]
+		}
+	}
+}

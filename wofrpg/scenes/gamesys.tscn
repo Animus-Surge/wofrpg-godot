@@ -779,7 +779,6 @@ __meta__ = {
 }
 
 [node name="Basic Info" type="Panel" parent="ui/customization/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -1112,6 +1111,7 @@ __meta__ = {
 }
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
@@ -1171,7 +1171,7 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Appearance/Parent/partScroll"]
-margin_right = 301.0
+margin_right = 313.0
 margin_bottom = 590.0
 size_flags_horizontal = 3
 columns = 2
@@ -1419,7 +1419,7 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="ui/customization/TabContainer/Appearance/Parent/colorScroll"]
-margin_right = 301.0
+margin_right = 313.0
 margin_bottom = 344.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

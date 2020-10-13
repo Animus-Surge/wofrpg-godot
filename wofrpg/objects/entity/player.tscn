@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://images/character/nigw/idle/nw-spine.png" type="Texture" id=1]
 [ext_resource path="res://images/character/nigw/idle/nw-wings.png" type="Texture" id=2]
@@ -7,7 +7,9 @@
 [ext_resource path="res://images/character/nigw/idle/nw-legs.png" type="Texture" id=5]
 [ext_resource path="res://images/character/palettes/palette-main.tex" type="Texture" id=6]
 [ext_resource path="res://images/character/nigw/idle/nw-spine-mask.png" type="Texture" id=7]
+[ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://images/character/nigw/idle/nw-head.png" type="Texture" id=9]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/interaction-bar.png" type="Texture" id=10]
 [ext_resource path="res://scripts/entity/player.gd" type="Script" id=11]
 [ext_resource path="res://scripts/plrui.gd" type="Script" id=12]
 [ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=13]
@@ -19,9 +21,6 @@
 [ext_resource path="res://images/character/nigw/idle/nw-wings-mask.png" type="Texture" id=23]
 [ext_resource path="res://images/character/nigw/idle/nw-tail-mask.png" type="Texture" id=24]
 [ext_resource path="res://images/character/nigw/idle/nw-head-mask.png" type="Texture" id=25]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 0, 0, 0.588235 )
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 19 )
@@ -211,16 +210,101 @@ tracks/4/keys = {
 }
 
 [sub_resource type="CapsuleShape2D" id=11]
-radius = 15.877
-height = 218.54
+radius = 11.5142
+height = 142.466
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0, 0, 0, 0.882353 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 30
+font_data = ExtResource( 8 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.588235 )
 
 [node name="player" type="KinematicBody2D"]
 scale = Vector2( 1.99748, 1.99748 )
 script = ExtResource( 11 )
 
+[node name="graphics" type="Node2D" parent="."]
+position = Vector2( 0, -92 )
+
+[node name="spine" type="Sprite" parent="graphics"]
+material = SubResource( 2 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="body" type="Sprite" parent="graphics"]
+material = SubResource( 3 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 3 )
+hframes = 6
+
+[node name="head" type="Sprite" parent="graphics"]
+material = SubResource( 4 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 9 )
+hframes = 6
+
+[node name="legs" type="Sprite" parent="graphics"]
+material = SubResource( 5 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 5 )
+hframes = 6
+
+[node name="tail" type="Sprite" parent="graphics"]
+material = SubResource( 6 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 4 )
+hframes = 6
+
+[node name="tdec" type="Sprite" parent="graphics"]
+visible = false
+material = SubResource( 6 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 4 )
+hframes = 6
+
+[node name="wings" type="Sprite" parent="graphics"]
+material = SubResource( 7 )
+position = Vector2( 6.10352e-05, -2.28882e-05 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = ExtResource( 2 )
+hframes = 6
+
+[node name="edrop" type="Sprite" parent="graphics"]
+position = Vector2( 6.10352e-05, 0 )
+scale = Vector2( 0.50278, 0.50278 )
+texture = SubResource( 8 )
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
+anims/test-idle = SubResource( 9 )
+anims/test-run = SubResource( 10 )
+
+[node name="cs-nonflip" type="CollisionShape2D" parent="."]
+position = Vector2( 40, 4 )
+rotation = 1.5708
+shape = SubResource( 11 )
+
+[node name="cs-flip" type="CollisionShape2D" parent="."]
+position = Vector2( -40, 4 )
+rotation = 1.5708
+shape = SubResource( 11 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -89.1116 )
 scale = Vector2( 1.15028, 1.15028 )
+z_index = 100
+z_as_relative = false
 current = true
 zoom = Vector2( 2.3, 2.3 )
 
@@ -289,6 +373,72 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="interaction" type="Panel" parent="Camera2D/UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="face" type="TextureRect" parent="Camera2D/UI/interaction"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ibar" type="TextureRect" parent="Camera2D/UI/interaction"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="npcname" type="Label" parent="Camera2D/UI/interaction/ibar"]
+anchor_left = 0.018
+anchor_top = 0.655
+anchor_right = 0.436
+anchor_bottom = 0.696
+margin_left = 0.375999
+margin_top = -0.350037
+margin_right = -0.447998
+margin_bottom = 0.0799561
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "%NPCNAME%"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Camera2D/UI/interaction/ibar"]
+margin_left = 25.0
+margin_top = 551.0
+margin_right = 663.0
+margin_bottom = 751.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="npcdialogue" type="Label" parent="Camera2D/UI/interaction/ibar/ScrollContainer"]
+margin_right = 638.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 13 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "Hewwo!"
+align = 1
+autowrap = true
+
 [node name="pausemenu" type="Panel" parent="Camera2D/UI"]
 visible = false
 anchor_right = 0.348
@@ -310,71 +460,4 @@ text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="graphics" type="Node2D" parent="."]
-position = Vector2( 0, -89.1493 )
-
-[node name="spine" type="Sprite" parent="graphics"]
-material = SubResource( 2 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 1 )
-hframes = 6
-
-[node name="body" type="Sprite" parent="graphics"]
-material = SubResource( 3 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 3 )
-hframes = 6
-
-[node name="head" type="Sprite" parent="graphics"]
-material = SubResource( 4 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 9 )
-hframes = 6
-
-[node name="legs" type="Sprite" parent="graphics"]
-material = SubResource( 5 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 5 )
-hframes = 6
-
-[node name="tail" type="Sprite" parent="graphics"]
-material = SubResource( 6 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 4 )
-hframes = 6
-
-[node name="tdec" type="Sprite" parent="graphics"]
-visible = false
-material = SubResource( 6 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 4 )
-hframes = 6
-
-[node name="wings" type="Sprite" parent="graphics"]
-material = SubResource( 7 )
-position = Vector2( 6.10352e-05, -2.28882e-05 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = ExtResource( 2 )
-hframes = 6
-
-[node name="edrop" type="Sprite" parent="graphics"]
-position = Vector2( 6.10352e-05, 0 )
-scale = Vector2( 0.50278, 0.50278 )
-texture = SubResource( 8 )
-hframes = 6
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
-anims/test-idle = SubResource( 9 )
-anims/test-run = SubResource( 10 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-shape = SubResource( 11 )
 [connection signal="pressed" from="Camera2D/UI/pausemenu/Button" to="Camera2D/UI" method="quit"]

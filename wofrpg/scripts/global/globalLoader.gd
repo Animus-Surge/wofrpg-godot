@@ -83,18 +83,10 @@ func loadTribes():
 		logcat.stdout("Loaded tribe: " + tribedata.modid + ":" + tribedata.tribename, 1)
 		tribe = tribesdir.get_next()
 
-#=====MULTIPLAYER=====
-
-func openSPserver():
-	logcat.stdout("Opening singleplayer server instance", 1)
-	var peer= NetworkedMultiplayerENet.new()
-	peer.create_server(25622, 1)
-	get_tree().network_peer = peer
-# warning-ignore:return_value_discarded
-	get_tree().connect("network_peer_connected", self, "onClientConnect")
-
-func onClientConnect(id):
-	logcat.stdout("Client: " + String(id) + " joined the game", 1)
-
-remote func setPlayerDetails(_id, data: Dictionary):
-	print(data)
+func loadNPCInteraction(npcid) -> Dictionary:
+	var icfile = File.new()
+	var err = icfile.open("res://data/interactions/" + npcid + ".json", File.READ)
+	if err != OK:
+		return {}
+	var interaction = JSON.parse(icfile.get_as_text()).result
+	return interaction

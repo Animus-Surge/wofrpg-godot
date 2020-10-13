@@ -1,0 +1,40 @@
+[gd_resource type="Animation" load_steps=19 format=2]
+
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_07_delay-0.08s.png" type="Texture" id=1]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_17_delay-0.08s.png" type="Texture" id=2]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_02_delay-0.08s.png" type="Texture" id=3]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_13_delay-0.08s.png" type="Texture" id=4]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_03_delay-0.08s.png" type="Texture" id=5]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_11_delay-0.08s.png" type="Texture" id=6]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_04_delay-0.08s.png" type="Texture" id=7]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_08_delay-0.08s.png" type="Texture" id=8]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_09_delay-0.08s.png" type="Texture" id=9]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_16_delay-0.08s.png" type="Texture" id=10]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_00_delay-0.08s.png" type="Texture" id=11]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_10_delay-0.08s.png" type="Texture" id=12]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_01_delay-0.08s.png" type="Texture" id=13]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_06_delay-0.08s.png" type="Texture" id=14]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_14_delay-0.08s.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_12_delay-0.08s.png" type="Texture" id=16]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_05_delay-0.08s.png" type="Texture" id=17]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/confused/frame_15_delay-0.08s.png" type="Texture" id=18]
+
+
+
+[resource]
+resource_name = "iw_sw_wolf-surge-confused"
+length = 1.44
+loop = true
+step = 0.08
+tracks/0/type = "value"
+tracks/0/path = NodePath("reaction:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.08, 0.16, 0.24, 0.32, 0.4, 0.48, 0.56, 0.64, 0.72, 0.8, 0.88, 0.96, 1.04, 1.12, 1.2, 1.28, 1.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 13 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 17 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 4 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 10 ), ExtResource( 2 ) ]
+}

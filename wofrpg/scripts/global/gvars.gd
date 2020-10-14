@@ -36,7 +36,7 @@ func _ready():
 		print("==============> GAME START <==============")
 		gloader.startLoad()
 		cfm.startLoad()
-		load_scene("res://scenes/gamesys.tscn")
+		load_scene("res://scenes/useracct.tscn")
 
 func _complete():
 	if test.testscenes:
@@ -45,7 +45,7 @@ func _complete():
 		logcat.stdout("DEBUG MODE ACTIVE", 0)
 	else:
 		fb = get_tree().get_root().get_node("fb")
-		load_scene("res://scenes/gamesys.tscn")
+		load_scene("res://scenes/useracct.tscn")
 
 func debugComplete():
 	gloader.startLoad()

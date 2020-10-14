@@ -171,6 +171,7 @@ func _physics_process(_delta):
 			animation()
 		else:
 			$graphics/AnimationPlayer.stop()
+			$graphics/customlooks.stop()
 	else:
 		if is_network_master():
 			var vect = Vector2()

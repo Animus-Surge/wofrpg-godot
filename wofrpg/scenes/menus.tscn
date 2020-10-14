@@ -312,6 +312,7 @@ custom_fonts/font = ExtResource( 13 )
 text = "Apply Settings"
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 10 )
@@ -508,7 +509,7 @@ anchor_bottom = 1.0
 margin_left = 0.19397
 margin_top = -0.176025
 margin_right = -0.442078
-text = "pre-0.1.4"
+text = "pre-0.1.42"
 align = 1
 valign = 1
 __meta__ = {

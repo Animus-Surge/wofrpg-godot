@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://images/character/nigw/idle/nw-tail.png" type="Texture" id=1]
 [ext_resource path="res://images/character/nigw/idle/nw-wings.png" type="Texture" id=2]
@@ -16,8 +16,10 @@
 [ext_resource path="res://images/character/palettes/palette-main.tex" type="Texture" id=14]
 [ext_resource path="res://images/character/nigw/idle/nw-tail-mask.png" type="Texture" id=15]
 [ext_resource path="res://images/character/nigw/idle/nw-spine-mask.png" type="Texture" id=16]
+[ext_resource path="res://images/ui/buttons/back-btn-pressed.png" type="Texture" id=17]
 [ext_resource path="res://images/character/nigw/idle/nw-head-mask.png" type="Texture" id=18]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=19]
+[ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=20]
 [ext_resource path="res://images/character/nigw/idle/nw-legs-mask.png" type="Texture" id=21]
 [ext_resource path="res://images/character/nigw/idle/nw-body-mask.png" type="Texture" id=22]
 [ext_resource path="res://images/ui/buttons/radio-btn.png" type="Texture" id=23]
@@ -31,6 +33,7 @@
 [ext_resource path="res://images/ui/buttons/tb-closebtn.png" type="Texture" id=31]
 [ext_resource path="res://images/ui/buttons/tb-closebtn-hover.png" type="Texture" id=32]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=33]
+[ext_resource path="res://images/ui/buttons/back-btn-hover.png" type="Texture" id=34]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -171,7 +174,7 @@ func rccnf():
 	resetAll()
 
 func loadCustomCharacter():
-	$dialogue.showDialogue(\"WOOPS!\", \"This feature currently isn't implemented!\", 0)
+	$cchardialogue.show()
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -719,6 +722,42 @@ func alok():
 	hide()
 "
 
+[sub_resource type="GDScript" id=33]
+script/source = "extends Panel
+
+onready var gldr = get_tree().get_root().get_node(\"gloader\")
+
+var chars
+
+func _ready():
+# warning-ignore:return_value_discarded
+	connect(\"visibility_changed\", self, \"_visibility_changed\")
+	$panel/ItemList.clear()
+	hide()
+
+func _visibility_changed():
+	if visible:
+		$panel/Button.disabled = true
+		listCharacters()
+
+func listCharacters():
+	$panel/ItemList.clear()
+	chars = gldr.loadCustom()
+	for character in chars:
+		$panel/ItemList.add_item(character.cname)
+
+func onBackPressed():
+	hide()
+
+func ccharPlay():
+	var gvars = get_tree().get_root().get_node(\"globalvars\")
+	gvars.setPlayerData(chars[$panel/ItemList.get_selected_items()[0]])
+	gvars.load_scene(\"res://scenes/testworld.tscn\")
+
+func onListSelected(_index):
+	$panel/Button.disabled = false
+"
+
 [node name="gamesys" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1083,32 +1122,6 @@ enabled_focus_mode = 0
 text = "Merchant"
 script = SubResource( 15 )
 id = 6
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ui/customization/TabContainer/Basic Info"]
-margin_left = -7.0
-margin_top = 121.0
-margin_right = 313.0
-margin_bottom = 364.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="ui/customization/TabContainer/Basic Info/ScrollContainer"]
-margin_right = 320.0
-margin_bottom = 243.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 19 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = " Power: 0
- Stamina: 0
- Mana: 0
- Flight Duration: 0s
-TODO"
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
 visible = false
@@ -1825,7 +1838,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="save2" type="Button" parent="ui/toolbar"]
+[node name="cchar" type="Button" parent="ui/toolbar"]
 margin_left = 1130.56
 margin_top = 7.296
 margin_right = 1301.56
@@ -2042,6 +2055,68 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="cchardialogue" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 31 )
+script = SubResource( 33 )
+
+[node name="panel" type="Panel" parent="cchardialogue"]
+self_modulate = Color( 0.462745, 0.462745, 0.462745, 1 )
+anchor_left = 0.27
+anchor_top = 0.059
+anchor_right = 0.73
+anchor_bottom = 0.941
+margin_left = -0.320007
+margin_top = 0.187996
+margin_right = 0.319946
+margin_bottom = -0.188049
+custom_styles/panel = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="cchardialogue/panel"]
+anchor_left = 0.064
+anchor_top = 0.118
+anchor_right = 0.924
+anchor_bottom = 0.781
+margin_left = -0.256001
+margin_top = 0.113991
+margin_right = -0.196045
+margin_bottom = 0.263
+focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="cchardialogue/panel"]
+anchor_left = 0.046
+anchor_top = 0.016
+anchor_right = 0.11
+anchor_bottom = 0.075
+margin_left = 0.101582
+margin_top = 0.162872
+margin_right = -0.154419
+margin_bottom = 0.219872
+texture_normal = ExtResource( 20 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 34 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="cchardialogue/panel"]
+margin_left = 40.0
+margin_top = 587.0
+margin_right = 228.0
+margin_bottom = 638.0
+custom_fonts/font = ExtResource( 33 )
+text = "Play"
+flat = true
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
@@ -2078,8 +2153,11 @@ __meta__ = {
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]
 [connection signal="pressed" from="ui/toolbar/sp" to="." method="spPressed"]
 [connection signal="pressed" from="ui/toolbar/save" to="." method="characterSave"]
-[connection signal="pressed" from="ui/toolbar/save2" to="." method="loadCustomCharacter"]
+[connection signal="pressed" from="ui/toolbar/cchar" to="." method="loadCustomCharacter"]
 [connection signal="pressed" from="ui/toolbar/rmchar" to="." method="rmcharPressed"]
 [connection signal="pressed" from="dialogue/yesno/cfbtn" to="dialogue" method="ynConfirm"]
 [connection signal="pressed" from="dialogue/yesno/cnbtn" to="dialogue" method="ynCancel"]
 [connection signal="pressed" from="dialogue/alert/okbtn" to="dialogue" method="alok"]
+[connection signal="item_selected" from="cchardialogue/panel/ItemList" to="cchardialogue" method="onListSelected"]
+[connection signal="pressed" from="cchardialogue/panel/TextureButton" to="cchardialogue" method="onBackPressed"]
+[connection signal="pressed" from="cchardialogue/panel/Button" to="cchardialogue" method="ccharPlay"]

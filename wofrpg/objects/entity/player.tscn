@@ -22,40 +22,40 @@
 [ext_resource path="res://images/character/nigw/idle/nw-tail-mask.png" type="Texture" id=24]
 [ext_resource path="res://images/character/nigw/idle/nw-head-mask.png" type="Texture" id=25]
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 7 )
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 20 )
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 25 )
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 21 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 24 )
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 23 )
 
-[sub_resource type="StreamTexture" id=8]
+[sub_resource type="StreamTexture" id=7]
 load_path = "res://.import/nw-eyedrop.png-62d0430988bc2e55a3d0610db9fe6349.stex"
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 1.08
 loop = true
 step = 0.02
@@ -144,7 +144,7 @@ tracks/6/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 length = 0.6
 loop = true
 step = 0.12
@@ -209,18 +209,18 @@ tracks/4/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=11]
+[sub_resource type="CapsuleShape2D" id=10]
 radius = 11.5142
 height = 142.466
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0, 0, 0, 0.882353 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=12]
 size = 30
 font_data = ExtResource( 8 )
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0, 0, 0, 0.588235 )
 
 [node name="player" type="KinematicBody2D"]
@@ -231,35 +231,35 @@ script = ExtResource( 11 )
 position = Vector2( 0, -92 )
 
 [node name="spine" type="Sprite" parent="graphics"]
-material = SubResource( 2 )
+material = SubResource( 1 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 1 )
 hframes = 6
 
 [node name="body" type="Sprite" parent="graphics"]
-material = SubResource( 3 )
+material = SubResource( 2 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 3 )
 hframes = 6
 
 [node name="head" type="Sprite" parent="graphics"]
-material = SubResource( 4 )
+material = SubResource( 3 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 9 )
 hframes = 6
 
 [node name="legs" type="Sprite" parent="graphics"]
-material = SubResource( 5 )
+material = SubResource( 4 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 5 )
 hframes = 6
 
 [node name="tail" type="Sprite" parent="graphics"]
-material = SubResource( 6 )
+material = SubResource( 5 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 4 )
@@ -267,14 +267,14 @@ hframes = 6
 
 [node name="tdec" type="Sprite" parent="graphics"]
 visible = false
-material = SubResource( 6 )
+material = SubResource( 5 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 4 )
 hframes = 6
 
 [node name="wings" type="Sprite" parent="graphics"]
-material = SubResource( 7 )
+material = SubResource( 6 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 2 )
@@ -283,22 +283,24 @@ hframes = 6
 [node name="edrop" type="Sprite" parent="graphics"]
 position = Vector2( 6.10352e-05, 0 )
 scale = Vector2( 0.50278, 0.50278 )
-texture = SubResource( 8 )
+texture = SubResource( 7 )
 hframes = 6
 
+[node name="customlooks" type="AnimatedSprite" parent="graphics"]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
-anims/test-idle = SubResource( 9 )
-anims/test-run = SubResource( 10 )
+anims/test-idle = SubResource( 8 )
+anims/test-run = SubResource( 9 )
 
 [node name="cs-nonflip" type="CollisionShape2D" parent="."]
 position = Vector2( 40, 4 )
 rotation = 1.5708
-shape = SubResource( 11 )
+shape = SubResource( 10 )
 
 [node name="cs-flip" type="CollisionShape2D" parent="."]
 position = Vector2( -40, 4 )
 rotation = 1.5708
-shape = SubResource( 11 )
+shape = SubResource( 10 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -89.1116 )
@@ -376,7 +378,7 @@ __meta__ = {
 [node name="interaction" type="Panel" parent="Camera2D/UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 12 )
+custom_styles/panel = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -430,7 +432,7 @@ margin_right = 638.0
 margin_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
@@ -439,12 +441,65 @@ text = "Hewwo!"
 align = 1
 autowrap = true
 
+[node name="opts" type="ScrollContainer" parent="Camera2D/UI/interaction/ibar"]
+margin_left = 858.0
+margin_top = 504.0
+margin_right = 1340.0
+margin_bottom = 755.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="Camera2D/UI/interaction/ibar/opts"]
+margin_right = 482.0
+margin_bottom = 251.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="Camera2D/UI/interaction/ibar/opts/GridContainer"]
+margin_right = 482.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color = Color( 0.360784, 0.360784, 0.360784, 1 )
+custom_colors/font_color_hover = Color( 0.662745, 0.670588, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.509804, 0.447059, 0, 1 )
+text = "OPTION 1"
+flat = true
+
+[node name="Button2" type="Button" parent="Camera2D/UI/interaction/ibar/opts/GridContainer"]
+margin_top = 42.0
+margin_right = 482.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color = Color( 0.360784, 0.360784, 0.360784, 1 )
+custom_colors/font_color_hover = Color( 0.662745, 0.670588, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.509804, 0.447059, 0, 1 )
+text = "OPTION 1"
+flat = true
+
+[node name="Button3" type="Button" parent="Camera2D/UI/interaction/ibar/opts/GridContainer"]
+margin_top = 84.0
+margin_right = 482.0
+margin_bottom = 122.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color = Color( 0.360784, 0.360784, 0.360784, 1 )
+custom_colors/font_color_hover = Color( 0.662745, 0.670588, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.509804, 0.447059, 0, 1 )
+text = "OPTION 1"
+flat = true
+__meta__ = {
+"_editor_description_": "eeeeeeeeee"
+}
+
 [node name="pausemenu" type="Panel" parent="Camera2D/UI"]
 visible = false
 anchor_right = 0.348
 anchor_bottom = 1.0
 margin_right = -0.368042
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 13 )
 
 [node name="Button" type="Button" parent="Camera2D/UI/pausemenu"]
 anchor_left = 0.053

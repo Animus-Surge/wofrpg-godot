@@ -70,8 +70,9 @@ tile_data = PoolIntArray( 0, 13, 0, 1, 13, 0, 2, 13, 0, 3, 13, 0, 4, 13, 0, 5, 1
 position = Vector2( 4605.4, 18835.4 )
 frames = ExtResource( 3 )
 npcid = "iw-siw-wlf_surge"
+npcname = "Surge"
 resize = 0.4
 flipped = true
 
 [node name="player" parent="entities" instance=ExtResource( 1 )]
-position = Vector2( -936, 5229 )
+position = Vector2( 7778, 18578 )

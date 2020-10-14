@@ -1,6 +1,14 @@
 extends KinematicBody2D
 
-const MOVEMENT_SPEED = 750
+#Custom character uses body sprite, graphics gets scaled with custom scaling in (GS-ADV-DETAILS)
+#
+#
+#
+#
+#
+#
+
+var MOVEMENT_SPEED = 750
 
 puppet var vel = Vector2.ZERO
 puppet var pos
@@ -12,8 +20,14 @@ var gvars
 onready var gloader = get_tree().get_root().get_node("gloader")
 
 signal interact()
+signal checkThere()
 
 var ready = false
+
+#custom character variables
+var usecc = false #if set to true hides all but the body graphic and disables colormasks
+
+var charname
 
 var runb
 var runbmask
@@ -25,6 +39,7 @@ var runs
 var runsmask
 var rune
 var runt
+var runtmask
 
 var idleb
 var idlebmask
@@ -36,6 +51,9 @@ var idles
 var idlesmask
 var idlee
 var idlet
+var idletmask
+
+var customScale: Vector2
 
 func _ready():
 	set_physics_process(false)
@@ -58,7 +76,32 @@ func _input(event):
 				emit_signal("interact")
 
 #Get the player details from the server, unless network master. Called for EACH player object
-sync func setplrdetails(data, palette):
+sync func setplrdetails(data: Dictionary, palette):
+	if data.has("custom") and data.custom and data.has("cframes"):
+		usecc = true
+		$graphics.scale = $graphics.scale * data.size
+		$graphics.position = $graphics.position * data.size
+		$graphics/body.visible = false
+		$graphics/spine.visible = false
+		$graphics/head.visible = false
+		$graphics/legs.visible = false
+		$graphics/tail.visible = false
+		$graphics/tdec.visible = false
+		$graphics/wings.visible = false
+		$graphics/edrop.visible = false
+		$graphics/customlooks.frames = load(data.cframes)
+		$graphics/customlooks.play("idle")
+		#TODO: custom stats
+		$graphics.scale = $graphics.scale * data.size
+		$graphics.position = $graphics.position * data.size
+		$"cs-flip".position = $"cs-flip".position * data.size
+		$"cs-flip".scale = $"cs-flip".scale * data.size
+		$"cs-nonflip".position = $"cs-nonflip".position * data.size
+		$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
+		charname = data.cname
+		emit_signal("checkThere")
+		return
+	charname = data.name
 	for tribe in gloader.loadedtribes:
 		if data.appearances.body == tribe.tribename:
 			idleb = load(tribe.appearancesidle[2])
@@ -112,7 +155,8 @@ sync func setplrdetails(data, palette):
 	$graphics/head.get_material().set_shader_param("palette", palette)
 	$graphics/wings.get_material().set_shader_param("palette", palette)
 	$graphics/spine.get_material().set_shader_param("palette", palette)
-
+	print(charname)
+	
 func _physics_process(_delta):
 	if !get_tree().has_network_peer() and ready:
 		if !gvars.paused:
@@ -121,9 +165,10 @@ func _physics_process(_delta):
 			vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 			
 			vel = vect.normalized() * MOVEMENT_SPEED
-			animation()
+			
 			vel = move_and_slide(vel)
 			pos = position
+			animation()
 		else:
 			$graphics/AnimationPlayer.stop()
 	else:
@@ -133,60 +178,65 @@ func _physics_process(_delta):
 			vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 			
 			vel = vect.normalized() * MOVEMENT_SPEED
-			animation()
 			vel = move_and_slide(vel)
 			pos = position
-		else:
 			animation()
+		else:
 			position = pos
+			animation()
 
 func animation():
 	
 	if vel.x > 0:
-		for x in range(8):
+		for x in range(9):
 			$graphics.get_child(x).flip_h = false
 		$"cs-nonflip".disabled = false
 		$"cs-flip".disabled = true
 	elif vel.x < 0:
-		for x in range(8):
+		for x in range(9):
 			$graphics.get_child(x).flip_h = true
 		$"cs-nonflip".disabled = true
 		$"cs-flip".disabled = false
 	
+	
 	if vel == Vector2.ZERO:
-		$graphics/AnimationPlayer.play("test-idle")
-		$graphics/tail.show()
-		$graphics/legs.show()
-		
-		$graphics/body.texture = idleb
-		$graphics/body.get_material().set_shader_param("mask", idlebmask)
-		$graphics/head.texture = idleh
-		$graphics/head.get_material().set_shader_param("mask", idlehmask)
-		$graphics/wings.texture = idlew
-		$graphics/wings.get_material().set_shader_param("mask", idlewmask)
-		$graphics/spine.texture = idles
-		$graphics/spine.get_material().set_shader_param("mask", idlesmask)
-		$graphics/edrop.texture = idlee
-		
-		for x in range(8):
-			$graphics.get_child(x).scale = Vector2(0.503, 0.503)
+		if !usecc:
+			$graphics/AnimationPlayer.play("test-idle")
+			$graphics/tail.show()
+			$graphics/legs.show()
+			
+			$graphics/body.texture = idleb
+			$graphics/body.get_material().set_shader_param("mask", idlebmask)
+			$graphics/head.texture = idleh
+			$graphics/head.get_material().set_shader_param("mask", idlehmask)
+			$graphics/wings.texture = idlew
+			$graphics/wings.get_material().set_shader_param("mask", idlewmask)
+			$graphics/spine.texture = idles
+			$graphics/spine.get_material().set_shader_param("mask", idlesmask)
+			$graphics/edrop.texture = idlee
+			for x in range(8):
+				$graphics.get_child(x).scale = Vector2(0.503, 0.503)
+		else:
+			$graphics/customlooks.play("idle")
 	else:
-		$graphics/AnimationPlayer.play("test-run")
-		$graphics/tail.hide()
-		$graphics/legs.hide()
-		
-		$graphics/body.texture = runb
-		$graphics/body.get_material().set_shader_param("mask", runbmask)
-		$graphics/head.texture = runh
-		$graphics/head.get_material().set_shader_param("mask", runhmask)
-		$graphics/wings.texture = runw
-		$graphics/wings.get_material().set_shader_param("mask", runwmask)
-		$graphics/spine.texture = runs
-		$graphics/spine.get_material().set_shader_param("mask", runsmask)
-		$graphics/edrop.texture = rune
-		
-		for x in range(8):
-			$graphics.get_child(x).scale = Vector2(0.65, 0.65)
+		if !usecc:
+			$graphics/AnimationPlayer.play("test-run")
+			$graphics/tail.hide()
+			$graphics/legs.hide()
+			
+			$graphics/body.texture = runb
+			$graphics/body.get_material().set_shader_param("mask", runbmask)
+			$graphics/head.texture = runh
+			$graphics/head.get_material().set_shader_param("mask", runhmask)
+			$graphics/wings.texture = runw
+			$graphics/wings.get_material().set_shader_param("mask", runwmask)
+			$graphics/spine.texture = runs
+			$graphics/spine.get_material().set_shader_param("mask", runsmask)
+			$graphics/edrop.texture = rune
+			for x in range(8):
+				$graphics.get_child(x).scale = Vector2(0.65, 0.65)
+		else:
+			$graphics/customlooks.play("run")
 
 puppet func interacted(npcid):
 	var idata = gloader.loadNPCInteraction(npcid)

@@ -3,17 +3,27 @@ extends KinematicBody2D
 export (SpriteFrames) var frames
 export (String) var npcid
 
+export(String) var npcname
+
 export (float) var resize = 1
 
 export(bool)var flipped = false
 
 var inboundsPlayer
+var hidden = false
 
 const type = "NPC"
 
 onready var gvars = get_tree().get_root().get_node("globalvars")
 
+func check():
+	if get_parent().get_node("player").charname == npcname:
+		print("Hiding NPC: " + npcname)
+		hidden = true
+		hide()
+
 func _ready():
+	get_parent().get_node("player").connect("checkThere", self, "check")
 	scale = Vector2(resize, resize)
 	$appearance.play()
 	$Label.hide()
@@ -46,4 +56,5 @@ func _on_Area2D_body_exited(body):
 		inboundsPlayer = null
 
 func playerInteract():
-	inboundsPlayer.call("interacted", npcid)
+	if !hidden:
+		inboundsPlayer.call("interacted", npcid)

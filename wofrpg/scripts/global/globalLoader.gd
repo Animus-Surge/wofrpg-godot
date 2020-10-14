@@ -15,7 +15,13 @@ func startLoad():
 	loadSettings()
 	loadAddons()
 	loadTribes()
+	checkDirs()
 	logcat.stdout("All stuff loaded.", 0)
+
+func checkDirs():
+	var dir = Directory.new()
+	if !dir.dir_exists("user://addons/characters"):
+		dir.make_dir_recursive("user://addons/characters")
 
 func loadSettings():
 	var setfile = File.new()
@@ -64,6 +70,28 @@ func loadAddons():
 	var addondir = Directory.new()
 	#TODO
 
+func loadCustom() -> Array:
+	var chars = []
+	var path = "user://addons/characters/"
+	var chardir = Directory.new()
+	chardir.open(path)
+	chardir.list_dir_begin()
+	var file: String = chardir.get_next()
+	while file != "":
+		if !file.begins_with("."):
+			if file.ends_with(".pck"):
+				var err = !ProjectSettings.load_resource_pack(path + file, false)
+				if !err:
+					logcat.stdout("Loaded custom character from addon file " + file, 1)
+					var cf = File.new()
+					var er = cf.open("res://data/customchars/" + file.split(".")[0] + ".json", File.READ)
+					if er == 0:
+						var jr = JSON.parse(cf.get_as_text()).result
+						chars.append(jr)
+				else:
+					logcat.stdout("Problems loading addon file " + file, 2)
+		file = chardir.get_next()
+	return chars
 #All tribes stored in res://data/tribes
 
 func loadTribes():

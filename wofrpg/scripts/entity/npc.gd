@@ -23,6 +23,7 @@ func check():
 		hide()
 
 func _ready():
+# warning-ignore:return_value_discarded
 	get_parent().get_node("player").connect("checkThere", self, "check")
 	scale = Vector2(resize, resize)
 	$appearance.play()

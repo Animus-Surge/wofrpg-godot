@@ -5,10 +5,24 @@
 			"speech":null,
 			"text":"Hewwo!",
 			"face":"cute",
+			"faceAnimated":false,
 			"opts":[
 				{
-					"text":"Close",
-					"goto":"%CLOSE",
+					"text":"Um.. hi?",
+					"goto":"who",
+					"locked":false
+				}
+			]
+		},
+		"who":{
+			"speech":null,
+			"text":"Who you?",
+			"face":"confused",
+			"faceAnimated":true,
+			"opts":[
+				{
+					"text":"I'm %PLAYERNAME%. Who are you?",
+					"goto":"-",
 					"locked":false
 				}
 			]

@@ -11,6 +11,9 @@
 					"text":"Um.. hi?",
 					"goto":"who",
 					"locked":false
+				},
+				{
+					"text":"Hello there! Who are you?"
 				}
 			]
 		},
@@ -22,6 +25,19 @@
 			"opts":[
 				{
 					"text":"I'm %PLAYERNAME%. Who are you?",
+					"goto":"-",
+					"locked":false
+				}
+			]
+		},
+		"whoresp":{
+			"speech":null,
+			"text":"I Surgie. It nice meet you!",
+			"face":"cute",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"It's nice to meet you too!",
 					"goto":"-",
 					"locked":false
 				}

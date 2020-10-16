@@ -13,7 +13,9 @@
 					"locked":false
 				},
 				{
-					"text":"Hello there! Who are you?"
+					"text":"Hello there! Who are you?",
+					"goto":"who2",
+					"locked":false
 				}
 			]
 		},

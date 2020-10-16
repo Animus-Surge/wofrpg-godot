@@ -6,12 +6,8 @@ const WARNING = 2
 const ERROR = 3
 const FATAL = 4
 
-func _ready():
-	logmsg("blah", 0)
-
 func logmsg(message, level: int):
 	var time = OS.get_time()
-	print(time)
 	match level:
 		DEBUG:
 			print("[" + String(time.hour) + ":" + String(time.minute) + ":" + String(time.second) + "|  DEBUG]: " + message)

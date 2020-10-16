@@ -22,18 +22,22 @@ func check():
 		hide()
 
 func _ready():
-# warning-ignore:return_value_discarded
-	get_parent().get_node("player").connect("checkThere", self, "check")
 	scale = Vector2(resize, resize)
 	$appearance.frames = frames
 	$appearance.play()
 	$Label.hide()
 
+func playerInstanced():
+	if !get_tree().has_network_peer():
+	# warning-ignore:return_value_discarded
+		get_parent().get_node("player").connect("checkThere", self, "check")
+
 func _physics_process(_delta):
-	if gvars.paused:
-		$appearance.stop()
-	else:
-		$appearance.play()
+	if !get_tree().has_network_peer():
+		if gvars.paused:
+			$appearance.stop()
+		else:
+			$appearance.play()
 	
 	if flipped:
 		$appearance.flip_h = true

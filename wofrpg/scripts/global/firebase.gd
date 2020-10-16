@@ -11,7 +11,6 @@ const authSU = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" 
 const dburl = "https://" + APIID + ".firebase.io/"
 
 var uid
-var username
 
 signal failed(reason, action)
 signal completed(action)
@@ -43,7 +42,7 @@ func userSignup(email, uname, password):
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
 		logcat.stdout("SIGNUP: OK", logcat.DEBUG)
-		username = uname
+		globalvars.username = uname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.idToken
 		globalvars.loggedIn = true
 		storeToDB("users/" + uname + ".json", {"email":email,"verified":false})
@@ -90,7 +89,7 @@ func loginWithEmail(email):
 		emit_signal("failed", result[3].get_string_from_ascii(), "login")
 	else:
 		logcat.stdout("LOGIN: OK", logcat.DEBUG)
-		username = tuname
+		globalvars.username = tuname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.localId
 		tuname = ""
 		tpass = ""

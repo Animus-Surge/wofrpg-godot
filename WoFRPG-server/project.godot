@@ -16,11 +16,13 @@ _global_script_class_icons={
 [application]
 
 config/name="WoFRPG-server"
+run/main_scene="res://testworld.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 lc="*res://scripts/logcat.gd"
+State="*res://scripts/state.gd"
 
 [rendering]
 

@@ -9,6 +9,8 @@ onready var test = get_node("/root/Test")
 
 const LOCALHOST = "127.0.0.1"
 
+signal doneLoading()
+
 var plrpalette: ImageTexture setget setPalette
 var plrdata:Dictionary setget setPlayerData
 
@@ -23,12 +25,17 @@ var uiShowing = false
 
 var debug = false
 var loggedIn = false
+var username = ""
 
 var paused = false
 
 var current = "loadscreen"
 
 func _ready():
+	var mpstate = Node.new()
+	mpstate.set_script(load("res://scripts/global/state.gd"))
+	mpstate.name = "State"
+	get_tree().get_root().add_child(mpstate)
 	if !debug:
 		if is_instance_valid(test):
 			if test.debug:
@@ -36,7 +43,7 @@ func _ready():
 		print("==============> GAME START <==============")
 		gloader.startLoad()
 		cfm.startLoad()
-		load_scene("res://scenes/gamesys.tscn")
+		load_scene("res://scenes/useracct.tscn")
 
 func _complete():
 	if test.testscenes:
@@ -45,7 +52,7 @@ func _complete():
 		logcat.stdout("DEBUG MODE ACTIVE", 0)
 	else:
 		fb = get_tree().get_root().get_node("fb")
-		load_scene("res://scenes/gamesys.tscn")
+		load_scene("res://scenes/useracct.tscn")
 
 func debugComplete():
 	gloader.startLoad()
@@ -106,6 +113,7 @@ func _process(_delta):
 			yield(timer, "timeout")
 			get_node("/root").add_child(resource.instance())
 			get_node("/root/loadscreen").hide()
+			emit_signal("doneLoading")
 			break
 		elif err == OK:
 			#print("Beep boop")

@@ -61,7 +61,7 @@ func _ready():
 		$ui/unamepanel/Label.text = \"DEBUG\"
 	else:
 		if globalvars.loggedIn:
-			$ui/unamepanel/Label.text = fb.username
+			$ui/unamepanel/Label.text = globalvars.username
 		else:
 			$ui/unamepanel.hide()
 			$ui/toolbar/mp.disabled = true
@@ -155,7 +155,14 @@ func spPressed(): #assumes empty character isn't selected
 	globalvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func mpPressed():
-	pass
+	if globalvars.username != \"\":
+		var cdata = cfm.loadCharacter(selectedPlayer)
+		globalvars.setPalette(cdata[1])
+		globalvars.setPlayerData(cdata[0])
+		var gl = get_node(\"/root/State\")
+		gl.join(\"127.0.0.1\")
+	else:
+		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
 
 func rmcharPressed():
 # warning-ignore:return_value_discarded
@@ -2057,6 +2064,7 @@ __meta__ = {
 }
 
 [node name="cchardialogue" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 31 )
@@ -2117,8 +2125,8 @@ margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
 text = "Play"
 flat = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
@@ -2152,6 +2160,7 @@ flat = true
 [connection signal="toggled" from="ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spinetoggle" to="ui/character" method="spineToggle"]
 [connection signal="pressed" from="ui/toolbar/TextureButton" to="." method="cbpressed"]
 [connection signal="pressed" from="ui/toolbar/sp" to="." method="spPressed"]
+[connection signal="pressed" from="ui/toolbar/mp" to="." method="mpPressed"]
 [connection signal="pressed" from="ui/toolbar/save" to="." method="characterSave"]
 [connection signal="pressed" from="ui/toolbar/cchar" to="." method="loadCustomCharacter"]
 [connection signal="pressed" from="ui/toolbar/rmchar" to="." method="rmcharPressed"]

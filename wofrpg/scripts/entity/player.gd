@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #Custom character uses body sprite, graphics gets scaled with custom scaling in (GS-ADV-DETAILS)
-#
+# Multiplayer data: [username, {playerdata}]
 #
 #
 #
@@ -12,22 +12,20 @@ var MOVEMENT_SPEED = 750
 
 puppet var vel = Vector2.ZERO
 puppet var pos
-puppet var username
 
 const type = "PLAYER"
 
-var gvars
+onready var gvars = get_tree().get_root().get_node("globalvars")
 onready var gloader = get_tree().get_root().get_node("gloader")
 
 signal interact()
 signal checkThere()
 
-var ready = false
-
 #custom character variables
 puppet var usecc = false #if set to true hides all but the body graphic and disables colormasks
 
 var charname
+var username
 
 var runb
 var runbmask
@@ -56,18 +54,13 @@ var idletmask
 var customScale: Vector2
 
 func _ready():
-	set_physics_process(false)
-	set_process(true)
-	$"cs-flip".disabled = true
-
-func _process(_delta):
-	if is_instance_valid(gvars):
+	if !get_tree().has_network_peer() or is_network_master():
 		setplrdetails(gvars.plrdata, gvars.plrpalette)
-		set_process(false);
-		ready = true
-		set_physics_process(true)
-	else:
-		gvars = get_tree().get_root().get_node("globalvars")
+		$Label.hide()
+		for entity in get_parent().get_children():
+			if entity.type == "NPC":
+				entity.playerInstanced()
+		
 
 func _input(event):
 	if !gvars.paused:
@@ -75,8 +68,17 @@ func _input(event):
 			if event.scancode == KEY_F and event.pressed:
 				emit_signal("interact")
 
-#Get the player details from the server, unless network master. Called for EACH player object
-puppet func setplrdetails(data: Dictionary, palette):
+func updateDetails(data:Array, palette):
+	var pal = ImageTexture.new()
+	pal.create_from_image(palette)
+	setplrdetails(data[1], pal)
+	$Label.text = data[2]
+	username = data[2]
+	$Label.show()
+
+func setplrdetails(data: Dictionary, palette):
+	gloader = get_tree().get_root().get_node("gloader")
+	gvars = get_tree().get_root().get_node("globalvars")
 	if data.has("custom") and data.custom and data.has("cframes"):
 		usecc = true
 		$graphics.scale = $graphics.scale * data.size
@@ -157,7 +159,7 @@ puppet func setplrdetails(data: Dictionary, palette):
 	$graphics/spine.get_material().set_shader_param("palette", palette)
 
 func _physics_process(_delta):
-	if !get_tree().has_network_peer() and ready:
+	if !get_tree().has_network_peer():
 		if !gvars.paused:
 			var vect = Vector2()
 			vect.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -173,14 +175,17 @@ func _physics_process(_delta):
 			$graphics/customlooks.stop()
 	else:
 		if is_network_master():
-			var vect = Vector2()
-			vect.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-			vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-			
-			vel = vect.normalized() * MOVEMENT_SPEED
-			vel = move_and_slide(vel)
-			pos = position
-			animation()
+			if !$Camera2D/UI.uishowing and !$Camera2D/UI.interactionShowing:
+				var vect = Vector2()
+				vect.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+				vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+				
+				vel = vect.normalized() * MOVEMENT_SPEED
+				vel = move_and_slide(vel)
+				pos = position
+				animation()
+			else:
+				vel = Vector2.ZERO
 		else:
 			position = pos
 			animation()
@@ -197,7 +202,6 @@ func animation():
 			$graphics.get_child(x).flip_h = true
 		$"cs-nonflip".disabled = true
 		$"cs-flip".disabled = false
-	
 	
 	if vel == Vector2.ZERO:
 		if !usecc:
@@ -238,7 +242,7 @@ func animation():
 		else:
 			$graphics/customlooks.play("run")
 
-remote func interacted(npcid):
+func interacted(npcid):
 	var idata = gloader.loadNPCInteraction(npcid)
 	if idata != {}:
 		$Camera2D/UI.showInteraction(idata, npcid)

@@ -3,11 +3,14 @@ extends Control
 onready var test = get_tree().get_root().get_node("Test")
 
 var interactionShowing = false
+var uishowing = false
 
 func _ready():
 	$interaction.hide()
 
 func quit():
+	if get_tree().has_network_peer():
+		get_tree().set_network_peer(null) #AKA: disconnect the player
 	var gvars = get_tree().get_root().get_node("globalvars")
 	if !is_instance_valid(test):
 		gvars.load_scene("res://scenes/menus.tscn")

@@ -12,6 +12,10 @@ var itemdict: Array
 onready var logcat = get_tree().get_root().get_node("logcat")
 
 func startLoad():
+	get_tree().connect("connected_to_server", self, "connected")
+	get_tree().connect("connection_failed", self, "failed")
+	get_tree().connect("server_disconnected", self, "disconnected")
+	
 	loadSettings()
 	loadAddons()
 	loadTribes()
@@ -118,3 +122,37 @@ func loadNPCInteraction(npcid) -> Dictionary:
 		return {}
 	var interaction = JSON.parse(icfile.get_as_text()).result
 	return interaction
+
+#multiplayer handling
+#All data will be sent to the server through the "register" function
+
+signal success()
+signal failed()
+signal disconnected()
+
+const defaultPort = 48823
+
+var players = {}
+
+func join(ip, port):
+	pass
+
+func connected():
+	emit_signal("success")
+
+func failed():
+	get_tree().set_network_peer(null)
+	emit_signal("failed")
+
+func disconnected():
+	get_tree().set_network_peer(null)
+	emit_signal("disconnected")
+
+puppet func register(id, data):
+	players[id] = data
+
+puppet func unregister(id):
+	players.erase(id)
+
+func getPlayers() -> Dictionary:
+	return players

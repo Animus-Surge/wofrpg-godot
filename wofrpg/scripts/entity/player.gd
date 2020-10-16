@@ -25,7 +25,7 @@ signal checkThere()
 var ready = false
 
 #custom character variables
-var usecc = false #if set to true hides all but the body graphic and disables colormasks
+puppet var usecc = false #if set to true hides all but the body graphic and disables colormasks
 
 var charname
 
@@ -76,7 +76,7 @@ func _input(event):
 				emit_signal("interact")
 
 #Get the player details from the server, unless network master. Called for EACH player object
-sync func setplrdetails(data: Dictionary, palette):
+puppet func setplrdetails(data: Dictionary, palette):
 	if data.has("custom") and data.custom and data.has("cframes"):
 		usecc = true
 		$graphics.scale = $graphics.scale * data.size
@@ -155,8 +155,7 @@ sync func setplrdetails(data: Dictionary, palette):
 	$graphics/head.get_material().set_shader_param("palette", palette)
 	$graphics/wings.get_material().set_shader_param("palette", palette)
 	$graphics/spine.get_material().set_shader_param("palette", palette)
-	print(charname)
-	
+
 func _physics_process(_delta):
 	if !get_tree().has_network_peer() and ready:
 		if !gvars.paused:
@@ -239,7 +238,7 @@ func animation():
 		else:
 			$graphics/customlooks.play("run")
 
-puppet func interacted(npcid):
+remote func interacted(npcid):
 	var idata = gloader.loadNPCInteraction(npcid)
 	if idata != {}:
 		$Camera2D/UI.showInteraction(idata, npcid)

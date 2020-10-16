@@ -21,6 +21,7 @@
 [ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=19]
 [ext_resource path="res://images/character/nigw/idle/nw-body-mask.png" type="Texture" id=20]
 [ext_resource path="res://images/character/nigw/idle/nw-legs-mask.png" type="Texture" id=21]
+[ext_resource path="res://capsule.tres" type="Shape2D" id=22]
 [ext_resource path="res://images/character/nigw/idle/nw-wings-mask.png" type="Texture" id=23]
 [ext_resource path="res://images/character/nigw/idle/nw-tail-mask.png" type="Texture" id=24]
 [ext_resource path="res://images/character/nigw/idle/nw-head-mask.png" type="Texture" id=25]
@@ -212,14 +213,10 @@ tracks/4/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=10]
-radius = 11.5142
-height = 142.466
-
 [sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0, 0, 0, 0.882353 )
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=12]
 resource_name = "iw-siw-wlf_surge-scared"
 length = 0.6
 loop = true
@@ -237,11 +234,11 @@ tracks/0/keys = {
 "values": [ ExtResource( 16 ), ExtResource( 18 ) ]
 }
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=13]
 size = 30
 font_data = ExtResource( 8 )
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0, 0, 0, 0.588235 )
 
 [node name="player" type="KinematicBody2D"]
@@ -249,7 +246,7 @@ scale = Vector2( 1.99748, 1.99748 )
 script = ExtResource( 11 )
 
 [node name="graphics" type="Node2D" parent="."]
-position = Vector2( 0, -92 )
+position = Vector2( 0, -100 )
 
 [node name="spine" type="Sprite" parent="graphics"]
 material = SubResource( 1 )
@@ -314,14 +311,14 @@ anims/test-idle = SubResource( 8 )
 anims/test-run = SubResource( 9 )
 
 [node name="cs-nonflip" type="CollisionShape2D" parent="."]
-position = Vector2( 40, 4 )
+position = Vector2( 40, 0 )
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = ExtResource( 22 )
 
 [node name="cs-flip" type="CollisionShape2D" parent="."]
-position = Vector2( -40, 4 )
+position = Vector2( -40, 0 )
 rotation = 1.5708
-shape = SubResource( 10 )
+shape = ExtResource( 22 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -89.1116 )
@@ -415,7 +412,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/UI/interaction/face"]
 anims/iw-siw-wlf_surge-confused = ExtResource( 17 )
-anims/iw-siw-wlf_surge-scared = SubResource( 14 )
+anims/iw-siw-wlf_surge-scared = SubResource( 12 )
 
 [node name="ibar" type="TextureRect" parent="Camera2D/UI/interaction"]
 anchor_right = 1.0
@@ -458,7 +455,7 @@ margin_right = 638.0
 margin_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
@@ -527,7 +524,7 @@ visible = false
 anchor_right = 0.348
 anchor_bottom = 1.0
 margin_right = -0.368042
-custom_styles/panel = SubResource( 13 )
+custom_styles/panel = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Camera2D/UI/pausemenu"]
 anchor_left = 0.053

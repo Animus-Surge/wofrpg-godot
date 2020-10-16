@@ -25,7 +25,7 @@
 			"opts":[
 				{
 					"text":"I'm %PLAYERNAME%. Who are you?",
-					"goto":"-",
+					"goto":"whoresp",
 					"locked":false
 				}
 			]

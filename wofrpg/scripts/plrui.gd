@@ -84,6 +84,8 @@ func ipart(id):
 		$interaction/ibar/opts/GridContainer.add_child(btn)
 
 func buttonPress(goto: String):
+	if goto.find("%QUEST:") != -1:
+		pass
 	match goto:
 		"%CLOSE":
 			hideInteraction()

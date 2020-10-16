@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://capsule.tres" type="Shape2D" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="players" type="Node2D" parent="."]
+
+[node name="player" type="KinematicBody2D" parent="."]
+
+[node name="cs-nonflip" type="CollisionShape2D" parent="player"]
+position = Vector2( 40, 0 )
+rotation = 1.5708
+shape = ExtResource( 1 )
+
+[node name="cs-flip" type="CollisionShape2D" parent="player"]
+position = Vector2( -40, 0 )
+rotation = 1.5708
+shape = ExtResource( 1 )

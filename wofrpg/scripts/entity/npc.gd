@@ -18,7 +18,6 @@ onready var gvars = get_tree().get_root().get_node("globalvars")
 
 func check():
 	if get_parent().get_node("player").charname == npcname:
-		print("Hiding NPC: " + npcname)
 		hidden = true
 		hide()
 
@@ -26,6 +25,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 	get_parent().get_node("player").connect("checkThere", self, "check")
 	scale = Vector2(resize, resize)
+	$appearance.frames = frames
 	$appearance.play()
 	$Label.hide()
 

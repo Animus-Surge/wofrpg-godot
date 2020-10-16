@@ -1,0 +1,23 @@
+{
+	"cname":"asteri",
+	"interaction":{
+		"start":{
+			"speech":null,
+			"text":"Oh hi! I don't remember you from around here... heh you look so confused.",
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"What are you?",
+					"goto":"%CLOSE",
+					"locked":false
+				},
+				{
+					"text":"Who are you?",
+					"goto":"%CLOSE",
+					"locked":false
+				}
+			]
+		}
+	}
+}

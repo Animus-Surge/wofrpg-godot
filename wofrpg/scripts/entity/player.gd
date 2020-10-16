@@ -11,7 +11,7 @@ extends KinematicBody2D
 var MOVEMENT_SPEED = 750
 
 puppet var vel = Vector2.ZERO
-puppet var pos
+puppet var pos = Vector2()
 
 const type = "PLAYER"
 
@@ -55,6 +55,7 @@ var customScale: Vector2
 
 func _ready():
 	if !get_tree().has_network_peer() or is_network_master():
+		$Camera2D.current = true
 		setplrdetails(gvars.plrdata, gvars.plrpalette)
 		$Label.hide()
 		for entity in get_parent().get_children():
@@ -70,7 +71,6 @@ func _input(event):
 
 func updateDetails(data:Array, palette):
 	var pal = ImageTexture.new()
-	pal.create_from_image(palette)
 	setplrdetails(data[1], pal)
 	$Label.text = data[2]
 	username = data[2]
@@ -94,12 +94,12 @@ func setplrdetails(data: Dictionary, palette):
 		$graphics/customlooks.frames = load(data.cframes)
 		$graphics/customlooks.play("idle")
 		#TODO: custom stats
-		$graphics.scale = $graphics.scale * data.size
-		$graphics.position = $graphics.position * data.size
-		$"cs-flip".position = $"cs-flip".position * data.size
-		$"cs-flip".scale = $"cs-flip".scale * data.size
-		$"cs-nonflip".position = $"cs-nonflip".position * data.size
-		$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
+		#$graphics.scale = $graphics.scale * data.size
+		#$graphics.position = $graphics.position * data.size
+		#$"cs-flip".position = $"cs-flip".position * data.size
+		#$"cs-flip".scale = $"cs-flip".scale * data.size
+		#$"cs-nonflip".position = $"cs-nonflip".position * data.size
+		#$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
 		charname = data.cname
 		emit_signal("checkThere")
 		return
@@ -184,6 +184,9 @@ func _physics_process(_delta):
 				vel = move_and_slide(vel)
 				pos = position
 				animation()
+				
+				rset_unreliable("pos", position)
+				rset_unreliable("vel", vel)
 			else:
 				vel = Vector2.ZERO
 		else:
@@ -191,7 +194,6 @@ func _physics_process(_delta):
 			animation()
 
 func animation():
-	
 	if vel.x > 0:
 		for x in range(9):
 			$graphics.get_child(x).flip_h = false

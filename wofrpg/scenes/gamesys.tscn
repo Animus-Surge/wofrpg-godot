@@ -745,6 +745,7 @@ func _ready():
 func _visibility_changed():
 	if visible:
 		$panel/Button.disabled = true
+		$panel/Button2.disabled = true
 		listCharacters()
 
 func listCharacters():
@@ -756,6 +757,17 @@ func listCharacters():
 func onBackPressed():
 	hide()
 
+func ccharmp():
+	var globalvars = get_node(\"/root/globalvars\")
+	if globalvars.username != \"\":
+		var cdata = chars[$panel/ItemList.get_selected_items()[0]]
+		globalvars.setPlayerData(cdata)
+		globalvars.setPalette(ImageTexture.new())
+		var gl = get_node(\"/root/State\")
+		gl.join(\"127.0.0.1\")
+	else:
+		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
+
 func ccharPlay():
 	var gvars = get_tree().get_root().get_node(\"globalvars\")
 	gvars.setPlayerData(chars[$panel/ItemList.get_selected_items()[0]])
@@ -763,6 +775,9 @@ func ccharPlay():
 
 func onListSelected(_index):
 	$panel/Button.disabled = false
+	var gvars = get_node(\"/root/globalvars\")
+	if gvars.loggedIn:
+		$panel/Button2.disabled = false
 "
 
 [node name="gamesys" type="Control"]
@@ -2064,7 +2079,6 @@ __meta__ = {
 }
 
 [node name="cchardialogue" type="Panel" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 31 )
@@ -2123,10 +2137,19 @@ margin_top = 587.0
 margin_right = 228.0
 margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
-text = "Play"
+text = "Singleplayer"
 flat = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+
+[node name="Button2" type="Button" parent="cchardialogue/panel"]
+margin_left = 391.014
+margin_top = 587.0
+margin_right = 579.014
+margin_bottom = 638.0
+custom_fonts/font = ExtResource( 33 )
+text = "Multiplayer"
+flat = true
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]
@@ -2170,3 +2193,4 @@ flat = true
 [connection signal="item_selected" from="cchardialogue/panel/ItemList" to="cchardialogue" method="onListSelected"]
 [connection signal="pressed" from="cchardialogue/panel/TextureButton" to="cchardialogue" method="onBackPressed"]
 [connection signal="pressed" from="cchardialogue/panel/Button" to="cchardialogue" method="ccharPlay"]
+[connection signal="pressed" from="cchardialogue/panel/Button2" to="cchardialogue" method="ccharmp"]

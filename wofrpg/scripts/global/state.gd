@@ -2,6 +2,9 @@ extends Node
 
 onready var logcat = get_node("/root/logcat")
 
+var ipaddr
+var ipport
+
 signal success()
 signal failed()
 signal disconnected()
@@ -19,9 +22,11 @@ const defaultPort = 48823
 var players = {}
 
 func join(ip, port = defaultPort):
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(ip, port)
-	get_tree().network_peer = peer
+	ipaddr = ip
+	ipport = port
+	var gvars = get_node("/root/globalvars")
+	gvars.connect("doneLoading", self, "loaded")
+	gvars.load_scene("res://scenes/testworld.tscn")
 
 func connected():
 	emit_signal("success")
@@ -48,11 +53,12 @@ func getPlayers() -> Dictionary:
 
 func prestart():
 	var gvars = get_node("/root/globalvars")
-	gvars.connect("doneLoading", self, "loaded")
-	gvars.load_scene("res://scenes/testworld.tscn")
+	rpc_id(1, "register", [0, gvars.plrdata, gvars.username])
+	rpc_id(1, "populate")
 
 func loaded():
 	var gvars = get_node("/root/globalvars")
 	gvars.disconnect("doneLoading", self, "loaded")
-	rpc_id(1, "register", [0, gvars.plrdata, gvars.username], gvars.plrpalette.get_data())
-	rpc_id(1, "populate")
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_client(ipaddr, ipport)
+	get_tree().network_peer = peer

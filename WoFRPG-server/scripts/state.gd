@@ -25,21 +25,21 @@ func _peer_connect(id):
 	lc.logmsg("Player connected with id: " + String(id), 1)
 
 func _peer_disconnect(id):
-	if players.has(id):
-		rpc("unregister", id)
-		$"/root/testworld".rpc("erasePlayer", id)
+	rpc("unregister", id)
+	$"/root/testworld".rpc("erasePlayer", id)
+	$"/root/testworld".erasePlayer(id)
 	
 	lc.logmsg("Player " + String(id) + " disconnected", 1)
 
-remote func register(playerdata, palette):
+remote func register(playerdata):
 	lc.logmsg("Registering player...", 0)
 	var cid = get_tree().get_rpc_sender_id()
 	playerdata[0] = cid
-	players[cid] = {"data":playerdata,"palette":palette}
+	players[String(cid)] = {"data":playerdata}
 	for id in players:
-		rpc_id(cid, "register", id, players[id])
+		rpc_id(cid, "register", id, players[String(id)])
 	
-	rpc("register", cid, players[cid])
+	rpc("register", cid, players[String(cid)])
 	lc.logmsg("Registered player " + String(cid), lc.INFO)
 
 puppetsync func unregister(id):
@@ -53,10 +53,10 @@ remote func populate():
 	var cid = get_tree().get_rpc_sender_id()
 	var wld = get_node("/root/testworld")
 	
-	for player in wld.get_node("players").get_children():
+	for player in wld.get_node("entities").get_children():
 		wld.rpc_id(cid, "spawn", player.position, player.get_network_master(), players[String(player.name)].data, players[String(player.name)].palette)
 	
-	wld.rpc("spawn", rvec(250, 250), cid, players[cid].data, players[cid].palette)
+	wld.rpc("spawn", rvec(250, 250), cid, players[String(cid)].data)
 
 func rvec(x, y) -> Vector2:
 	return Vector2(randf() * x, randf() * y)

@@ -325,7 +325,6 @@ position = Vector2( 0, -89.1116 )
 scale = Vector2( 1.15028, 1.15028 )
 z_index = 100
 z_as_relative = false
-current = true
 zoom = Vector2( 2.3, 2.3 )
 
 [node name="UI" type="Control" parent="Camera2D"]

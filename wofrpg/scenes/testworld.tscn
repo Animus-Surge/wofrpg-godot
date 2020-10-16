@@ -13,12 +13,16 @@ script/source = "extends Node
 onready var plr = load(\"res://objects/entity/player.tscn\")
 
 func _ready():
+	var timer:Timer = get_node(\"/root/timer\")
+	timer.wait_time = 1.5
+	timer.start()
+	yield(timer, \"timeout\")
 	if !get_tree().has_network_peer():
 		$entities.add_child(plr.instance())
 	var gvars = get_tree().get_root().get_node(\"globalvars\")
 	gvars.current = \"testworld\"
 
-puppet func spawn(pos, id, data, palette):
+puppet func spawn(pos, id, data):
 	var player = plr.instance()
 	
 	player.position = pos
@@ -26,7 +30,7 @@ puppet func spawn(pos, id, data, palette):
 	player.name = String(id)
 	
 	$entities.add_child(player)
-	player.updateDetails(data, palette)
+	player.updateDetails(data, null)
 
 puppet func erasePlayer(id):
 	$entities.get_node(id).queue_free()

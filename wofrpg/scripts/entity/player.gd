@@ -94,14 +94,15 @@ func setplrdetails(data: Dictionary, palette):
 		$graphics/customlooks.frames = load(data.cframes)
 		$graphics/customlooks.play("idle")
 		#TODO: custom stats
-		#$graphics.scale = $graphics.scale * data.size
-		#$graphics.position = $graphics.position * data.size
-		#$"cs-flip".position = $"cs-flip".position * data.size
-		#$"cs-flip".scale = $"cs-flip".scale * data.size
-		#$"cs-nonflip".position = $"cs-nonflip".position * data.size
-		#$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
-		charname = data.cname
-		emit_signal("checkThere")
+		if !gvars.loggedIn:
+			$graphics.scale = $graphics.scale * data.size
+			$graphics.position = $graphics.position * data.size
+			$"cs-flip".position = $"cs-flip".position * data.size
+			$"cs-flip".scale = $"cs-flip".scale * data.size
+			$"cs-nonflip".position = $"cs-nonflip".position * data.size
+			$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
+			charname = data.cname
+			emit_signal("checkThere")
 		return
 	charname = data.name
 	for tribe in gloader.loadedtribes:

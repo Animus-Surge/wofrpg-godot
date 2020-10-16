@@ -543,9 +543,9 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="."]
 margin_left = -87.6104
-margin_top = -296.373
+margin_top = -228.287
 margin_right = 95.3896
-margin_bottom = -264.373
+margin_bottom = -196.287
 custom_fonts/font = ExtResource( 15 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 2

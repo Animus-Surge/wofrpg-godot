@@ -26,6 +26,7 @@ var uiShowing = false
 var debug = false
 var loggedIn = false
 var username = ""
+var splr = false
 
 var paused = false
 

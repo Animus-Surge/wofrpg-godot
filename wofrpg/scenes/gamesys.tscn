@@ -150,11 +150,16 @@ func slotPressed(slot: int):
 
 func spPressed(): #assumes empty character isn't selected
 	var cdata = cfm.loadCharacter(selectedPlayer)
+	globalvars.splr = true
 	globalvars.setPalette(cdata[1])
 	globalvars.setPlayerData(cdata[0])
 	globalvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func mpPressed():
+	if true:
+		$dialogue.showDialogue(\"Oops!\", \"This feature currently is in the works, and therefore not available at this time.\", 0)
+		return
+	globalvars.splr = false
 	if globalvars.username != \"\":
 		var cdata = cfm.loadCharacter(selectedPlayer)
 		globalvars.setPalette(cdata[1])

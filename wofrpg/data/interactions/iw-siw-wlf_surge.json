@@ -1,5 +1,16 @@
 {
 	"cname":"Surge",
+	"startingPoint":{
+		"point1":{
+			"position":"start",
+			"condition":{
+				"variable":{
+					"name":"nevermet",
+					"value":true
+				}
+			}
+		}
+	},
 	"interaction":{
 		"start":{
 			"speech":null,
@@ -13,8 +24,8 @@
 					"locked":false
 				},
 				{
-					"text":"Hello there! Who are you?",
-					"goto":"who2",
+					"text":"Hey there little guy!",
+					"goto":"who",
 					"locked":false
 				}
 			]
@@ -40,8 +51,187 @@
 			"opts":[
 				{
 					"text":"It's nice to meet you too!",
-					"goto":"-",
+					"goto":"main1",
 					"locked":false
+				},
+				{
+					"text":"Oh... someone's looking for you.",
+					"goto":"look1",
+					"locked":true,
+					"condition":{
+						"variable":{
+							"name":"quest",
+							"value":"TODO"
+						}
+					}
+				}
+			]
+		},
+		"look1":{
+			"speech":null,
+			"text":"Oh... um... who?",
+			"face":"confused",
+			"faceAnimated":true,
+			"opts":[
+				{
+					"text":"An orange SkyWing's been looking for a dragon named Surge.",
+					"goto":"look2",
+					"locked":false
+				}
+			]
+		},
+		"look2":{
+			"text":"Oh, dat my master. Where she?",
+			"face":"norm",
+			"faceAnimated":false,
+			"speech":null,
+			"opts":[
+				{
+					"text":"She's over by *insert shop name here*",
+					"goto":"look21",
+					"locked":false
+				},
+				{
+					"text":"I can take you to her if you'd like",
+					"locked":false,
+					"goto":"look3"
+				}
+			]
+		},
+		"look21":{
+			"speech":null,
+			"text":"Oh.",
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"I can take you to her if you'd like",
+					"locked":false,
+					"goto":"look3"
+				}
+			]
+		},
+		"look3":{
+			"speech":null,
+			"text":"Yeah! Take to her?",
+			"face":"cute",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"Yeah. Just follow me.",
+					"locked":false,
+					"goto":"lookfin"
+				}
+			]
+		},
+		"lookfin":{
+			"speech":null,
+			"text":"Okay!",
+			"face":"cute",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"[continue]",
+					"locked":false,
+					"goto":"%CLOSE"
+				}
+			]
+		},
+		"main1":{
+			"speech":null,
+			"text":"*silent*",
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"So... what are you doing here all alone?",
+					"locked":false,
+					"goto":"main11"
+				},
+				{
+					"text":"What are you?",
+					"locked":false,
+					"goto":"main12"
+				},
+				{
+					"text":"Why do you have a collar?",
+					"locked":false,
+					"goto":"main13"
+				}
+			]
+		},
+		"main11":{
+			"speech":null,
+			"text":"Got lost... dunno where master go.",
+			"face":"sad",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"Oh... well I can try to go find her if you'd like.",
+					"locked":false,
+					"goto":"main2"
+				}
+			]
+		},
+		"main12":{
+			"speech":null,
+			"text":"Doggie an' dwagon.",
+			"face":"cute",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"Ah... why are you here all alone?",
+					"locked":false,
+					"goto":"main11"
+				},
+				{
+					"text":"Oh. Why do you have a collar?",
+					"locked":false,
+					"goto":"main13"
+				}
+			]
+		},
+		"main13":{
+			"speech":null,
+			"text":"'Cause master said so. I servant.",
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"Oh. What are you then?",
+					"locked":false,
+					"goto":"main12"
+				},
+				{
+					"text":"I see... why are you here all alone?",
+					"locked":false,
+					"goto":"main11"
+				}
+			]
+		},
+		"main2":{
+			"text":"Yeah?",
+			"speech":null,
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"Of course.",
+					"locked":false,
+					"goto":"main3"
+				}
+			]
+		},
+		"main3":{
+			"text":"Okay!",
+			"speech":null,
+			"face":"cute",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"I'll be back in a jiffy.",
+					"locked":false,
+					"goto":"%CLOSE"
 				}
 			]
 		}

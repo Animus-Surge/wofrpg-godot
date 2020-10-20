@@ -1,0 +1,35 @@
+onEnter:
+
+point START if NEVERMET is true
+point QPROG if NEVERMET is false && CURRENTQUESTNAME is "cactihelp"
+
+endonEnter;
+onExit:
+
+func1:
+do:
+startquest "cactihelp"
+enddo;
+end;
+
+endonExit;
+
+points:
+
+point START:
+
+$text: "Oh hi!"
+$face: warm_smile
+
+$options: 
+
+opt:
+$text: "Who are you?"
+$to: opt1
+endopt;
+
+endoptions;
+
+endpoint;
+
+endpoints;

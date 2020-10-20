@@ -1,6 +1,6 @@
 {
 	"cname":"Surge",
-	"startingPoint":{
+	"onEnter":{
 		"point1":{
 			"position":"start",
 			"condition":{
@@ -10,6 +10,9 @@
 				}
 			}
 		}
+	},
+	"onexit":{
+		"note":"todo"
 	},
 	"interaction":{
 		"start":{

@@ -1,5 +1,22 @@
 {
 	"cname":"asteri",
+	"onEnter":{
+		"point1":{
+			"position":"start",
+			"condition":{
+				"variable":"nevermet",
+				"value":true
+			}
+		}
+	},
+	"onexit":{
+		"func1":{
+			"do":"startquest",
+			"args":[
+				"cactihelp"
+			]
+		}
+	},
 	"interaction":{
 		"start":{
 			"speech":null,

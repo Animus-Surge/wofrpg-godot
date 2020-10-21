@@ -149,7 +149,7 @@
 		},
 		"main3":{
 			"speech":null,
-			"text":"Thank you!",
+			"text":"Thank you so much!",
 			"face":"smile",
 			"faceAnimated":false,
 			"opts":[
@@ -170,6 +170,19 @@
 					"text":"Alright, I will",
 					"locked":false,
 					"goto":"%CLOSE"
+				}
+			]
+		},
+		"main21":{
+			"speech":null,
+			"text":"Yep! And for once... he's searchin' the ground like he lost one of his rubies.",
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[
+				{
+					"text":"Continue",
+					"locked":false,
+					"goto":"main21a"
 				}
 			]
 		}

@@ -1,35 +1,27 @@
 onEnter:
 
-point START if NEVERMET is true
-point QPROG if NEVERMET is false && CURRENTQUESTNAME is "cactihelp"
+	setvar charname to: "Asteri"
 
-endonEnter;
+	goto pos: Start if TRUE;
+	goto pos: Quest if FALSE;
+
+end;
 onExit:
 
-func1:
-do:
-startquest "cactihelp"
-enddo;
+	setvar currentQuest to: "cactihelp" if TRUE;
+
 end;
 
-endonExit;
+pos Start:
+	text: "Oh hi! I don't remember you from around here. Heh... you look so confused."
+	speech: null
+	face: smile %anim
 
-points:
-
-point START:
-
-$text: "Oh hi!"
-$face: warm_smile
-
-$options: 
-
-opt:
-$text: "Who are you?"
-$to: opt1
-endopt;
-
-endoptions;
-
-endpoint;
-
-endpoints;
+	opts:[
+		0:
+			text: "What are you?"
+			goto pos: what if CLICKED
+			locked: FALSE
+		end;
+	]
+end;

@@ -574,8 +574,8 @@ script/source = "extends ColorPickerButton
 export (int) var partid
 
 func _color_changed(color):
-	get_node(\"../../../..\").call(\"colorChanged\", color, partid)
-"
+	.color_changed(color)
+	get_node(\"../../../..\").call(\"colorChanged\", color, partid)"
 
 [sub_resource type="ShaderMaterial" id=20]
 shader = ExtResource( 12 )
@@ -2153,8 +2153,8 @@ margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
 text = "Multiplayer"
 flat = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

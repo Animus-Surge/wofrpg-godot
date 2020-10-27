@@ -1,8 +1,5 @@
 extends Control
 
-onready var test = get_tree().get_root().get_node("Test")
-
-var interactionShowing = false
 var uishowing = false
 
 func _ready():
@@ -12,85 +9,110 @@ func quit():
 	if get_tree().has_network_peer():
 		get_tree().set_network_peer(null) #AKA: disconnect the player
 	var gvars = get_tree().get_root().get_node("globalvars")
-	if !is_instance_valid(test):
-		gvars.load_scene("res://scenes/menus.tscn")
-		gvars.paused = false
-	else:
-		if test.testscenes and gvars.debug:
-			get_tree().quit(0)
-		else: #TODO: make this better
-			#print("blah")
-			gvars.load_scene("res://scenes/menus.tscn")
-			gvars.paused = false
+	gvars.load_scene("res://scenes/menus.tscn")
+	gvars.paused = false
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_ESCAPE:
-			if interactionShowing:
-				interactionShowing = false
-				hideInteraction()
-				return
+			if uishowing:
+				uishowing = false
+				$interaction.hide()
 			$pausemenu.visible = !$pausemenu.visible
 			var gvars = get_tree().get_root().get_node("globalvars")
 			gvars.paused = !gvars.paused
 
-#Interaction Handler
+#######################
+# INTERACTION HANDLER #
+#######################
 
-func hideInteraction():
-	$interaction/face/AnimationPlayer.stop()
-	$interaction.hide()
-	get_node("/root/globalvars").paused = false
+var metchars = [] #Will be saved in save data file
 
-var cpart: Dictionary
-var cpartid: String
-var interaction: Dictionary
-var interactionid: String
+var interaction
+var startAt: String
+var currentPos: String
 
-func showInteraction(data, npcid):
-	interactionid = npcid
-	interaction = data.interaction
-	$interaction/ibar/npcname.text = data.cname
-	var gvars = get_tree().get_root().get_node("globalvars")
-	gvars.paused = true
-	$interaction/ibar.texture = load("res://images/ui/interactions/" + npcid + "/interaction-bar.png")
-	$interaction.show()
-	interactionShowing = true
-	ipart("start") #TODO: quest handlers
+var npcid
 
-func ipart(id):
-	$interaction/face/AnimationPlayer.stop()
-	for opt in $interaction/ibar/opts/GridContainer.get_children():
-		opt.queue_free()
-	cpartid = id;
-	cpart = interaction[id]
-	if cpart.faceAnimated:
-		$interaction/face/AnimationPlayer.play(interactionid + "-" + cpart.face)
+var nevermet = false
+
+func initInteraction(npcid):
+	npcid = npcid
+	if metchars.has(npcid):
+		nevermet = false
 	else:
-		$interaction/face.texture = load("res://images/ui/interactions/" + interactionid + "/reaction-" + cpart.face + ".png")
-	$interaction/ibar/ScrollContainer/npcdialogue.text = cpart.text
-	for opt in cpart.opts:
+		nevermet = true
+		metchars.append(npcid)
+	
+	var ifile = File.new()
+	var err = ifile.open("res://data/interactions/" + npcid)
+	assert(err == OK)
+	
+	var idata = JSON.parse(ifile.get_as_text()).result
+	onenter(idata.onEnter)
+	if idata.has("interaction"):
+		interaction = idata.interaction
+		updateInteraction()
+	elif idata.has("random"):
+		interaction = idata.random
+		randSpeech()
+
+func randSpeech():
+	randomize()
+	var num = int(randf() * interaction.size())
+	var ipos = interaction[num]
+	$interaction/ibar/ScrollContainer/npcdialogue.text = ipos.text
+	$interaction/face.texture = load("res://images/ui/interactions/" + npcid + "/reaction-" + ipos.face + ".png")
+
+func updateInteraction():
+	for btn in $interaction/ibar/opts/GridContainer.get_children(): btn.queue_free()
+	
+	if currentPos == "":
+		assert(startAt != null)
+		currentPos = startAt
+		$interaction.show()
+	
+	var iposition = interaction[currentPos]
+	
+	$interaction/ibar/ScrollContainer/npcdialogue.text = iposition.text
+	if iposition.faceAnimated:
+		$interaction/face/AnimationPlayer.play(npcid + "-" + iposition.face)
+	else:
+		$interaction/face/AnimationPlayer.stop()
+		$interaction/face.texture = load("res://images/ui/interactions/" + npcid + "/reaction-" + iposition.face + ".png")
+	
+	for opt in iposition.opts:
 		var btn = Button.new()
-		btn.flat = true
-		btn.set("custom_fonts/font", load("res://fonts/pixel.tres"))
-		btn.enabled_focus_mode = Control.FOCUS_NONE
-		if !opt.locked:
-			btn.text = opt.text
-		else:
-			btn.text = "[LOCKED]"
 		btn.set_script(load("res://scripts/ui/interactionopt.gd"))
-		btn.locked = opt.locked
-		btn.goto = opt.goto
-		btn.set("custom_colors/font_color_hover", Color(0.66, 0.67, 0, 1))
-		btn.set("custom_colors/font_color_pressed", Color(0.5, 0.44	, 0, 1))
-		btn.set("custom_colors/font_color", Color(0.36, 0.36, 0.36, 1))
-		btn.connect("optClicked", self, "buttonPress")
+		btn.set("goto", opt.goto)
+		if opt.locked:
+			if opt.unlockCondition.has("variable"):
+				if get(opt.unlockCondition.variable.name) == opt.unlockCondition.variable.value:
+					btn.text = opt.text
+				else:
+					btn.text = "[LOCKED]"
+					btn.disabled = true
+		else:
+			btn.text = opt.text
 		$interaction/ibar/opts/GridContainer.add_child(btn)
 
-func buttonPress(goto: String):
-	if goto.find("%QUEST:") != -1:
+func ibtnPress(to):
+	assert(to != "")
+	if to == "%CLOSE":
+		$interaction.hide()
+	
+	else:
+		currentPos = to
+		updateInteraction()
+
+func onenter(data):
+	$interaction/ibar/npcname.text = data.cname
+	$interaction/ibar.texture = load("res://images/ui/interactions/" + npcid + "/interaction-bar.png")
+	if data.has("positions"):
 		pass
-	match goto:
-		"%CLOSE":
-			hideInteraction()
-		_:
-			ipart(goto)
+
+func _on_interaction_visibility_changed():
+	if !$interaction.visible:
+		interaction = {}
+		startAt = ""
+		currentPos = ""

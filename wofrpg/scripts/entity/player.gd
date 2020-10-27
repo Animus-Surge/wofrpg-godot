@@ -176,7 +176,7 @@ func _physics_process(_delta):
 			$graphics/customlooks.stop()
 	else:
 		if is_network_master():
-			if !$Camera2D/UI.uishowing and !$Camera2D/UI.interactionShowing:
+			if !gvars.uishowing and !gvars.interactionShowing:
 				var vect = Vector2()
 				vect.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 				vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -248,6 +248,6 @@ func animation():
 func interacted(npcid):
 	var idata = gloader.loadNPCInteraction(npcid)
 	if idata != {}:
-		$Camera2D/UI.showInteraction(idata, npcid)
+		get_parent().get_parent().get_node("CanvasLayer/UI").showInteraction(idata, npcid)
 	else:
 		pass #TODO

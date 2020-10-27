@@ -2,6 +2,8 @@ extends Control
 
 var uishowing = false
 
+onready var font = preload("res://fonts/pixel.tres")
+
 func _ready():
 	$interaction.hide()
 
@@ -35,9 +37,12 @@ var currentPos: String
 var npcid
 
 var nevermet = false
+var npcUseRandom = false
 
+# warning-ignore:shadowed_variable
 func initInteraction(npcid):
-	npcid = npcid
+	npcUseRandom = false
+	self.npcid = npcid
 	if metchars.has(npcid):
 		nevermet = false
 	else:
@@ -45,15 +50,16 @@ func initInteraction(npcid):
 		metchars.append(npcid)
 	
 	var ifile = File.new()
-	var err = ifile.open("res://data/interactions/" + npcid)
+	var err = ifile.open("res://data/interactions/" + npcid + ".json", File.READ)
 	assert(err == OK)
 	
 	var idata = JSON.parse(ifile.get_as_text()).result
-	onenter(idata.onEnter)
+	if startAt == "":
+		onenter(idata.onEnter)
 	if idata.has("interaction"):
 		interaction = idata.interaction
 		updateInteraction()
-	elif idata.has("random"):
+	elif idata.has("random") and npcUseRandom:
 		interaction = idata.random
 		randSpeech()
 
@@ -75,7 +81,7 @@ func updateInteraction():
 	var iposition = interaction[currentPos]
 	
 	$interaction/ibar/ScrollContainer/npcdialogue.text = iposition.text
-	if iposition.faceAnimated:
+	if iposition.animated:
 		$interaction/face/AnimationPlayer.play(npcid + "-" + iposition.face)
 	else:
 		$interaction/face/AnimationPlayer.stop()
@@ -94,13 +100,24 @@ func updateInteraction():
 					btn.disabled = true
 		else:
 			btn.text = opt.text
+		btn.set("custom_fonts/font", font)
+		btn.flat = true
+		btn.size_flags_horizontal = SIZE_EXPAND_FILL
+		btn.set("custom_colors/font_color_hover", Color(0.66, 0.67, 0, 1))
+		btn.set("custom_colors/font_color_pressed", Color(0.5, 0.44, 0, 1))
+		btn.set("custom_colors/font_color", Color(0.36, 0.36, 0.36, 1))
 		$interaction/ibar/opts/GridContainer.add_child(btn)
 
 func ibtnPress(to):
 	assert(to != "")
 	if to == "%CLOSE":
 		$interaction.hide()
-	
+	elif to.begins_with("%IT"): # Format: %IT:iw-siw-wolf_surge:begood
+		$interaction.hide() #TODO
+	elif to.begins_with("%QUEST"):
+		$interaction.hide() #TODO
+	elif to.begins_with("%UPDATE"):
+		$interaction.hide() #TODO
 	else:
 		currentPos = to
 		updateInteraction()
@@ -108,11 +125,34 @@ func ibtnPress(to):
 func onenter(data):
 	$interaction/ibar/npcname.text = data.cname
 	$interaction/ibar.texture = load("res://images/ui/interactions/" + npcid + "/interaction-bar.png")
-	if data.has("positions"):
-		pass
+	for pos in data.positions:
+		var canStartHere = true
+		for condition in pos.conditions:
+			if condition.has("variable"):
+				if get(condition.variable.name) == condition.variable.value:
+					continue
+				else:
+					canStartHere = false
+		if canStartHere:
+			if pos.lcname == "random":
+				npcUseRandom = true
+			startAt = pos.lcname
+			break
 
 func _on_interaction_visibility_changed():
 	if !$interaction.visible:
 		interaction = {}
 		startAt = ""
 		currentPos = ""
+
+####################
+# INVENTORY SYSTEM #
+####################
+
+#TODO
+
+###############
+# SHOP SYSTEM #
+###############
+
+#TODO

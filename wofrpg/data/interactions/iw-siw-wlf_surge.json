@@ -1,242 +1,229 @@
 {
-	"cname":"Surge",
 	"onEnter":{
-		"point1":{
-			"position":"start",
-			"condition":{
-				"variable":{
-					"name":"nevermet",
-					"value":true
-				}
+		"cname":"Surge",
+		"positions":[
+			{
+				"lcname":"start",
+				"conditions":[
+					{
+						"variable":{
+							"name":"nevermet",
+							"value":true
+						}
+					}
+				]
+			},
+			{
+				"lcname":"quest",
+				"conditions":[
+					{
+						"variable":{
+							"name":"currentQuest",
+							"value":"surge-help"
+						}
+					}
+				]
+			},
+			{
+				"lcname":"random",
+				"conditions":[
+					{
+						"variable":{
+							"name":"nevermet",
+							"value":false
+						}
+					}
+				]
 			}
-		}
+		]
 	},
-	"onexit":{
-		"note":"todo"
+	"onExit":{
+		
 	},
 	"interaction":{
 		"start":{
-			"speech":null,
 			"text":"Hewwo!",
 			"face":"cute",
-			"faceAnimated":false,
+			"animated":false,
 			"opts":[
-				{
-					"text":"Um.. hi?",
-					"goto":"who",
-					"locked":false
-				},
 				{
 					"text":"Hey there little guy!",
-					"goto":"who",
-					"locked":false
-				}
-			]
-		},
-		"who":{
-			"speech":null,
-			"text":"Who you?",
-			"face":"confused",
-			"faceAnimated":true,
-			"opts":[
-				{
-					"text":"I'm %PLAYERNAME%. Who are you?",
-					"goto":"whoresp",
-					"locked":false
-				}
-			]
-		},
-		"whoresp":{
-			"speech":null,
-			"text":"I Surgie. It nice meet you!",
-			"face":"cute",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"It's nice to meet you too!",
-					"goto":"main1",
-					"locked":false
-				},
-				{
-					"text":"Oh... someone's looking for you.",
-					"goto":"look1",
-					"locked":true,
-					"condition":{
-						"variable":{
-							"name":"quest",
-							"value":"TODO"
-						}
-					}
-				}
-			]
-		},
-		"look1":{
-			"speech":null,
-			"text":"Oh... um... who?",
-			"face":"confused",
-			"faceAnimated":true,
-			"opts":[
-				{
-					"text":"An orange SkyWing's been looking for a dragon named Surge.",
-					"goto":"look2",
-					"locked":false
-				}
-			]
-		},
-		"look2":{
-			"text":"Oh, dat my master. Where she?",
-			"face":"norm",
-			"faceAnimated":false,
-			"speech":null,
-			"opts":[
-				{
-					"text":"She's over by *insert shop name here*",
-					"goto":"look21",
-					"locked":false
-				},
-				{
-					"text":"I can take you to her if you'd like",
 					"locked":false,
-					"goto":"look3"
-				}
-			]
-		},
-		"look21":{
-			"speech":null,
-			"text":"Oh.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"I can take you to her if you'd like",
-					"locked":false,
-					"goto":"look3"
-				}
-			]
-		},
-		"look3":{
-			"speech":null,
-			"text":"Yeah! Take to her?",
-			"face":"cute",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Yeah. Just follow me.",
-					"locked":false,
-					"goto":"lookfin"
-				}
-			]
-		},
-		"lookfin":{
-			"speech":null,
-			"text":"Okay!",
-			"face":"cute",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"[continue]",
-					"locked":false,
-					"goto":"%CLOSE"
+					"goto":"main1"
 				}
 			]
 		},
 		"main1":{
-			"speech":null,
-			"text":"*silent*",
+			"text":"Who you?",
 			"face":"norm",
-			"faceAnimated":false,
+			"animated":false,
 			"opts":[
 				{
-					"text":"So... what are you doing here all alone?",
-					"locked":false,
-					"goto":"main11"
-				},
-				{
-					"text":"What are you?",
-					"locked":false,
-					"goto":"main12"
-				},
-				{
-					"text":"Why do you have a collar?",
-					"locked":false,
-					"goto":"main13"
-				}
-			]
-		},
-		"main11":{
-			"speech":null,
-			"text":"Got lost... dunno where master go.",
-			"face":"sad",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Oh... well I can try to go find her if you'd like.",
+					"text":"I'm Jake. Who are you?",
 					"locked":false,
 					"goto":"main2"
 				}
 			]
 		},
-		"main12":{
-			"speech":null,
-			"text":"Doggie an' dwagon.",
-			"face":"cute",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Ah... why are you here all alone?",
-					"locked":false,
-					"goto":"main11"
-				},
-				{
-					"text":"Oh. Why do you have a collar?",
-					"locked":false,
-					"goto":"main13"
-				}
-			]
-		},
-		"main13":{
-			"speech":null,
-			"text":"'Cause master said so. I servant.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Oh. What are you then?",
-					"locked":false,
-					"goto":"main12"
-				},
-				{
-					"text":"I see... why are you here all alone?",
-					"locked":false,
-					"goto":"main11"
-				}
-			]
-		},
 		"main2":{
-			"text":"Yeah?",
-			"speech":null,
-			"face":"norm",
-			"faceAnimated":false,
+			"text":"I Surgie. It nice meet you!",
+			"face":"cute",
+			"animated":false,
 			"opts":[
 				{
-					"text":"Of course.",
+					"text":"It's nice to meet you too.",
 					"locked":false,
 					"goto":"main3"
 				}
 			]
 		},
 		"main3":{
-			"text":"Okay!",
-			"speech":null,
-			"face":"cute",
-			"faceAnimated":false,
+			"text":"*silent*",
+			"face":"norm",
+			"animated":false,
 			"opts":[
 				{
-					"text":"I'll be back in a jiffy.",
+					"text":"So... what are you doing here all alone?",
 					"locked":false,
-					"goto":"%CLOSE"
+					"goto":"main3a"
+				},
+				{
+					"text":"What are you?",
+					"locked":false,
+					"goto":"main3b"
 				}
 			]
+		},
+		"main3b":{
+			"text":"I dwagon an' doggie!",
+			"face":"cute",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Oh... but what are you doing here all alone?",
+					"locked":false,
+					"goto":"main3a"
+				}
+			]
+		},
+		"main3a":{
+			"text":"I got wost, so I come here. Know where master is?",
+			"face":"norm",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Who's your master?",
+					"locked":false,
+					"goto":"main3a1"
+				},
+				{
+					"text":"Yeah... someone was looking for a dragon named Surge.",
+					"locked":true,
+					"unlockCondition":{
+						"variable":{
+							"name":"currentQuest",
+							"value":"find-surgie"
+						}
+					},
+					"goto":"main4"
+				}
+			]
+		},
+		"main3a1":{
+			"text":"She orange, an' have wots of pwetty stuff.",
+			"face":"norm",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Alright, so you want me to find her?",
+					"locked":false,
+					"goto":"main3a2"
+				}
+			]
+		},
+		"main3a2":{
+			"text":"Yes peas!",
+			"face":"norm",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Alright, I'll go find her.",
+					"locked":false,
+					"goto":"main3a3"
+				}
+			]
+		},
+		"main3a3":{
+			"text":"Fank you!",
+			"face":"cute",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Your welcome!",
+					"locked":false,
+					"goto":"%QUEST:surge-help"
+				}
+			]
+		},
+		"main4":{
+			"text":"Oh... take to her?",
+			"face":"norm",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Yeah, of course.",
+					"locked":false,
+					"goto":"main4a"
+				}
+			]
+		},
+		"main4a":{
+			"text":"Fank you!",
+			"face":"cute",
+			"animated":false,
+			"opts":[
+				{
+					"text":"No problem. Follow me",
+					"locked":false,
+					"goto":"%UPDATE:find-surgie"
+				}
+			]
+		},
+		"quest":{
+			"text":"Find master?",
+			"face":"norm",
+			"animated":false,
+			"opts":[
+				{
+					"text":"Yeah, follow me.",
+					"locked":true,
+					"unlockCondition":{
+						"arrayContains":{
+							"name":"metCharacters",
+							"value":"hinio"
+						}
+					},
+					"goto":"questA"
+				}
+			]
+		},
+		"questA":{
+			"text":"Okay!",
+			"face":"cute",
+			"animated":false,
+			"opts":[
+				{
+					"text":"[CLOSE]",
+					"locked":false,
+					"goto":"%UPDATE:surge-help"
+				}
+			]
+		},
+		"random":{
+			"text":"I be good boy an' stay wif master.",
+			"face":"norm",
+			"faceAnimated":false,
+			"opts":[]
 		}
 	}
 }

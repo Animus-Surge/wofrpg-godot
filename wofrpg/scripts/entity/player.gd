@@ -69,7 +69,7 @@ func _input(event):
 			if event.scancode == KEY_F and event.pressed:
 				emit_signal("interact")
 
-func updateDetails(data:Array, palette):
+func updateDetails(data:Array, _palette):
 	var pal = ImageTexture.new()
 	setplrdetails(data[1], pal)
 	$Label.text = data[2]
@@ -246,8 +246,4 @@ func animation():
 			$graphics/customlooks.play("run")
 
 func interacted(npcid):
-	var idata = gloader.loadNPCInteraction(npcid)
-	if idata != {}:
-		get_parent().get_parent().get_node("CanvasLayer/UI").showInteraction(idata, npcid)
-	else:
-		pass #TODO
+	get_parent().get_parent().get_node("CanvasLayer/UI").initInteraction(npcid)

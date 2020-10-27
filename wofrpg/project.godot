@@ -31,6 +31,10 @@ config/windows_native_icon="res://favicon.ico"
 
 Test="*res://scripts/test.gd"
 
+[debug]
+
+gdscript/warnings/deprecated_keyword=false
+
 [display]
 
 window/size/width=1366

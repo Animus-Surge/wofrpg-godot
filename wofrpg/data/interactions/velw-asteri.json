@@ -1,190 +1,24 @@
 {
-	"cname":"asteri",
 	"onEnter":{
-		"point1":{
-			"position":"start",
-			"condition":{
-				"variable":"nevermet",
-				"value":true
+		"cname":"Asteri",
+		"positions":[
+			{
+				"lcname":"start",
+				"conditions":[
+					{
+						"variable":{
+							"name":"nevermet",
+							"value":true
+						}
+					}
+				]
 			}
-		}
+		]
 	},
-	"onexit":{
-		"func1":{
-			"do":"startquest",
-			"args":[
-				"cactihelp"
-			]
-		}
+	"onExit":{
+
 	},
 	"interaction":{
-		"start":{
-			"speech":null,
-			"text":"Oh hi! I don't remember you from around here... heh you look so confused.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"What are you?",
-					"goto":"what",
-					"locked":false
-				},
-				{
-					"text":"Who are you?",
-					"goto":"who",
-					"locked":false
-				},
-				{
-					"text":"/!\\ Something on your mind?",
-					"locked":false,
-					"goto":"main1"
-				},
-				{
-					"text":"You must be the general's girlfriend, Asteri!",
-					"locked":true,
-					"goto":"alt1"
-				}
-			]
-		},
-		"what":{
-			"speech":null,
-			"text":"I'm a VelociWing. They're not from this continent, but I grew up here.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"[back]",
-					"locked":false,
-					"goto":"start"
-				}
-			]
-		},
-		"who":{
-			"speech":null,
-			"text":"I'm Asteri! I live here in Possibility like most of the dragons here. My place is near the river splitting the old SandWing and SkyWing side.",
-			"face":"smile",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"[back]",
-					"locked":false,
-					"goto":"start"
-				}
-			]
-		},
-		"alt1":{
-			"speech":null,
-			"text":"Hah! He talkin' 'bout me again?",
-			"face":"smile",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"[back]",
-					"locked":false,
-					"goto":"start"
-				}
-			]
-		},
-		"main1":{
-			"speech":null,
-			"text":"Well... yes, actually. You know Cacti, right?",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Who's that?",
-					"locked":false,
-					"goto":"main2"
-				},
-				{
-					"text":"Is he the giant SandWing?",
-					"locked":false,
-					"goto":"main21"
-				}
-			]
-		},
-		"main2":{
-			"speech":null,
-			"text":"Well... Cacti's the giant sandy brown guy over there... you can't miss him... and, well... for once he's checkin' the ground under his claws.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Continue",
-					"locked":false,
-					"goto":"main2a"
-				}
-			]
-		},
-		"main2a":{
-			"speech":null,
-			"text":"Heh... probably lost somethin'... because he never checks.",
-			"face":"smile",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Continue",
-					"locked":false,
-					"goto":"main2b"
-				}
-			]
-		},
-		"main2b":{
-			"speech":null,
-			"text":"... you wouldn't mind checkin' on him for me... would you?",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Sure!",
-					"locked":false,
-					"goto":"main3"
-				},
-				{
-					"text":"I will, in a bit though.",
-					"locked":false,
-					"goto":"main31"
-				}
-			]
-		},
-		"main3":{
-			"speech":null,
-			"text":"Thank you so much!",
-			"face":"smile",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Your welcome",
-					"locked":false,
-					"goto":"%CLOSE"
-				}
-			]
-		},
-		"main31":{
-			"speech":null,
-			"text":"Alright... just go to him whenever you can.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Alright, I will",
-					"locked":false,
-					"goto":"%CLOSE"
-				}
-			]
-		},
-		"main21":{
-			"speech":null,
-			"text":"Yep! And for once... he's searchin' the ground like he lost one of his rubies.",
-			"face":"norm",
-			"faceAnimated":false,
-			"opts":[
-				{
-					"text":"Continue",
-					"locked":false,
-					"goto":"main21a"
-				}
-			]
-		}
+		
 	}
 }

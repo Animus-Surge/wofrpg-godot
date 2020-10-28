@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://systemroot.gd" type="Script" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "sidebar-showhide"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel/sidebar:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -408, 0 ), Vector2( 0, 0 ) ]
+}
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Panel"]
+modulate = Color( 1, 0, 0, 1 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -101.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sidebar" type="Panel" parent="Panel"]
+anchor_right = 0.395
+anchor_bottom = 1.0
+margin_left = -408.0
+margin_right = -408.48
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sbbutton" type="Button" parent="Panel"]
+anchor_right = 0.068
+anchor_bottom = 0.117
+margin_right = 0.367996
+margin_bottom = -0.200005
+text = "Sidebar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/sidebar-showhide = SubResource( 1 )

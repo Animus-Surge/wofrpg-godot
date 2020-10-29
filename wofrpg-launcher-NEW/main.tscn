@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://systemroot.gd" type="Script" id=1]
+[ext_resource path="res://pixel-s.tres" type="DynamicFont" id=2]
+[ext_resource path="res://firebase.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "sidebar-showhide"
@@ -33,7 +35,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="Panel"]
+[node name="playbar" type="Panel" parent="Panel"]
 modulate = Color( 1, 0, 0, 1 )
 anchor_top = 1.0
 anchor_right = 1.0
@@ -62,5 +64,198 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="signin" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="uname" type="LineEdit" parent="signin"]
+anchor_left = 0.371
+anchor_top = 0.407
+anchor_right = 0.629
+anchor_bottom = 0.46
+margin_left = 0.0959778
+margin_top = -0.199997
+margin_right = -0.0960083
+custom_fonts/font = ExtResource( 2 )
+align = 1
+placeholder_text = "Username"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="password" type="LineEdit" parent="signin"]
+anchor_left = 0.371
+anchor_top = 0.473
+anchor_right = 0.629
+anchor_bottom = 0.527
+margin_left = 0.0959778
+margin_top = 0.199982
+margin_right = -0.0960083
+margin_bottom = -0.200012
+custom_fonts/font = ExtResource( 2 )
+align = 1
+secret = true
+placeholder_text = "Password"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="signin"]
+anchor_left = 0.371
+anchor_top = 0.637
+anchor_right = 0.629
+anchor_bottom = 0.683
+margin_left = 0.0959778
+margin_top = -0.200012
+margin_right = -0.0960083
+margin_bottom = 0.199982
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Sign In"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="errorlabel" type="Label" parent="signin"]
+modulate = Color( 1, 0, 0, 1 )
+anchor_left = 0.371
+anchor_top = 0.735
+anchor_right = 0.629
+anchor_bottom = 0.863
+margin_left = 0.0959778
+margin_right = -0.0960083
+margin_bottom = 0.199951
+custom_fonts/font = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="signin"]
+anchor_left = 0.371
+anchor_top = 0.542
+anchor_right = 0.629
+anchor_bottom = 0.592
+margin_left = 0.0959778
+margin_top = -0.200043
+margin_right = -0.0960083
+margin_bottom = -0.200012
+custom_fonts/font = ExtResource( 2 )
+text = "Remember Me"
+align = 1
+
+[node name="signup" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="uname" type="LineEdit" parent="signup"]
+anchor_left = 0.371
+anchor_top = 0.34
+anchor_right = 0.629
+anchor_bottom = 0.393
+margin_left = 0.0959778
+margin_right = -0.0960083
+margin_bottom = 0.199997
+custom_fonts/font = ExtResource( 2 )
+align = 1
+placeholder_text = "Username"
+caret_blink = true
+
+[node name="email" type="LineEdit" parent="signup"]
+anchor_left = 0.371
+anchor_top = 0.407
+anchor_right = 0.629
+anchor_bottom = 0.46
+margin_left = 0.0959778
+margin_top = -0.199997
+margin_right = -0.0960083
+custom_fonts/font = ExtResource( 2 )
+align = 1
+placeholder_text = "Email"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="password" type="LineEdit" parent="signup"]
+anchor_left = 0.371
+anchor_top = 0.473
+anchor_right = 0.629
+anchor_bottom = 0.527
+margin_left = 0.0959778
+margin_top = 0.199982
+margin_right = -0.0960083
+margin_bottom = -0.200012
+custom_fonts/font = ExtResource( 2 )
+align = 1
+secret = true
+placeholder_text = "Password"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="passwordc" type="LineEdit" parent="signup"]
+anchor_left = 0.371
+anchor_top = 0.54
+anchor_right = 0.629
+anchor_bottom = 0.593
+margin_left = 0.0959778
+margin_right = -0.0960083
+margin_bottom = 0.199982
+custom_fonts/font = ExtResource( 2 )
+align = 1
+secret = true
+placeholder_text = "Confirm Password"
+caret_blink = true
+
+[node name="Button" type="Button" parent="signup"]
+anchor_left = 0.371
+anchor_top = 0.637
+anchor_right = 0.629
+anchor_bottom = 0.683
+margin_left = 0.0959778
+margin_top = -0.200012
+margin_right = -0.0960083
+margin_bottom = 0.199982
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Sign Up"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="errorlabel" type="Label" parent="signup"]
+modulate = Color( 1, 0, 0, 1 )
+anchor_left = 0.371
+anchor_top = 0.735
+anchor_right = 0.629
+anchor_bottom = 0.863
+margin_left = 0.0959778
+margin_right = -0.0960083
+margin_bottom = 0.199951
+custom_fonts/font = ExtResource( 2 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/sidebar-showhide = SubResource( 1 )
+
+[node name="firebase" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[connection signal="visibility_changed" from="signin" to="." method="siVisChanged"]
+[connection signal="pressed" from="signin/Button" to="." method="loginPressed"]
+[connection signal="toggled" from="signin/CheckBox" to="." method="rememberToggle"]
+[connection signal="visibility_changed" from="signup" to="." method="suVisChanged"]
+[connection signal="pressed" from="signup/Button" to="." method="signupPressed"]
+[connection signal="errored" from="firebase" to="." method="errored"]

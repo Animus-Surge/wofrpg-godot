@@ -14,6 +14,13 @@ func onSidebarShowPressed():
 func onSidebarHidePressed():
 	$AnimationPlayer.play_backwards("sidebar-showhide")
 
+func showSI():
+	$signup.hide()
+	$signin.show()
+func showSU():
+	$signup.show()
+	$signin.hide()
+
 ##################
 # SU/LI handlers #
 ##################
@@ -31,6 +38,10 @@ func siVisChanged():
 	$signin/errorlabel.text = ""
 
 func signupPressed():
+	$signup/email.editable = false
+	$signup/uname.editable = false
+	$signup/password.editable = false
+	$signup/passwordc.editable = false
 	suVisChanged()
 	if $signup/uname.text == "":
 		$signup/uname.modulate = Color.red
@@ -57,6 +68,8 @@ func signupPressed():
 	$firebase.signUp($signup/uname.text, $signup/email.text, pw)
 
 func loginPressed():
+	$signin/password.editable = false
+	$signin/uname.editable = false
 	siVisChanged()
 	var uname = $signin/uname.text
 	var pw = $signin/password.text
@@ -74,6 +87,12 @@ func forgotPassword(): #TODO
 	pass
 
 func errored(type, id):
+	$signin/password.editable = true
+	$signin/email.editable = true
+	$signup/email.editable = true
+	$signup/uname.editable = true
+	$signup/password.editable = true
+	$signup/passwordc.editable = true
 	match id:
 		"ERR_EMAIL_INVALID":
 			$signup/errorlabel.text = type
@@ -90,6 +109,27 @@ func errored(type, id):
 		"ERR_UNKNOWN_USERNAME":
 			$signin/errorlabel.text = type
 			$signin/uname.modulate = Color.red
+
+func success(type, _data):
+	match type:
+		"TYPE_LOGIN":
+			$signin.hide()
+			$signup.hide()
+			$signin/password.editable = true
+			$signin/uname.editable = true
+			loggedIn = true
+		"TYPE_SIGNUP":
+			$signin.hide()
+			$signup.hide()
+			$signup/email.editable = true
+			$signup/uname.editable = true
+			$signup/password.editable = true
+			$signup/passwordc.editable = true
+			loggedIn = true
+		"TYPE_DBFETCH":
+			pass
+		"TYPE_DBSTORE":
+			pass
 
 func rememberToggle(_button_pressed):
 	pass #TODO

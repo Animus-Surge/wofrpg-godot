@@ -54,7 +54,7 @@ func signUp(uname:String, email:String, password:String): #Password checking wil
 			http.request(URL_AUTDEL, [], false, HTTPClient.METHOD_POST, to_json(reqbody))
 			result = yield(http, "request_completed") as Array
 			return
-		emit_signal("success", "USER_SIGNUP")
+		emit_signal("success", "TYPE_SIGNUP", JSON.parse(result[3].get_string_from_ascii()))
 	else:
 		emit_signal("errored", "Error reading from database", "ERR_HTTP-GET_FAILURE")
 
@@ -75,7 +75,7 @@ func signIn(uname, password):
 		if result[1] == 200:
 			out = JSON.parse(result[3].get_string_from_ascii()).result
 			idToken = out.idToken
-			emit_signal("success", "USER_LOGIN")
+			emit_signal("success", "TYPE_SIGNUP", JSON.parse(result[3].get_string_from_ascii()).result)
 		else:
 			print(result[3].get_string_from_ascii())
 	else:

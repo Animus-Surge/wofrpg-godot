@@ -50,6 +50,7 @@ margin_right = 0.0519867
 margin_bottom = -7.62939e-06
 focus_mode = 0
 custom_fonts/font = SubResource( 1 )
+disabled = true
 enabled_focus_mode = 0
 text = "Home"
 __meta__ = {
@@ -239,6 +240,51 @@ focus_mode = 0
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="newspanel" type="Panel" parent="main"]
+anchor_left = 0.256
+anchor_right = 1.0
+anchor_bottom = 0.993
+margin_left = -0.144012
+margin_bottom = 0.199951
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="main/newspanel"]
+anchor_left = 0.012
+anchor_top = 0.017
+anchor_right = 0.74
+anchor_bottom = 0.985
+margin_left = -0.144
+margin_top = -0.132001
+margin_right = 0.119995
+margin_bottom = -0.0600586
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[color=#0ff]Release v1.0.0-a[/color]
+
+Woohoo! Alpha! Guess what time it is? It's time for closed alpha! That's right... closed alpha. Go to [insert link here] to sign up! It's completely free!"
+text = "Release v1.0.0-a
+
+Woohoo! Alpha! Guess what time it is? It's time for closed alpha! That's right... closed alpha. Go to [insert link here] to sign up! It's completely free!"
+
+[node name="ItemList" type="ItemList" parent="main/newspanel"]
+margin_left = 564.0
+margin_top = 11.0
+margin_right = 753.0
+margin_bottom = 590.0
+custom_fonts/font = ExtResource( 2 )
+items = [ "Latest", null, false ]
+
+[node name="addonspanel" type="Panel" parent="main"]
+visible = false
+margin_left = 262.0
+margin_right = 1024.0
+margin_bottom = 596.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

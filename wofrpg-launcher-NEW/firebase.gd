@@ -5,6 +5,7 @@ signal success(type)
 
 var idToken
 var username
+var remember
 
 const WEBAPIKEY = "AIzaSyDrkZuYjzbynZNE5KfL5H0_TLUSAen0mQs"
 

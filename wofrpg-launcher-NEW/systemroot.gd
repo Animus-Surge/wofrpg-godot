@@ -4,6 +4,16 @@ var loggedIn = false
 
 func _ready():
 	showSI()
+	$main/addonspanel.hide()
+	$main/newspanel.hide()
+
+func showMain():
+	$main/sidebar/addon.disabled = false
+	$main/sidebar/news.disabled = false
+	$main/sidebar/home.disabled = true
+	
+	$main/addonspanel.hide()
+	$main/newspanel.hide()
 
 ##########################
 # Callbacks from buttons #
@@ -134,7 +144,7 @@ func success(type, _data):
 			pass
 
 func rememberToggle(_button_pressed):
-	pass #TODO
+	$firebase.remember = _button_pressed
 
 ##################
 # Misc functions #
@@ -146,3 +156,33 @@ func isValidEmail(email:String) -> bool:
 	if email.find(".com") == -1 and email.find(".net") == -1 and email.find(".org") == -1 and email.find(".edu") == -1:
 		return false
 	return true
+
+#################
+# News Handling #
+#################
+
+func showNewsPanel():
+	$main/sidebar/news.disabled = true
+	$main/sidebar/addon.disabled = false
+	$main/sidebar/home.disabled = false
+	
+	$main/newspanel.show()
+	$main/addonspanel.hide()
+
+func newsRefresh():
+	pass
+
+##################
+# Addon Handling #
+##################
+
+func showAddonsPanel():
+	$main/sidebar/addon.disabled = true
+	$main/sidebar/home.disabled = false
+	$main/sidebar/news.disabled = false
+	
+	$main/newspanel.hide()
+	$main/addonspanel.show()
+
+func addonRefresh():
+	pass

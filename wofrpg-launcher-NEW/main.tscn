@@ -1,28 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://systemroot.gd" type="Script" id=1]
 [ext_resource path="res://pixel-s.tres" type="DynamicFont" id=2]
 [ext_resource path="res://firebase.gd" type="Script" id=3]
 [ext_resource path="res://dpcomic.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://icons/icon-friends.png" type="Texture" id=5]
+[ext_resource path="res://icons/icon-notifications.png" type="Texture" id=6]
+[ext_resource path="res://icons/icon-messages.png" type="Texture" id=7]
+[ext_resource path="res://icons/icon-settings.png" type="Texture" id=8]
+[ext_resource path="res://icons/icon-arrowUp.png" type="Texture" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 4 )
-
-[sub_resource type="Animation" id=1]
-resource_name = "sidebar-showhide"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Panel/sidebar:rect_position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -408, 0 ), Vector2( 0, 0 ) ]
-}
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -32,43 +25,226 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="."]
+[node name="main" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="playbar" type="Panel" parent="Panel"]
-modulate = Color( 1, 0, 0, 1 )
+[node name="sidebar" type="Panel" parent="main"]
+self_modulate = Color( 0.788235, 0.788235, 0.788235, 1 )
+margin_right = 262.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="home" type="Button" parent="main/sidebar"]
+anchor_left = 0.08
+anchor_top = 0.025
+anchor_right = 0.954
+anchor_bottom = 0.13
+margin_left = 0.039999
+margin_right = 0.0519867
+margin_bottom = -7.62939e-06
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = "Home"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="news" type="Button" parent="main/sidebar"]
+anchor_left = 0.08
+anchor_top = 0.158
+anchor_right = 0.954
+anchor_bottom = 0.263
+margin_left = 0.039999
+margin_top = 0.199997
+margin_right = 0.0519867
+margin_bottom = 0.199997
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = "News"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="addon" type="Button" parent="main/sidebar"]
+anchor_left = 0.08
+anchor_top = 0.288
+anchor_right = 0.954
+anchor_bottom = 0.393
+margin_left = 0.039999
+margin_top = -0.0739594
+margin_right = 0.0519867
+margin_bottom = -0.0739594
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = "Addons"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controlpanel" type="Panel" parent="main/sidebar"]
+self_modulate = Color( 0.258824, 0.258824, 0.258824, 1 )
+anchor_top = 0.853
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.199982
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="unamelabel" type="Label" parent="main/sidebar/controlpanel"]
+anchor_top = 0.045
+anchor_right = 1.0
+anchor_bottom = 0.295
+margin_top = 0.04
+margin_bottom = 0.039999
+custom_fonts/font = ExtResource( 2 )
+text = "$USERNAME"
+align = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="friends" type="Button" parent="main/sidebar/controlpanel"]
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -101.0
+margin_left = 4.0
+margin_top = -42.0
+margin_right = 48.0
+margin_bottom = -4.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 5 )
+flat = true
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="sidebar" type="Panel" parent="Panel"]
-anchor_right = 0.395
+[node name="notifications" type="Button" parent="main/sidebar/controlpanel"]
+anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = -408.0
-margin_right = -408.48
+margin_left = 48.0
+margin_top = -42.0
+margin_right = 92.0
+margin_bottom = -4.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 6 )
+flat = true
+expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="sbbutton" type="Button" parent="Panel"]
-anchor_right = 0.068
-anchor_bottom = 0.117
-margin_right = 0.367996
-margin_bottom = -0.200005
-text = "Sidebar"
+[node name="messages" type="Button" parent="main/sidebar/controlpanel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 92.0
+margin_top = -42.0
+margin_right = 136.0
+margin_bottom = -4.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settings" type="Button" parent="main/sidebar/controlpanel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 144.0
+margin_top = -42.0
+margin_right = 188.0
+margin_bottom = -4.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 8 )
+flat = true
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="more" type="Button" parent="main/sidebar/controlpanel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 188.0
+margin_top = -42.0
+margin_right = 232.0
+margin_bottom = -4.0
+focus_mode = 0
+enabled_focus_mode = 0
+icon = ExtResource( 9 )
+flat = true
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="playbtn" type="Button" parent="main"]
+anchor_left = 0.853
+anchor_top = 0.008
+anchor_right = 0.986
+anchor_bottom = 0.113
+margin_left = -0.472046
+margin_top = 0.2
+margin_right = 0.335938
+margin_bottom = 0.199997
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = "Play"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="profiles" type="OptionButton" parent="main"]
+anchor_left = 0.605
+anchor_top = 0.008
+anchor_right = 0.791
+anchor_bottom = 0.078
+margin_left = 0.47998
+margin_top = 0.2
+margin_right = 0.0159912
+margin_bottom = 0.200001
+custom_fonts/font = ExtResource( 2 )
+text = "Select Profile..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="profileadd" type="Button" parent="main"]
+anchor_left = 0.796
+anchor_top = 0.008
+anchor_right = 0.838
+anchor_bottom = 0.078
+margin_left = 0.895935
+margin_top = 0.2
+margin_right = -0.112061
+margin_bottom = 0.200005
+focus_mode = 0
+custom_fonts/font = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "+"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="signin" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -168,6 +344,7 @@ text = "Create an Account"
 flat = true
 
 [node name="signup" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -281,7 +458,6 @@ margin_bottom = 0.199951
 custom_fonts/font = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/sidebar-showhide = SubResource( 1 )
 
 [node name="firebase" type="Node" parent="."]
 script = ExtResource( 3 )

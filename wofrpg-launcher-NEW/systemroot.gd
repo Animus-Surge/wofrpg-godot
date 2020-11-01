@@ -3,7 +3,7 @@ extends Control
 var loggedIn = false
 
 func _ready():
-	pass
+	showSI()
 
 ##########################
 # Callbacks from buttons #
@@ -117,6 +117,7 @@ func success(type, _data):
 			$signup.hide()
 			$signin/password.editable = true
 			$signin/uname.editable = true
+			$main/sidebar/controlpanel/unamelabel.text = $firebase.username
 			loggedIn = true
 		"TYPE_SIGNUP":
 			$signin.hide()
@@ -125,6 +126,7 @@ func success(type, _data):
 			$signup/uname.editable = true
 			$signup/password.editable = true
 			$signup/passwordc.editable = true
+			$main/sidebar/controlpanel/unamelabel.text = $firebase.username
 			loggedIn = true
 		"TYPE_DBFETCH":
 			pass

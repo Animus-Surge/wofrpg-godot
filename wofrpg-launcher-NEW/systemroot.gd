@@ -2,8 +2,12 @@ extends Control
 
 var loggedIn = false
 
+var releases := []
+
 func _ready():
 	showSI()
+	loadProfiles()
+	$firebase.readDatabase("releases.json")
 	$main/addonspanel.hide()
 	$main/newspanel.hide()
 
@@ -98,7 +102,7 @@ func forgotPassword(): #TODO
 
 func errored(type, id):
 	$signin/password.editable = true
-	$signin/email.editable = true
+	$signin/uname.editable = true
 	$signup/email.editable = true
 	$signup/uname.editable = true
 	$signup/password.editable = true
@@ -113,14 +117,16 @@ func errored(type, id):
 		"ERR_HTTP-PUT_FAILURE":
 			$signup/errorlabel.text = type
 			$signin/errorlabel.text = type
-		"ERR_PASSWORD_INVALID":
+		"ERR_PASSWORD_INVALID", "ERR_INVALID_PASSWORD":
 			$signup/password.modulate = Color.red
 			$signup/errorlabel.text = type
+			$signin/password.modulate = Color.red
+			$signin/errorlabel.text = type
 		"ERR_UNKNOWN_USERNAME":
 			$signin/errorlabel.text = type
 			$signin/uname.modulate = Color.red
 
-func success(type, _data):
+func success(type, data):
 	match type:
 		"TYPE_LOGIN":
 			$signin.hide()
@@ -139,7 +145,15 @@ func success(type, _data):
 			$main/sidebar/controlpanel/unamelabel.text = $firebase.username
 			loggedIn = true
 		"TYPE_DBFETCH":
-			pass
+			match typeof(data):
+				TYPE_ARRAY:
+					$main/profilesDialogue/version.clear()
+					data.invert()
+					for release in data:
+						releases.append(release)
+						$main/profilesDialogue/version.add_item(release)
+				TYPE_DICTIONARY:
+					pass
 		"TYPE_DBSTORE":
 			pass
 
@@ -186,3 +200,71 @@ func showAddonsPanel():
 
 func addonRefresh():
 	pass
+
+#########################
+# Game Profile Handling #
+#########################
+
+#profile data design:
+#{
+# "name":"some name here".
+# "version":"v1.0.0-alpha"
+#}
+
+var profiles = []
+var pdiaShowing = false
+
+func loadProfiles():
+	hideProfileDialogue()
+	var pfile = File.new()
+	var err = pfile.open("user://profiles.json", File.READ)
+	if err != OK:
+		match err:
+			ERR_FILE_NOT_FOUND:
+				pfile.open("user://profiles.json", File.WRITE)
+				pfile.store_line("[]")
+				pfile.close()
+			_:
+				print("An error has occoured while loading profiles. " + String(err))
+		return
+	var profiledata = JSON.parse(pfile.get_as_text()).result #should be an array
+	for profile in profiledata:
+		profiles.append(profile)
+	pfile.close()
+	
+	for profile in profiles:
+		$main/profiles.add_item(profile.name)
+
+func addProfile():
+	var data = {
+		"name":$main/profilesDialogue/prfname.text,
+		"version":$main/profilesDialogue/version.get_item_text($main/profilesDialogue/version.selected),
+		"beta":false #todo
+	}
+	profiles.append(data)
+	hideProfileDialogue()
+	
+	$main/profiles.clear()
+	for profile in profiles:
+		$main/profiles.add_item(profile.name)
+
+func showProfileDialogue():
+	if !pdiaShowing:
+		pdiaShowing = true
+		$main/profilesDialogue.show()
+		$main/profilesDialogue/prfname.text = ""
+		$main/profilesDialogue/version.select(0) #default selected will be the latest version
+
+func hideProfileDialogue():
+	pdiaShowing = false
+	$main/profilesDialogue.hide()
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		# warning-ignore:return_value_discarded
+		Directory.new().remove("user://profiles.json")
+		var pfile = File.new()
+		pfile.open("user://profiles.json", File.WRITE)
+		pfile.store_line(to_json(profiles))
+		pfile.close()
+		get_tree().quit(0)

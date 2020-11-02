@@ -1,7 +1,7 @@
 extends Node
 
 signal errored(type, id)
-signal success(type)
+signal success(type, data)
 
 var idToken
 var username
@@ -81,7 +81,17 @@ func signIn(uname, password):
 			username = uname
 			emit_signal("success", "TYPE_LOGIN", JSON.parse(result[3].get_string_from_ascii()).result)
 		else:
-			print(result[3].get_string_from_ascii())
+			var data = JSON.parse(result[3].get_string_from_ascii()).result
+			match data.error.message:
+				"INVALID_PASSWORD":
+					emit_signal("errored", "Incorrect Password", "ERR_INVALID_PASSWORD")
 	else:
 		emit_signal("errored", "Error reading from database", "ERR_HTTP-GET_FAILURE")
-	
+
+func readDatabase(path):
+	http.request(URL_DBFORE + path)
+	var result = yield(http, "request_completed") as Array
+	if result[1] == 200:
+		emit_signal("success", "TYPE_DBFETCH", JSON.parse(result[3].get_string_from_ascii()).result)
+	else:
+		emit_signal("errored", "Failed to read from database", "-")

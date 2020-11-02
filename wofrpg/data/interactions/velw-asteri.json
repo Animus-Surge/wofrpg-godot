@@ -12,6 +12,17 @@
 						}
 					}
 				]
+			},
+			{
+				"lcname":"start2",
+				"conditions":[
+					{
+						"variable":{
+							"name":"nevermet",
+							"value":false
+						}
+					}
+				]
 			}
 		]
 	},
@@ -22,6 +33,19 @@
 		"start":{
 			"speech":null,
 			"text":"Oh hi! I don't remember you from around here.",
+			"face":"norm",
+			"animated":false,
+			"opts":[
+				{
+					"text":"[CLOSE]",
+					"locked":false,
+					"goto":"%CLOSE"
+				}
+			]
+		},
+		"start2":{
+			"speech":null,
+			"text":"Hi again!",
 			"face":"norm",
 			"animated":false,
 			"opts":[

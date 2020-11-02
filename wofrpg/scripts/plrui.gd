@@ -20,6 +20,7 @@ func _input(event):
 			if uishowing:
 				uishowing = false
 				$interaction.hide()
+				return
 			$pausemenu.visible = !$pausemenu.visible
 			var gvars = get_tree().get_root().get_node("globalvars")
 			gvars.paused = !gvars.paused
@@ -52,7 +53,7 @@ func initInteraction(npcid):
 	var ifile = File.new()
 	var err = ifile.open("res://data/interactions/" + npcid + ".json", File.READ)
 	assert(err == OK)
-	
+	uishowing = true
 	var idata = JSON.parse(ifile.get_as_text()).result
 	if startAt == "":
 		onenter(idata.onEnter)
@@ -144,6 +145,8 @@ func _on_interaction_visibility_changed():
 		interaction = {}
 		startAt = ""
 		currentPos = ""
+		npcid = ""
+		uishowing = false
 
 ####################
 # INVENTORY SYSTEM #

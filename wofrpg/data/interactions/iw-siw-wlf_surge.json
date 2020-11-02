@@ -222,7 +222,7 @@
 		"random":{
 			"text":"I be good boy an' stay wif master.",
 			"face":"norm",
-			"faceAnimated":false,
+			"animated":false,
 			"opts":[]
 		}
 	}

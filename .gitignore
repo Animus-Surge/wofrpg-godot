@@ -1,9 +1,11 @@
 # Godot
 /.import
 /.vscode
+/.firebase
 
 *.import
 *.png~
+*.kra
 
 #packages
 *.zip

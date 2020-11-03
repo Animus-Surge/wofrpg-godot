@@ -29,7 +29,13 @@ config/windows_native_icon="res://favicon.ico"
 
 [autoload]
 
-Test="*res://scripts/test.gd"
+gvars="*res://scripts/global/gvars.gd"
+logcat="*res://scripts/global/logger.gd"
+cfm="*res://scripts/filemanager/characterFileHandler.gd"
+fb="*res://scripts/global/firebase.gd"
+gloader="*res://scripts/global/globalLoader.gd"
+http="*res://objects/request.tscn"
+timer="*res://objects/systimer.tscn"
 
 [debug]
 

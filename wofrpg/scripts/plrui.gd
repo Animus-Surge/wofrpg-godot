@@ -5,12 +5,15 @@ var uishowing = false
 onready var font = preload("res://fonts/pixel.tres")
 
 func _ready():
+	#var tex = ResourceLoader.load(ProjectSettings.globalize_path("user://icon.png"), "Texture")
+	#if tex != null:
+	#	tex.set_flags(0)
+	#	$chatpanel/Label/TextureRect.texture = tex
 	$interaction.hide()
 
 func quit():
 	if get_tree().has_network_peer():
 		get_tree().set_network_peer(null) #AKA: disconnect the player
-	var gvars = get_tree().get_root().get_node("globalvars")
 	gvars.load_scene("res://scenes/menus.tscn")
 	gvars.paused = false
 
@@ -22,7 +25,6 @@ func _input(event):
 				$interaction.hide()
 				return
 			$pausemenu.visible = !$pausemenu.visible
-			var gvars = get_tree().get_root().get_node("globalvars")
 			gvars.paused = !gvars.paused
 
 #######################
@@ -134,6 +136,7 @@ func onenter(data):
 					continue
 				else:
 					canStartHere = false
+					break
 		if canStartHere:
 			if pos.lcname == "random":
 				npcUseRandom = true

@@ -16,12 +16,10 @@ script/source = "extends Node
 onready var plr = load(\"res://objects/entity/player.tscn\")
 
 func _ready():
-	var gvars = get_tree().get_root().get_node(\"globalvars\")
-	gvars.current = \"testworld\"
+	gvars.setCurrentScene(\"testworld\")
 	if !gvars.loggedIn or gvars.splr:
 		$entities.add_child(plr.instance())
 		return
-	var timer:Timer = get_node(\"/root/timer\")
 	timer.wait_time = 0.5
 	timer.start()
 	yield(timer, \"timeout\")

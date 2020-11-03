@@ -14,8 +14,6 @@ var hidden = false
 
 const type = "NPC"
 
-onready var gvars = get_tree().get_root().get_node("globalvars")
-
 func check():
 	if get_parent().get_node("player").charname == npcname:
 		hidden = true

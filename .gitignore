@@ -2,6 +2,7 @@
 /.import
 /.vscode
 /.firebase
+/test
 
 *.import
 *.png~

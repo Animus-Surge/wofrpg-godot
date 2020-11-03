@@ -23,10 +23,6 @@ var dbNeeded
 
 var loggingIn = false
 
-onready var globalvars = get_tree().get_root().get_node("globalvars")
-onready var http = get_tree().get_root().get_node("http")
-onready var logcat = get_tree().get_root().get_node("logcat")
-
 func userLogin(uname, password):
 	tuname = uname
 	tpass = password
@@ -38,19 +34,21 @@ func userSignup(email, uname, password):
 		"email":email,
 		"password":password
 	}
+# warning-ignore:return_value_discarded
 	http.request(authSU, [], false, HTTPClient.METHOD_POST, to_json(body))
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
 		logcat.stdout("SIGNUP: OK", logcat.DEBUG)
-		globalvars.username = uname
+		gvars.username = uname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.idToken
-		globalvars.loggedIn = true
+		gvars.loggedIn = true
 		storeToDB("users/" + uname + ".json", {"email":email,"verified":false})
 	else:
 		logcat.stdout("SIGNUP: FAIL", logcat.DEBUG)
 		emit_signal("failed", result[3].get_string_from_ascii(), "signup")
 
 func getFromDB(field):
+# warning-ignore:return_value_discarded
 	http.request("https://wofrpg-main.firebaseio.com/" + field, [], false, HTTPClient.METHOD_GET, "{}")
 	var result = yield(http, "request_completed") as Array
 	if result[1] != 200:
@@ -70,6 +68,7 @@ func getFromDB(field):
 			emit_signal("dbComplete", jsonresult)
 
 func storeToDB(field, data: Dictionary):
+# warning-ignore:return_value_discarded
 	http.request("https://wofrpg-main.firebaseio.com/" + field + "?auth=" + uid, [], false, HTTPClient.METHOD_PUT, to_json(data))
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
@@ -82,6 +81,7 @@ func storeToDB(field, data: Dictionary):
 
 func loginWithEmail(email):
 	var body = {"email":email, "password":tpass}
+# warning-ignore:return_value_discarded
 	http.request(authSI, [], false, HTTPClient.METHOD_POST, to_json(body))
 	var result = yield(http, "request_completed") as Array
 	if result[1] != 200:
@@ -89,9 +89,9 @@ func loginWithEmail(email):
 		emit_signal("failed", result[3].get_string_from_ascii(), "login")
 	else:
 		logcat.stdout("LOGIN: OK", logcat.DEBUG)
-		globalvars.username = tuname
+		gvars.username = tuname
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.localId
 		tuname = ""
 		tpass = ""
-		globalvars.loggedIn = true
+		gvars.loggedIn = true
 		emit_signal("completed", "login")

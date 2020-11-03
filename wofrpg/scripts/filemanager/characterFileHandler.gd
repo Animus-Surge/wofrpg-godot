@@ -19,8 +19,6 @@ const blankChar = {
 	"skills":{}
 }
 
-onready var logcat = get_tree().get_root().get_node("logcat")
-
 var characters = []
 
 var headPal

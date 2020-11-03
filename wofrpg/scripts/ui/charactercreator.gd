@@ -5,9 +5,6 @@ onready var cname = get_node("TabContainer/Basic Details/name")
 onready var crole = get_node("TabContainer/Basic Details/Role")
 onready var cgender = get_node("TabContainer/Basic Details/Gender")
 
-onready var gloader = get_node("/root/gloader")
-onready var cfm = get_node("/root/cfm")
-
 func _ready():
 	for tribe in gloader.baseTribes:
 		tribes.add_item(tribe.name)

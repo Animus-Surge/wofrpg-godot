@@ -16,8 +16,6 @@ onready var ddlegs = get_parent().get_node("customization/TabContainer/Appearanc
 onready var ddspine = get_parent().get_node("customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spine")
 onready var ddtdec = get_parent().get_node("customization/TabContainer/Appearance/Parent/partScroll/GridContainer/td")
 
-onready var gloader = get_tree().get_root().get_node("gloader")
-
 var mainPalette
 var mp
 
@@ -326,3 +324,5 @@ func edropToggle(button_pressed):
 
 func getPalettes() -> ImageTexture:
 	return mp
+
+#TODO: rewrite this to work with fullbody bases instead of parts and masks

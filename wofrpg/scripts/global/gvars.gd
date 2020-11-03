@@ -1,12 +1,5 @@
 extends Node
 
-onready var gloader = get_tree().get_root().get_node("gloader")
-onready var cfm = get_tree().get_root().get_node("cfm")
-onready var logcat = get_tree().get_root().get_node("logcat")
-var fb
-onready var timer = get_tree().get_root().get_node("timer")
-onready var test = get_node("/root/Test")
-
 const LOCALHOST = "127.0.0.1"
 
 signal doneLoading()
@@ -33,27 +26,17 @@ var paused = false
 var current = "loadscreen"
 
 func _ready():
-	var mpstate = Node.new()
-	mpstate.set_script(load("res://scripts/global/state.gd"))
-	mpstate.name = "State"
-	get_tree().get_root().add_child(mpstate)
+	#var mpstate = Node.new()
+	#mpstate.set_script(load("res://scripts/global/state.gd"))
+	#mpstate.name = "State"
+	#get_tree().get_root().add_child(mpstate)
+	gloader.startLoad()
+	cfm.startLoad()
 	if !debug:
-		if is_instance_valid(test):
-			if test.debug:
-				test.connect("complete", self, "_complete")
 		print("==============> GAME START <==============")
-		gloader.startLoad()
-		cfm.startLoad()
-		load_scene("res://scenes/useracct.tscn")
-
-func _complete():
-	if test.testscenes:
-		fb = get_tree().get_root().get_node("fb")
-		gloader.startLoad()
-		logcat.stdout("DEBUG MODE ACTIVE", 0)
+		load_scene("res://scenes/menus.tscn")
 	else:
-		fb = get_tree().get_root().get_node("fb")
-		load_scene("res://scenes/useracct.tscn")
+		print("==============> DEBUG MODE <==============")
 
 func debugComplete():
 	gloader.startLoad()
@@ -121,6 +104,6 @@ func _process(_delta):
 			continue
 		else:
 			scn = null
-			logcat.stdout("An error occured while loading a scene.", 4)
+			logcat.stdout("An error occured while loading a scene. Error code: " + String(err), 4)
 			break #TODO
 

@@ -40,28 +40,24 @@ script/source = "extends Control
 
 var selectedPlayer
 
-onready var globalvars = get_tree().get_root().get_node(\"globalvars\")
-onready var fb = get_tree().get_root().get_node(\"fb\")
-onready var cfm = get_tree().get_root().get_node(\"cfm\")
-
 func _ready():
 	$ui/toolbar/mp.disabled = true
 	$ui/toolbar/rmchar.disabled = true
 	$ui/toolbar/sp.disabled = true
 	$ui/toolbar/save.disabled = true
 	$ui/customization.hide()
-	globalvars.setCurrentScene(\"gamesys\")
+	gvars.setCurrentScene(\"gamesys\")
 # warning-ignore:return_value_discarded
 	get_node(\"ui/cs1\").connect(\"clicked\", self, \"slotPressed\")
 # warning-ignore:return_value_discarded
 	get_node(\"ui/cs2\").connect(\"clicked\", self, \"slotPressed\")
 # warning-ignore:return_value_discarded
 	get_node(\"ui/cs3\").connect(\"clicked\", self, \"slotPressed\")
-	if globalvars.debug:
+	if gvars.debug:
 		$ui/unamepanel/Label.text = \"DEBUG\"
 	else:
-		if globalvars.loggedIn:
-			$ui/unamepanel/Label.text = globalvars.username
+		if gvars.loggedIn:
+			$ui/unamepanel/Label.text = gvars.username
 		else:
 			$ui/unamepanel.hide()
 			$ui/toolbar/mp.disabled = true
@@ -97,17 +93,17 @@ func characterSave():
 	$ui/toolbar/sp.disabled = false
 	$ui/toolbar/save.disabled = true
 	$ui/toolbar/rmchar.disabled = false
-	if globalvars.loggedIn:
+	if gvars.loggedIn:
 		$ui/toolbar/mp.disabled = false
 
 func showProfile():
 	pass
 
 func cbpressed():
-	if globalvars.debug:
+	if gvars.debug:
 		get_tree().quit(0)
 	else:
-		globalvars.load_scene(\"res://scenes/menus.tscn\")
+		gvars.load_scene(\"res://scenes/menus.tscn\")
 
 func resetAll():
 	get_node(\"ui/customization/TabContainer/Basic Info/groupGender\").reset()
@@ -128,7 +124,7 @@ func slotPressed(slot: int):
 		var data = cfm.loadCharacter(slot)
 		$ui/character.loadDataFromFiles(data)
 		$ui/toolbar/sp.disabled = false
-		if globalvars.loggedIn:
+		if gvars.loggedIn:
 			$ui/toolbar/mp.disabled = false
 		$ui/toolbar/save.disabled = true
 		$ui/toolbar/rmchar.disabled = false
@@ -150,20 +146,20 @@ func slotPressed(slot: int):
 
 func spPressed(): #assumes empty character isn't selected
 	var cdata = cfm.loadCharacter(selectedPlayer)
-	globalvars.splr = true
-	globalvars.setPalette(cdata[1])
-	globalvars.setPlayerData(cdata[0])
-	globalvars.load_scene(\"res://scenes/testworld.tscn\")
+	gvars.splr = true
+	gvars.setPalette(cdata[1])
+	gvars.setPlayerData(cdata[0])
+	gvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func mpPressed():
 	if true:
 		$dialogue.showDialogue(\"Oops!\", \"This feature currently is in the works, and therefore not available at this time.\", 0)
 		return
-	globalvars.splr = false
-	if globalvars.username != \"\":
+	gvars.splr = false
+	if gvars.username != \"\":
 		var cdata = cfm.loadCharacter(selectedPlayer)
-		globalvars.setPalette(cdata[1])
-		globalvars.setPlayerData(cdata[0])
+		gvars.setPalette(cdata[1])
+		gvars.setPlayerData(cdata[0])
 		var gl = get_node(\"/root/State\")
 		gl.join(\"127.0.0.1\")
 	else:
@@ -2154,8 +2150,8 @@ margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
 text = "Multiplayer"
 flat = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

@@ -80,6 +80,17 @@ Escape key - Pause the game"
 align = 1
 valign = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="chatpanel/Label"]
+margin_right = 64.0
+margin_bottom = 64.0
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="questingpanel" type="Panel" parent="."]
 visible = false

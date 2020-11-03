@@ -9,8 +9,6 @@ var loadedtribes: Array
 var tribeindexes: Array
 var itemdict: Array
 
-onready var logcat = get_tree().get_root().get_node("logcat")
-
 func startLoad():
 	
 	loadSettings()

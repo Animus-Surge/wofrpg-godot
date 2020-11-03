@@ -1,17 +1,16 @@
 extends Panel
 
-onready var fb = get_tree().get_root().get_node("fb")
-onready var globalvars = get_tree().get_root().get_node("globalvars")
-
 func _ready():
+	#warning-ignore:return_value_discarded
 	fb.connect("dbComplete", self, "dbComplete")
+	#warning-ignore:return_value_discarded
 	fb.connect("failed", self, "failed")
 	#following lines help with making sure the menu is visible
 	$settingspanel.hide()
 	$creditspanel.hide()
 	get_node("../dialogue").hide()
 	fb.getFromDB("newsinfo.json")
-	globalvars.setCurrentScene("menus")
+	gvars.setCurrentScene("menus")
 
 func dbComplete(result):
 	$newspanel/RichTextLabel.bbcode_text = result.text
@@ -25,8 +24,7 @@ func onSettingsHide():
 	$settingspanel.hide()
 
 func onPlay():
-	#globalvars.load_scene("res://scenes/gamesys.tscn")
-	globalvars.load_scene("res://scenes/gamesys.tscn")
+	gvars.load_scene("res://scenes/gamesys.tscn")
 
 func onExpansions():
 	get_node("../dialogue").show()

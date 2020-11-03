@@ -1,7 +1,5 @@
 extends Node
 
-onready var logcat = get_node("/root/logcat")
-
 var ipaddr
 var ipport
 
@@ -24,7 +22,7 @@ var players = {}
 func join(ip, port = defaultPort):
 	ipaddr = ip
 	ipport = port
-	var gvars = get_node("/root/globalvars")
+# warning-ignore:return_value_discarded
 	gvars.connect("doneLoading", self, "loaded")
 	gvars.load_scene("res://scenes/testworld.tscn")
 
@@ -52,12 +50,10 @@ func getPlayers() -> Dictionary:
 	return players
 
 func prestart():
-	var gvars = get_node("/root/globalvars")
 	rpc_id(1, "register", [0, gvars.plrdata, gvars.username])
 	rpc_id(1, "populate")
 
 func loaded():
-	var gvars = get_node("/root/globalvars")
 	gvars.disconnect("doneLoading", self, "loaded")
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(ipaddr, ipport)

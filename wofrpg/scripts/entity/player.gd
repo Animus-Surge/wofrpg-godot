@@ -15,9 +15,6 @@ puppet var pos = Vector2()
 
 const type = "PLAYER"
 
-onready var gvars = get_tree().get_root().get_node("globalvars")
-onready var gloader = get_tree().get_root().get_node("gloader")
-
 signal interact()
 signal checkThere()
 
@@ -77,8 +74,6 @@ func updateDetails(data:Array, _palette):
 	$Label.show()
 
 func setplrdetails(data: Dictionary, palette):
-	gloader = get_tree().get_root().get_node("gloader")
-	gvars = get_tree().get_root().get_node("globalvars")
 	if data.has("custom") and data.custom and data.has("cframes"):
 		usecc = true
 		$graphics.scale = $graphics.scale * data.size

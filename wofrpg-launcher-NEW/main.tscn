@@ -313,7 +313,6 @@ margin_right = 260.0
 margin_bottom = 41.0
 custom_fonts/font = ExtResource( 2 )
 align = 1
-selected = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -577,6 +576,7 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="main/sidebar/home" to="." method="showMain"]
 [connection signal="pressed" from="main/sidebar/news" to="." method="showNewsPanel"]
 [connection signal="pressed" from="main/sidebar/addon" to="." method="showAddonsPanel"]
+[connection signal="pressed" from="main/playbtn" to="." method="play"]
 [connection signal="pressed" from="main/profileadd" to="." method="showProfileDialogue"]
 [connection signal="pressed" from="main/profilesDialogue/cnf" to="." method="addProfile"]
 [connection signal="pressed" from="main/profilesDialogue/cnc" to="." method="hideProfileDialogue"]

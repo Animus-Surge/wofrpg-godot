@@ -2,35 +2,25 @@
 	"modid":"base",
 	"tribeid":"nigw",
 	"tribename":"NightWing",
-	"appearancesidle":[
-		"res://images/character/nigw/idle/nw-head.png",
-		"res://images/character/nigw/idle/nw-legs.png",
-		"res://images/character/nigw/idle/nw-body.png",
-		"res://images/character/nigw/idle/nw-tail.png",
-		"res://images/character/nigw/idle/nw-wings.png",
-		"res://images/character/nigw/idle/nw-spine.png",
-		"res://images/character/nigw/idle/nw-eyedrop.png"
+	"apps":[
+		{
+			"idle":"res://images/character/nigw/idle/nw-full-nospine.png",
+			"mask":"res://images/character/nigw/idle/nw-full-nospine-mask.png",
+			"additionalTribe":""
+		},
+		{
+			"idle":"res://images/character/nigw/idle/nw-skw-full.png",
+			"additionalTribe":"skyw"
+		}
 	],
-	"appearancesidlemask":[
-		"res://images/character/nigw/idle/nw-head-mask.png",
-		"res://images/character/nigw/idle/nw-legs-mask.png",
-		"res://images/character/nigw/idle/nw-body-mask.png",
-		"res://images/character/nigw/idle/nw-tail-mask.png",
-		"res://images/character/nigw/idle/nw-wings-mask.png",
-		"res://images/character/nigw/idle/nw-spine-mask.png"
-	],
-	"appearancesrun":[
-		"res://images/character/nigw/run/nw-base-run.png",
-		"res://images/character/nigw/run/nw-head-run.png",
-		"res://images/character/nigw/run/nw-wings-run.png",
-		"res://images/character/nigw/run/nw-spine-run.png",
-		"res://images/character/nigw/run/nw-eyedrop-run.png"
-	],
-	"appearancesrunmask":[
-		"res://images/character/nigw/run/nw-base-run-mask.png",
-		"res://images/character/nigw/run/nw-head-run-mask.png",
-		"res://images/character/nigw/run/nw-wings-run-mask.png",
-		"res://images/character/nigw/run/nw-spine-run-mask.png"
-	],
-	"decoflags":["spikes", "eyedrop"]
+	"modifs":[
+		{
+			"additionalpartpath":"res://images/character/nigw/idle/parts/nw-eyedrop.png",
+			"part":"eyedrop"
+		},
+		{
+			"additionalpartpath":"res://images/character/nigw/idle/nw-full.png",
+			"part":"spine"
+		}
+	]
 }

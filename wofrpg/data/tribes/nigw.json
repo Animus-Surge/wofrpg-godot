@@ -5,22 +5,42 @@
 	"apps":[
 		{
 			"idle":"res://images/character/nigw/idle/nw-full-nospine.png",
-			"mask":"res://images/character/nigw/idle/nw-full-nospine-mask.png",
-			"additionalTribe":""
+			"idlemask":"res://images/character/nigw/idle/nw-full-nospine-mask.png",
+			"run":"res://images/character/nigw/run/nw-full-nospine-run.png",
+			"runmask":"res://images/character/nigw/run/nw-full-nospine-run-mask.png",
+			"appModifiers":{
+				"eyedrop":{
+					"replacesPart":false,
+					"idle":"res://images/character/nigw/idle/parts/nw-eyedrop.png",
+					"idlemask":"none",
+					"run":"none",
+					"runmask":"none"
+				},
+				"spine":{
+					"replacesPart":"main",
+					"idle":"res://images/character/nigw/idle/nw-full.png",
+					"idlemask":"res://images/character/nigw/idle/nw-full-mask.png",
+					"run":"res://images/character/nigw/run/nw-full-run.png",
+					"runmask":"res://images/character/nigw/run/nw-full-nospine-run-mask.png"
+				}
+			},
+			"additionalTribe":"none"
 		},
 		{
 			"idle":"res://images/character/nigw/idle/nw-skw-full.png",
+			"idlemask":"res://images/character/nigw/idle/nw-skw-full-nospine-mask.png",
+			"run":"res://images/character/nigw/run/nw-skw-full-nospine-run.png",
+			"runmask":"res://images/character/nigw/run/nw-skw-full-nospine-run-mask.png",
+			"appModifiers":{
+				"spine":{
+					"replacesPart":false,
+					"idle":"res://images/character/nigw/idle/nw_skw-full.png",
+					"idlemask":"res://images/character/nigw/idle/nw_skw-full-mask.png",
+					"run":"res://images/character/nigw/run/nw-skw-full-run.png",
+					"runmask":"res://images/character/nigw/run/nw-skw-full-run-mask.png"
+				}
+			},
 			"additionalTribe":"skyw"
-		}
-	],
-	"modifs":[
-		{
-			"additionalpartpath":"res://images/character/nigw/idle/parts/nw-eyedrop.png",
-			"part":"eyedrop"
-		},
-		{
-			"additionalpartpath":"res://images/character/nigw/idle/nw-full.png",
-			"part":"spine"
 		}
 	]
 }

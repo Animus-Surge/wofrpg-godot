@@ -4,7 +4,10 @@
 	"tribename":"SkyWing",
 	"apps":[
 		{
-			"idle":"res://images/character/skyw/idle/skyw-full",
+			"idle":"res://images/character/skyw/idle/skw-full.png",
+			"idlemask":"res://images/character/skyw/idle/skw-full-mask.png",
+			"run":"res://images/character/skyw/run/skw-full-run.png",
+			"runmask":"res://images/character/skyw/run/skw-full-run-mask.png",
 			"additionalTribe":""
 		}
 	],

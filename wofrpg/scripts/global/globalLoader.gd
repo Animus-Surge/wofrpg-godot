@@ -10,12 +10,31 @@ var tribeindexes: Array
 var itemdict: Array
 
 func startLoad():
-	
+	login()
 	loadSettings()
 	loadAddons()
 	loadTribes()
 	checkDirs()
 	logcat.stdout("All stuff loaded.", 0)
+
+func login():
+	var pwu = File.new()
+	var err = pwu.open("user://temp/login.pwu", File.READ)
+	if err == ERR_FILE_NOT_FOUND:
+		return
+	elif err == OK:
+		var unpw = pwu.get_as_text().split(";")
+		fb.connect("completed", self,"success")
+		fb.userLogin(unpw[0], unpw[1])
+		
+	else:
+		print(err)
+
+func success(_action):
+	var dir = Directory.new()
+	dir.remove("user://temp/login.pwu")
+func fail(_reason, _action):
+	pass #shows error message and allows the player to play offline instead of crashing
 
 func checkDirs():
 	var dir = Directory.new()

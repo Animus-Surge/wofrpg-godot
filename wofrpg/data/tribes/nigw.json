@@ -10,10 +10,10 @@
 			"runmask":"res://images/character/nigw/run/nw-full-nospine-run-mask.png",
 			"appModifiers":{
 				"eyedrop":{
-					"replacesPart":false,
+					"replacesPart":"eyedrop",
 					"idle":"res://images/character/nigw/idle/parts/nw-eyedrop.png",
 					"idlemask":"none",
-					"run":"none",
+					"run":"res://images/character/nigw/run/parts/nw-eyedrop-run.png",
 					"runmask":"none"
 				},
 				"spine":{
@@ -32,6 +32,13 @@
 			"run":"res://images/character/nigw/run/nw-skw-full-nospine-run.png",
 			"runmask":"res://images/character/nigw/run/nw-skw-full-nospine-run-mask.png",
 			"appModifiers":{
+				"eyedrop":{
+					"replacesPart":false,
+					"idle":"res://images/character/nigw/idle/parts/nw-eyedrop.png",
+					"idlemask":"none",
+					"run":"res://images/character/nigw/run/parts/nw-eyedrop-run.png",
+					"runmask":"none"
+				},
 				"spine":{
 					"replacesPart":false,
 					"idle":"res://images/character/nigw/idle/nw_skw-full.png",

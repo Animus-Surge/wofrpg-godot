@@ -1,0 +1,8 @@
+{
+	"cname":"Test",
+	"tribes":["nigw"],
+	"modifiers":["spine", "eyedrop"],
+	"skills":{
+		"note":"TODO"
+	}
+}

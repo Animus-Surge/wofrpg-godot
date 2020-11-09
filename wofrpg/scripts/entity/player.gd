@@ -24,29 +24,13 @@ puppet var usecc = false #if set to true hides all but the body graphic and disa
 var charname
 var username
 
-var runb
-var runbmask
-var runh
-var runhmask
-var runw
-var runwmask
-var runs
-var runsmask
+var run
+var runmask
 var rune
-var runt
-var runtmask
 
-var idleb
-var idlebmask
-var idleh
-var idlehmask
-var idlew
-var idlewmask
-var idles
-var idlesmask
+var idle
+var idlemask
 var idlee
-var idlet
-var idletmask
 
 var customScale: Vector2
 
@@ -78,14 +62,7 @@ func setplrdetails(data: Dictionary, palette):
 		usecc = true
 		$graphics.scale = $graphics.scale * data.size
 		$graphics.position = $graphics.position * data.size
-		$graphics/body.visible = false
-		$graphics/spine.visible = false
-		$graphics/head.visible = false
-		$graphics/legs.visible = false
-		$graphics/tail.visible = false
-		$graphics/tdec.visible = false
-		$graphics/wings.visible = false
-		$graphics/edrop.visible = false
+		$graphics/base.visible = false
 		$graphics/customlooks.frames = load(data.cframes)
 		$graphics/customlooks.play("idle")
 		#TODO: custom stats
@@ -100,59 +77,40 @@ func setplrdetails(data: Dictionary, palette):
 			emit_signal("checkThere")
 		return
 	charname = data.name
-	for tribe in gloader.loadedtribes:
-		if data.appearances.body == tribe.tribename:
-			idleb = load(tribe.appearancesidle[2])
-			idlebmask = load(tribe.appearancesidlemask[2])
-			runb = load(tribe.appearancesrun[0])
-			runbmask = load(tribe.appearancesrunmask[0])
-			break
-	for tribe in gloader.loadedtribes:
-		if data.appearances.head == tribe.tribename:
-			idleh = load(tribe.appearancesidle[0])
-			idlehmask = load(tribe.appearancesidlemask[0])
-			runh = load(tribe.appearancesrun[1])
-			runhmask = load(tribe.appearancesrunmask[1])
-			break
-	for tribe in gloader.loadedtribes:
-		if data.appearances.tail == tribe.tribename:
-			$graphics/tail.texture = load(tribe.appearancesidle[3])
-			$graphics/tail.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[3]))
-			break
-	for tribe in gloader.loadedtribes:
-		if data.appearances.legs == tribe.tribename:
-			$graphics/legs.texture = load(tribe.appearancesidle[1])
-			$graphics/legs.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[1]))
-			break
-	for tribe in gloader.loadedtribes:
-		if data.appearances.wings == tribe.tribename:
-			idlew = load(tribe.appearancesidle[4])
-			idlewmask = load(tribe.appearancesidlemask[4])
-			runw = load(tribe.appearancesrun[2])
-			runwmask = load(tribe.appearancesrunmask[2])
-			break
-	for tribe in gloader.loadedtribes:
-		if data.appearances.spine == tribe.tribename:
-			idles = load(tribe.appearancesidle[5])
-			idlesmask = load(tribe.appearancesidlemask[5])
-			runs = load(tribe.appearancesrun[3])
-			runsmask = load(tribe.appearancesrunmask[3])
-			break
-	for tribe in gloader.loadedtribes:
-		for df in tribe.decoflags:
-			if df == "eyedrop":
-				rune = load(tribe.appearancesrun[4])
-				idlee = load(tribe.appearancesidle[6])
-		
-	$graphics/spine.visible = data.appearances.sshow
-	$graphics/edrop.visible = data.appearances.eshow
-	
-	$graphics/body.get_material().set_shader_param("palette", palette)
-	$graphics/tail.get_material().set_shader_param("palette", palette)
-	$graphics/legs.get_material().set_shader_param("palette", palette)
-	$graphics/head.get_material().set_shader_param("palette", palette)
-	$graphics/wings.get_material().set_shader_param("palette", palette)
-	$graphics/spine.get_material().set_shader_param("palette", palette)
+	match data.tribes.size():
+		1: #Purebred
+			for tribe in gloader.loadedtribes:
+				if data.tribes[0] == tribe.tribeid:
+					var updated = false
+					for modifier in data.modifiers:
+						if tribe.apps[0].appModifiers.has(modifier): #Uses first index (purebred by default)
+							match modifier.replacesPart:
+								"main":
+									$graphics/base.texture = load(modifier.idle)
+									idle = load(modifier.idle)
+									run = load(modifier.run)
+									if modifier.idlemask != "none":
+										$graphics/base.set_material(load("res://godot-resources/shaders/characterParts.shader"))
+										$graphics/base.material.set_shader_param("mask", load(modifier.idlemask))
+										$graphics/base.material.set_shader_param("palette", palette)
+										idlemask = load(modifier.idlemask)
+										runmask = load(modifier.runmask)
+									else:
+										$graphics/base.set_material(null)
+									updated = true
+								"eyedrop": #Doesn't use mask
+									$graphics/eyedrop.texture = load(modifier.idle)
+					if !updated:
+						$graphics/base.texture = load(tribe.apps[0].idle)
+						idle = load(tribe.apps[0].idle)
+						idle = load(tribe.apps[0].idlemask)
+						run = load(tribe.apps[0].run)
+						runmask = load(tribe.apps[0].runmask)
+						$graphics/base.set_material(load("res://godot-resources/shaders/characterParts.shader"))
+						$graphics/base.material.set_shader_param("mask", load(tribe.apps[0].idlemask))
+						$graphics/base.material.set_shader_param("palette", palette)
+		2: #Hybrid: Uses first index tribe as file reference, then scans apps for additionalTribe to match second index
+			pass
 
 func _physics_process(_delta):
 	if !get_tree().has_network_peer():
@@ -191,12 +149,12 @@ func _physics_process(_delta):
 
 func animation():
 	if vel.x > 0:
-		for x in range(9):
+		for x in range(2):
 			$graphics.get_child(x).flip_h = false
 		$"cs-nonflip".disabled = false
 		$"cs-flip".disabled = true
 	elif vel.x < 0:
-		for x in range(9):
+		for x in range(2):
 			$graphics.get_child(x).flip_h = true
 		$"cs-nonflip".disabled = true
 		$"cs-flip".disabled = false
@@ -204,39 +162,23 @@ func animation():
 	if vel == Vector2.ZERO:
 		if !usecc:
 			$graphics/AnimationPlayer.play("test-idle")
-			$graphics/tail.show()
-			$graphics/legs.show()
 			
-			$graphics/body.texture = idleb
-			$graphics/body.get_material().set_shader_param("mask", idlebmask)
-			$graphics/head.texture = idleh
-			$graphics/head.get_material().set_shader_param("mask", idlehmask)
-			$graphics/wings.texture = idlew
-			$graphics/wings.get_material().set_shader_param("mask", idlewmask)
-			$graphics/spine.texture = idles
-			$graphics/spine.get_material().set_shader_param("mask", idlesmask)
-			$graphics/edrop.texture = idlee
-			for x in range(8):
-				$graphics.get_child(x).scale = Vector2(0.503, 0.503)
+			$graphics/base.texture = idle
+			$graphics/base.material.set_shader_param("mask", idlemask)
+			
+			for x in range(1):
+				$graphics.get_child(x).scale = Vector2(2.035, 2.035)
 		else:
 			$graphics/customlooks.play("idle")
 	else:
 		if !usecc:
 			$graphics/AnimationPlayer.play("test-run")
-			$graphics/tail.hide()
-			$graphics/legs.hide()
 			
-			$graphics/body.texture = runb
-			$graphics/body.get_material().set_shader_param("mask", runbmask)
-			$graphics/head.texture = runh
-			$graphics/head.get_material().set_shader_param("mask", runhmask)
-			$graphics/wings.texture = runw
-			$graphics/wings.get_material().set_shader_param("mask", runwmask)
-			$graphics/spine.texture = runs
-			$graphics/spine.get_material().set_shader_param("mask", runsmask)
-			$graphics/edrop.texture = rune
-			for x in range(8):
-				$graphics.get_child(x).scale = Vector2(0.65, 0.65)
+			$graphics/base.texture = run
+			$graphics/base.material.set_shader_param("mask", runmask)
+			
+			for x in range(1):
+				$graphics.get_child(x).scale = Vector2(2.372, 2.372)
 		else:
 			$graphics/customlooks.play("run")
 

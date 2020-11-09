@@ -19,12 +19,6 @@ func showMain():
 	$main/addonspanel.hide()
 	$main/newspanel.hide()
 
-func play():
-	#save user login information in user://temp/login.pwd. game deletes when login is complete
-# warning-ignore:return_value_discarded
-
-	OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg-launcher.exe"))
-
 ##########################
 # Callbacks from buttons #
 ##########################

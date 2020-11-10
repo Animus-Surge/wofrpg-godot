@@ -324,5 +324,3 @@ func edropToggle(button_pressed):
 
 func getPalettes() -> ImageTexture:
 	return mp
-
-#TODO: rewrite this to work with fullbody bases instead of parts and masks

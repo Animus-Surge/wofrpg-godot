@@ -21,12 +21,13 @@ func login():
 	var pwu = File.new()
 	var err = pwu.open("user://temp/login.pwu", File.READ)
 	if err == ERR_FILE_NOT_FOUND:
+		logcat.stdout("Could not find login.pwu. Running singleplayer instance", logcat.INFO)
 		return
 	elif err == OK:
 		var unpw = pwu.get_as_text().split(";")
+		#warning-ignore: return_value_discarded
 		fb.connect("completed", self,"success")
 		fb.userLogin(unpw[0], unpw[1])
-		
 	else:
 		print(err)
 

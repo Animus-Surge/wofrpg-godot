@@ -1,0 +1,18 @@
+{
+	"modid":"base",
+	"tribename":"SandWing",
+	"tribeid":"sanw",
+	"appearancesidle":[
+
+	],
+	"appearancesidlemask":[
+
+	],
+	"appearancesrun":[
+
+	],
+	"appearancesrunmask":[
+
+	],
+	"decoflags":["spine", "tdec"]
+}

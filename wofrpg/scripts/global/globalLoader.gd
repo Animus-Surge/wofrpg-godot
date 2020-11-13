@@ -127,7 +127,7 @@ func loadTribes():
 		var tribedata = JSON.parse(tfile.get_as_text()).result
 		loadedtribes.append(tribedata)
 		tribeindexes.append(tribedata.tribename)
-		logcat.stdout("Loaded tribe: " + tribedata.modid + ":" + tribedata.tribename, 1)
+		logcat.stdout("Loaded tribe: " + tribedata.modid + ":" + tribedata.tribeid, 1)
 		tribe = tribesdir.get_next()
 
 func loadNPCInteraction(npcid) -> Dictionary:

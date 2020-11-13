@@ -34,8 +34,12 @@ func _ready():
 	$head.texture = null
 	$head.get_material().set_shader_param("mask", null)
 	$spine.texture = null
+	$spine.get_material().set_shader_param("mask", null)
+	$tdec.texture = null
+	$tdec.get_material().set_shader_param("mask", null)
 	$eyedrop.visible = false
 	$spine.visible = false
+	$tdec.visible = false
 
 func reset():
 	mp = mainPalette
@@ -45,6 +49,7 @@ func reset():
 	eyesChangeC(Color.white)
 	hornsChangeC(Color.white)
 	spineChangeC(Color.white)
+	tdecChangeC(Color.white)
 	
 	$head.texture = null
 	$body.texture = null
@@ -52,6 +57,7 @@ func reset():
 	$legs.texture = null
 	$tail.texture = null
 	$spine.texture = null
+	$tdec.visible = false
 	
 	spineToggle(false)
 	edropToggle(false)
@@ -64,6 +70,7 @@ func loadDataFromFiles(dataarr):
 	$head.get_material().set_shader_param("palette", dataarr[1])
 	$wings.get_material().set_shader_param("palette", dataarr[1])
 	$spine.get_material().set_shader_param("palette", dataarr[1])
+	$tdec.get_material().set_shader_param("palette", dataarr[1])
 	
 # warning-ignore:unused_variable
 	var index = 0
@@ -105,17 +112,20 @@ func loadDataFromFiles(dataarr):
 	for tribe in gloader.loadedtribes:
 		if tribe.tribename == dataarr[0].appearances.spine:
 			$spine.texture = load(tribe.appearancesidle[5])
+			$spine.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[5]))
 			break
 		index += 1
 	index = 0
-	#for tribe in gloader.loadedtribes:
-	#	if tribe.tribename == dataarr[0].appearances.body:
-	#		bodyChanged(index)  #TODO: implement tail decoration (Fantribes, SandWing, IceWing, LeafWing, HiveWing)
-	#		break
-	#	index += 1
+	for tribe in gloader.loadedtribes:
+		if tribe.tribename == dataarr[0].appearances.tdec:
+			$tdec.texture = load(tribe.appearancesidle[7])
+			$tdec.get_material().set_shader_param("mask", load(tribe.appearancesidlemask[6]))
+			break
+		index += 1
 	
 	$spine.visible = dataarr[0].appearances.sshow
 	$eyedrop.visible = dataarr[0].appearances.eshow
+	$tdec.visible = dataarr[0].appearances.tshow
 
 func scalesChangeC(color): #0 and 1
 	var temp = mp.get_data()
@@ -137,6 +147,7 @@ func scalesChangeC(color): #0 and 1
 	$tail.get_material().set_shader_param("palette", temp2)
 	$spine.get_material().set_shader_param("palette", temp2)
 	$wings.get_material().set_shader_param("palette", temp2)
+	$tdec.get_material().set_shader_param("palette", temp2)
 
 func eyesChangeC(color): #3
 	var temp = mp.get_data()
@@ -156,6 +167,7 @@ func eyesChangeC(color): #3
 	$tail.get_material().set_shader_param("palette", temp2)
 	$spine.get_material().set_shader_param("palette", temp2)
 	$wings.get_material().set_shader_param("palette", temp2)
+	$tdec.get_material().set_shader_param("palette", temp2)
 
 func hornsChangeC(color): #2
 	var temp = mp.get_data()
@@ -175,7 +187,7 @@ func hornsChangeC(color): #2
 	$tail.get_material().set_shader_param("palette", temp2)
 	$spine.get_material().set_shader_param("palette", temp2)
 	$wings.get_material().set_shader_param("palette", temp2)
-	
+	$tdec.get_material().set_shader_param("palette", temp2)
 	
 
 func wingsChangeC(color): #6 and 7
@@ -198,6 +210,7 @@ func wingsChangeC(color): #6 and 7
 	$tail.get_material().set_shader_param("palette", temp2)
 	$spine.get_material().set_shader_param("palette", temp2)
 	$wings.get_material().set_shader_param("palette", temp2)
+	$tdec.get_material().set_shader_param("palette", temp2)
 
 func spineChangeC(color): #4 and 5
 	var temp = mp.get_data()
@@ -217,11 +230,31 @@ func spineChangeC(color): #4 and 5
 	$head.get_material().set_shader_param("palette", temp2)
 	$legs.get_material().set_shader_param("palette", temp2)
 	$tail.get_material().set_shader_param("palette", temp2)
+	$tdec.get_material().set_shader_param("palette", temp2)
 	$spine.get_material().set_shader_param("palette", temp2)
 	$wings.get_material().set_shader_param("palette", temp2)
 
-func tdecChangeC(_color): #8
-	pass
+func tdecChangeC(color): #8 and 9
+	var temp = mp.get_data()
+	var darker = Color(color.r - 0.8, color.g - 0.8, color.b - 0.8)
+	
+	temp.lock()
+	temp.set_pixel(8,0,color)
+	temp.set_pixel(9,0,darker)
+	temp.unlock()
+	
+	var temp2 = ImageTexture.new()
+	temp2.create_from_image(temp, 0)
+	temp2.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	
+	mp = temp2
+	$body.get_material().set_shader_param("palette", temp2)
+	$head.get_material().set_shader_param("palette", temp2)
+	$legs.get_material().set_shader_param("palette", temp2)
+	$tail.get_material().set_shader_param("palette", temp2)
+	$tdec.get_material().set_shader_param("palette", temp2)
+	$spine.get_material().set_shader_param("palette", temp2)
+	$wings.get_material().set_shader_param("palette", temp2)
 
 func bodyChanged(_index):
 	if ddbody.get_selected_id() >= 255:
@@ -257,7 +290,6 @@ func tailChanged(_index):
 	if ddtail.get_selected_id() >= 255:
 		$tail.texture = null
 		return
-	
 	var tdataind = gloader.loadedtribes[ddtail.get_selected_id()]
 	for part in tdataind.appearancesidle:
 		if "tail" in part:
@@ -307,17 +339,28 @@ func spineChanged(_index):
 	for part in tdataind.appearancesidle:
 		if "spine" in part:
 			$spine.texture = load(part)
+	for part in tdataind.appearancesidlemask:
+		if "spine" in part:
+			$spine.get_material().set_shader_param("mask", load(part))
 
 func tdecChanged(_index):
 	if ddtdec.get_selected_id() >= 255:
 		$tdec.texture = null
 		return
 	
-	var _tdataind = gloader.loadedtribes[ddtdec.get_selected_id()]
-	#TODO
+	var tdataind = gloader.loadedtribes[ddtdec.get_selected_id()]
+	for part in tdataind.appearancesidle:
+		if "tdec" in part:
+			$tdec.texture = load(part)
+	for part in tdataind.appearancesidlemask:
+		if "tdec" in part:
+			$tdec.material.set_shader_param("mask", load(part))
 
 func spineToggle(button_pressed):
 	$spine.visible = button_pressed
+
+func tdecToggle(button_pressed):
+	$tdec.visible = button_pressed
 
 func edropToggle(button_pressed):
 	$eyedrop.visible = button_pressed

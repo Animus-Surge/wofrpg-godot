@@ -19,6 +19,10 @@ func showMain():
 	$main/addonspanel.hide()
 	$main/newspanel.hide()
 
+func play():
+	#TODO: player profiles
+	OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg-launcher.exe"))
+
 ##########################
 # Callbacks from buttons #
 ##########################

@@ -43,19 +43,19 @@ shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 24 )
 
-[sub_resource type="ShaderMaterial" id=10]
+[sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=7]
 shader = ExtResource( 19 )
 shader_param/palette = ExtResource( 6 )
 shader_param/mask = ExtResource( 23 )
 
-[sub_resource type="StreamTexture" id=7]
+[sub_resource type="StreamTexture" id=8]
 load_path = "res://.import/nw-eyedrop.png-62d0430988bc2e55a3d0610db9fe6349.stex"
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 1.08
 loop = true
 step = 0.18
@@ -156,7 +156,7 @@ tracks/7/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.6
 loop = true
 step = 0.12
@@ -276,13 +276,13 @@ texture = ExtResource( 4 )
 hframes = 6
 
 [node name="tdec" type="Sprite" parent="graphics"]
-material = SubResource( 10 )
+material = SubResource( 6 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 hframes = 6
 
 [node name="wings" type="Sprite" parent="graphics"]
-material = SubResource( 6 )
+material = SubResource( 7 )
 position = Vector2( 6.10352e-05, -2.28882e-05 )
 scale = Vector2( 0.50278, 0.50278 )
 texture = ExtResource( 2 )
@@ -291,14 +291,14 @@ hframes = 6
 [node name="edrop" type="Sprite" parent="graphics"]
 position = Vector2( 6.10352e-05, 0 )
 scale = Vector2( 0.50278, 0.50278 )
-texture = SubResource( 7 )
+texture = SubResource( 8 )
 hframes = 6
 
 [node name="customlooks" type="AnimatedSprite" parent="graphics"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
-anims/test-idle = SubResource( 8 )
-anims/test-run = SubResource( 9 )
+anims/test-idle = SubResource( 9 )
+anims/test-run = SubResource( 10 )
 
 [node name="cs-nonflip" type="CollisionShape2D" parent="."]
 position = Vector2( 40, 0 )

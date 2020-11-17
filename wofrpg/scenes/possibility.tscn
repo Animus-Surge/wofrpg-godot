@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/sceneroot.gd" type="Script" id=1]
+[ext_resource path="res://objects/ui/playerui.tscn" type="PackedScene" id=2]
+
+[node name="possibility" type="Node2D"]
+script = ExtResource( 1 )
+scene_name = "possibility"
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="spawn" type="Position2D" parent="world"]
+
+[node name="entities" type="YSort" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource( 2 )]

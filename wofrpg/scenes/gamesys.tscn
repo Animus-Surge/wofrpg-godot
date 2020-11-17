@@ -163,7 +163,7 @@ func mpPressed():
 		gvars.setPalette(cdata[1])
 		gvars.setPlayerData(cdata[0])
 		var gl = get_node(\"/root/State\")
-		gl.join(\"127.0.0.1\")
+		gl.join(\"127.0.0.1\") #TODO: Add a server list and a direct connect option
 	else:
 		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
 
@@ -2177,8 +2177,8 @@ margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
 text = "Multiplayer"
 flat = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

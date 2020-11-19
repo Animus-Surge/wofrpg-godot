@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://images/buildings/3x3_tent_1.png" type="Texture" id=1]
 [ext_resource path="res://objects/entity/npc.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scripts/entity/building.gd" type="Script" id=7]
 [ext_resource path="res://objects/ui/playerui.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/sceneroot.gd" type="Script" id=9]
+[ext_resource path="res://objects/item/item.tscn" type="PackedScene" id=10]
 [ext_resource path="res://godot-resources/main-tilemap.tres" type="TileSet" id=11]
 
 [node name="testworld" type="Node2D"]
@@ -98,6 +99,11 @@ texture = ExtResource( 5 )
 
 [node name="spawn" type="Position2D" parent="world"]
 position = Vector2( 12045, 15155 )
+
+[node name="items" type="Node2D" parent="."]
+
+[node name="item" parent="items" instance=ExtResource( 10 )]
+position = Vector2( 8954, 15629 )
 
 [node name="entities" type="YSort" parent="."]
 

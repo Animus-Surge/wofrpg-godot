@@ -25,6 +25,16 @@ var paused = false
 
 var current = "loadscreen"
 
+###################
+# UTILITY CLASSES #
+###################
+
+class Sorter:
+	static func itemsort_alphabetical(a,b): #Will sort the items by alphabetical name
+		if a.itemname < b.itemname:
+			return true
+		return false 
+
 func _ready():
 	#var mpstate = Node.new()
 	#mpstate.set_script(load("res://scripts/global/state.gd"))

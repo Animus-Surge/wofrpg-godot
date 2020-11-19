@@ -107,14 +107,48 @@ valign = 1
 autowrap = true
 
 [node name="inventory" type="Panel" parent="."]
-visible = false
 self_modulate = Color( 0.866667, 0.772549, 0.403922, 1 )
-anchor_left = 0.658
-anchor_right = 1.0
-anchor_bottom = 0.56
-margin_left = 0.171936
-margin_bottom = -0.0800171
+anchor_left = 0.014
+anchor_top = 0.042
+anchor_right = 0.423
+anchor_bottom = 0.478
+margin_left = -0.124001
+margin_top = -0.256004
+margin_right = 0.182007
+margin_bottom = -0.104004
 custom_styles/panel = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll" type="ScrollContainer" parent="inventory"]
+anchor_left = 0.045
+anchor_top = 0.119
+anchor_right = 0.463
+anchor_bottom = 0.965
+margin_left = -0.155001
+margin_top = -0.170002
+margin_right = 0.182983
+margin_bottom = 0.0499878
+
+[node name="GridContainer" type="GridContainer" parent="inventory/scroll"]
+margin_right = 234.0
+margin_bottom = 283.63
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="Label" type="Label" parent="inventory"]
+anchor_left = 0.122
+anchor_top = 0.03
+anchor_right = 0.122
+anchor_bottom = 0.03
+margin_left = -0.198006
+margin_top = -0.0500002
+margin_right = 143.802
+margin_bottom = 31.95
+custom_fonts/font = ExtResource( 4 )
+text = "INVENTORY"
 __meta__ = {
 "_edit_use_anchors_": false
 }

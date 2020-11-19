@@ -1,13 +1,5 @@
 extends KinematicBody2D
 
-#Custom character uses body sprite, graphics gets scaled with custom scaling in (GS-ADV-DETAILS)
-# Multiplayer data: [username, {playerdata}]
-#
-#
-#
-#
-#
-
 var MOVEMENT_SPEED = 750
 
 puppet var vel = Vector2.ZERO

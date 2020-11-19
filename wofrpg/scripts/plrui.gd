@@ -5,18 +5,17 @@ var uishowing = false
 onready var font = preload("res://fonts/pixel.tres")
 
 func _ready():
-	#var tex = ResourceLoader.load(ProjectSettings.globalize_path("user://icon.png"), "Texture")
-	#if tex != null:
-	#	tex.set_flags(0)
-	#	$chatpanel/Label/TextureRect.texture = tex
 	$interaction.hide()
 	$quest_taskpanel.hide()
+	$inventory.hide()
+	initInventory()
 
 func quit():
 	if get_tree().has_network_peer():
 		get_tree().set_network_peer(null) #AKA: disconnect the player
 	gvars.load_scene("res://scenes/menus.tscn")
 	gvars.paused = false
+	uishowing = false
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -27,6 +26,8 @@ func _input(event):
 				return
 			$pausemenu.visible = !$pausemenu.visible
 			gvars.paused = !gvars.paused
+		if event.scancode == KEY_E:
+			$inventory.visible = !$inventory.visible
 
 #######################
 # INTERACTION HANDLER #
@@ -59,6 +60,7 @@ func initInteraction(npcid, cname):
 	var err = ifile.open("res://data/interactions/" + npcid + ".json", File.READ)
 	assert(err == OK)
 	uishowing = true
+	gvars.paused = true
 	var idata = JSON.parse(ifile.get_as_text()).result
 	if startAt == "":
 		onenter(idata.onEnter)
@@ -155,6 +157,7 @@ func _on_interaction_visibility_changed():
 		currentPos = ""
 		npcid = ""
 		uishowing = false
+		gvars.paused = false
 
 ###################
 # QUESTING SYSTEM #
@@ -212,6 +215,45 @@ func qcomp():
 ####################
 # INVENTORY SYSTEM #
 ####################
+
+var inventory = []
+
+onready var itemslot = preload("res://objects/ui/slot.tscn")
+
+export(int) var slot_count = 20
+
+func initInventory():
+	for x in range(slot_count):
+		var slot = itemslot.instance()
+		slot.slotnum = x
+		slot.connect("use", self, "itemUse")
+		slot.connect("drop", self, "itemDrop")
+		slot.clearSlot()
+		$inventory/scroll/GridContainer.add_child(slot)
+
+func updateInventory():
+	for slot in $inventory/scroll/GridContainer:
+		slot.clearSlot()
+	inventory.sort_custom(gvars.Sorter, "itemsort_alphabetical")
+	
+	for x in range(inventory.size()):
+		$inventory/scroll/GridContainer.get_child(x).setItem(inventory[x])
+
+func addItem(item):
+	inventory.append(item)
+	updateInventory()
+
+func removeItem(item):
+	inventory.remove(inventory.find(item))
+	updateInventory()
+
+func itemDrop(item, _slot):
+	removeItem(item)
+
+func itemUse(item, _slot):
+	if item.onUse.has("call"):
+		if item.onUse.call.begins_with("print"):
+			logcat.stdout(item.onUse.call.split(":")[1], logcat.DEBUG)
 
 #TODO
 

@@ -18,7 +18,7 @@
 				"conditions":[
 					{
 						"variable":{
-							"name":"currentQuest",
+							"name":"cqname",
 							"value":"surge-help"
 						}
 					}
@@ -59,7 +59,7 @@
 			"animated":false,
 			"opts":[
 				{
-					"text":"I'm Jake. Who are you?",
+					"text":"I'm {name}. Who are you?",
 					"locked":false,
 					"goto":"main2"
 				}
@@ -121,7 +121,7 @@
 					"locked":true,
 					"unlockCondition":{
 						"variable":{
-							"name":"currentQuest",
+							"name":"cqname",
 							"value":"find-surgie"
 						}
 					},

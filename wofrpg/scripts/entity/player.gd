@@ -64,7 +64,7 @@ func _input(event):
 	if !gvars.paused:
 		if event is InputEventKey:
 			if event.scancode == KEY_F and event.pressed:
-				emit_signal("interact")
+				emit_signal("interact", charname)
 
 func updateDetails(data:Array, _palette):
 	var pal = ImageTexture.new()
@@ -253,5 +253,5 @@ func animation():
 		else:
 			$graphics/customlooks.play("run")
 
-func interacted(npcid):
-	get_parent().get_parent().get_node("CanvasLayer/UI").initInteraction(npcid)
+func interacted(npcid, cname):
+	get_parent().get_parent().get_node("CanvasLayer/UI").initInteraction(npcid, cname)

@@ -24,6 +24,7 @@ func login():
 		logcat.stdout("Could not find login.pwu. Running singleplayer instance", logcat.INFO)
 		return
 	elif err == OK:
+		return
 		var unpw = pwu.get_as_text().split(";")
 		#warning-ignore: return_value_discarded
 		fb.connect("completed", self,"success")

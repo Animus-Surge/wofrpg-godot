@@ -10,6 +10,7 @@ func _ready():
 	#	tex.set_flags(0)
 	#	$chatpanel/Label/TextureRect.texture = tex
 	$interaction.hide()
+	$quest_taskpanel.hide()
 
 func quit():
 	if get_tree().has_network_peer():
@@ -38,12 +39,14 @@ var startAt: String
 var currentPos: String
 
 var npcid
+var characterName
 
 var nevermet = false
 var npcUseRandom = false
 
 # warning-ignore:shadowed_variable
-func initInteraction(npcid):
+func initInteraction(npcid, cname):
+	characterName = cname
 	npcUseRandom = false
 	self.npcid = npcid
 	if metchars.has(npcid):
@@ -97,12 +100,12 @@ func updateInteraction():
 		if opt.locked:
 			if opt.unlockCondition.has("variable"):
 				if get(opt.unlockCondition.variable.name) == opt.unlockCondition.variable.value:
-					btn.text = opt.text
+					btn.text = opt.text.format({"name":characterName})
 				else:
 					btn.text = "[LOCKED]"
 					btn.disabled = true
 		else:
-			btn.text = opt.text
+			btn.text = opt.text.format({"name":characterName})
 		btn.set("custom_fonts/font", font)
 		btn.flat = true
 		btn.size_flags_horizontal = SIZE_EXPAND_FILL
@@ -118,9 +121,11 @@ func ibtnPress(to):
 	elif to.begins_with("%IT"): # Format: %IT:iw-siw-wolf_surge:begood
 		$interaction.hide() #TODO
 	elif to.begins_with("%QUEST"):
-		$interaction.hide() #TODO
+		initQuest(to.split(":")[1])
+		$interaction.hide()
 	elif to.begins_with("%UPDATE"):
-		$interaction.hide() #TODO
+		questUpdate()
+		$interaction.hide()
 	else:
 		currentPos = to
 		updateInteraction()
@@ -150,6 +155,59 @@ func _on_interaction_visibility_changed():
 		currentPos = ""
 		npcid = ""
 		uishowing = false
+
+###################
+# QUESTING SYSTEM #
+###################
+
+var currentQuest: Dictionary
+var cqname: String = ""
+var part = 0
+var cqpart: Dictionary
+
+func initQuest(questName):
+	part = 0
+	var qfile = File.new()
+	var err = qfile.open("res://data/quests/quest_" + questName + ".json", File.READ)
+	if err != OK:
+		pass #TODO: fullscreen dialogue
+		return
+	cqname = questName
+	currentQuest = JSON.parse(qfile.get_as_text()).result
+	cqpart = {}
+	questUpdate()
+	$quest_taskpanel.show()
+
+func questUpdate():
+	if cqpart.empty():
+		cqpart = currentQuest.questParts[part]
+		$quest_taskpanel/Label.text = cqpart.name
+		return
+	if !cqpart.onTaskComplete.empty():
+		if cqpart.onTaskComplete.has("run"):
+			match cqpart.onTaskComplete.run:
+				"COMPLETE":
+					qcomp()
+					return
+		elif cqpart.onTaskComplete.has("variable"):
+			set(cqpart.onTaskComplete.variable.name, cqpart.onTaskComplete.variable.value)
+	part += 1
+	cqpart = {}
+	questUpdate() #Calls itself to update the data
+
+#Quest helper functions
+
+func qcomp():
+	var onQC = currentQuest.onCompleted
+	part = 0
+	cqpart = {}
+	currentQuest = {}
+	
+	if onQC.has("add"):
+		pass
+	elif onQC.has("run"):
+		pass
+	$quest_taskpanel.hide()
 
 ####################
 # INVENTORY SYSTEM #

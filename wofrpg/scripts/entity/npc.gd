@@ -58,6 +58,6 @@ func _on_Area2D_body_exited(body):
 		$Label.hide()
 		inboundsPlayer = null
 
-func playerInteract():
+func playerInteract(cname):
 	if !hidden:
-		inboundsPlayer.call("interacted", npcid)
+		inboundsPlayer.call("interacted", npcid, cname)

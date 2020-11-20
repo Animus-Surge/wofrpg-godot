@@ -81,9 +81,6 @@ func randSpeech():
 	$interaction/ibar/ScrollContainer/npcdialogue.text = ipos.text
 	$interaction/face.texture = load("res://images/ui/interactions/" + npcid + "/reaction-" + ipos.face + ".png")
 
-func playerReady(palette):
-	$TextureRect.texture = palette
-
 func updateInteraction():
 	for btn in $interaction/ibar/opts/GridContainer.get_children(): btn.queue_free()
 	

@@ -32,7 +32,7 @@ func login():
 		fb.connect("completed", self,"success")
 		#warning-ignore: return_value_discarded
 		fb.connect("failed", self, "fail")
-		fb.userLogin(unpw[0], unpw[1])
+		fb.userLogin(unpw[0].strip_edges(), unpw[1].strip_edges())
 	else:
 		print(err)
 

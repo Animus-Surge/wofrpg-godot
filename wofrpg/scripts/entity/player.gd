@@ -67,7 +67,6 @@ func updateDetails(data:Array, _palette):
 	$Label.text = data[2]
 	username = data[2]
 	$Label.show()
-	get_node("../../CanvasLayer/UI").playerReady(_palette)
 
 func setplrdetails(data: Dictionary, palette):
 	if data.has("custom") and data.custom and data.has("cframes"):

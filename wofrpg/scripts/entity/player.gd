@@ -16,6 +16,8 @@ puppet var usecc = false #if set to true hides all but the body graphic and disa
 var charname
 var username
 
+var pal
+
 var runb
 var runbmask
 var runh
@@ -61,9 +63,11 @@ func _input(event):
 func updateDetails(data:Array, _palette):
 	#var pal = ImageTexture.new()
 	setplrdetails(data[1], _palette)
+	pal = _palette
 	$Label.text = data[2]
 	username = data[2]
 	$Label.show()
+	get_node("../../CanvasLayer/UI").playerReady(_palette)
 
 func setplrdetails(data: Dictionary, palette):
 	if data.has("custom") and data.custom and data.has("cframes"):
@@ -172,7 +176,7 @@ func _physics_process(_delta):
 			$graphics/customlooks.stop()
 	else:
 		if is_network_master():
-			if !gvars.uishowing and !gvars.interactionShowing:
+			if !gvars.uiShowing:
 				var vect = Vector2()
 				vect.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 				vect.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")

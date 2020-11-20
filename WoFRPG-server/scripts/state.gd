@@ -37,9 +37,9 @@ remote func register(playerdata, playerpal):
 	playerdata[0] = cid
 	players[String(cid)] = {"data":playerdata, "palette":playerpal}
 	for id in players:
-		rpc_id(cid, "register", id, players[String(id)])
+		rpc_id(cid, "register", id, players[String(id)], playerpal)
 	
-	rpc("register", cid, players[String(cid)])
+	rpc("register", cid, players[String(cid)], playerpal)
 	lc.logmsg("Registered player " + String(cid), lc.INFO)
 
 puppetsync func unregister(id):

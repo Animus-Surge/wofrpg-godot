@@ -154,7 +154,7 @@ func spPressed(): #assumes empty character isn't selected
 	gvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func mpPressed():
-	if true:
+	if false:
 		$dialogue.showDialogue(\"Oops!\", \"This feature currently is in the works, and therefore not available at this time.\", 0)
 		return
 	gvars.splr = false
@@ -162,8 +162,7 @@ func mpPressed():
 		var cdata = cfm.loadCharacter(selectedPlayer)
 		gvars.setPalette(cdata[1])
 		gvars.setPlayerData(cdata[0])
-		var gl = get_node(\"/root/State\")
-		gl.join(\"127.0.0.1\") #TODO: Add a server list and a direct connect option
+		State.join(\"127.0.0.1\") #TODO: Add a server list and a direct connect option
 	else:
 		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
 

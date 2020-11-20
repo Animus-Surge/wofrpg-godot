@@ -24,10 +24,13 @@ func login():
 		logcat.stdout("Could not find login.pwu. Running singleplayer instance", logcat.INFO)
 		return
 	elif err == OK:
-		return
+		#return
 		var unpw = pwu.get_as_text().split(";")
+		print(unpw)
 		#warning-ignore: return_value_discarded
 		fb.connect("completed", self,"success")
+		#warning-ignore: return_value_discarded
+		fb.connect("failed", self, "fail")
 		fb.userLogin(unpw[0], unpw[1])
 	else:
 		print(err)
@@ -36,7 +39,7 @@ func success(_action):
 	var dir = Directory.new()
 	dir.remove("user://temp/login.pwu")
 func fail(_reason, _action):
-	pass #shows error message and allows the player to play offline instead of crashing
+	print(_reason)
 
 func checkDirs():
 	var dir = Directory.new()

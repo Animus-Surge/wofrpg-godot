@@ -28,9 +28,9 @@ puppet func spawn(_pos, id, data, palette):
 	player.position = spawnpoint
 	
 	var pal = Image.new()
-	pal.create_from_data(32,1,false,Image.FORMAT_BPTC_RGBA,Marshalls.base64_to_raw(palette))
+	pal.create_from_data(32,1,false,Image.FORMAT_RGBA8,Marshalls.base64_to_raw(palette))
 	var img = ImageTexture.new()
-	img.create_from_image(pal)
+	img.create_from_image(pal, 0)
 	
 	$entities.add_child(player)
 	player.updateDetails(data, img)

@@ -36,6 +36,7 @@ fb="*res://scripts/global/firebase.gd"
 gloader="*res://scripts/global/globalLoader.gd"
 http="*res://objects/request.tscn"
 timer="*res://objects/systimer.tscn"
+State="*res://scripts/global/state.gd"
 
 [debug]
 

@@ -31,11 +31,11 @@ func _peer_disconnect(id):
 	
 	lc.logmsg("Player " + String(id) + " disconnected", 1)
 
-remote func register(playerdata):
+remote func register(playerdata, playerpal):
 	lc.logmsg("Registering player...", 0)
 	var cid = get_tree().get_rpc_sender_id()
 	playerdata[0] = cid
-	players[String(cid)] = {"data":playerdata}
+	players[String(cid)] = {"data":playerdata, "palette":playerpal}
 	for id in players:
 		rpc_id(cid, "register", id, players[String(id)])
 	
@@ -56,7 +56,7 @@ remote func populate():
 	for player in wld.get_node("entities").get_children():
 		wld.rpc_id(cid, "spawn", player.position, player.get_network_master(), players[String(player.name)].data, players[String(player.name)].palette)
 	
-	wld.rpc("spawn", rvec(250, 250), cid, players[String(cid)].data)
+	wld.rpc("spawn", rvec(250, 250), cid, players[String(cid)].data, players[String(cid)].palette)
 
 func rvec(x, y) -> Vector2:
 	return Vector2(randf() * x, randf() * y)

@@ -1,6 +1,7 @@
 [
 	{
-		"itemid":"wofrpg:dummy",
+		"itemid":"dummy",
+		"expansionid":"base",
 		"itemname":"Dummy Item",
 		"onUse":{
 			"call":"print:Why hello there"

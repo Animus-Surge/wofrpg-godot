@@ -40,8 +40,8 @@ func disconnected():
 	get_tree().set_network_peer(null)
 	emit_signal("disconnected")
 
-puppet func register(id, data):
-	players[id] = data
+puppet func register(id, data, palette):
+	players[id] = {"data":data, "palette":palette}
 
 puppet func unregister(id):
 	players.erase(id)
@@ -50,7 +50,8 @@ func getPlayers() -> Dictionary:
 	return players
 
 func prestart():
-	rpc_id(1, "register", [0, gvars.plrdata, gvars.username])
+	var palette = Marshalls.raw_to_base64(gvars.plrpalette.get_data().get_data())
+	rpc_id(1, "register", [0, gvars.plrdata, gvars.username], palette)
 	rpc_id(1, "populate")
 
 func loaded():

@@ -59,8 +59,8 @@ func _input(event):
 				emit_signal("interact", charname)
 
 func updateDetails(data:Array, _palette):
-	var pal = ImageTexture.new()
-	setplrdetails(data[1], pal)
+	#var pal = ImageTexture.new()
+	setplrdetails(data[1], _palette)
 	$Label.text = data[2]
 	username = data[2]
 	$Label.show()

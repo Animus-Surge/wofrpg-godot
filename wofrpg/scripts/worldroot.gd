@@ -18,7 +18,7 @@ func _ready():
 		player.position = get_node("world/spawn").position
 		$entities.add_child(player)
 
-puppet func spawn(_pos, id, data):
+puppet func spawn(_pos, id, data, palette):
 	var spawnpoint:Vector2 = get_node("world/spawn").position
 	print(spawnpoint)
 	var player = plr.instance()
@@ -27,8 +27,13 @@ puppet func spawn(_pos, id, data):
 	player.name = String(id)
 	player.position = spawnpoint
 	
+	var pal = Image.new()
+	pal.create_from_data(32,1,false,Image.FORMAT_BPTC_RGBA,Marshalls.base64_to_raw(palette))
+	var img = ImageTexture.new()
+	img.create_from_image(pal)
+	
 	$entities.add_child(player)
-	player.updateDetails(data, null)
+	player.updateDetails(data, img)
 
 puppet func erasePlayer(id):
 	$entities.get_node(String(id)).queue_free()

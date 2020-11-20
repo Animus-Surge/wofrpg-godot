@@ -77,6 +77,10 @@ var scn
 var wait
 var tmax = 100
 
+func load_world(world_name: String, expansion = "base"):
+	var worldDataFile=File.new()
+	
+
 func load_scene(scene: String):
 	#print("Bop")
 	#print(current)

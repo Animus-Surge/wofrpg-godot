@@ -2,7 +2,7 @@ extends Node2D
 
 onready var plr = load("res://player.tscn")
 
-puppetsync func spawn(pos, id, _data):
+puppetsync func spawn(pos, id, _data, _palette):
 	var player = plr.instance()
 	
 	player.position = pos

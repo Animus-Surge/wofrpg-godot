@@ -1,0 +1,12 @@
+{
+	"locationid":"testworld",
+	"expansionid":"base",
+	"worldscene":"res://scenes/testworld.tscn",
+	"loot":[
+		{
+			"ident":"idummyx0y0",
+			"item":"base:dummy",
+			"location":{"x":0,"y":0}
+		}
+	]
+}

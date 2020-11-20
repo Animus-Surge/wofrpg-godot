@@ -44,7 +44,7 @@ func _ready():
 	cfm.startLoad()
 	if !debug:
 		print("==============> GAME START <==============")
-		load_scene("res://scenes/menus.tscn")
+		#load_scene("res://scenes/menus.tscn")
 	else:
 		print("==============> DEBUG MODE <==============")
 
@@ -58,18 +58,6 @@ func setCurrentScene(scene):
 func inrange(callerPos, targetPos, distance) -> bool:
 	if callerPos.distance_to(targetPos) <= distance: return true
 	return false
-
-func loadConfigFile():
-	var cfgFile = File.new()
-	if !cfgFile.file_exists("user://login.ids"):
-		logcat.stdout("No user configuration file found. Unable to automatically log in.", 2)
-		return
-	var err = cfgFile.open_encrypted_with_pass("user://login.ids", File.READ, OS.get_unique_id())
-	if !err == OK:
-		logcat.stdout("Error when attempting to load user config file. " + String(err), 3)
-		return
-	var details = cfgFile.get_as_text().split(' ')
-	fb.login(details[0], details[1])
 
 #=====Scene Loader System=====
 

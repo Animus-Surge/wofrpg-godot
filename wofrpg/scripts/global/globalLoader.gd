@@ -10,7 +10,8 @@ var tribeindexes: Array
 var itemdict: Array
 
 func startLoad():
-	login()
+	if !gvars.debug:
+		login()
 	loadSettings()
 	loadAddons()
 	loadTribes()
@@ -22,11 +23,11 @@ func login():
 	var err = pwu.open("user://temp/login.pwu", File.READ)
 	if err == ERR_FILE_NOT_FOUND:
 		logcat.stdout("Could not find login.pwu. Running singleplayer instance", logcat.INFO)
+		gvars.load_scene("res://scenes/menus.tscn")
 		return
 	elif err == OK:
 		#return
 		var unpw = pwu.get_as_text().split(";")
-		print(unpw)
 		#warning-ignore: return_value_discarded
 		fb.connect("completed", self,"success")
 		#warning-ignore: return_value_discarded
@@ -38,6 +39,7 @@ func login():
 func success(_action):
 	var dir = Directory.new()
 	dir.remove("user://temp/login.pwu")
+	gvars.load_scene("res://scenes/menus.tscn")
 func fail(_reason, _action):
 	print(_reason)
 

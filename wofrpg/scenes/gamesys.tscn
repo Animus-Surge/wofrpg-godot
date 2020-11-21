@@ -67,24 +67,38 @@ func _ready():
 		$ui/cs2.call(\"updateName\", cfm.characters[1].name)
 		$ui/cs3.call(\"updateName\", cfm.characters[2].name)
 
+onready var head = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/head\")
+onready var body = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/body\")
+onready var tail = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/tail\")
+onready var wings = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/wings\")
+onready var spine = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spine\")
+onready var tdec = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/td\")
+onready var legs = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/legs\")
+
+onready var tdtog = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/tdtoggle\")
+onready var sptog = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spinetoggle\")
+onready var edtog = get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/eyedroptoggle\")
+
 func characterSave():
 	var charPalettes = get_node(\"ui/character\").getPalettes()
+	if head.selected == 255 or body.selected == 255 or tail.selected == 255 or legs.selected == 255:
+		$dialogue.showDialogue(\"Invalid Parts\", \"Either a body, tail, head, or leg part hasn't been selected.\", 0)
 	$ui/customization.hide()
 	var charData = { 
 		\"name\":get_node(\"ui/customization/TabContainer/Basic Info/cname\").text,
 		\"tribes\":get_node(\"ui/customization/TabContainer/Basic Info/tribesbtn/ScrollContainer/GridContainer\").getSelectedTribes(),
 		\"role\":get_node(\"ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer\").getSelectedRole(),
 		\"appearances\":{
-			\"head\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/head\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/head\").selected),
-			\"body\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/body\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/body\").selected),
-			\"legs\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/legs\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/legs\").selected),
-			\"tail\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/tail\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/tail\").selected),
-			\"wings\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/wings\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/wings\").selected),
-			\"spine\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spine\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spine\").selected),
-			\"tdec\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/td\").get_item_text(get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/td\").selected),
-			\"sshow\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/spinetoggle\").pressed,
-			\"eshow\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/eyedroptoggle\").pressed,
-			\"tshow\":get_node(\"ui/customization/TabContainer/Appearance/Parent/partScroll/GridContainer/tdtoggle\").pressed
+			\"head\":head.get_item_text(head.selected),
+			\"body\":body.get_item_text(body.selected),
+			\"legs\":legs.get_item_text(legs.selected),
+			\"tail\":tail.get_item_text(tail.selected),
+			\"wings\":wings.get_item_text(wings.selected),
+			\"spine\":spine.get_item_text(spine.selected),
+			\"tdec\":tdec.get_item_text(tdec.selected),
+			\"sshow\":sptog.pressed,
+			\"eshow\":edtog.pressed,
+			\"tshow\":tdtog.pressed
 		}
 	}
 	var err = cfm.saveCharacter(selectedPlayer, charData, charPalettes)
@@ -2176,8 +2190,8 @@ margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
 text = "Multiplayer"
 flat = true
-[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
+[connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
 [connection signal="mouse_exited" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckUnhover"]
 [connection signal="toggled" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="_mcheck"]

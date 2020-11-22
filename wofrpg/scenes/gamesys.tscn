@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://images/character/sanw/idle/saw-head.png" type="Texture" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-legs.png" type="Texture" id=2]
@@ -23,7 +23,7 @@
 [ext_resource path="res://images/character/sanw/idle/saw-tail-mask.png" type="Texture" id=21]
 [ext_resource path="res://images/character/sanw/idle/saw-wings-mask.png" type="Texture" id=22]
 [ext_resource path="res://images/ui/buttons/radio-btn.png" type="Texture" id=23]
-[ext_resource path="res://images/ui/backgrounds/lineedit-bg.png" type="Texture" id=24]
+[ext_resource path="res://godot-resources/lineedit-stylebox.stylebox" type="StyleBox" id=24]
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=25]
 [ext_resource path="res://images/ui/buttons/button-toggleable.png" type="Texture" id=26]
 [ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=27]
@@ -48,6 +48,7 @@ func _ready():
 	$ui/toolbar/sp.disabled = true
 	$ui/toolbar/save.disabled = true
 	$ui/customization.hide()
+	$ipdialogue.hide()
 	gvars.setCurrentScene(\"gamesys\")
 # warning-ignore:return_value_discarded
 	get_node(\"ui/cs1\").connect(\"clicked\", self, \"slotPressed\")
@@ -168,17 +169,7 @@ func spPressed(): #assumes empty character isn't selected
 	gvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func mpPressed():
-	if false:
-		$dialogue.showDialogue(\"Oops!\", \"This feature currently is in the works, and therefore not available at this time.\", 0)
-		return
-	gvars.splr = false
-	if gvars.username != \"\":
-		var cdata = cfm.loadCharacter(selectedPlayer)
-		gvars.setPalette(cdata[1])
-		gvars.setPlayerData(cdata[0])
-		State.join(\"127.0.0.1\") #TODO: Add a server list and a direct connect option
-	else:
-		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
+	$ipdialogue.show()
 
 func rmcharPressed():
 # warning-ignore:return_value_discarded
@@ -198,6 +189,20 @@ func rccnf():
 
 func loadCustomCharacter():
 	$cchardialogue.show()
+
+func hideIPDialogue():
+	$ipdialogue.hide()
+	$ipdialogue/panel/ipline.text = \"\"
+
+func ipClickJoin():
+	gvars.splr = false
+	if gvars.username != \"\":
+		var cdata = cfm.loadCharacter(selectedPlayer)
+		gvars.setPalette(cdata[1])
+		gvars.setPlayerData(cdata[0])
+		State.join($ipdialogue/panel/ipline.text)
+	else:
+		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
 "
 
 [sub_resource type="StyleBoxTexture" id=2]
@@ -222,13 +227,7 @@ font_data = ExtResource( 13 )
 
 [sub_resource type="StyleBoxEmpty" id=6]
 
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 24 )
-region_rect = Rect2( 0, 0, 128, 128 )
-margin_left = 28.2819
-margin_right = 27.8945
-
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=7]
 script/source = "extends Control
 
 var genderIndex
@@ -278,7 +277,7 @@ func fcheckUnhover():
 		$fcheck.self_modulate = Color(1,0.5,0)
 "
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 26 )
 region_rect = Rect2( 0, 0, 64.4626, 64.4546 )
 margin_left = 20.0714
@@ -286,7 +285,7 @@ margin_right = 20.495
 margin_top = 19.8777
 margin_bottom = 20.4765
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Button
 
 signal selected(tribes)
@@ -312,10 +311,10 @@ func _on_rolesbtn_pressed():
 		emit_signal(\"selected\", $ScrollContainer/GridContainer.getSelectedTribes())
 "
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.909804, 0.85098, 0.356863, 1 )
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=11]
 script/source = "extends GridContainer
 
 const maxSelectedTribes = 3
@@ -356,7 +355,7 @@ func resetSelected():
 	selectedTribes = 0
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Button
 
 func _ready():
@@ -377,7 +376,7 @@ func _on_TabContainer_tab_changed(_tab):
 		pressed = false
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=13]
 script/source = "extends GridContainer
 
 var roleIndex = -1
@@ -403,7 +402,7 @@ func reset():
 		child.pressed = false
 "
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=14]
 script/source = "extends CheckBox
 
 export (int) var id
@@ -433,7 +432,7 @@ func _process(_delta):
 			self_modulate = Color(1,0.5,0)
 "
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=15]
 script/source = "extends Panel
 
 func colorChanged(color: Color, part: int):
@@ -461,9 +460,9 @@ func reset():
 	$Parent/partScroll.reset()
 "
 
-[sub_resource type="StyleBoxEmpty" id=17]
+[sub_resource type="StyleBoxEmpty" id=16]
 
-[sub_resource type="GDScript" id=18]
+[sub_resource type="GDScript" id=17]
 script/source = "extends ScrollContainer
 
 onready var bodydd = $GridContainer/body
@@ -581,7 +580,7 @@ func updateSelectedTribes(tribes):
 		get_node(\"GridContainer/Label7\").visible = true
 "
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=18]
 script/source = "extends ColorPickerButton
 
 export (int) var partid
@@ -591,52 +590,52 @@ func _color_changed(color):
 	get_node(\"../../../..\").call(\"colorChanged\", color, partid)
 "
 
-[sub_resource type="ShaderMaterial" id=20]
+[sub_resource type="ShaderMaterial" id=19]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 18 )
 
-[sub_resource type="ShaderMaterial" id=21]
+[sub_resource type="ShaderMaterial" id=20]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 21 )
 
-[sub_resource type="ShaderMaterial" id=22]
+[sub_resource type="ShaderMaterial" id=21]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 36 )
 
-[sub_resource type="ShaderMaterial" id=23]
+[sub_resource type="ShaderMaterial" id=22]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 15 )
 
-[sub_resource type="ShaderMaterial" id=24]
+[sub_resource type="ShaderMaterial" id=23]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 4 )
 
-[sub_resource type="ShaderMaterial" id=25]
+[sub_resource type="ShaderMaterial" id=24]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 3 )
 
-[sub_resource type="ShaderMaterial" id=26]
+[sub_resource type="ShaderMaterial" id=25]
 shader = ExtResource( 12 )
 shader_param/palette = ExtResource( 14 )
 shader_param/mask = ExtResource( 22 )
 
-[sub_resource type="StreamTexture" id=27]
+[sub_resource type="StreamTexture" id=26]
 load_path = "res://.import/nw-eyedrop.png-62d0430988bc2e55a3d0610db9fe6349.stex"
 
-[sub_resource type="StyleBoxTexture" id=28]
+[sub_resource type="StyleBoxTexture" id=27]
 texture = ExtResource( 8 )
 region_rect = Rect2( 0, 0, 128, 64 )
 margin_left = 16.2901
 margin_right = 18.7336
 margin_top = 48.8704
 
-[sub_resource type="GDScript" id=29]
+[sub_resource type="GDScript" id=28]
 script/source = "extends Panel
 
 func _ready():
@@ -652,7 +651,7 @@ func mouseExit():
 	self_modulate = Color(0.9, 0.98, 0.48, 0.54)
 "
 
-[sub_resource type="GDScript" id=30]
+[sub_resource type="GDScript" id=29]
 script/source = "extends Panel
 
 var storedCharName
@@ -704,13 +703,13 @@ func disable():
 	selected = false
 "
 
-[sub_resource type="StyleBoxFlat" id=31]
+[sub_resource type="StyleBoxFlat" id=30]
 bg_color = Color( 0, 0, 0, 0.529412 )
 
-[sub_resource type="StyleBoxFlat" id=32]
+[sub_resource type="StyleBoxFlat" id=31]
 bg_color = Color( 0, 0, 0, 0.647059 )
 
-[sub_resource type="GDScript" id=33]
+[sub_resource type="GDScript" id=32]
 script/source = "extends Panel
 
 onready var yn = get_node(\"yesno\")
@@ -753,7 +752,7 @@ func alok():
 	hide()
 "
 
-[sub_resource type="GDScript" id=34]
+[sub_resource type="GDScript" id=33]
 script/source = "extends Panel
 
 onready var gldr = get_tree().get_root().get_node(\"gloader\")
@@ -879,9 +878,9 @@ margin_left = 0.618
 margin_top = 0.116
 margin_right = 0.381989
 margin_bottom = -0.0699997
-custom_styles/read_only = SubResource( 7 )
-custom_styles/focus = SubResource( 7 )
-custom_styles/normal = SubResource( 7 )
+custom_styles/read_only = ExtResource( 24 )
+custom_styles/focus = ExtResource( 24 )
+custom_styles/normal = ExtResource( 24 )
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 placeholder_text = "Character Name"
@@ -898,7 +897,7 @@ margin_left = 0.118
 margin_top = 0.0459938
 margin_right = 0.0529785
 margin_bottom = -0.0500031
-script = SubResource( 8 )
+script = SubResource( 7 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -954,9 +953,9 @@ margin_top = -0.130005
 margin_right = 0.125992
 margin_bottom = 0.0911865
 focus_mode = 0
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 9 )
-custom_styles/normal = SubResource( 9 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/normal = SubResource( 8 )
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -965,7 +964,7 @@ custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 toggle_mode = true
 enabled_focus_mode = 0
 text = "Tribes"
-script = SubResource( 10 )
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -977,7 +976,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -0.354187
 margin_bottom = 101.646
-custom_styles/bg = SubResource( 11 )
+custom_styles/bg = SubResource( 10 )
 scroll_horizontal_enabled = false
 __meta__ = {
 "_edit_group_": true,
@@ -990,7 +989,7 @@ margin_bottom = 102.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
-script = SubResource( 12 )
+script = SubResource( 11 )
 
 [node name="rolesbtn" type="Button" parent="ui/customization/TabContainer/Basic Info"]
 self_modulate = Color( 0.92549, 0.862745, 0, 1 )
@@ -1003,9 +1002,9 @@ margin_top = -0.130005
 margin_right = -0.00799561
 margin_bottom = 0.0911865
 focus_mode = 0
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 9 )
-custom_styles/normal = SubResource( 9 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/normal = SubResource( 8 )
 custom_fonts/font = ExtResource( 19 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -1014,7 +1013,7 @@ custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 toggle_mode = true
 enabled_focus_mode = 0
 text = "Roles"
-script = SubResource( 13 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1028,7 +1027,7 @@ anchor_bottom = 1.0
 margin_left = -0.0599976
 margin_top = -0.354202
 margin_bottom = 101.646
-custom_styles/bg = SubResource( 11 )
+custom_styles/bg = SubResource( 10 )
 scroll_horizontal_enabled = false
 __meta__ = {
 "_edit_group_": true,
@@ -1041,7 +1040,7 @@ margin_bottom = 132.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
-script = SubResource( 14 )
+script = SubResource( 13 )
 
 [node name="commoner" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
 margin_right = 128.0
@@ -1057,7 +1056,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Commoner"
-script = SubResource( 15 )
+script = SubResource( 14 )
 
 [node name="rogue" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
 margin_left = 132.0
@@ -1074,7 +1073,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Rogue"
-script = SubResource( 15 )
+script = SubResource( 14 )
 id = 1
 
 [node name="servant" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -1092,7 +1091,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Servant"
-script = SubResource( 15 )
+script = SubResource( 14 )
 id = 2
 
 [node name="noble" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -1111,7 +1110,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Noble"
-script = SubResource( 15 )
+script = SubResource( 14 )
 id = 3
 
 [node name="animus" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -1129,7 +1128,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Animus"
-script = SubResource( 15 )
+script = SubResource( 14 )
 id = 4
 
 [node name="paladin" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -1148,7 +1147,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Paladin"
-script = SubResource( 15 )
+script = SubResource( 14 )
 id = 5
 
 [node name="merchant" type="CheckBox" parent="ui/customization/TabContainer/Basic Info/rolesbtn/ScrollContainer/GridContainer"]
@@ -1166,7 +1165,7 @@ custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 enabled_focus_mode = 0
 text = "Merchant"
-script = SubResource( 15 )
+script = SubResource( 14 )
 id = 6
 
 [node name="Appearance" type="Panel" parent="ui/customization/TabContainer"]
@@ -1175,7 +1174,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 27.0
 custom_styles/panel = SubResource( 6 )
-script = SubResource( 16 )
+script = SubResource( 15 )
 
 [node name="Parent" type="Panel" parent="ui/customization/TabContainer/Appearance"]
 anchor_right = 1.0
@@ -1183,7 +1182,7 @@ anchor_bottom = 1.0
 margin_top = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 17 )
+custom_styles/panel = SubResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1224,7 +1223,7 @@ margin_top = 0.5
 margin_right = -9.15527e-05
 margin_bottom = 1.0
 scroll_horizontal_enabled = false
-script = SubResource( 18 )
+script = SubResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1494,7 +1493,7 @@ custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
 color = Color( 1, 1, 1, 1 )
-script = SubResource( 19 )
+script = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1520,7 +1519,7 @@ custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
 color = Color( 1, 1, 1, 1 )
-script = SubResource( 19 )
+script = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1547,7 +1546,7 @@ custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
 color = Color( 1, 1, 1, 1 )
-script = SubResource( 19 )
+script = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1574,7 +1573,7 @@ custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
 color = Color( 1, 1, 1, 1 )
-script = SubResource( 19 )
+script = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1601,7 +1600,7 @@ custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
 color = Color( 1, 1, 1, 1 )
-script = SubResource( 19 )
+script = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1628,7 +1627,7 @@ custom_styles/hover = ExtResource( 28 )
 custom_styles/pressed = ExtResource( 27 )
 custom_styles/normal = ExtResource( 29 )
 color = Color( 1, 1, 1, 1 )
-script = SubResource( 19 )
+script = SubResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1661,7 +1660,7 @@ __meta__ = {
 }
 
 [node name="spine" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 20 )
+material = SubResource( 19 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 16 )
@@ -1671,7 +1670,7 @@ __meta__ = {
 }
 
 [node name="tail" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 21 )
+material = SubResource( 20 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
@@ -1681,7 +1680,7 @@ __meta__ = {
 }
 
 [node name="tdec" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 22 )
+material = SubResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 35 )
@@ -1691,7 +1690,7 @@ __meta__ = {
 }
 
 [node name="body" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 23 )
+material = SubResource( 22 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 10 )
@@ -1701,7 +1700,7 @@ __meta__ = {
 }
 
 [node name="legs" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 24 )
+material = SubResource( 23 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -1711,7 +1710,7 @@ __meta__ = {
 }
 
 [node name="head" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 25 )
+material = SubResource( 24 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -1721,7 +1720,7 @@ __meta__ = {
 }
 
 [node name="wings" type="NinePatchRect" parent="ui/character"]
-material = SubResource( 26 )
+material = SubResource( 25 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 6 )
@@ -1734,7 +1733,7 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = SubResource( 27 )
+texture = SubResource( 26 )
 region_rect = Rect2( 0, 0, 796, 448 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1749,8 +1748,8 @@ anchor_bottom = 1.0
 margin_left = -0.526001
 margin_top = 0.351929
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 28 )
-script = SubResource( 29 )
+custom_styles/panel = SubResource( 27 )
+script = SubResource( 28 )
 
 [node name="Label" type="Label" parent="ui/unamepanel"]
 anchor_right = 1.0
@@ -1771,8 +1770,8 @@ margin_left = 0.195984
 margin_top = 0.351929
 margin_right = -0.644043
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 28 )
-script = SubResource( 30 )
+custom_styles/panel = SubResource( 27 )
+script = SubResource( 29 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1796,8 +1795,8 @@ margin_left = 0.0359802
 margin_top = 0.351929
 margin_right = 0.561951
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 28 )
-script = SubResource( 30 )
+custom_styles/panel = SubResource( 27 )
+script = SubResource( 29 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -1823,8 +1822,8 @@ margin_left = -0.124001
 margin_top = 0.351929
 margin_right = 0.401978
 rect_rotation = 359.999
-custom_styles/panel = SubResource( 28 )
-script = SubResource( 30 )
+custom_styles/panel = SubResource( 27 )
+script = SubResource( 29 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -1849,7 +1848,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 0.068
 margin_bottom = -0.224003
-custom_styles/panel = SubResource( 31 )
+custom_styles/panel = SubResource( 30 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1978,8 +1977,8 @@ expand = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 32 )
-script = SubResource( 33 )
+custom_styles/panel = SubResource( 31 )
+script = SubResource( 32 )
 
 [node name="yesno" type="Panel" parent="dialogue"]
 visible = false
@@ -2123,8 +2122,8 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 32 )
-script = SubResource( 34 )
+custom_styles/panel = SubResource( 31 )
+script = SubResource( 33 )
 
 [node name="panel" type="Panel" parent="cchardialogue"]
 self_modulate = Color( 0.462745, 0.462745, 0.462745, 1 )
@@ -2190,6 +2189,72 @@ margin_bottom = 638.0
 custom_fonts/font = ExtResource( 33 )
 text = "Multiplayer"
 flat = true
+
+[node name="ipdialogue" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 31 )
+
+[node name="panel" type="Panel" parent="ipdialogue"]
+self_modulate = Color( 0.462745, 0.462745, 0.462745, 1 )
+anchor_left = 0.334
+anchor_top = 0.378
+anchor_right = 0.666
+anchor_bottom = 0.622
+margin_left = -0.244019
+margin_top = 0.195984
+margin_right = 0.244019
+margin_bottom = -0.196045
+custom_styles/panel = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ipline" type="LineEdit" parent="ipdialogue/panel"]
+anchor_left = 0.093
+anchor_top = 0.337
+anchor_right = 0.892
+anchor_bottom = 0.543
+margin_left = -0.222
+margin_top = -0.019001
+margin_right = 0.0319824
+margin_bottom = -0.541008
+custom_styles/read_only = ExtResource( 24 )
+custom_styles/focus = ExtResource( 24 )
+custom_styles/normal = ExtResource( 24 )
+custom_fonts/font = ExtResource( 33 )
+align = 1
+placeholder_text = "IP address"
+
+[node name="Button" type="Button" parent="ipdialogue/panel"]
+anchor_left = 0.093
+anchor_top = 0.663
+anchor_right = 0.892
+anchor_bottom = 0.866
+margin_left = -0.222
+margin_top = 0.00197601
+margin_right = 0.0319824
+margin_bottom = -3.82004
+focus_mode = 0
+custom_fonts/font = ExtResource( 33 )
+enabled_focus_mode = 0
+text = "Join"
+
+[node name="TextureButton" type="TextureButton" parent="ipdialogue/panel"]
+anchor_left = 0.034
+anchor_top = 0.023
+anchor_right = 0.116
+anchor_bottom = 0.221
+margin_left = 0.0639992
+margin_top = -0.0510006
+margin_right = -0.164001
+margin_bottom = -0.0770035
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 20 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 34 )
+expand = true
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/tribesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="tab_changed" from="ui/customization/TabContainer" to="ui/customization/TabContainer/Basic Info/rolesbtn" method="_on_TabContainer_tab_changed"]
 [connection signal="mouse_entered" from="ui/customization/TabContainer/Basic Info/groupGender/mcheck" to="ui/customization/TabContainer/Basic Info/groupGender" method="mcheckHover"]
@@ -2238,3 +2303,5 @@ flat = true
 [connection signal="pressed" from="cchardialogue/panel/TextureButton" to="cchardialogue" method="onBackPressed"]
 [connection signal="pressed" from="cchardialogue/panel/Button" to="cchardialogue" method="ccharPlay"]
 [connection signal="pressed" from="cchardialogue/panel/Button2" to="cchardialogue" method="ccharmp"]
+[connection signal="pressed" from="ipdialogue/panel/Button" to="." method="ipClickJoin"]
+[connection signal="pressed" from="ipdialogue/panel/TextureButton" to="." method="hideIPDialogue"]

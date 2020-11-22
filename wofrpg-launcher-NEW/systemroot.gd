@@ -1,17 +1,35 @@
 extends Control
 
 var loggedIn = false
+var working = false
+var initial = false
 
 var releases := []
 
 func _ready():
-	showSI()
-	loadProfiles()
-	$firebase.readDatabase("releases.json")
-	$main/addonspanel.hide()
-	$main/newspanel.hide()
+	var loginFile = File.new()
+	var err = loginFile.open("user://temp/login.pwu", File.READ)
+	if err != OK:
+		showSI()
+	else:
+		var loginData = loginFile.get_as_text().split(";")
+		match loginData.size():
+			2:
+				showSI()
+			3:
+				if loginData[2] == "persistent":
+					print("Found login.pwu file, detected persistent login. Logging in...")
+					pass #show a fullscreen status dialogue
+					$firebase.signIn(loginData[0], loginData[1])
+					yield($firebase, "success")
+					showMain()
 
 func showMain():
+	$dialogues.hide()
+	if !initial:
+		$firebase.readDatabase("releases.json")
+		initial = true
+	
 	$main/sidebar/addon.disabled = false
 	$main/sidebar/news.disabled = false
 	$main/sidebar/home.disabled = true
@@ -20,8 +38,22 @@ func showMain():
 	$main/newspanel.hide()
 
 func play():
-	#TODO: player profiles
-	OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg-launcher.exe"))
+	working = true
+	$main/playbtn.disabled = true
+	$main/playbtn.text = "Working..."
+	$firebase.checkUpdate()
+
+#############
+# Dialogues #
+#############
+
+func errorDialogue(title, message):
+	$dialogues/error/message.text = message
+	$dialogues/error/title.text = title
+	$dialogues.show()
+
+func dismiss():
+	$dialogues.hide()
 
 ##########################
 # Callbacks from buttons #
@@ -104,6 +136,10 @@ func loginPressed():
 func forgotPassword(): #TODO
 	pass
 
+####################
+# Firebase Signals #
+####################
+
 func errored(type, id):
 	$signin/password.editable = true
 	$signin/uname.editable = true
@@ -129,17 +165,28 @@ func errored(type, id):
 		"ERR_UNKNOWN_USERNAME":
 			$signin/errorlabel.text = type
 			$signin/uname.modulate = Color.red
+		"ERR_UPDATEFETCH":
+			working = false
+			if Directory.new().exists("user://bin/wofrpg.pck"):
+				print("Unable to get new update, launching current version")
+				OS.shell(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
+			else:
+				pass #dialogue
+			#run the game's current version, or show a dialogue if wofrpg.pck does not exist
 
 func success(type, data):
 	match type:
 		"TYPE_LOGIN":
+			print("Successfully logged in.")
 			$signin.hide()
 			$signup.hide()
 			$signin/password.editable = true
 			$signin/uname.editable = true
 			$main/sidebar/controlpanel/unamelabel.text = $firebase.username
+			showMain()
 			loggedIn = true
 		"TYPE_SIGNUP":
+			print("Successfully signed up.")
 			$signin.hide()
 			$signup.hide()
 			$signup/email.editable = true
@@ -147,19 +194,43 @@ func success(type, data):
 			$signup/password.editable = true
 			$signup/passwordc.editable = true
 			$main/sidebar/controlpanel/unamelabel.text = $firebase.username
+			showMain()
 			loggedIn = true
 		"TYPE_DBFETCH":
-			match typeof(data):
-				TYPE_ARRAY:
-					$main/profilesDialogue/version.clear()
-					data.invert()
-					for release in data:
-						releases.append(release)
-						$main/profilesDialogue/version.add_item(release)
-				TYPE_DICTIONARY:
-					pass
+			pass
 		"TYPE_DBSTORE":
 			pass
+		"TYPE_UPDATEFETCH":
+			if data.hasUpdate:
+				print("Has update. Downloading...")
+				$HTTPRequest.request(data.url)
+				var file = yield($HTTPRequest, "request_completed") as Array
+				if file[1] != 200:
+					print("Unable to download update. Error code: " + String(file[1]))
+					$main/playbtn.disabled = false
+					$main/playbtn.text = "Play"
+					return
+				var pck = File.new()
+				pck.open("user://bin/wofrpg.pck", File.WRITE)
+				pck.store_buffer(file[3])
+				pck.close()
+				print("Saved new pck file. Launching...")
+				Directory.new().remove("user://version.json")
+				pck.open("user://version.json", File.WRITE)
+				pck.store_line(to_json({"version":data.version}))
+				var err = OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
+				if err != OK:
+					print(err)
+				$main/playbtn.disabled = false
+				$main/playbtn.text = "Play"
+			else:
+				print("No update required. Launching...")
+				print(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
+				var err = OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
+				if err != OK:
+					print(err)
+				$main/playbtn.disabled = false
+				$main/playbtn.text = "Play"
 
 func rememberToggle(_button_pressed):
 	$firebase.remember = _button_pressed
@@ -204,71 +275,3 @@ func showAddonsPanel():
 
 func addonRefresh():
 	pass
-
-#########################
-# Game Profile Handling #
-#########################
-
-#profile data design:
-#{
-# "name":"some name here".
-# "version":"v1.0.0-alpha"
-#}
-
-var profiles = []
-var pdiaShowing = false
-
-func loadProfiles():
-	hideProfileDialogue()
-	var pfile = File.new()
-	var err = pfile.open("user://profiles.json", File.READ)
-	if err != OK:
-		match err:
-			ERR_FILE_NOT_FOUND:
-				pfile.open("user://profiles.json", File.WRITE)
-				pfile.store_line("[]")
-				pfile.close()
-			_:
-				print("An error has occoured while loading profiles. " + String(err))
-		return
-	var profiledata = JSON.parse(pfile.get_as_text()).result #should be an array
-	for profile in profiledata:
-		profiles.append(profile)
-	pfile.close()
-	
-	for profile in profiles:
-		$main/profiles.add_item(profile.name)
-
-func addProfile():
-	var data = {
-		"name":$main/profilesDialogue/prfname.text,
-		"version":$main/profilesDialogue/version.get_item_text($main/profilesDialogue/version.selected),
-		"beta":false #todo
-	}
-	profiles.append(data)
-	hideProfileDialogue()
-	
-	$main/profiles.clear()
-	for profile in profiles:
-		$main/profiles.add_item(profile.name)
-
-func showProfileDialogue():
-	if !pdiaShowing:
-		pdiaShowing = true
-		$main/profilesDialogue.show()
-		$main/profilesDialogue/prfname.text = ""
-		$main/profilesDialogue/version.select(0) #default selected will be the latest version
-
-func hideProfileDialogue():
-	pdiaShowing = false
-	$main/profilesDialogue.hide()
-
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		# warning-ignore:return_value_discarded
-		Directory.new().remove("user://profiles.json")
-		var pfile = File.new()
-		pfile.open("user://profiles.json", File.WRITE)
-		pfile.store_line(to_json(profiles))
-		pfile.close()
-		get_tree().quit(0)

@@ -339,3 +339,20 @@ text = "%USERNAME%"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="attr" type="Label" parent="."]
+margin_left = -87.6104
+margin_top = -260.327
+margin_right = 95.3896
+margin_bottom = -228.327
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color = Color( 1, 0.654902, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "TESTER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

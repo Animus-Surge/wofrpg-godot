@@ -21,6 +21,8 @@ var loggedIn = false
 var username = ""
 var splr = false
 
+var userattributes
+
 var paused = false
 
 var current = "loadscreen"

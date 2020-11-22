@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://systemroot.gd" type="Script" id=1]
 [ext_resource path="res://pixel-s.tres" type="DynamicFont" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://icons/icon-messages.png" type="Texture" id=7]
 [ext_resource path="res://icons/icon-settings.png" type="Texture" id=8]
 [ext_resource path="res://icons/icon-arrowUp.png" type="Texture" id=9]
+[ext_resource path="res://pixel.tres" type="DynamicFont" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -16,6 +17,9 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 0.54902 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -212,40 +216,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="profiles" type="OptionButton" parent="main"]
-anchor_left = 0.507344
-anchor_top = 0.008
-anchor_right = 0.786117
-anchor_bottom = 0.078
-margin_left = 0.47998
-margin_top = 0.2
-margin_right = 0.0159912
-margin_bottom = 0.200001
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "Select Profile..."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="profileadd" type="Button" parent="main"]
-anchor_left = 0.796
-anchor_top = 0.008
-anchor_right = 0.838
-anchor_bottom = 0.078
-margin_left = 0.895935
-margin_top = 0.2
-margin_right = -0.112061
-margin_bottom = 0.200005
-focus_mode = 0
-custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
-text = "+"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="newspanel" type="Panel" parent="main"]
 visible = false
 anchor_left = 0.256
@@ -288,67 +258,6 @@ visible = false
 margin_left = 262.0
 margin_right = 1024.0
 margin_bottom = 596.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="profilesDialogue" type="Panel" parent="main"]
-self_modulate = Color( 0.568627, 0.568627, 0.568627, 1 )
-anchor_left = 0.52043
-anchor_top = 0.675333
-anchor_right = 0.94743
-anchor_bottom = 0.920333
-margin_left = 0.0799561
-margin_top = -0.200043
-margin_right = -0.16803
-margin_bottom = -0.200012
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="version" type="OptionButton" parent="main/profilesDialogue"]
-margin_left = 15.0
-margin_top = 13.0
-margin_right = 260.0
-margin_bottom = 41.0
-custom_fonts/font = ExtResource( 2 )
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="main/profilesDialogue"]
-margin_left = 281.899
-margin_top = 13.0
-margin_right = 407.899
-margin_bottom = 35.0
-custom_fonts/font = ExtResource( 2 )
-text = "Game Version
-
-Profile Name"
-
-[node name="prfname" type="LineEdit" parent="main/profilesDialogue"]
-margin_left = 15.0
-margin_top = 56.0
-margin_right = 260.0
-margin_bottom = 88.0
-custom_fonts/font = ExtResource( 2 )
-
-[node name="cnf" type="Button" parent="main/profilesDialogue"]
-margin_left = 15.0
-margin_top = 106.0
-margin_right = 194.0
-margin_bottom = 134.0
-custom_fonts/font = ExtResource( 2 )
-text = "Create Profile"
-
-[node name="cnc" type="Button" parent="main/profilesDialogue"]
-margin_left = 311.0
-margin_top = 106.0
-margin_right = 419.0
-margin_bottom = 134.0
-custom_fonts/font = ExtResource( 2 )
-text = "Cancel"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -573,12 +482,63 @@ custom_fonts/font = ExtResource( 2 )
 script = ExtResource( 3 )
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="dialogues" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="error" type="Panel" parent="dialogues"]
+anchor_left = 0.262
+anchor_top = 0.237
+anchor_right = 0.738
+anchor_bottom = 0.762
+margin_left = -0.288025
+margin_top = 0.299988
+margin_right = 0.287964
+margin_bottom = 0.299988
+
+[node name="title" type="Label" parent="dialogues/error"]
+anchor_right = 1.0
+anchor_bottom = 0.19
+margin_bottom = 0.149998
+custom_fonts/font = ExtResource( 10 )
+text = "$ERRORMESSAGE$"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="message" type="Label" parent="dialogues/error"]
+anchor_top = 0.248
+anchor_right = 1.0
+anchor_bottom = 0.654
+margin_top = -0.120003
+margin_bottom = -0.0100098
+custom_fonts/font = ExtResource( 2 )
+text = "Message"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Button" type="Button" parent="dialogues/error"]
+anchor_left = 0.056
+anchor_top = 0.822
+anchor_right = 0.944
+anchor_bottom = 0.959
+margin_left = 0.171999
+margin_top = 0.0699768
+margin_right = -0.172028
+margin_bottom = -0.085022
+custom_fonts/font = ExtResource( 10 )
+text = "Dismiss"
 [connection signal="pressed" from="main/sidebar/home" to="." method="showMain"]
 [connection signal="pressed" from="main/sidebar/news" to="." method="showNewsPanel"]
 [connection signal="pressed" from="main/sidebar/addon" to="." method="showAddonsPanel"]
-[connection signal="pressed" from="main/profileadd" to="." method="showProfileDialogue"]
-[connection signal="pressed" from="main/profilesDialogue/cnf" to="." method="addProfile"]
-[connection signal="pressed" from="main/profilesDialogue/cnc" to="." method="hideProfileDialogue"]
+[connection signal="pressed" from="main/playbtn" to="." method="play"]
 [connection signal="visibility_changed" from="signin" to="." method="siVisChanged"]
 [connection signal="pressed" from="signin/Button" to="." method="loginPressed"]
 [connection signal="toggled" from="signin/CheckBox" to="." method="rememberToggle"]
@@ -588,3 +548,4 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="signup/Button2" to="." method="showSI"]
 [connection signal="errored" from="firebase" to="." method="errored"]
 [connection signal="success" from="firebase" to="." method="success"]
+[connection signal="pressed" from="dialogues/error/Button" to="." method="dismiss"]

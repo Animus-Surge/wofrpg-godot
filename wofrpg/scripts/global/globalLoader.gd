@@ -9,6 +9,8 @@ var loadedtribes: Array
 var tribeindexes: Array
 var itemdict: Array
 
+var persistentLogin = false
+
 func startLoad():
 	if !gvars.debug:
 		login()
@@ -33,12 +35,16 @@ func login():
 		#warning-ignore: return_value_discarded
 		fb.connect("failed", self, "fail")
 		fb.userLogin(unpw[0].strip_edges(), unpw[1].strip_edges())
+		if unpw.size() == 3:
+			if unpw[2].strip_edges() == "persistent":
+				persistentLogin = true
 	else:
 		print(err)
 
 func success(_action):
-	var dir = Directory.new()
-	dir.remove("user://temp/login.pwu")
+	if !persistentLogin:
+		var dir = Directory.new()
+		dir.remove("user://temp/login.pwu")
 	gvars.load_scene("res://scenes/menus.tscn")
 func fail(_reason, _action):
 	print(_reason)

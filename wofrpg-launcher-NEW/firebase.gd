@@ -18,6 +18,7 @@ const URL_DBFORE = "https://wofrpg-main.firebaseio.com/"
 onready var http = get_parent().get_node("HTTPRequest")
 
 func signUp(uname:String, email:String, password:String): #Password checking will happen in signup script
+	print("Signing up")
 	http.request(URL_DBFORE + "users/" + uname + ".json")
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
@@ -41,11 +42,12 @@ func signUp(uname:String, email:String, password:String): #Password checking wil
 			return
 		idToken = JSON.parse(result[3].get_string_from_ascii()).result.idToken
 		reqbody = {
+			"attrs":"", #for now, this will be like this when a new user signs up
 			"displayname":uname,
 			"email":email,
 			"verified":false #Will be worked with in the future
 		}
-		http.request(URL_DBFORE + "users/" + uname + ".json?access_token=" + idToken, [], false, HTTPClient.METHOD_PUT, to_json(reqbody))
+		http.request(URL_DBFORE + "users/" + uname + ".json?auth=" + idToken, [], false, HTTPClient.METHOD_PUT, to_json(reqbody))
 		result = yield(http, "request_completed") as Array
 		
 		if result[1] != 200:
@@ -57,16 +59,22 @@ func signUp(uname:String, email:String, password:String): #Password checking wil
 			result = yield(http, "request_completed") as Array
 			return
 		username = uname
+		var loginfile = File.new()
+		loginfile.open("user://temp/login.pwu", File.WRITE)
+		loginfile.store_line(uname + ";" + password)
+		loginfile.close()
 		emit_signal("success", "TYPE_SIGNUP", JSON.parse(result[3].get_string_from_ascii()))
 	else:
 		emit_signal("errored", "Error reading from database", "ERR_HTTP-GET_FAILURE")
 
 func signIn(uname, password):
+	print("Signing in")
 	http.request(URL_DBFORE + "users/" + uname + ".json")
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
 		var out = result[3].get_string_from_ascii()
 		if out == "null":
+			print("Unable to sign in. No username with specified username found.")
 			emit_signal("errored", "Username not found", "ERR_UNKNOWN_USERNAME")
 			return
 		var reqbody = {
@@ -79,6 +87,11 @@ func signIn(uname, password):
 			out = JSON.parse(result[3].get_string_from_ascii()).result
 			idToken = out.idToken
 			username = uname
+			var loginfile = File.new()
+			var err = loginfile.open("user://temp/login.pwu", File.WRITE)
+			print(err)
+			loginfile.store_line(uname + ";" + password)
+			loginfile.close()
 			emit_signal("success", "TYPE_LOGIN", JSON.parse(result[3].get_string_from_ascii()).result)
 		else:
 			var data = JSON.parse(result[3].get_string_from_ascii()).result
@@ -89,9 +102,26 @@ func signIn(uname, password):
 		emit_signal("errored", "Error reading from database", "ERR_HTTP-GET_FAILURE")
 
 func readDatabase(path):
+	print("Reading " + path + " from global database")
 	http.request(URL_DBFORE + path)
 	var result = yield(http, "request_completed") as Array
 	if result[1] == 200:
 		emit_signal("success", "TYPE_DBFETCH", JSON.parse(result[3].get_string_from_ascii()).result)
 	else:
-		emit_signal("errored", "Failed to read from database", "-")
+		emit_signal("errored", "Failed to read from database", "ERR_DBFETCH")
+
+func checkUpdate():
+	print("Checking for updates...")
+	http.request(URL_DBFORE + "release.json") #{"version":"v1.0.0a","pckfile":"https://filestorage.com/wofrpg.pck"}
+	var result = yield(http, "request_completed") as Array
+	if result[1] == 200:
+		var versiondata = JSON.parse(result[3].get_string_from_ascii()).result
+		var verfile = File.new()
+		var err = verfile.open("user://version.json", File.READ)
+		if err == OK:
+			print("Check complete")
+			var currentvdata = JSON.parse(verfile.get_as_text()).result
+			emit_signal("success", "TYPE_UPDATEFETCH", {"hasUpdate":(currentvdata.version != versiondata.version), "url":versiondata.pckfile, "version":versiondata.version})
+		else:
+			print("No version.json file found. Assuming fresh install")
+			emit_signal("success", "TYPE_UPDATEFETCH", {"hasUpdate": true, "url":versiondata.pckfile, "version":versiondata.version})

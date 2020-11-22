@@ -49,6 +49,7 @@ func _ready():
 		$Camera2D.current = true
 		setplrdetails(gvars.plrdata, gvars.plrpalette)
 		$Label.hide()
+		$attr.hide()
 		for entity in get_parent().get_children():
 			if entity.type == "NPC":
 				entity.playerInstanced()
@@ -67,6 +68,15 @@ func updateDetails(data:Array, _palette):
 	$Label.text = data[2]
 	username = data[2]
 	$Label.show()
+	match gvars.userattributes:
+		"owner":
+			$attr.self_modulate = Color(1,0.4,0.4)
+			$attr.text = "~Owner~"
+			$attr.show()
+		"tester":
+			$attr.self_modulate = Color.gold
+			$attr.text = "~Tester~"
+			$attr.show()
 
 func setplrdetails(data: Dictionary, palette):
 	if data.has("custom") and data.custom and data.has("cframes"):

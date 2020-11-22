@@ -22,30 +22,13 @@ var tpass
 var dbNeeded
 
 var loggingIn = false
+var userdata:Dictionary
 
 func userLogin(uname, password):
 	tuname = uname
 	tpass = password
 	loggingIn = true
 	getFromDB("users/" + tuname + ".json")
-
-func userSignup(email, uname, password):
-	var body = {
-		"email":email,
-		"password":password
-	}
-# warning-ignore:return_value_discarded
-	http.request(authSU, [], false, HTTPClient.METHOD_POST, to_json(body))
-	var result = yield(http, "request_completed") as Array
-	if result[1] == 200:
-		logcat.stdout("SIGNUP: OK", logcat.DEBUG)
-		gvars.username = uname
-		uid = JSON.parse(result[3].get_string_from_ascii()).result.idToken
-		gvars.loggedIn = true
-		storeToDB("users/" + uname + ".json", {"email":email,"verified":false})
-	else:
-		logcat.stdout("SIGNUP: FAIL", logcat.DEBUG)
-		emit_signal("failed", result[3].get_string_from_ascii(), "signup")
 
 func getFromDB(field):
 # warning-ignore:return_value_discarded
@@ -61,8 +44,9 @@ func getFromDB(field):
 			emit_signal("failed", "{\"error\":\"Invalid username (username not found)!\"}", "dbGet")
 			return
 		logcat.stdout("DBGET: OK", logcat.DEBUG)
+		userdata = jsonresult
 		if loggingIn:
-			loginWithEmail(JSON.parse(result[3].get_string_from_ascii()).result.email)
+			loginWithEmail(userdata.email)
 			loggingIn = false
 		else:
 			emit_signal("dbComplete", jsonresult)
@@ -90,6 +74,7 @@ func loginWithEmail(email):
 	else:
 		logcat.stdout("LOGIN: OK", logcat.DEBUG)
 		gvars.username = tuname
+		gvars.userattributes = userdata.get("attrs", "")
 		uid = JSON.parse(result[3].get_string_from_ascii()).result.localId
 		tuname = ""
 		tpass = ""

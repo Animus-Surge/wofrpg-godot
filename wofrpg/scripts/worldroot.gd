@@ -34,11 +34,11 @@ puppet func spawn(_pos, id, data, palette, frames = null):
 		img = ImageTexture.new()
 		img.create_from_image(pal, 0)
 	
-	if frames != null:
-		frames = Marshalls.base64_to_variant(frames, true)
+	#if frames != null:
+	#	frames = Marshalls.base64_to_variant(frames, true)
 	
 	$entities.add_child(player)
-	player.updateDetails(data, img, frames)
+	player.updateDetails(data, img)
 
 puppet func erasePlayer(id):
 	if $entities.get_node_or_null(String(id)) != null:

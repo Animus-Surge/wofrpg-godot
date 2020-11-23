@@ -238,7 +238,7 @@ func success(type, data):
 							$main/playbtn.text = "Play"
 							return
 						var exefile = File.new()
-						var _err = exefile.open("user://bin/wofrpg.exe", File.WRITE)
+						var _err = exefile.open("user://bin/wofrpg.app", File.WRITE)
 						exefile.store_buffer(result[3])
 						exefile.close()
 					exepath = "user://bin/wofrpg.app"
@@ -254,7 +254,7 @@ func success(type, data):
 							$main/playbtn.text = "Play"
 							return
 						var exefile = File.new()
-						var _err = exefile.open(exepath, File.WRITE)
+						var _err = exefile.open("user://bin/wofrpg.x86_64", File.WRITE)
 						exefile.store_buffer(result[3])
 						exefile.close()
 # warning-ignore:return_value_discarded
@@ -278,15 +278,16 @@ func success(type, data):
 				Directory.new().remove("user://version.json")
 				pck.open("user://version.json", File.WRITE)
 				pck.store_line(to_json({"version":data.version}))
-				var err = OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
+				print(ProjectSettings.globalize_path(exepath))
+				var err = OS.shell_open(ProjectSettings.globalize_path(exepath))
 				if err != OK:
 					print(err)
 				$main/playbtn.disabled = false
 				$main/playbtn.text = "Play"
 			else:
 				print("No update required. Launching...")
-				print(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
-				var err = OS.shell_open(ProjectSettings.globalize_path("user://bin/wofrpg.exe"))
+				print(ProjectSettings.globalize_path(exepath))
+				var err = OS.shell_open(ProjectSettings.globalize_path(exepath))
 				if err != OK:
 					print(err)
 				$main/playbtn.disabled = false

@@ -63,11 +63,11 @@ func _input(event):
 			if event.scancode == KEY_F and event.pressed:
 				emit_signal("interact", charname)
 
-func updateDetails(data:Array, _palette, frames = null):
+func updateDetails(data:Array, _palette, _frames = null):
 	#var pal = ImageTexture.new()
-	print(typeof(frames))
-	if frames != null and data.has("custom"):
-		cframes = frames
+	print(data)
+	#if frames != null and data.has("custom"):
+	#	cframes = frames
 	pal = _palette
 	setplrdetails(data[1], _palette)
 	$Label.text = data[2]

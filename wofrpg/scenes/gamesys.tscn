@@ -755,8 +755,6 @@ func alok():
 [sub_resource type="GDScript" id=33]
 script/source = "extends Panel
 
-onready var gldr = get_tree().get_root().get_node(\"gloader\")
-
 var chars
 
 func _ready():
@@ -773,7 +771,7 @@ func _visibility_changed():
 
 func listCharacters():
 	$panel/ItemList.clear()
-	chars = gldr.loadCustom()
+	chars = gloader.loadCustom()
 	for character in chars:
 		$panel/ItemList.add_item(character.cname)
 
@@ -781,24 +779,21 @@ func onBackPressed():
 	hide()
 
 func ccharmp():
-	var globalvars = get_node(\"/root/globalvars\")
-	if globalvars.username != \"\":
+	if gvars.username != \"\":
 		var cdata = chars[$panel/ItemList.get_selected_items()[0]]
-		globalvars.setPlayerData(cdata)
-		globalvars.setPalette(ImageTexture.new())
-		var gl = get_node(\"/root/State\")
-		gl.join(\"127.0.0.1\")
+		gvars.useCustom = true
+		gvars.setPlayerData(cdata)
+		gvars.setFrames(load(cdata.cframes))
+		State.join(\"127.0.0.1\")
 	else:
 		$dialogue.showDialogue(\"Uh oh!\", \"For some reason... we don't have your username!\", 0)
 
 func ccharPlay():
-	var gvars = get_tree().get_root().get_node(\"globalvars\")
 	gvars.setPlayerData(chars[$panel/ItemList.get_selected_items()[0]])
 	gvars.load_scene(\"res://scenes/testworld.tscn\")
 
 func onListSelected(_index):
 	$panel/Button.disabled = false
-	var gvars = get_node(\"/root/globalvars\")
 	if gvars.loggedIn:
 		$panel/Button2.disabled = false
 "
@@ -2191,6 +2186,7 @@ text = "Multiplayer"
 flat = true
 
 [node name="ipdialogue" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 31 )

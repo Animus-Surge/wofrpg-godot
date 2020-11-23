@@ -44,6 +44,8 @@ var idletmask
 
 var customScale: Vector2
 
+var cframes
+
 func _ready():
 	if !get_tree().has_network_peer() or is_network_master():
 		$Camera2D.current = true
@@ -61,10 +63,13 @@ func _input(event):
 			if event.scancode == KEY_F and event.pressed:
 				emit_signal("interact", charname)
 
-func updateDetails(data:Array, _palette):
+func updateDetails(data:Array, _palette, frames = null):
 	#var pal = ImageTexture.new()
-	setplrdetails(data[1], _palette)
+	print(typeof(frames))
+	if frames != null and data.has("custom"):
+		cframes = frames
 	pal = _palette
+	setplrdetails(data[1], _palette)
 	$Label.text = data[2]
 	username = data[2]
 	$Label.show()
@@ -80,6 +85,7 @@ func updateDetails(data:Array, _palette):
 
 func setplrdetails(data: Dictionary, palette):
 	if data.has("custom") and data.custom and data.has("cframes"):
+		print(cframes)
 		usecc = true
 		$graphics.scale = $graphics.scale * data.size
 		$graphics.position = $graphics.position * data.size
@@ -91,18 +97,17 @@ func setplrdetails(data: Dictionary, palette):
 		$graphics/tdec.visible = false
 		$graphics/wings.visible = false
 		$graphics/edrop.visible = false
-		$graphics/customlooks.frames = load(data.cframes)
+		$graphics/customlooks.frames = cframes
 		$graphics/customlooks.play("idle")
 		#TODO: custom stats
-		if !gvars.loggedIn:
-			$graphics.scale = $graphics.scale * data.size
-			$graphics.position = $graphics.position * data.size
-			$"cs-flip".position = $"cs-flip".position * data.size
-			$"cs-flip".scale = $"cs-flip".scale * data.size
-			$"cs-nonflip".position = $"cs-nonflip".position * data.size
-			$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
-			charname = data.cname
-			emit_signal("checkThere")
+		$graphics.scale = $graphics.scale * data.size
+		$graphics.position = $graphics.position * data.size
+		$"cs-flip".position = $"cs-flip".position * data.size
+		$"cs-flip".scale = $"cs-flip".scale * data.size
+		$"cs-nonflip".position = $"cs-nonflip".position * data.size
+		$"cs-nonflip".scale = $"cs-nonflip".scale * data.size
+		charname = data.cname
+		emit_signal("checkThere")
 		return
 	charname = data.name
 	for tribe in gloader.loadedtribes:
@@ -199,6 +204,7 @@ func _physics_process(_delta):
 				rset_unreliable("vel", vel)
 			else:
 				vel = Vector2.ZERO
+				animation()
 		else:
 			position = pos
 			animation()

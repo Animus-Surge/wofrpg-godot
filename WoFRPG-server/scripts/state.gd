@@ -15,6 +15,10 @@ func _ready():
 	
 	start()
 
+remote func chatmessage(sender, message):
+	lc.logmsg("MESSAGE SENT FROM: " + sender + ". Message: " + message, lc.DEBUG)
+	rpc("chatmessage", sender, message)
+
 func start():
 	var host = NetworkedMultiplayerENet.new()
 	host.create_server(PORT, MAXPLAYERS)
@@ -31,11 +35,11 @@ func _peer_disconnect(id):
 	
 	lc.logmsg("Player " + String(id) + " disconnected", 1)
 
-remote func register(playerdata, playerpal):
+remote func register(playerdata, playerpal, frames = null):
 	lc.logmsg("Registering player...", 0)
 	var cid = get_tree().get_rpc_sender_id()
 	playerdata[0] = cid
-	players[String(cid)] = {"data":playerdata, "palette":playerpal}
+	players[String(cid)] = {"data":playerdata, "palette":playerpal, "frames":frames}
 	for id in players:
 		rpc_id(cid, "register", id, players[String(id)], playerpal)
 	
@@ -54,9 +58,9 @@ remote func populate():
 	var wld = get_node("/root/testworld")
 	
 	for player in wld.get_node("entities").get_children():
-		wld.rpc_id(cid, "spawn", player.position, player.get_network_master(), players[String(player.name)].data, players[String(player.name)].palette)
+		wld.rpc_id(cid, "spawn", player.position, player.get_network_master(), players[String(player.name)].data, players[String(player.name)].palette, players[String(player.name)].frames)
 	
-	wld.rpc("spawn", rvec(250, 250), cid, players[String(cid)].data, players[String(cid)].palette)
+	wld.rpc("spawn", rvec(250, 250), cid, players[String(cid)].data, players[String(cid)].palette, players[String(cid)].frames)
 
 func rvec(x, y) -> Vector2:
 	return Vector2(randf() * x, randf() * y)

@@ -4,11 +4,15 @@ const LOCALHOST = "127.0.0.1"
 
 signal doneLoading()
 
-var plrpalette: ImageTexture setget setPalette
+var plrpalette = null setget setPalette
 var plrdata:Dictionary setget setPlayerData
+var plrframes: SpriteFrames = null setget setFrames
 
 func setPalette(palette: ImageTexture):
 	plrpalette = palette
+
+func setFrames(frames: SpriteFrames):
+	plrframes = frames
 
 func setPlayerData(data:Dictionary):
 	plrdata = data
@@ -16,6 +20,7 @@ func setPlayerData(data:Dictionary):
 var sppaused = false
 var uiShowing = false
 
+var useCustom = false
 var debug = false
 var loggedIn = false
 var username = ""

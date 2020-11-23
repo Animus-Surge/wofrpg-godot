@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/scared/frame_1_delay-0.3s.png" type="Texture" id=7]
 [ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/interaction-bar.png" type="Texture" id=8]
 [ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=9]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.882353 )
@@ -65,32 +66,34 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -0.166138
 margin_top = -0.208008
-custom_styles/panel = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="chatpanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -0.398071
-custom_fonts/font = ExtResource( 4 )
-text = "CONTROLS:
-
-WASD or arrow keys - Move around
-
-Escape key - Pause the game"
-align = 1
-valign = 1
-autowrap = true
+[node name="RichTextLabel" type="RichTextLabel" parent="chatpanel"]
+anchor_left = 0.015
+anchor_top = 0.019
+anchor_right = 0.985
+anchor_bottom = 0.885
+margin_left = -0.0799408
+margin_top = -0.117986
+margin_right = 0.0799255
+margin_bottom = 0.0299683
+custom_fonts/normal_font = ExtResource( 10 )
+bbcode_enabled = true
+scroll_following = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="chatpanel/Label"]
-margin_right = 64.0
-margin_bottom = 64.0
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="LineEdit" type="LineEdit" parent="chatpanel"]
+anchor_left = 0.015
+anchor_top = 0.891
+anchor_right = 0.985
+anchor_bottom = 0.991
+margin_left = -0.0800018
+margin_top = 0.0979614
+margin_right = 0.0798645
+margin_bottom = -0.102051
+focus_mode = 1
+custom_fonts/font = ExtResource( 10 )
 
 [node name="quest_taskpanel" type="Panel" parent="."]
 anchor_left = 1.0
@@ -105,6 +108,9 @@ custom_fonts/font = ExtResource( 4 )
 align = 1
 valign = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="inventory" type="Panel" parent="."]
 self_modulate = Color( 0.866667, 0.772549, 0.403922, 1 )
@@ -261,5 +267,7 @@ text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="focus_entered" from="chatpanel/LineEdit" to="." method="chatFocus"]
+[connection signal="focus_exited" from="chatpanel/LineEdit" to="." method="chatFocusLost"]
 [connection signal="visibility_changed" from="interaction" to="." method="_on_interaction_visibility_changed"]
 [connection signal="pressed" from="pausemenu/Button" to="." method="quit"]

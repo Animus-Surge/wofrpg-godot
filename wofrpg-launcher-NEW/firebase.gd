@@ -89,9 +89,9 @@ func signIn(uname, password):
 			username = uname
 			var loginfile = File.new()
 			var err = loginfile.open("user://temp/login.pwu", File.WRITE)
-			print(err)
-			loginfile.store_line(uname + ";" + password)
-			loginfile.close()
+			if err == OK:
+				loginfile.store_line(uname + ";" + password)
+				loginfile.close()
 			emit_signal("success", "TYPE_LOGIN", JSON.parse(result[3].get_string_from_ascii()).result)
 		else:
 			var data = JSON.parse(result[3].get_string_from_ascii()).result

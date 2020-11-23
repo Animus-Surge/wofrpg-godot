@@ -1,10 +1,13 @@
 extends Control
 
 var uishowing = false
+var chatfocus = false
 
 onready var font = preload("res://fonts/pixel.tres")
 
 func _ready():
+# warning-ignore:return_value_discarded
+	State.connect("chatMessage", self, "showChatMessage")
 	$interaction.hide()
 	$quest_taskpanel.hide()
 	$inventory.hide()
@@ -23,11 +26,23 @@ func _input(event):
 			if uishowing:
 				uishowing = false
 				$interaction.hide()
+				$chatpanel/LineEdit.release_focus()
+				$chatpanel/LineEdit.text = ""
 				return
-			$pausemenu.visible = !$pausemenu.visible
-			gvars.paused = !gvars.paused
+			else:
+				$pausemenu.visible = !$pausemenu.visible
+				gvars.paused = !gvars.paused
 		if event.scancode == KEY_E:
-			$inventory.visible = !$inventory.visible
+			if !uishowing:
+				$inventory.visible = !$inventory.visible
+		if event.scancode == KEY_ENTER:
+			if chatfocus and $chatpanel/LineEdit.text.strip_edges() != "":
+				State.sendChatMessage($chatpanel/LineEdit.text.strip_edges())
+				$chatpanel/LineEdit.release_focus()
+				$chatpanel/LineEdit.text = ""
+		if event.scancode == KEY_TAB:
+			if !chatfocus:
+				$chatpanel/LineEdit.grab_focus()
 
 func _process(_delta):
 	gvars.uiShowing = uishowing
@@ -265,3 +280,27 @@ func itemUse(item, _slot):
 ###############
 
 #TODO
+
+###############
+# CHAT SYSTEM #
+###############
+
+func chatFocus():
+	print("Chat Gained Focus")
+	uishowing = true
+	chatfocus = true
+
+func chatFocusLost():
+	uishowing = false
+	chatfocus = false
+	print("Chat Lost Focus")
+
+func showChatMessage(sender, message):
+	var completemessage = ""
+	if sender == gvars.username:
+		completemessage = "[color=#0ff]" + sender + "[/color]: "
+	else:
+		completemessage = sender + ": "
+	completemessage += message
+	logcat.stdout("CHAT APPENDED TO: " + message + " FROM " + sender, logcat.DEBUG)
+	$chatpanel/RichTextLabel.append_bbcode(completemessage + "\n")

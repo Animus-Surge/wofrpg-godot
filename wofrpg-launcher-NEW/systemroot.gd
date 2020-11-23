@@ -8,8 +8,14 @@ var releases := []
 
 func _ready():
 	var loginFile = File.new()
+	var dir = Directory.new()
+	if not dir.dir_exists("user://temp"):
+		dir.make_dir("user://temp")
+	if not dir.dir_exists("user://bin"):
+		dir.make_dir("user://bin")
 	var err = loginFile.open("user://temp/login.pwu", File.READ)
 	if err != OK:
+		print(String(err))
 		showSI()
 	else:
 		var loginData = loginFile.get_as_text().split(";")
@@ -201,7 +207,60 @@ func success(type, data):
 		"TYPE_DBSTORE":
 			pass
 		"TYPE_UPDATEFETCH":
-			if data.hasUpdate:
+			var dir = Directory.new()
+			var exepath = ""
+			match OS.get_name():
+				"Windows":
+					if not dir.file_exists("user://bin/wofrpg.exe"):
+						print("Could not find executable. Downloading for Windows...")
+						$HTTPRequest.request("https://www.dropbox.com/s/pox86jrzm3s9ooj/wofrpg.exe?dl=1")
+						var result = yield($HTTPRequest, "request_completed") as Array
+						if result[1] != 200:
+							print("Failed to download executable.")
+							errorDialogue("Failed to fetch executable", "We could not fetch the executable to run the game. Please try again later.")
+							$main/playbtn.disabled = false
+							$main/playbtn.text = "Play"
+							return
+						var exefile = File.new()
+						var _err = exefile.open("user://bin/wofrpg.exe", File.WRITE)
+						exefile.store_buffer(result[3])
+						exefile.close()
+					exepath = "user://bin/wofrpg.exe"
+				"OSX":
+					if not dir.file_exists("user://bin/wofrpg.app"):
+						print("Could not find executable. Downloading for Mac OS...")
+						$HTTPRequest.request("https://www.dropbox.com/sh/np58n20l4gvif3w/AAAAV3OJcUHmqeX9RFwDNDEOa?dl=1")
+						var result = yield($HTTPRequest, "request_completed") as Array
+						if result[1] != 200:
+							print("Failed to download executable.")
+							errorDialogue("Failed to fetch executable", "We could not fetch the executable to run the game. Please try again later.")
+							$main/playbtn.disabled = false
+							$main/playbtn.text = "Play"
+							return
+						var exefile = File.new()
+						var _err = exefile.open("user://bin/wofrpg.exe", File.WRITE)
+						exefile.store_buffer(result[3])
+						exefile.close()
+					exepath = "user://bin/wofrpg.app"
+				"X11":
+					if not dir.file_exists("user://bin/wofrpg.x86_64"):
+						print("Could not find executable. Downloading for Linux...")
+						$HTTPRequest.request("https://www.dropbox.com/s/ynvabz99l1gs08y/wofrpg.x86_64?dl=1")
+						var result = yield($HTTPRequest, "request_completed") as Array
+						if result[1] != 200:
+							print("Failed to download executable.")
+							errorDialogue("Failed to fetch executable", "We could not fetch the executable to run the game. Please try again later.")
+							$main/playbtn.disabled = false
+							$main/playbtn.text = "Play"
+							return
+						var exefile = File.new()
+						var _err = exefile.open(exepath, File.WRITE)
+						exefile.store_buffer(result[3])
+						exefile.close()
+# warning-ignore:return_value_discarded
+						OS.shell_open("chmod +x " + ProjectSettings.globalize_path("user://bin/wofrpg.x86_64"))
+					exepath = "user://bin/wofrpg.x86_64"
+			if data.hasUpdate or not dir.file_exists("user://bin/wofrpg.pck"):
 				print("Has update. Downloading...")
 				$HTTPRequest.request(data.url)
 				var file = yield($HTTPRequest, "request_completed") as Array
@@ -215,6 +274,7 @@ func success(type, data):
 				pck.store_buffer(file[3])
 				pck.close()
 				print("Saved new pck file. Launching...")
+# warning-ignore:return_value_discarded
 				Directory.new().remove("user://version.json")
 				pck.open("user://version.json", File.WRITE)
 				pck.store_line(to_json({"version":data.version}))

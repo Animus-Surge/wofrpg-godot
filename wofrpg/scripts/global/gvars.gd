@@ -21,7 +21,7 @@ var sppaused = false
 var uiShowing = false
 
 var useCustom = false
-var debug = false
+var debug = true
 var loggedIn = false
 var username = ""
 var splr = false
@@ -105,7 +105,6 @@ func _process(_delta):
 			timer.start()
 			yield(timer, "timeout")
 			get_node("/root").add_child(resource.instance())
-			get_node("/root/loadscreen").hide()
 			emit_signal("doneLoading")
 			break
 		elif err == OK:
@@ -116,3 +115,6 @@ func _process(_delta):
 			logcat.stdout("An error occured while loading a scene. Error code: " + String(err), 4)
 			break #TODO
 
+func allReady():
+	if !debug:
+		get_node("/root/loadscreen").hide()

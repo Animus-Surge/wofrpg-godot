@@ -9,6 +9,8 @@ var loadedtribes: Array
 var tribeindexes: Array
 var itemdict: Array
 
+var characters: Array
+
 var persistentLogin = false
 
 func startLoad():
@@ -149,3 +151,117 @@ func loadNPCInteraction(npcid) -> Dictionary:
 		return {}
 	var interaction = JSON.parse(icfile.get_as_text()).result
 	return interaction
+
+# characters
+
+"""
+New data structure (JSON format)
+
+blank means a blank dictionary: {} or a blank string: ""
+
+{
+	cname:Surge
+	ctribes:[icew,silw]
+	cgender:male
+	cident:male
+	crole:servant
+	clevel:35
+	cinventory:{
+		head:[blank,blank] (Armor,cosmetic,(OPTIONAL)hidden) (NOTE: all items listed here will be dictionary format)
+		neck:[blank,collar]
+		torso:[blank,blank]
+		legs:[blank,shackles]
+		tail:[blank,blank]
+		wing:[blank,blank,true]
+		slots:{
+			size:35
+			contents:[
+				fish
+				fish
+				fish
+				fish
+				fish
+				cloth
+				cloth
+				iron ingot
+				ruby
+				sapphire
+				blank
+				...
+				blank
+			]
+		}
+	}
+	cskills:{ (in skill dictionary format)
+		learned:[
+			...
+		]
+		not learned:[
+			...
+		]
+	}
+	cquick: { (Quickbar slots, all items will be in skill dictionary format)
+		left: bite
+		right: tail slap
+		1: hide
+		2: dash
+		3: nuzzle
+		4: blank
+	}
+	cuseCustom:true
+	ccustomPath:user://characters/custom/Surge.png (contains all animation sequences)
+	ccustomSize:[6,2] (x and y dimensions in frames)
+	ccustomAnims:[
+		{
+			name:idle
+			length:5
+			fps:5
+			row:1
+		}
+		{
+			name:run
+			length:6
+			fps:5
+			row:2
+		}
+	]
+	(Following lines used with customizer)
+	palette:user://characters/palettes/character-name_palette.png
+	appearance:{
+		head:iw
+		hpattern:integer (To be used later)
+		body:iw
+		bpattern:integer
+		legs:iw
+		lpattern:integer
+		tail:iw
+		tpattern:integer
+		wing:iw
+		wpattern:integer
+		spine:iw
+		spattern:integer
+		tdeco:iw
+		tdpattern:integer
+		useED:false
+		useSP:true
+		useTD:true
+		useWI:false
+	}
+}
+"""
+
+func loadCharacters():
+	var cdir = Directory.new()
+	if cdir.exists("user://characters"):
+		cdir.open("user://characters")
+		cdir.list_dir_begin()
+		var current = cdir.get_next()
+		while current != "":
+			if current.begins_with(".") or current == "palettes" or current == "custom" or not current.ends_with(".json"):
+				continue
+			var file = File.new()
+			file.open("user://characters/" + current, File.READ)
+	else:
+		cdir.make_dir_recursive("user://characters/palettes")
+		cdir.make_dir_recursive("user://characters/custom")
+		logcat.stdout("Created characters directory.", logcat.DEBUG)

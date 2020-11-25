@@ -3,10 +3,13 @@
 /.vscode
 /.firebase
 /test
+/dlassets
+/*.app
 
 *.import
 *.png~
 *.kra
+*.app
 
 #packages
 *.zip

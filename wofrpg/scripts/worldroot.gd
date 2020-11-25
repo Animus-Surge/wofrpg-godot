@@ -17,6 +17,7 @@ func _ready():
 		var player = plr.instance()
 		player.position = get_node("world/spawn").position
 		$entities.add_child(player)
+	gvars.allReady()
 
 puppet func spawn(_pos, id, data, palette, frames = null):
 	var spawnpoint:Vector2 = get_node("world/spawn").position

@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=2]
+[ext_resource path="res://images/ui/backgrounds/save_slot.png" type="Texture" id=3]
+[ext_resource path="res://scripts/objects/saveslot.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "slot"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 40 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TextureRect/clevel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="saveslot" type="Control"]
+margin_right = 400.0
+margin_bottom = 108.0
+rect_min_size = Vector2( 400, 0 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cname" type="Label" parent="TextureRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -86.0
+margin_top = -26.0
+margin_right = 86.0
+margin_bottom = 6.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.568627, 0, 0.160784, 1 )
+text = "
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="clevel" type="Label" parent="TextureRect"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -86.0
+margin_top = 14.0
+margin_right = 86.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.568627, 0, 0.160784, 1 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/slot = SubResource( 1 )
+[connection signal="mouse_entered" from="." to="." method="_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_mouse_exited"]

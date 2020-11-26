@@ -1,6 +1,5 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/mainmenu.gd" type="Script" id=3]
 [ext_resource path="res://godot-resources/bg1.tres" type="StyleBox" id=4]
@@ -12,59 +11,9 @@
 [ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=10]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
-[ext_resource path="res://godot-resources/bgs/button-colorable-hover.tres" type="StyleBox" id=36]
-[ext_resource path="res://godot-resources/bgs/button-colorable-press.tres" type="StyleBox" id=37]
-[ext_resource path="res://godot-resources/bgs/button-colorable.tres" type="StyleBox" id=38]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.6, 0.6, 0.6, 0.313726 )
-
-[sub_resource type="GDScript" id=2]
-script/source = "extends Panel
-
-onready var fsCheck = $CheckBox
-
-func _ready():
-	pass
-	#TODO: read from settings.json file in user:// directory
-
-func applySettings():
-	if fsCheck.pressed:
-		OS.window_fullscreen = true
-	else:
-		OS.window_fullscreen = false
-	
-	var ratioIndex = $OptionButton.get_selected_id()
-	match ratioIndex:
-		0: #1920x1080
-			OS.window_size = Vector2(1920,1080)
-		1: #DEFAULT: 1366x768
-			OS.window_size = Vector2(1366,768)
-		2: #1440x900
-			OS.window_size = Vector2(1440,900)
-		3: #1536x864
-			OS.window_size = Vector2(1536,864)
-		4: #2560x1440
-			OS.window_size = Vector2(2560,1440)
-		5: #1680x1050
-			OS.window_size = Vector2(1680,1050)
-		6: #1280x720
-			OS.window_size = Vector2(1280,720)
-		7: #1280x800
-			OS.window_size = Vector2(1280,800)
-		8: #1600x900
-			OS.window_size = Vector2(1600,900)
-"
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.305882, 0.305882, 0.305882, 0.835294 )
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0, 0, 0, 0.694118 )
-
-[sub_resource type="DynamicFont" id=5]
-size = 21
-font_data = ExtResource( 1 )
 
 [node name="menus" type="Control"]
 anchor_right = 1.0
@@ -87,229 +36,86 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="buttonpanel" type="Panel" parent="mainmenu"]
-anchor_left = 0.028
-anchor_right = 0.341
+[node name="Label" type="Label" parent="mainmenu"]
+anchor_left = 0.341
+anchor_top = 0.982
+anchor_right = 0.687
 anchor_bottom = 1.0
-margin_left = -0.248001
-margin_right = 0.19397
-custom_styles/panel = SubResource( 1 )
+margin_left = 0.19397
+margin_top = -0.176025
+margin_right = -0.442078
+text = "v0.2.24-alpha"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="mainmenu/buttonpanel"]
-anchor_left = 0.199
-anchor_right = 0.801
-anchor_bottom = 0.336
-margin_left = -0.172012
-margin_right = 0.171997
-margin_bottom = -0.0480347
-texture = ExtResource( 9 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="mainmenu/buttonpanel"]
-anchor_left = 0.192
-anchor_top = 0.385
-anchor_right = 0.808
-anchor_bottom = 0.475
-margin_left = -0.176003
-margin_top = 0.319977
-margin_right = 0.175995
-margin_bottom = 0.199982
+[node name="playbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.429356
+anchor_top = 0.533203
+anchor_right = 0.570644
+anchor_bottom = 0.633464
 custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_hover = Color( 0.501961, 0.368627, 0.913725, 1 )
 text = "Play"
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
-[node name="Button2" type="Button" parent="mainmenu/buttonpanel"]
-anchor_left = 0.192
-anchor_top = 0.5
-anchor_right = 0.808
-anchor_bottom = 0.594
-margin_left = -0.176003
-margin_right = 0.175995
-margin_bottom = -3.19202
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_hover = Color( 0.501961, 0.368627, 0.913725, 1 )
-text = "Expansions"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button3" type="Button" parent="mainmenu/buttonpanel"]
-anchor_left = 0.192
-anchor_top = 0.615
-anchor_right = 0.808
-anchor_bottom = 0.704
-margin_left = -0.176003
-margin_top = -0.320007
-margin_right = 0.175995
-margin_bottom = 0.327942
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_hover = Color( 0.501961, 0.368627, 0.913725, 1 )
+[node name="settingsbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.429722
+anchor_top = 0.78776
+anchor_right = 0.57101
+anchor_bottom = 0.852865
+custom_fonts/font = ExtResource( 13 )
 text = "Settings"
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
-[node name="Button4" type="Button" parent="mainmenu/buttonpanel"]
-anchor_left = 0.192
-anchor_top = 0.729
-anchor_right = 0.808
-anchor_bottom = 0.819
-margin_left = -0.176003
-margin_top = 0.127991
-margin_right = 0.175995
-margin_bottom = 0.00793457
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_hover = Color( 0.501961, 0.368627, 0.913725, 1 )
+[node name="creditsbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.136896
+anchor_top = 0.683594
+anchor_right = 0.278184
+anchor_bottom = 0.748698
+custom_fonts/font = ExtResource( 13 )
 text = "Credits"
-
-[node name="Button5" type="Button" parent="mainmenu/buttonpanel"]
-anchor_left = 0.192
-anchor_top = 0.844
-anchor_right = 0.808
-anchor_bottom = 0.934
-margin_left = -0.175995
-margin_top = -0.192017
-margin_right = 0.176025
-margin_bottom = 2.8808
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color_hover = Color( 0.501961, 0.368627, 0.913725, 1 )
-text = "Quit"
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
-[node name="newspanel" type="Panel" parent="mainmenu"]
-anchor_left = 0.687
-anchor_top = 0.656
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -0.442078
-margin_top = 0.191986
-custom_styles/panel = SubResource( 1 )
+[node name="exitbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.722548
+anchor_top = 0.683594
+anchor_right = 0.863836
+anchor_bottom = 0.748698
+custom_fonts/font = ExtResource( 13 )
+text = "Exit"
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="mainmenu/newspanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_fonts/normal_font = ExtResource( 13 )
-bbcode_enabled = true
-bbcode_text = "[color=#f00]Uh oh! I couldn't get any game info! Please try again later."
-text = "Uh oh! I couldn't get any game info! Please try again later."
+[node name="icon" type="TextureRect" parent="mainmenu"]
+anchor_left = 0.392753
+anchor_top = 0.0488281
+anchor_right = 0.607247
+anchor_bottom = 0.430339
+margin_right = 6.10352e-05
+texture = ExtResource( 9 )
+expand = true
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="settingspanel" type="Panel" parent="mainmenu"]
-anchor_left = 0.388
-anchor_top = 0.061
-anchor_right = 0.939
-anchor_bottom = 0.935
-margin_left = -0.00799561
-margin_top = 0.151997
-margin_right = -0.674072
-margin_bottom = -0.0800781
+anchor_left = 0.10981
+anchor_top = 0.0917969
+anchor_right = 0.89019
+anchor_bottom = 0.908203
 custom_styles/panel = ExtResource( 8 )
-script = SubResource( 2 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
-
-[node name="Label" type="Label" parent="mainmenu/settingspanel"]
-anchor_left = 0.43
-anchor_top = 0.012
-anchor_right = 0.57
-anchor_bottom = 0.06
-margin_left = 0.139984
-margin_top = -0.0519991
-margin_right = -0.140045
-margin_bottom = -0.259998
-custom_fonts/font = ExtResource( 2 )
-text = "Settings"
-
-[node name="TextureButton" type="TextureButton" parent="mainmenu/settingspanel"]
-anchor_left = 0.037
-anchor_top = 0.007
-anchor_right = 0.109
-anchor_bottom = 0.087
-margin_left = -0.0401878
-margin_top = -0.264627
-margin_right = -0.184189
-margin_bottom = 0.0553741
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 7 )
-texture_hover = ExtResource( 5 )
-expand = true
-
-[node name="CheckBox" type="CheckBox" parent="mainmenu/settingspanel"]
-anchor_left = 0.037
-anchor_top = 0.103
-anchor_right = 0.334
-anchor_bottom = 0.148
-margin_left = 0.175999
-margin_top = -0.112991
-margin_right = -0.168015
-margin_bottom = -0.307991
-custom_fonts/font = ExtResource( 13 )
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-pressed = true
-text = "Fullscreen"
-
-[node name="OptionButton" type="OptionButton" parent="mainmenu/settingspanel"]
-anchor_left = 0.037
-anchor_top = 0.148
-anchor_right = 0.334
-anchor_bottom = 0.189
-margin_left = 0.175999
-margin_top = -0.307991
-margin_right = -0.168015
-margin_bottom = 0.181007
-custom_fonts/font = ExtResource( 13 )
-text = "1366x768"
-items = [ "1920x1080", null, false, 0, null, "1366x768", null, false, 1, null, "1440x900", null, false, 2, null, "1536x864", null, false, 3, null, "2560x1440", null, false, 4, null, "1680x1050", null, false, 5, null, "1280x720", null, false, 6, null, "1280x800", null, false, 7, null, "1600x900", null, false, 8, null ]
-selected = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="mainmenu/settingspanel/OptionButton"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = 3.00002
-margin_right = 136.0
-margin_bottom = 28.0
-custom_fonts/font = ExtResource( 13 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Aspect Ratio"
-align = 1
-valign = 1
-
-[node name="Button" type="Button" parent="mainmenu/settingspanel"]
-anchor_left = 0.037
-anchor_top = 0.371
-anchor_right = 0.22
-anchor_bottom = 0.413
-margin_left = -0.0401878
-margin_top = 0.0589752
-margin_right = 0.343796
-margin_bottom = -0.123016
-custom_fonts/font = ExtResource( 13 )
-text = "Apply Settings"
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
 visible = false
@@ -500,101 +306,4 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Label" type="Label" parent="mainmenu"]
-anchor_left = 0.341
-anchor_top = 0.982
-anchor_right = 0.687
-anchor_bottom = 1.0
-margin_left = 0.19397
-margin_top = -0.176025
-margin_right = -0.442078
-text = "pre-0.1.5"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="dialogue" type="Panel" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_styles/panel = SubResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="dialogue"]
-self_modulate = Color( 0.498039, 0.498039, 0.498039, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 496.5
-margin_top = 235.0
-margin_right = -496.5
-margin_bottom = -235.0
-custom_styles/panel = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="dialogue/Panel"]
-anchor_left = 0.479
-anchor_top = 0.104
-anchor_right = 0.479
-anchor_bottom = 0.104
-margin_left = -156.667
-margin_top = -10.992
-margin_right = 156.333
-margin_bottom = 11.008
-custom_fonts/font = ExtResource( 13 )
-text = "This feature isn't implemented yet!"
-align = 1
-
-[node name="Label2" type="Label" parent="dialogue/Panel"]
-anchor_left = 0.129
-anchor_top = 0.349
-anchor_right = 0.858
-anchor_bottom = 0.57
-margin_left = -0.117004
-margin_top = -0.0019989
-margin_right = -0.0340271
-margin_bottom = 0.139984
-custom_fonts/font = SubResource( 5 )
-text = "Sorry! This feature currently isn't implemented. It should be soon, though!"
-align = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="dialogue/Panel"]
-anchor_left = 0.09
-anchor_top = 0.752
-anchor_right = 0.859
-anchor_bottom = 0.96
-margin_left = -0.0699997
-margin_top = -0.0960083
-margin_right = 0.0929871
-margin_bottom = 0.112793
-custom_styles/hover = ExtResource( 36 )
-custom_styles/pressed = ExtResource( 37 )
-custom_styles/normal = ExtResource( 38 )
-custom_fonts/font = ExtResource( 13 )
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0.0313726, 0.223529, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-text = "Okay!"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-[connection signal="pressed" from="mainmenu/buttonpanel/Button" to="mainmenu" method="onPlay"]
-[connection signal="pressed" from="mainmenu/buttonpanel/Button2" to="mainmenu" method="onExpansions"]
-[connection signal="pressed" from="mainmenu/buttonpanel/Button3" to="mainmenu" method="onSettings"]
-[connection signal="pressed" from="mainmenu/buttonpanel/Button4" to="mainmenu" method="onCredits"]
-[connection signal="pressed" from="mainmenu/buttonpanel/Button5" to="mainmenu" method="onQuit"]
-[connection signal="pressed" from="mainmenu/settingspanel/TextureButton" to="mainmenu" method="onSettingsHide"]
-[connection signal="pressed" from="mainmenu/settingspanel/Button" to="mainmenu/settingspanel" method="applySettings"]
 [connection signal="pressed" from="mainmenu/creditspanel/TextureButton" to="mainmenu" method="creditsHide"]
-[connection signal="pressed" from="dialogue/Panel/Button" to="mainmenu" method="dialogueHide"]

@@ -2,7 +2,7 @@ extends Panel
 
 func _ready():
 	#warning-ignore:return_value_discarded
-	fb.connect("dbComplete", self, "dbComplete")
+	#fb.connect("dbComplete", self, "dbComplete")
 	#warning-ignore:return_value_discarded
 	fb.connect("failed", self, "failed")
 	#following lines help with making sure the menu is visible
@@ -12,22 +12,14 @@ func _ready():
 	fb.getFromDB("newsinfo.json")
 	gvars.setCurrentScene("menus")
 
-func dbComplete(result):
-	$newspanel/RichTextLabel.bbcode_text = result.text
+#func dbComplete(result):
+#	$newspanel/RichTextLabel.bbcode_text = result.text
 
 func failed(reason, _action):
 	print(reason)
 
-func onSettings():
-	$settingspanel.show()
-func onSettingsHide():
-	$settingspanel.hide()
-
 func onPlay():
 	gvars.load_scene("res://scenes/gamesys.tscn")
-
-func onExpansions():
-	get_node("../dialogue").show()
 
 func onCredits():
 	$creditspanel.show()

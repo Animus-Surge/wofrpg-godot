@@ -1,17 +1,134 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
+[ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
+[ext_resource path="res://images/character/sanw/idle/saw-tdec.png" type="Texture" id=3]
+[ext_resource path="res://images/character/sanw/idle/saw-spine.png" type="Texture" id=4]
+[ext_resource path="res://images/character/sanw/idle/saw-legs.png" type="Texture" id=5]
+[ext_resource path="res://images/character/sanw/idle/saw-wings.png" type="Texture" id=6]
+[ext_resource path="res://images/character/sanw/idle/saw-tail.png" type="Texture" id=7]
+[ext_resource path="res://images/character/sanw/idle/saw-head.png" type="Texture" id=8]
 [ext_resource path="res://images/ui/backgrounds/sw-customizationscreen.png" type="Texture" id=9]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
+var sslot = preload(\"res://objects/ui/saveslot.tscn\")
+
 func _ready():
-	pass
+	var index = 0
+	for character in gloader.characters:
+		var slot = sslot.instance()
+		slot.initialize(character.cname, index, character.clevel)
+		slot.connect(\"clicked\", self, \"onSlotPress\")
+		$ScrollContainer/chartabs.add_child(slot)
+	var addSlot = sslot.instance()
+	addSlot.initializeAdd()
+	addSlot.connect(\"add\", self, \"onAdd\")
+	$ScrollContainer/chartabs.add_child(addSlot)
 
-func onSlotPress():
-	pass
+func onSlotPress(index): #Callback from slot signal
+	print(gloader.characters[index].cname)
 
+func onAdd():
+	print(\"Will add a new character\")
+"
+
+[sub_resource type="Animation" id=2]
+resource_name = "preview"
+length = 1.2
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("spine:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("body:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("legs:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 3980, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("tail:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("head:region_rect")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("wings:region_rect")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("tdec:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Control
+
+func _ready():
+	hide()
 "
 
 [node name="gamesys" type="Control"]
@@ -57,3 +174,99 @@ margin_bottom = 108.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 5
+
+[node name="design" type="Control" parent="ui"]
+anchor_left = 0.0904236
+anchor_top = 0.304683
+anchor_right = 0.673147
+anchor_bottom = 0.888016
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="spine" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="body" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="legs" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 3980, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="tail" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="head" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="wings" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="tdec" type="NinePatchRect" parent="ui/design"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ui/design"]
+anims/preview = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="poleznoTutInteractions" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

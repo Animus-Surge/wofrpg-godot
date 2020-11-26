@@ -21,7 +21,7 @@ var sppaused = false
 var uiShowing = false
 
 var useCustom = false
-var debug = true
+var debug = false
 var loggedIn = false
 var username = ""
 var splr = false
@@ -48,7 +48,6 @@ func _ready():
 	#mpstate.name = "State"
 	#get_tree().get_root().add_child(mpstate)
 	gloader.startLoad()
-	cfm.startLoad()
 	if !debug:
 		print("==============> GAME START <==============")
 		#load_scene("res://scenes/menus.tscn")

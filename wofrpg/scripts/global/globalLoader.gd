@@ -20,6 +20,7 @@ func startLoad():
 	loadAddons()
 	loadTribes()
 	checkDirs()
+	loadCharacters()
 	logcat.stdout("All stuff loaded.", 0)
 
 func login():
@@ -209,6 +210,7 @@ blank means a blank dictionary: {} or a blank string: ""
 		4: blank
 	}
 	cuseCustom:true
+	(Required if cuseCustom)
 	ccustomPath:user://characters/custom/Surge.png (contains all animation sequences)
 	ccustomSize:[6,2] (x and y dimensions in frames)
 	ccustomAnims:[
@@ -225,7 +227,7 @@ blank means a blank dictionary: {} or a blank string: ""
 			row:2
 		}
 	]
-	(Following lines used with customizer)
+	(Following lines used with customizer, required if not cuseCustom)
 	palette:user://characters/palettes/character-name_palette.png
 	appearance:{
 		head:iw
@@ -252,15 +254,19 @@ blank means a blank dictionary: {} or a blank string: ""
 
 func loadCharacters():
 	var cdir = Directory.new()
-	if cdir.exists("user://characters"):
+	if cdir.dir_exists("user://characters"):
 		cdir.open("user://characters")
 		cdir.list_dir_begin()
 		var current = cdir.get_next()
 		while current != "":
 			if current.begins_with(".") or current == "palettes" or current == "custom" or not current.ends_with(".json"):
+				current = cdir.get_next()
 				continue
+
 			var file = File.new()
 			file.open("user://characters/" + current, File.READ)
+			characters.append(JSON.parse(file.get_as_text()).result)
+			current = cdir.get_next()
 	else:
 		cdir.make_dir_recursive("user://characters/palettes")
 		cdir.make_dir_recursive("user://characters/custom")

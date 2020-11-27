@@ -1,19 +1,28 @@
 extends Panel
 
+var loading = false
+var backwards = false
+
 func _ready():
 	#warning-ignore:return_value_discarded
 	#fb.connect("dbComplete", self, "dbComplete")
 	#warning-ignore:return_value_discarded
-	fb.connect("failed", self, "failed")
-	#following lines help with making sure the menu is visible
-	$settingspanel.hide()
+	loading = true
+	$AnimationPlayer.play_backwards("settings")
+	#fb.connect("failed", self, "failed")
 	$creditspanel.hide()
-	get_node("../dialogue").hide()
-	fb.getFromDB("newsinfo.json")
+	#fb.getFromDB("newsinfo.json")
 	gvars.setCurrentScene("menus")
 
 #func dbComplete(result):
 #	$newspanel/RichTextLabel.bbcode_text = result.text
+
+func settings():
+	$AnimationPlayer.play("settings")
+
+func settingsHide():
+	backwards = true
+	$AnimationPlayer.play_backwards("settings")
 
 func failed(reason, _action):
 	print(reason)
@@ -27,8 +36,14 @@ func onCredits():
 func onQuit():
 	get_tree().quit(0)
 
-func dialogueHide():
-	get_node("../dialogue").hide()
-
 func creditsHide():
 	$creditspanel.hide()
+
+func animDone(_anim_name):
+	if backwards:
+		$settingspanel.hide()
+		backwards = false
+	if loading:
+		$settingspanel.hide()
+		loading = false
+		gvars.allReady()

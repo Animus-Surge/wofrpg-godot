@@ -9,6 +9,8 @@ var loadedtribes: Array
 var tribeindexes: Array
 var itemdict: Array
 
+var firstInstance = true
+
 var characters: Array
 
 var persistentLogin = false
@@ -66,7 +68,7 @@ func loadSettings():
 		OS.window_fullscreen = true
 		if error == ERR_FILE_NOT_FOUND:
 			setfile.open("user://settings.json", File.WRITE)
-			setfile.store_line(to_json({"fullscreen":true,"resolution":1}))
+			setfile.store_line(to_json({"fullscreen":true,"resolution":1,"first-instance":true}))
 			setfile.close()
 			return
 		return
@@ -92,7 +94,12 @@ func loadSettings():
 			OS.window_size = Vector2(1280,800)
 		8: #1600x900
 			OS.window_size = Vector2(1600,900)
+	if settings.get("first-instance"):
+		firstInstance = true
+	else:
+		firstInstance = false
 	setfile.close()
+	
 
 func saveSettings():
 	pass
@@ -104,28 +111,14 @@ func loadAddons():
 	var addondir = Directory.new()
 	#TODO
 
-func loadCustom() -> Array:
-	var chars = []
-	var path = "user://addons/characters/"
-	var chardir = Directory.new()
-	chardir.open(path)
-	chardir.list_dir_begin()
-	var file: String = chardir.get_next()
-	while file != "":
-		if !file.begins_with("."):
-			if file.ends_with(".pck"):
-				var err = !ProjectSettings.load_resource_pack(path + file, false)
-				if !err:
-					logcat.stdout("Loaded custom character from addon file " + file, 1)
-					var cf = File.new()
-					var er = cf.open("res://data/customchars/" + file.split(".")[0] + ".json", File.READ)
-					if er == 0:
-						var jr = JSON.parse(cf.get_as_text()).result
-						chars.append(jr)
-				else:
-					logcat.stdout("Problems loading addon file " + file, 2)
-		file = chardir.get_next()
-	return chars
+func loadCImage(path) -> Texture:
+	var tex = ImageTexture.new()
+	var err = tex.load(path)
+	if err != OK:
+		logcat.stdout("Couldn't load image from path \"" + path + "\"", logcat.ERROR)
+		return null
+	return tex
+
 #All tribes stored in res://data/tribes
 
 func loadTribes():

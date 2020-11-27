@@ -71,8 +71,8 @@ var scn
 var wait
 var tmax = 100
 
-func load_world(world_name: String, expansion = "base"):
-	var worldDataFile=File.new()
+func load_world(_world_name: String, _expansion = "base"):
+	var _worldDataFile=File.new()
 	
 
 func load_scene(scene: String):
@@ -81,7 +81,7 @@ func load_scene(scene: String):
 	if current != "loadscreen":
 		#print("Current is not loadscreen")
 		get_node("/root/" + current).queue_free()
-		get_node("/root/loadscreen").show()
+		get_node("/root/loadscreen/loadscreen").show()
 	scn = ResourceLoader.load_interactive(scene)
 	set_process(true)
 	
@@ -116,4 +116,4 @@ func _process(_delta):
 
 func allReady():
 	if !debug:
-		get_node("/root/loadscreen").hide()
+		get_tree().get_root().get_node("loadscreen/loadscreen").hide()

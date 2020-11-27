@@ -26,9 +26,36 @@ func _ready():
 	addSlot.initializeAdd()
 	addSlot.connect(\"add\", self, \"onAdd\")
 	$ScrollContainer/chartabs.add_child(addSlot)
+	
+	$design/spine.texture = null
+	$design/body.texture = null
+	$design/legs.texture = null
+	$design/tail.texture = null
+	$design/head.texture = null
+	$design/wings.texture = null
+	$design/tdec.texture = null
 
 func onSlotPress(index): #Callback from slot signal
-	print(gloader.characters[index].cname)
+	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
+		if x == index:
+			continue
+		$ScrollContainer/chartabs.get_child(x).unselect()
+	var cdata = gloader.characters[index]
+	if cdata.cuseCustom:
+		var image = gloader.loadCImage(cdata.ccustomPath)
+		var sss = Vector2(cdata.ccustomSize[0], cdata.ccustomSize[1])
+		var frameSize = Vector2(image.get_data().get_width()/sss.x, image.get_data().get_height()/sss.y)
+		$design/body.texture = image
+		$design/body.region_rect.size = frameSize
+		var idlerow = 0
+		for anim in cdata.ccustomAnims:
+			if anim.name == \"idle\":
+				idlerow = anim.row
+		print(frameSize.y * (idlerow - 1))
+		$design/body.region_rect.position = Vector2(0, frameSize.y * (idlerow - 1))
+		
+	else:
+		pass #TODO
 
 func onAdd():
 	print(\"Will add a new character\")
@@ -127,8 +154,38 @@ tracks/6/keys = {
 [sub_resource type="GDScript" id=3]
 script/source = "extends Control
 
+const p1 = \"Hi there! My name's Polezno, and I'm here to help you out!\"
+const p2 = \"First off, let's create a character. Click the \\\"+ Create\\\" button to do so.\"
+const p3 = \"In this screen, you'll give the character some appearance!\"
+const p4 = \"These two arrows select different parts of your character.\"
+const p5 = \"And these arrows select the different variants of that part.\"
+const p6 = \"You can also click this button to provide a custom look for your character!\"
+const p7 = \"Some parts are required, while others aren't. The required ones are set by default to the NightWing base, though you can change that in the settings.\"
+const p8 = \"Try it now! Give your character some looks. Click next once you are ready to continue.\"
+const p9 = \"In this screen, you'll give your character some color.\"
+const p10 = \"These arrows select different parts of the character, leaving out the hidden ones.\"
+const p11 = \"This button opens a color picker, which you can use to set the color of the selected part.\"
+const p12 = \"Go ahead and give your character some color! Click next to proceed.\"
+const p13 = \"This screen defines your character's traits.\"
+const p14 = \"Traits can be selected entirely by you, or you can click the randomize button to completely randomize it.\"
+const p15 = \"Try it! Click next to continue on to the last screen.\"
+const p16 = \"In this screen, you'll define your character's name, gender, and their pronouns.\"
+const p17 = \"You can also select how big your character will appear.\"
+const p18 = \"Now give your character some details! Click save once you are done.\"
+const p19 = \"As you can see, now your character appears as a tab on the bottom of your screen.\"
+const p20 = \"After saving, the character automatically gets selected.\"
+const p21 = \"On the right side of the screen, there are several options.\"
+const p22 = \"You can export your character...\"
+const p23 = \"... store your character to the cloud, so it can be accessed from anywhere...\"
+const p24 = \"... or delete your character. That cannot be undone, so be careful!\"
+const p25 = \"Lastly, below the design of your character, a play button appears. Go ahead and click that.\"
+const p26 = \"In this screen, you can select to either play solo...\"
+const p27 = \"... or play with friends.\"
+const p28 = \"And thats about it for the customizer! I'll see you in the world, traveller.\"
+
 func _ready():
 	hide()
+
 "
 
 [node name="gamesys" type="Control"]
@@ -139,6 +196,7 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_edit_vertical_guides_": [  ]
 }
+sceneName = "gamesys"
 
 [node name="ui" type="Control" parent="."]
 anchor_right = 1.0

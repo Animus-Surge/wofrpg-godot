@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/mainmenu.gd" type="Script" id=3]
@@ -12,8 +12,85 @@
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.305882, 0.305882, 0.305882, 0.835294 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "settings"
+length = 0.4
+step = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("settingspanel:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("settingspanel:rect_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1066, 258 ), Vector2( 1066, 564 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("settingspanel:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 150, 286 ), Vector2( 150, 86 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("settingspanel/Content:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("settingspanel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009, 0.01 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, false, false, false, false, false, false, false, false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("settingspanel/Content:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.294, 0.295, 0.296, 0.297, 0.298, 0.299, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, false, false, false, false, true ]
+}
 
 [node name="menus" type="Control"]
 anchor_right = 1.0
@@ -26,6 +103,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 sceneName = "menus"
+readiness_check = false
 
 [node name="mainmenu" type="Panel" parent="."]
 anchor_right = 1.0
@@ -109,13 +187,48 @@ __meta__ = {
 
 [node name="settingspanel" type="Panel" parent="mainmenu"]
 anchor_left = 0.10981
-anchor_top = 0.0917969
+anchor_top = 0.372396
 anchor_right = 0.89019
-anchor_bottom = 0.908203
+anchor_bottom = 0.708333
+margin_top = -161.0
+margin_bottom = 85.33
 custom_styles/panel = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="Content" type="Control" parent="mainmenu/settingspanel"]
+visible = false
+modulate = Color( 1, 1, 1, 0.158811 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="mainmenu/settingspanel/Content"]
+anchor_left = 0.0208935
+anchor_top = 0.0078149
+anchor_right = 0.0715502
+anchor_bottom = 0.0939393
+margin_top = -4.76837e-07
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="mainmenu/settingspanel/Content"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -52.5
+margin_top = 14.0
+margin_right = 52.5
+margin_bottom = 46.0
+custom_fonts/font = ExtResource( 2 )
+text = "Settings"
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
 visible = false
@@ -133,7 +246,7 @@ margin_left = 0.541992
 margin_top = 0.343994
 margin_right = -0.542114
 margin_bottom = -0.344055
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -306,4 +419,13 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="mainmenu"]
+anims/settings = SubResource( 2 )
+[connection signal="pressed" from="mainmenu/playbtn" to="mainmenu" method="onPlay"]
+[connection signal="pressed" from="mainmenu/settingsbtn" to="mainmenu" method="settings"]
+[connection signal="pressed" from="mainmenu/creditsbtn" to="mainmenu" method="onCredits"]
+[connection signal="pressed" from="mainmenu/exitbtn" to="mainmenu" method="onQuit"]
+[connection signal="pressed" from="mainmenu/settingspanel/Content/TextureButton" to="mainmenu" method="settingsHide"]
 [connection signal="pressed" from="mainmenu/creditspanel/TextureButton" to="mainmenu" method="creditsHide"]
+[connection signal="animation_finished" from="mainmenu/AnimationPlayer" to="mainmenu" method="animDone"]

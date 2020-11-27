@@ -23,10 +23,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 10 ) ]
+"values": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 7 ), ExtResource( 3 ) ]
 }
 
 [sub_resource type="GDScript" id=2]
@@ -50,20 +50,23 @@ func _ready():
 	get_parent().get_node(\"AnimationPlayer\").play(\"loadscreen-icon\")
 "
 
-[node name="loadscreen" type="Control"]
+[node name="loadscreen" type="CanvasLayer"]
+layer = 2
+script = ExtResource( 12 )
+sceneName = "loadscreen"
+
+[node name="loadscreen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-sceneName = "loadscreen"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="loadscreen"]
 method_call_mode = 1
 anims/loadscreen-icon = SubResource( 1 )
 
-[node name="bg" type="TextureRect" parent="."]
+[node name="bg" type="TextureRect" parent="loadscreen"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -73,7 +76,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="loadscreen"]
 self_modulate = Color( 0.0196078, 0.572549, 0.839216, 1 )
 anchor_left = 0.836
 anchor_top = 0.014
@@ -89,4 +92,4 @@ script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="visibility_changed" from="bg" to="bg" method="_visibility_changed"]
+[connection signal="visibility_changed" from="loadscreen/bg" to="loadscreen/bg" method="_visibility_changed"]

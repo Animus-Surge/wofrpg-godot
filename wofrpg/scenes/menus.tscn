@@ -231,7 +231,6 @@ custom_fonts/font = ExtResource( 2 )
 text = "Settings"
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 10 )
@@ -285,6 +284,10 @@ kayak  [color=#f70]Magma Studios[/color]
 [color=#ff0]Voice Actors[/color]
 
 Cacti
+
+[color=#ff0]Thanks to the marvelous people who helped translate![/color]
+
+Sundra
 
 [color=#f70]Special thanks to our patrons![/color]
 
@@ -358,6 +361,10 @@ kayak  Magma Studios
 Voice Actors
 
 Cacti
+
+Thanks to the marvelous people who helped translate!
+
+Sundra
 
 Special thanks to our patrons!
 

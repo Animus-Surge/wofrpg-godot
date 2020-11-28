@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://images/ui/buttons/checked_box.png" type="Texture" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/mainmenu.gd" type="Script" id=3]
 [ext_resource path="res://godot-resources/bg1.tres" type="StyleBox" id=4]
@@ -9,6 +10,7 @@
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=8]
 [ext_resource path="res://images/ui/icons/mm-icon.png" type="Texture" id=9]
 [ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=10]
+[ext_resource path="res://images/ui/bars/bar.png" type="Texture" id=11]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
 
@@ -190,16 +192,16 @@ anchor_left = 0.10981
 anchor_top = 0.372396
 anchor_right = 0.89019
 anchor_bottom = 0.708333
-margin_top = -161.0
-margin_bottom = 85.33
+margin_left = -0.000457764
+margin_top = -200.0
+margin_right = 0.000488281
+margin_bottom = 106.0
 custom_styles/panel = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="Content" type="Control" parent="mainmenu/settingspanel"]
-visible = false
-modulate = Color( 1, 1, 1, 0.158811 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -228,9 +230,93 @@ margin_top = 14.0
 margin_right = 52.5
 margin_bottom = 46.0
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Settings"
 
+[node name="lang" type="OptionButton" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 70.0
+margin_right = 404.0
+margin_bottom = 98.0
+custom_fonts/font = ExtResource( 13 )
+text = "English (US)"
+items = [ "English (US)", null, false, 0, null, "English (UK)", null, false, 1, null, "Spanish", null, false, 2, null, "French", null, false, 3, null, "Italian", null, false, 4, null, "Russian", null, false, 5, null, "German", null, false, 6, null, "Japanese", null, false, 7, null, "Sindarin (Elvish)", null, false, 8, null, "Pirate Talk", null, false, 9, null ]
+selected = 0
+
+[node name="aspect" type="OptionButton" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 120.942
+margin_right = 404.0
+margin_bottom = 148.942
+custom_fonts/font = ExtResource( 13 )
+text = "1366x768 (16:9)"
+items = [ "1366x768 (16:9)", null, false, 0, null, "1920x1080 (16:9)", null, false, 1, null ]
+selected = 0
+
+[node name="Label2" type="Label" parent="mainmenu/settingspanel/Content"]
+margin_left = 62.9289
+margin_top = 72.6679
+margin_right = 195.929
+margin_bottom = 394.668
+custom_fonts/font = ExtResource( 13 )
+text = "Language
+
+Aspect Ratio
+
+Fullscreen
+
+Windowed
+
+Master Volume
+
+Music Volume
+
+SFX Volume"
+
+[node name="wincheck" type="CheckBox" parent="mainmenu/settingspanel/Content"]
+margin_left = 195.929
+margin_top = 207.501
+margin_right = 243.929
+margin_bottom = 255.501
+custom_icons/checked = ExtResource( 1 )
+custom_icons/unchecked = ExtResource( 11 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fscheck" type="CheckBox" parent="mainmenu/settingspanel/Content"]
+margin_left = 195.929
+margin_top = 161.07
+margin_right = 243.929
+margin_bottom = 209.07
+custom_icons/checked = ExtResource( 1 )
+custom_icons/unchecked = ExtResource( 11 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 276.0
+margin_right = 404.0
+margin_bottom = 292.0
+
+[node name="muvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 323.5
+margin_right = 404.0
+margin_bottom = 339.5
+
+[node name="svolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 372.997
+margin_right = 404.0
+margin_bottom = 388.997
+
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 10 )

@@ -117,6 +117,7 @@ func loadCImage(path) -> Texture:
 	if err != OK:
 		logcat.stdout("Couldn't load image from path \"" + path + "\"", logcat.ERROR)
 		return null
+	tex.flags = 0
 	return tex
 
 #All tribes stored in res://data/tribes
@@ -255,7 +256,6 @@ func loadCharacters():
 			if current.begins_with(".") or current == "palettes" or current == "custom" or not current.ends_with(".json"):
 				current = cdir.get_next()
 				continue
-
 			var file = File.new()
 			file.open("user://characters/" + current, File.READ)
 			characters.append(JSON.parse(file.get_as_text()).result)

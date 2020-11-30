@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -9,6 +9,14 @@
 [ext_resource path="res://images/character/sanw/idle/saw-tail.png" type="Texture" id=7]
 [ext_resource path="res://images/character/sanw/idle/saw-head.png" type="Texture" id=8]
 [ext_resource path="res://images/ui/backgrounds/sw-customizationscreen.png" type="Texture" id=9]
+[ext_resource path="res://images/ui/buttons/arrow-left-hover.png" type="Texture" id=11]
+[ext_resource path="res://images/ui/buttons/arrow-right-hover.png" type="Texture" id=12]
+[ext_resource path="res://images/ui/buttons/arrow-right.png" type="Texture" id=13]
+[ext_resource path="res://images/ui/buttons/arrow-up-hover.png" type="Texture" id=14]
+[ext_resource path="res://images/ui/buttons/arrow-up.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/buttons/arrow-left.png" type="Texture" id=16]
+[ext_resource path="res://images/ui/buttons/arrow-down-hover.png" type="Texture" id=17]
+[ext_resource path="res://images/ui/buttons/arrow-down.png" type="Texture" id=18]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -53,12 +61,21 @@ func onSlotPress(index): #Callback from slot signal
 				idlerow = anim.row
 		print(frameSize.y * (idlerow - 1))
 		$design/body.region_rect.position = Vector2(0, frameSize.y * (idlerow - 1))
-		
 	else:
 		pass #TODO
+	# Scaling for the character in the designer
+	
 
 func onAdd():
-	print(\"Will add a new character\")
+	$design/spine.texture = load(\"res://images/character/nigw/idle/nw-spine.png\")
+	$design/body.texture = load(\"res://images/character/nigw/idle/nw-body.png\")
+	$design/legs.texture = load(\"res://images/character/nigw/idle/nw-legs.png\")
+	$design/tail.texture = load(\"res://images/character/nigw/idle/nw-tail.png\")
+	$design/head.texture = load(\"res://images/character/nigw/idle/nw-head.png\")
+	$design/wings.texture = load(\"res://images/character/nigw/idle/nw-wings.png\")
+	$design/tdec.texture = null
+	get_node(\"../AnimationPlayer\").play(\"camZoomHead\")
+	get_node(\"../CanvasLayer/toplayer\").onCreate()
 "
 
 [sub_resource type="Animation" id=2]
@@ -184,9 +201,75 @@ const p27 = \"... or play with friends.\"
 const p28 = \"And thats about it for the customizer! I'll see you in the world, traveller.\"
 
 func _ready():
-	hide()
+	$poleznocustomtut.hide()
+	$customizer.hide()
+
+func onCreate():
+	$customizer.show()
 
 "
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Control
+
+"
+
+[sub_resource type="Animation" id=4]
+resource_name = "camZoomHead"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/ScrollContainer:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Camera2D:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 683, -0.25, 0, 0.25, 0, 713, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Camera2D:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 384, -0.25, 0, 0.25, 0, 354, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Camera2D:zoom:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.4, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Camera2D:zoom:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.4, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
 
 [node name="gamesys" type="Control"]
 anchor_right = 1.0
@@ -317,14 +400,104 @@ __meta__ = {
 anims/preview = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
+position = Vector2( 683, 384 )
+current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="poleznoTutInteractions" type="Control" parent="CanvasLayer"]
+[node name="toplayer" type="Control" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 script = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="poleznocustomtut" type="Control" parent="CanvasLayer/toplayer"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+
+[node name="customizer" type="Control" parent="CanvasLayer/toplayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 5 )
+
+[node name="arrowH" type="Control" parent="CanvasLayer/toplayer/customizer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="r" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowH"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -120.0
+margin_top = -44.0
+margin_right = -32.0
+margin_bottom = 44.0
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 16 )
+texture_hover = ExtResource( 11 )
+expand = true
+
+[node name="l" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowH"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 16.0
+margin_top = -44.0
+margin_right = 104.0
+margin_bottom = 44.0
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 12 )
+expand = true
+
+[node name="arrowV" type="Control" parent="CanvasLayer/toplayer/customizer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="u" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowV"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -44.0
+margin_top = 16.0
+margin_right = 44.0
+margin_bottom = 104.0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 14 )
+expand = true
+
+[node name="d" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowV"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -44.0
+margin_top = -104.0
+margin_right = 44.0
+margin_bottom = -16.0
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 18 )
+texture_hover = ExtResource( 17 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/camZoomHead = SubResource( 4 )

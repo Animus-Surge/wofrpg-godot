@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://images/ui/buttons/checked_box.png" type="Texture" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -11,14 +11,25 @@
 [ext_resource path="res://images/ui/icons/mm-icon.png" type="Texture" id=9]
 [ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=10]
 [ext_resource path="res://images/ui/bars/bar.png" type="Texture" id=11]
+[ext_resource path="res://images/ui/ink.png" type="Texture" id=12]
 [ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
+[ext_resource path="res://godot-resources/grabber_bg.tres" type="StyleBox" id=15]
+[ext_resource path="res://godot-resources/grabber_bg_highlight.tres" type="StyleBox" id=16]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 40, 40 )
+margin_left = 11.9716
+margin_right = 11.9716
+margin_top = 12.3221
+margin_bottom = 11.9716
+modulate_color = Color( 0.364706, 0.364706, 0.364706, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.305882, 0.305882, 0.305882, 0.835294 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "settings"
+[sub_resource type="Animation" id=3]
 length = 0.4
 step = 0.001
 tracks/0/type = "value"
@@ -299,21 +310,51 @@ __meta__ = {
 
 [node name="mvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
 margin_left = 201.0
-margin_top = 276.0
+margin_top = 266.0
 margin_right = 404.0
-margin_bottom = 292.0
+margin_bottom = 306.0
+focus_mode = 0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 15 )
+custom_styles/grabber_area_highlight = ExtResource( 16 )
+custom_styles/grabber_area = SubResource( 1 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="muvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
 margin_left = 201.0
-margin_top = 323.5
+margin_top = 314.772
 margin_right = 404.0
-margin_bottom = 339.5
+margin_bottom = 354.772
+focus_mode = 0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 15 )
+custom_styles/grabber_area_highlight = ExtResource( 16 )
+custom_styles/grabber_area = SubResource( 1 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="svolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+[node name="sfxvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
 margin_left = 201.0
-margin_top = 372.997
+margin_top = 364.385
 margin_right = 404.0
-margin_bottom = 388.997
+margin_bottom = 404.385
+focus_mode = 0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 15 )
+custom_styles/grabber_area_highlight = ExtResource( 16 )
+custom_styles/grabber_area = SubResource( 1 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
 visible = false
@@ -331,7 +372,7 @@ margin_left = 0.541992
 margin_top = 0.343994
 margin_right = -0.542114
 margin_bottom = -0.344055
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -514,7 +555,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="mainmenu"]
-anims/settings = SubResource( 2 )
+anims/settings = SubResource( 3 )
 [connection signal="pressed" from="mainmenu/playbtn" to="mainmenu" method="onPlay"]
 [connection signal="pressed" from="mainmenu/settingsbtn" to="mainmenu" method="settings"]
 [connection signal="pressed" from="mainmenu/creditsbtn" to="mainmenu" method="onCredits"]

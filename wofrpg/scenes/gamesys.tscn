@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://images/character/sanw/idle/saw-tail.png" type="Texture" id=7]
 [ext_resource path="res://images/character/sanw/idle/saw-head.png" type="Texture" id=8]
 [ext_resource path="res://images/ui/backgrounds/sw-customizationscreen.png" type="Texture" id=9]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=10]
 [ext_resource path="res://images/ui/buttons/arrow-left-hover.png" type="Texture" id=11]
 [ext_resource path="res://images/ui/buttons/arrow-right-hover.png" type="Texture" id=12]
 [ext_resource path="res://images/ui/buttons/arrow-right.png" type="Texture" id=13]
@@ -59,11 +60,17 @@ func onSlotPress(index): #Callback from slot signal
 		for anim in cdata.ccustomAnims:
 			if anim.name == \"idle\":
 				idlerow = anim.row
-		print(frameSize.y * (idlerow - 1))
 		$design/body.region_rect.position = Vector2(0, frameSize.y * (idlerow - 1))
+		$design/spine.texture = null
+		$design/legs.texture = null
+		$design/tail.texture = null
+		$design/head.texture = null
+		$design/wings.texture = null
+		$design/tdec.texture = null
 	else:
 		pass #TODO
-	# Scaling for the character in the designer
+	$design.rect_scale = Vector2(1*cdata.cscale, 1*cdata.cscale)
+	$design.rect_position = Vector2($design.rect_position.x, $design.rect_position.y + 1*(1-cdata.cscale))
 	
 
 func onAdd():
@@ -76,6 +83,23 @@ func onAdd():
 	$design/tdec.texture = null
 	get_node(\"../AnimationPlayer\").play(\"camZoomHead\")
 	get_node(\"../CanvasLayer/toplayer\").onCreate()
+	$design/body.region_rect.position = Vector2.ZERO
+	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
+		$ScrollContainer/chartabs.get_child(x).unselect()
+
+func customizerCancel():
+	get_parent().get_node(\"CanvasLayer/toplayer/mmbtn\").show()
+	$design/spine.texture = null
+	$design/legs.texture = null
+	$design/tail.texture = null
+	$design/head.texture = null
+	$design/wings.texture = null
+	$design/tdec.texture = null
+	$design/body.texture = null
+	get_node(\"../AnimationPlayer\").play_backwards(\"camZoomHead\")
+
+func mmreturn():
+	gvars.load_scene(\"res://scenes/menus.tscn\")
 "
 
 [sub_resource type="Animation" id=2]
@@ -205,17 +229,53 @@ func _ready():
 	$customizer.hide()
 
 func onCreate():
-	$customizer.show()
+	$mmbtn.hide()
+	$customizer.initCustomizer()
 
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Control
 
+signal cancel()
+
+var location = 0
+var currentPart = 0
+
+# locations - 0: parts 1: colors 2: traits 3: details
+# parts - 0: head 1: body 2: spine 3: wings 4: legs 5: tail 6: tail decoration
+
+func initCustomizer():
+	location = 0
+	currentPart = 0
+	show()
+
+func onNext():
+	if location <= 3:
+		location += 1
+		if location == 3:
+			$nsbtn.text = \"Save\"
+		$pbtn.disabled = false
+
+func onPrevious():
+	if location >= 0:
+		location -= 1
+		if location == 0:
+			$pbtn.disabled = true
+		$nsbtn.text = \"Next\"
+
+func nextPart():
+	pass
+
+func previousPart():
+	pass
+
+func cancel():
+	emit_signal(\"cancel\")
+	hide()
 "
 
-[sub_resource type="Animation" id=4]
-resource_name = "camZoomHead"
+[sub_resource type="Animation" id=5]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -415,6 +475,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="mmbtn" type="Button" parent="CanvasLayer/toplayer"]
+margin_left = 40.0
+margin_top = 32.0
+margin_right = 115.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+text = "Quit to Main Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="poleznocustomtut" type="Control" parent="CanvasLayer/toplayer"]
 visible = false
 margin_right = 40.0
@@ -422,11 +493,13 @@ margin_bottom = 40.0
 mouse_filter = 2
 
 [node name="customizer" type="Control" parent="CanvasLayer/toplayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 5 )
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="arrowH" type="Control" parent="CanvasLayer/toplayer/customizer"]
 anchor_right = 1.0
@@ -499,5 +572,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="nsbtn" type="Button" parent="CanvasLayer/toplayer/customizer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -82.0
+margin_top = 32.0
+margin_right = -30.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+text = "Next"
+
+[node name="pbtn" type="Button" parent="CanvasLayer/toplayer/customizer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -186.0
+margin_top = 32.0
+margin_right = -99.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+disabled = true
+text = "Previous"
+
+[node name="cbtn" type="Button" parent="CanvasLayer/toplayer/customizer"]
+margin_left = 40.0
+margin_top = 32.0
+margin_right = 115.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+text = "Cancel"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/camZoomHead = SubResource( 4 )
+anims/camZoomHead = SubResource( 5 )
+[connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
+[connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/nsbtn" to="CanvasLayer/toplayer/customizer" method="onNext"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/pbtn" to="CanvasLayer/toplayer/customizer" method="onPrevious"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/cbtn" to="CanvasLayer/toplayer/customizer" method="cancel"]

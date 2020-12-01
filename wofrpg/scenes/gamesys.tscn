@@ -70,10 +70,13 @@ func onSlotPress(index): #Callback from slot signal
 	else:
 		pass #TODO
 	$design.rect_scale = Vector2(1*cdata.cscale, 1*cdata.cscale)
-	$design.rect_position = Vector2($design.rect_position.x, $design.rect_position.y + 1*(1-cdata.cscale))
+	$design.rect_position = Vector2($design.rect_position.x + (rect_size.x * cdata.cscale) / 2, $design.rect_position.y + rect_size.y*(cdata.cscale) - (15 if cdata.cscale != 1 else 0))
+	print($design.rect_position.y + rect_size.y*(1-cdata.cscale))
 	
 
 func onAdd():
+	$design.rect_scale = Vector2(1,1)
+	$design.rect_position = Vector2(123.519, 235.451)
 	$design/spine.texture = load(\"res://images/character/nigw/idle/nw-spine.png\")
 	$design/body.texture = load(\"res://images/character/nigw/idle/nw-body.png\")
 	$design/legs.texture = load(\"res://images/character/nigw/idle/nw-legs.png\")
@@ -237,10 +240,16 @@ func onCreate():
 [sub_resource type="GDScript" id=4]
 script/source = "extends Control
 
+func _ready():
+	$arrowV/u.hide()
+
 signal cancel()
+
+const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",'tdec']
 
 var location = 0
 var currentPart = 0
+var currentPartID = \"head\"
 
 # locations - 0: parts 1: colors 2: traits 3: details
 # parts - 0: head 1: body 2: spine 3: wings 4: legs 5: tail 6: tail decoration
@@ -248,6 +257,7 @@ var currentPart = 0
 func initCustomizer():
 	location = 0
 	currentPart = 0
+	currentPartID = \"head\"
 	show()
 
 func onNext():
@@ -265,10 +275,30 @@ func onPrevious():
 		$nsbtn.text = \"Next\"
 
 func nextPart():
-	pass
+	if currentPart < 6:
+		currentPart += 1
+		print(partIDs[currentPart])
+		if currentPart == 6:
+			$arrowV/d.hide()
+		else:
+			$arrowV/d.show()
+		if currentPart == 0:
+			$arrowV/u.hide()
+		else:
+			$arrowV/u.show()
 
 func previousPart():
-	pass
+	if currentPart > 0:
+		currentPart -= 1
+		print(partIDs[currentPart])
+		if currentPart == 0:
+			$arrowV/u.hide()
+		else:
+			$arrowV/u.show()
+		if currentPart == 6:
+			$arrowV/d.hide()
+		else:
+			$arrowV/d.show()
 
 func cancel():
 	emit_signal(\"cancel\")
@@ -359,31 +389,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ui"]
-anchor_top = 0.859
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 0.287964
-scroll_vertical_enabled = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="chartabs" type="HBoxContainer" parent="ui/ScrollContainer"]
-margin_right = 1366.0
-margin_bottom = 108.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 5
-
 [node name="design" type="Control" parent="ui"]
-anchor_left = 0.0904236
-anchor_top = 0.304683
-anchor_right = 0.673147
-anchor_bottom = 0.888016
+anchor_left = 0.09
+anchor_top = 0.307
+anchor_right = 0.673
+anchor_bottom = 0.89
+margin_left = 0.578636
+margin_top = -0.324997
+margin_right = 0.200623
+margin_bottom = -0.0689697
+grow_horizontal = 2
+grow_vertical = 2
 __meta__ = {
 "_edit_group_": true,
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }
 
 [node name="spine" type="NinePatchRect" parent="ui/design"]
@@ -459,6 +478,23 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ui/design"]
 anims/preview = SubResource( 2 )
 
+[node name="ScrollContainer" type="ScrollContainer" parent="ui"]
+anchor_top = 0.859
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.287964
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chartabs" type="HBoxContainer" parent="ui/ScrollContainer"]
+margin_right = 1366.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
 current = true
@@ -471,6 +507,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 script = SubResource( 3 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
@@ -554,6 +591,9 @@ texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 15 )
 texture_hover = ExtResource( 14 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="d" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowV"]
 anchor_left = 0.5
@@ -605,6 +645,8 @@ text = "Cancel"
 anims/camZoomHead = SubResource( 5 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/u" to="CanvasLayer/toplayer/customizer" method="previousPart"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/d" to="CanvasLayer/toplayer/customizer" method="nextPart"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/nsbtn" to="CanvasLayer/toplayer/customizer" method="onNext"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/pbtn" to="CanvasLayer/toplayer/customizer" method="onPrevious"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/cbtn" to="CanvasLayer/toplayer/customizer" method="cancel"]

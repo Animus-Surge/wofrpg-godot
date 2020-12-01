@@ -15,6 +15,23 @@ var characters: Array
 
 var persistentLogin = false
 
+######################
+# SETTINGS VARIABLES #
+######################
+
+var defaultTribe
+var customizerBackground
+
+var ratio
+var language
+
+var fs: bool
+var win: bool
+
+var masterVolume: float
+var sfxVolume: float
+var musicVolume: float
+
 func startLoad():
 	if !gvars.debug:
 		login()

@@ -42,21 +42,14 @@ class Sorter:
 			return true
 		return false 
 
+#====GLOBAL====
+
 func _ready():
-	#var mpstate = Node.new()
-	#mpstate.set_script(load("res://scripts/global/state.gd"))
-	#mpstate.name = "State"
-	#get_tree().get_root().add_child(mpstate)
 	gloader.startLoad()
 	if !debug:
 		print("==============> GAME START <==============")
-		#load_scene("res://scenes/menus.tscn")
 	else:
 		print("==============> DEBUG MODE <==============")
-
-func debugComplete():
-	gloader.startLoad()
-	logcat.stdout("DEBUG MODE ACTIVE", 0)
 
 func setCurrentScene(scene):
 	current = scene

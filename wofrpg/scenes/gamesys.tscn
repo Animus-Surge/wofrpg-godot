@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://images/ui/buttons/arrow-left.png" type="Texture" id=16]
 [ext_resource path="res://images/ui/buttons/arrow-down-hover.png" type="Texture" id=17]
 [ext_resource path="res://images/ui/buttons/arrow-down.png" type="Texture" id=18]
+[ext_resource path="res://objects/ui/saveslot.tscn" type="PackedScene" id=19]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -247,6 +248,8 @@ signal cancel()
 
 const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",'tdec']
 
+onready var player = get_parent().get_parent().get_parent().get_node(\"AnimationPlayer\")
+
 var location = 0
 var currentPart = 0
 var currentPartID = \"head\"
@@ -254,7 +257,15 @@ var currentPartID = \"head\"
 # locations - 0: parts 1: colors 2: traits 3: details
 # parts - 0: head 1: body 2: spine 3: wings 4: legs 5: tail 6: tail decoration
 
+func partChange(partID):
+	match partID:
+		\"head\":
+			player.play(\"camZoomHead\")
+		\"body\":
+			pass
+
 func initCustomizer():
+	player.play(\"camInit\")
 	location = 0
 	currentPart = 0
 	currentPartID = \"head\"
@@ -306,6 +317,49 @@ func cancel():
 "
 
 [sub_resource type="Animation" id=5]
+resource_name = "camInit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/ScrollContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "camZoomBody"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"update": 3,
+"values": [ Vector2( 611.648, 483.893 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera2D:zoom")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"update": 3,
+"values": [ Vector2( 0.4, 0.4 ) ]
+}
+
+[sub_resource type="Animation" id=7]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -495,9 +549,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 5
 
+[node name="saveslot" parent="ui/ScrollContainer/chartabs" instance=ExtResource( 19 )]
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 683, 384 )
+position = Vector2( 611.648, 483.893 )
 current = true
+zoom = Vector2( 0.4, 0.4 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -642,7 +699,9 @@ custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/camZoomHead = SubResource( 5 )
+anims/camInit = SubResource( 5 )
+anims/camZoomBody = SubResource( 6 )
+anims/camZoomHead = SubResource( 7 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/u" to="CanvasLayer/toplayer/customizer" method="previousPart"]

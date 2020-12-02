@@ -18,7 +18,6 @@
 [ext_resource path="res://images/ui/buttons/arrow-left.png" type="Texture" id=16]
 [ext_resource path="res://images/ui/buttons/arrow-down-hover.png" type="Texture" id=17]
 [ext_resource path="res://images/ui/buttons/arrow-down.png" type="Texture" id=18]
-[ext_resource path="res://objects/ui/saveslot.tscn" type="PackedScene" id=19]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -26,6 +25,8 @@ script/source = "extends Control
 var sslot = preload(\"res://objects/ui/saveslot.tscn\")
 
 func _ready():
+	get_parent().get_node(\"Camera2D\").zoom = Vector2(1,1)
+	get_parent().get_node(\"Camera2D\").position = Vector2(683,384)
 	var index = 0
 	for character in gloader.characters:
 		var slot = sslot.instance()
@@ -85,7 +86,8 @@ func onAdd():
 	$design/head.texture = load(\"res://images/character/nigw/idle/nw-head.png\")
 	$design/wings.texture = load(\"res://images/character/nigw/idle/nw-wings.png\")
 	$design/tdec.texture = null
-	get_node(\"../AnimationPlayer\").play(\"camZoomHead\")
+	get_node(\"../AnimationPlayer\").play(\"camInit\")
+	get_node(\"../Camera2D\").camMovePart(\"head\")
 	get_node(\"../CanvasLayer/toplayer\").onCreate()
 	$design/body.region_rect.position = Vector2.ZERO
 	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
@@ -100,7 +102,8 @@ func customizerCancel():
 	$design/wings.texture = null
 	$design/tdec.texture = null
 	$design/body.texture = null
-	get_node(\"../AnimationPlayer\").play_backwards(\"camZoomHead\")
+	get_parent().get_node(\"Camera2D\").camMovePart(\"overview\")
+	get_parent().get_node(\"AnimationPlayer\").play_backwards(\"camInit\")
 
 func mmreturn():
 	gvars.load_scene(\"res://scenes/menus.tscn\")
@@ -195,6 +198,49 @@ tracks/6/keys = {
 "update": 1,
 "values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
 }
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends Camera2D
+
+const parts = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\", \"overview\"]
+const camspeed = 3
+const camzoomspeed = 0.035
+
+var cameraGoTo: Vector2
+var cameraZoom: Vector2
+
+func _ready():
+	cameraGoTo = position
+	cameraZoom = Vector2(1,1)
+
+func camMovePart(part:String):
+	if part in parts:
+		match parts.find(part):
+			0: #head
+				cameraGoTo = Vector2(713,354)
+				cameraZoom = Vector2(0.4, 0.4)
+			1:
+				pass
+			2:
+				pass
+			3:
+				pass
+			4:
+				pass
+			5:
+				pass
+			6:
+				pass
+			7:
+				cameraGoTo = Vector2(1366/2, 768/2)
+				cameraZoom = Vector2(1,1)
+			_:
+				logcat.stdout(\"Unknown part at index: \" + String(parts.find(part)), logcat.ERROR)
+
+func _process(_delta):
+	position = position.move_toward(cameraGoTo, camspeed)
+	zoom = zoom.move_toward(cameraZoom, camzoomspeed)
+"
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Control
@@ -549,12 +595,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 5
 
-[node name="saveslot" parent="ui/ScrollContainer/chartabs" instance=ExtResource( 19 )]
-
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 611.648, 483.893 )
+position = Vector2( 683, 384 )
 current = true
-zoom = Vector2( 0.4, 0.4 )
+smoothing_enabled = true
+script = SubResource( 8 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -697,6 +742,9 @@ margin_right = 115.0
 margin_bottom = 60.0
 custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/camInit = SubResource( 5 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://systemroot.gd" type="Script" id=1]
 [ext_resource path="res://pixel-s.tres" type="DynamicFont" id=2]
@@ -10,12 +10,11 @@
 [ext_resource path="res://icons/icon-settings.png" type="Texture" id=8]
 [ext_resource path="res://icons/icon-arrowUp.png" type="Texture" id=9]
 [ext_resource path="res://pixel.tres" type="DynamicFont" id=10]
+[ext_resource path="res://addon.tscn" type="PackedScene" id=11]
+[ext_resource path="res://pixel-xs.tres" type="DynamicFont" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=3]
@@ -254,10 +253,48 @@ custom_fonts/font = ExtResource( 2 )
 items = [ "Latest", null, false ]
 
 [node name="addonspanel" type="Panel" parent="main"]
-visible = false
 margin_left = 262.0
 margin_right = 1024.0
 margin_bottom = 596.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="main/addonspanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 71.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main/addonspanel/ScrollContainer"]
+margin_right = 762.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+
+[node name="addon2" parent="main/addonspanel/ScrollContainer/VBoxContainer" instance=ExtResource( 11 )]
+size_flags_horizontal = 1
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="main/addonspanel"]
+anchor_right = 1.0
+margin_bottom = 71.0
+custom_fonts/font = ExtResource( 10 )
+text = "Addons"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="main/addonspanel/Label"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 120.0
+margin_bottom = 48.0
+custom_fonts/font = ExtResource( 10 )
+text = "Refresh"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -357,7 +394,7 @@ margin_left = 0.0959778
 margin_top = 0.199982
 margin_right = 0.0959778
 focus_mode = 0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 12 )
 enabled_focus_mode = 0
 text = "Create an Account"
 flat = true
@@ -457,7 +494,7 @@ margin_left = 0.0959778
 margin_top = 0.199982
 margin_right = 0.0959778
 focus_mode = 0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 12 )
 enabled_focus_mode = 0
 text = "Sign In Instead"
 flat = true
@@ -475,6 +512,14 @@ margin_left = 0.0959778
 margin_right = -0.0960083
 margin_bottom = 0.199951
 custom_fonts/font = ExtResource( 2 )
+
+[node name="CheckBox" type="CheckBox" parent="signup"]
+margin_left = 518.0
+margin_top = 422.0
+margin_right = 630.0
+margin_bottom = 446.0
+custom_fonts/font = ExtResource( 12 )
+text = "Remember Me"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -539,6 +584,7 @@ text = "Dismiss"
 [connection signal="pressed" from="main/sidebar/news" to="." method="showNewsPanel"]
 [connection signal="pressed" from="main/sidebar/addon" to="." method="showAddonsPanel"]
 [connection signal="pressed" from="main/playbtn" to="." method="play"]
+[connection signal="pressed" from="main/addonspanel/Label/Button" to="." method="addonRefresh"]
 [connection signal="visibility_changed" from="signin" to="." method="siVisChanged"]
 [connection signal="pressed" from="signin/Button" to="." method="loginPressed"]
 [connection signal="toggled" from="signin/CheckBox" to="." method="rememberToggle"]

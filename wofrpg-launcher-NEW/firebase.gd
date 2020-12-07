@@ -17,7 +17,7 @@ const URL_DBFORE = "https://wofrpg-main.firebaseio.com/"
 
 onready var http = get_parent().get_node("HTTPRequest")
 
-func signUp(uname:String, email:String, password:String): #Password checking will happen in signup script
+func signUp(uname:String, email:String, password:String, persist=false):
 	print("Signing up")
 	http.request(URL_DBFORE + "users/" + uname + ".json")
 	var result = yield(http, "request_completed") as Array
@@ -61,13 +61,13 @@ func signUp(uname:String, email:String, password:String): #Password checking wil
 		username = uname
 		var loginfile = File.new()
 		loginfile.open("user://temp/login.pwu", File.WRITE)
-		loginfile.store_line(uname + ";" + password)
+		loginfile.store_line(uname + ";" + password + (";persistent" if persist else ""))
 		loginfile.close()
 		emit_signal("success", "TYPE_SIGNUP", JSON.parse(result[3].get_string_from_ascii()))
 	else:
 		emit_signal("errored", "Error reading from database", "ERR_HTTP-GET_FAILURE")
 
-func signIn(uname, password):
+func signIn(uname, password, persist = false):
 	print("Signing in")
 	http.request(URL_DBFORE + "users/" + uname + ".json")
 	var result = yield(http, "request_completed") as Array
@@ -90,7 +90,7 @@ func signIn(uname, password):
 			var loginfile = File.new()
 			var err = loginfile.open("user://temp/login.pwu", File.WRITE)
 			if err == OK:
-				loginfile.store_line(uname + ";" + password)
+				loginfile.store_line(uname + ";" + password + (";persistent" if persist else ""))
 				loginfile.close()
 			emit_signal("success", "TYPE_LOGIN", JSON.parse(result[3].get_string_from_ascii()).result)
 		else:

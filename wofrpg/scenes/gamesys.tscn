@@ -199,12 +199,12 @@ tracks/6/keys = {
 "values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
 }
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Camera2D
 
 const parts = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\", \"overview\"]
-const camspeed = 3
-const camzoomspeed = 0.035
+const camspeed = 10
+const camzoomspeed = 0.02
 
 var cameraGoTo: Vector2
 var cameraZoom: Vector2
@@ -218,21 +218,27 @@ func camMovePart(part:String):
 		match parts.find(part):
 			0: #head
 				cameraGoTo = Vector2(713,354)
-				cameraZoom = Vector2(0.4, 0.4)
+				cameraZoom = Vector2(0.4,0.4)
 			1:
-				pass
+				cameraGoTo = Vector2(625,450)
+				cameraZoom = Vector2(0.4,0.4)
 			2:
-				pass
+				cameraGoTo = Vector2(513,434)
+				cameraZoom = Vector2(0.6,0.6)
 			3:
-				pass
+				cameraGoTo = Vector2(600,470)
+				cameraZoom = Vector2(0.4,0.4)
 			4:
-				pass
+				cameraGoTo = Vector2(593,562)
+				cameraZoom = Vector2(0.4,0.4)
 			5:
-				pass
+				cameraGoTo = Vector2(352,462)
+				cameraZoom = Vector2(0.4,0.4)
 			6:
-				pass
+				cameraGoTo = Vector2(210,494)
+				cameraZoom = Vector2(0.3,0.3)
 			7:
-				cameraGoTo = Vector2(1366/2, 768/2)
+				cameraGoTo = Vector2(1366/2,768/2)
 				cameraZoom = Vector2(1,1)
 			_:
 				logcat.stdout(\"Unknown part at index: \" + String(parts.find(part)), logcat.ERROR)
@@ -242,7 +248,7 @@ func _process(_delta):
 	zoom = zoom.move_toward(cameraZoom, camzoomspeed)
 "
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends Control
 
 const p1 = \"Hi there! My name's Polezno, and I'm here to help you out!\"
@@ -284,7 +290,7 @@ func onCreate():
 
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=5]
 script/source = "extends Control
 
 func _ready():
@@ -295,6 +301,7 @@ signal cancel()
 const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",'tdec']
 
 onready var player = get_parent().get_parent().get_parent().get_node(\"AnimationPlayer\")
+onready var camera = get_parent().get_parent().get_parent().get_node(\"Camera2D\")
 
 var location = 0
 var currentPart = 0
@@ -334,7 +341,7 @@ func onPrevious():
 func nextPart():
 	if currentPart < 6:
 		currentPart += 1
-		print(partIDs[currentPart])
+		camera.camMovePart(partIDs[currentPart])
 		if currentPart == 6:
 			$arrowV/d.hide()
 		else:
@@ -347,7 +354,7 @@ func nextPart():
 func previousPart():
 	if currentPart > 0:
 		currentPart -= 1
-		print(partIDs[currentPart])
+		camera.camMovePart(partIDs[currentPart])
 		if currentPart == 0:
 			$arrowV/u.hide()
 		else:
@@ -362,8 +369,7 @@ func cancel():
 	hide()
 "
 
-[sub_resource type="Animation" id=5]
-resource_name = "camInit"
+[sub_resource type="Animation" id=6]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ui/ScrollContainer:modulate")
@@ -378,8 +384,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "camZoomBody"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:position")
 tracks/0/interp = 2
@@ -405,7 +410,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.4, 0.4 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -599,7 +604,7 @@ custom_constants/separation = 5
 position = Vector2( 683, 384 )
 current = true
 smoothing_enabled = true
-script = SubResource( 8 )
+script = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -607,7 +612,7 @@ script = SubResource( 8 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 3 )
+script = SubResource( 4 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true,
@@ -635,7 +640,7 @@ mouse_filter = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 4 )
+script = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -747,9 +752,9 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/camInit = SubResource( 5 )
-anims/camZoomBody = SubResource( 6 )
-anims/camZoomHead = SubResource( 7 )
+anims/camInit = SubResource( 6 )
+anims/camZoomBody = SubResource( 7 )
+anims/camZoomHead = SubResource( 8 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/u" to="CanvasLayer/toplayer/customizer" method="previousPart"]

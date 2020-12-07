@@ -1,10 +1,10 @@
 extends Control
 
+onready var addonSlot = preload("res://addon.tscn")
+
 var loggedIn = false
 var working = false
 var initial = false
-
-var releases := []
 
 func _ready():
 	var loginFile = File.new()
@@ -23,12 +23,13 @@ func _ready():
 			2:
 				showSI()
 			3:
-				if loginData[2] == "persistent":
+				if loginData[2].strip_edges() == "persistent":
 					print("Found login.pwu file, detected persistent login. Logging in...")
-					pass #show a fullscreen status dialogue
 					$firebase.signIn(loginData[0], loginData[1])
 					yield($firebase, "success")
 					showMain()
+				else:
+					showSI()
 
 func showMain():
 	$dialogues.hide()
@@ -42,6 +43,9 @@ func showMain():
 	
 	$main/addonspanel.hide()
 	$main/newspanel.hide()
+	
+	addonRefresh()
+	newsRefresh()
 
 func play():
 	working = true
@@ -121,7 +125,7 @@ func signupPressed():
 	if !isValidEmail($signup/email.text):
 		$signup/email.modulate = Color.red
 		return
-	$firebase.signUp($signup/uname.text, $signup/email.text, pw)
+	$firebase.signUp($signup/uname.text, $signup/email.text, pw, $signup/CheckBox.pressed)
 
 func loginPressed():
 	$signin/password.editable = false
@@ -137,7 +141,7 @@ func loginPressed():
 		$signin/errorlabel.text = "Password cannot be blank"
 		$signin/password.modulate = Color.red
 	
-	$firebase.signIn(uname, pw)
+	$firebase.signIn(uname, pw, $signin/CheckBox.pressed)
 
 func forgotPassword(): #TODO
 	pass
@@ -180,6 +184,12 @@ func errored(type, id):
 				pass #dialogue
 			#run the game's current version, or show a dialogue if wofrpg.pck does not exist
 
+func checkRemember():
+	if $signin/CheckBox.pressed or $signup/CheckBox.pressed:
+		pass
+
+var fetching: String
+
 func success(type, data):
 	match type:
 		"TYPE_LOGIN":
@@ -203,7 +213,13 @@ func success(type, data):
 			showMain()
 			loggedIn = true
 		"TYPE_DBFETCH":
-			pass
+			if fetching == "addons":
+				fetching = ""
+				if data == null: return
+				for addon in data:
+					var slot = addonSlot.instance()
+					slot.initAddon(addon.name, addon.web, addon.download)
+					$main/addonspanel/ScrollContainer/VBoxContainer.add_child(slot)
 		"TYPE_DBSTORE":
 			pass
 		"TYPE_UPDATEFETCH":
@@ -335,4 +351,7 @@ func showAddonsPanel():
 	$main/addonspanel.show()
 
 func addonRefresh():
-	pass
+	for slot in $main/addonspanel/ScrollContainer/VBoxContainer.get_children():
+		$main/addonspanel/ScrollContainer/VBoxContainer.remove_child(slot)
+	fetching = "addons"
+	$firebase.readDatabase("addons.json") #Array of dictionaries

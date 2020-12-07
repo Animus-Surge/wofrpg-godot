@@ -5,6 +5,7 @@
 /test
 /dlassets
 /*.app
+/addons
 
 *.import
 *.png~

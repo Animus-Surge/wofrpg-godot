@@ -298,7 +298,8 @@ func _ready():
 
 signal cancel()
 
-const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",'tdec']
+const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\"]
+var partIndex = [0,0,0,0,0,0,0]
 
 onready var player = get_parent().get_parent().get_parent().get_node(\"AnimationPlayer\")
 onready var camera = get_parent().get_parent().get_parent().get_node(\"Camera2D\")
@@ -318,6 +319,9 @@ func partChange(partID):
 			pass
 
 func initCustomizer():
+	partIndex = [0,0,0,0,0,0,0]
+	$arrowH/l.hide()
+	$arrowV/u.hide()
 	player.play(\"camInit\")
 	location = 0
 	currentPart = 0
@@ -341,6 +345,7 @@ func onPrevious():
 func nextPart():
 	if currentPart < 6:
 		currentPart += 1
+		currentPartID = partIDs[currentPart]
 		camera.camMovePart(partIDs[currentPart])
 		if currentPart == 6:
 			$arrowV/d.hide()
@@ -354,6 +359,7 @@ func nextPart():
 func previousPart():
 	if currentPart > 0:
 		currentPart -= 1
+		currentPartID = partIDs[currentPart]
 		camera.camMovePart(partIDs[currentPart])
 		if currentPart == 0:
 			$arrowV/u.hide()
@@ -367,6 +373,66 @@ func previousPart():
 func cancel():
 	emit_signal(\"cancel\")
 	hide()
+
+var row
+
+func switchPartNext():
+	partIndex[currentPart] += 1
+	if partIndex[currentPart] == gloader.loadedtribes.size() - 1:
+		$arrowH/r.hide()
+		$nextpart.hide()
+	else:
+		$arrowH/r.show()
+		$nextpart.show()
+		$nextpart.texture = load(gloader.loadedtribes[partIndex[currentPart] + 1].idle.idletex)
+		row = 0 #Default to 0 just in case something breaks
+		for part in gloader.loadedtribes[partIndex[currentPart]+1].get(\"idle\").parts:
+			if part.partid == currentPartID:
+				row = part.row
+		$nextpart.region_rect.position = Vector2(0,448 * (row-1))
+	if partIndex[currentPart] == 0:
+		$arrowH/l.hide()
+		$prevpart.hide()
+	else:
+		$arrowH/l.show()
+		$prevpart.show()
+		$prevpart.texture = load(gloader.loadedtribes[partIndex[currentPart] - 1].idle.idletex)
+		row = 0 #Default to 0 just in case something breaks
+		for part in gloader.loadedtribes[partIndex[currentPart]-1].get(\"idle\").parts:
+			if part.partid == currentPartID:
+				row = part.row
+		$prevpart.region_rect.position = Vector2(0,448 * (row-1))
+	#print(gloader.loadedtribes[partIndex[currentPart] - 1].tribeid + \" \" + String(row) + \" tribeid:\" +String(currentPart-1))
+	#print(gloader.loadedtribes[partIndex[currentPart] + 1].tribeid + \" \" + String(row) + \" tribeid:\" +String(currentPart+1))
+
+func switchPartPrev():
+	partIndex[currentPart] -= 1
+	if partIndex[currentPart] == gloader.loadedtribes.size() - 1:
+		$arrowH/r.hide()
+		$nextpart.hide()
+	else:
+		$arrowH/r.show()
+		$nextpart.show()
+		$nextpart.texture = load(gloader.loadedtribes[partIndex[currentPart] + 1].idle.idletex)
+		row = 0 #Default to 0 just in case something breaks
+		for part in gloader.loadedtribes[partIndex[currentPart]+1].get(\"idle\").parts:
+			if part.partid == currentPartID:
+				row = part.row
+		$nextpart.region_rect.position = Vector2(0,448 * (row-1))
+	if partIndex[currentPart] == 0:
+		$arrowH/l.hide()
+		$prevpart.hide()
+	else:
+		$arrowH/l.show()
+		$prevpart.show()
+		$prevpart.texture = load(gloader.loadedtribes[partIndex[currentPart] - 1].idle.idletex)
+		row = 0 #Default to 0 just in case something breaks
+		for part in gloader.loadedtribes[partIndex[currentPart]-1].get(\"idle\").parts:
+			if part.partid == currentPartID:
+				row = part.row
+		$prevpart.region_rect.position = Vector2(0,448 * (row-1))
+	#print(gloader.loadedtribes[partIndex[currentPart] - 1].tribeid + \" \" + String(row) + \" tribeid:\" +String(currentPart-1))
+	#print(gloader.loadedtribes[partIndex[currentPart] + 1].tribeid + \" \" + String(row) + \" tribeid:\" +String(currentPart+1))
 "
 
 [sub_resource type="Animation" id=6]
@@ -781,6 +847,8 @@ anims/camZoomBody = SubResource( 7 )
 anims/camZoomHead = SubResource( 8 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/r" to="CanvasLayer/toplayer/customizer" method="switchPartNext"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/l" to="CanvasLayer/toplayer/customizer" method="switchPartPrev"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/u" to="CanvasLayer/toplayer/customizer" method="previousPart"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/d" to="CanvasLayer/toplayer/customizer" method="nextPart"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/nsbtn" to="CanvasLayer/toplayer/customizer" method="onNext"]

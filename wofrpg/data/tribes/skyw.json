@@ -2,29 +2,32 @@
 	"modid":"base",
 	"tribeid":"skyw",
 	"tribename":"SkyWing",
-	"appearancesidle":[
-		"res://images/character/skyw/idle/sw-head.png",
-		"res://images/character/skyw/idle/sw-legs.png",
-		"res://images/character/skyw/idle/sw-body.png",
-		"res://images/character/skyw/idle/sw-tail.png",
-		"res://images/character/skyw/idle/sw-wings.png"
-	],
-	"appearancesidlemask":[
-		"res://images/character/skyw/idle/sw-head-mask.png",
-		"res://images/character/skyw/idle/sw-legs-mask.png",
-		"res://images/character/skyw/idle/sw-body-mask.png",
-		"res://images/character/skyw/idle/sw-tail-mask.png",
-		"res://images/character/skyw/idle/sw-wings-mask.png"
-	],
-	"appearancesrun":[
-		"res://images/character/skyw/run/sw-body-run.png",
-		"res://images/character/skyw/run/sw-head-run.png",
-		"res://images/character/skyw/run/sw-wings-run.png"
-	],
-	"appearancesrunmask":[
-		"res://images/character/skyw/run/sw-body-run-mask.png",
-		"res://images/character/skyw/run/sw-head-run-mask.png",
-		"res://images/character/skyw/run/sw-wings-run-mask.png"
-	],
-	"decoflags":[]
+	"idle":{
+		"idletex":"res://images/character/skyw/idle/skyw-idle-parts.png",
+		"rows":5,
+		"frames":6,
+		"fps":6,
+		"parts":[
+			{
+				"partid":"body",
+				"row":1
+			},
+			{
+				"partid":"head",
+				"row":2
+			},
+			{
+				"partid":"legs",
+				"row":3
+			},
+			{
+				"partid":"tail",
+				"row":4
+			},
+			{
+				"partid":"wings",
+				"row":5
+			}
+		]
+	}
 }

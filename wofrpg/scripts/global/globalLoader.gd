@@ -137,7 +137,7 @@ func loadCImage(path) -> Texture:
 	tex.flags = 0
 	return tex
 
-#All tribes stored in res://data/tribes
+# All tribes stored in res://data/tribes
 
 func loadTribes():
 	var tribesdir = Directory.new()
@@ -155,6 +155,8 @@ func loadTribes():
 		tribeindexes.append(tribedata.tribename)
 		logcat.stdout("Loaded tribe: " + tribedata.modid + ":" + tribedata.tribeid, 1)
 		tribe = tribesdir.get_next()
+
+# NPC interactions
 
 func loadNPCInteraction(npcid) -> Dictionary:
 	var icfile = File.new()

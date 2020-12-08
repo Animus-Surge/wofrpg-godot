@@ -614,8 +614,6 @@ anchor_bottom = 1.0
 mouse_filter = 2
 script = SubResource( 4 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -747,6 +745,32 @@ margin_right = 115.0
 margin_bottom = 60.0
 custom_fonts/font = ExtResource( 10 )
 text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nextpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer"]
+modulate = Color( 1, 1, 1, 0.611765 )
+anchor_left = 0.632113
+anchor_top = 0.368036
+anchor_right = 0.910298
+anchor_bottom = 0.646682
+margin_left = 6.10352e-05
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="prevpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer"]
+modulate = Color( 1, 1, 1, 0.611765 )
+anchor_left = 0.0761347
+anchor_top = 0.368036
+anchor_right = 0.354319
+anchor_bottom = 0.646682
+margin_left = 7.62939e-06
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

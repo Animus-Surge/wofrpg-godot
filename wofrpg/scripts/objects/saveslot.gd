@@ -39,7 +39,7 @@ func select():
 func _gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == BUTTON_LEFT:
-			if not addSlot:
+			if not addSlot and not selected:
 				emit_signal("clicked", slotidx)
 				selected = true
 			else:

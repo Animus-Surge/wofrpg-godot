@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://images/ui/buttons/arrow-down-hover.png" type="Texture" id=17]
 [ext_resource path="res://images/ui/buttons/arrow-down.png" type="Texture" id=18]
 [ext_resource path="res://images/ui/buttons/tb-closebtn.png" type="Texture" id=19]
+[ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=20]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -294,9 +295,6 @@ func onCreate():
 [sub_resource type="GDScript" id=5]
 script/source = "extends Control
 
-func _ready():
-	$arrowV/u.hide()
-
 signal cancel()
 
 const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\"]
@@ -324,9 +322,9 @@ func initCustomizer():
 	partIndex = [0,0,0,0,0,0,0]
 	$arrowH/l.hide()
 	$arrowV/u.hide()
-	$prevpart.hide()
-	$prevpart/noTex.hide()
-	$nextpart/noTex.hide()
+	$prevpartpreview.hide()
+	$prevpartpreview/prevpart/noTex.hide()
+	$nextpartpreview/nextpart/noTex.hide()
 	player.play(\"camInit\")
 	location = 0
 	currentPart = 0
@@ -334,19 +332,37 @@ func initCustomizer():
 	checkPart()
 	show()
 
+func checkLocation():
+	match location:
+		0:
+			camera.camMovePart(partIDs[currentPart])
+		1:
+			camera.camMovePart(partIDs[currentPart])
+		2:
+			camera.camMovePart(\"overview\")
+		3:
+			camera.camMovePart(\"overview\")
+
 func onNext():
+	if $nsbtn.text == \"save\":
+		pass #TODO
+		return
 	if location <= 3:
 		location += 1
+		currentPart = 0
 		if location == 3:
 			$nsbtn.text = \"Save\"
 		$pbtn.disabled = false
+	checkLocation()
 
 func onPrevious():
 	if location >= 0:
 		location -= 1
+		currentPart = 0
 		if location == 0:
 			$pbtn.disabled = true
 		$nsbtn.text = \"Next\"
+	checkLocation()
 
 func nextPart():
 	if currentPart < 6:
@@ -387,42 +403,49 @@ var row
 func checkPart():
 	if partIndex[currentPart] == gloader.loadedtribes.size() - 1:
 		$arrowH/r.hide()
-		$nextpart.hide()
+		$nextpartpreview.hide()
 	else:
 		$arrowH/r.show()
-		$nextpart.show()
-		$nextpart.texture = load(gloader.loadedtribes[partIndex[currentPart] + 1].idle.idletex)
+		$nextpartpreview.show()
+		$nextpartpreview/nextpart.texture = load(gloader.loadedtribes[partIndex[currentPart] + 1].idle.idletex)
 		row = -1
 		for part in gloader.loadedtribes[partIndex[currentPart]+1].get(\"idle\").parts:
 			if part.partid == currentPartID:
 				row = part.row
-				$nextpart/noTex.hide()
+				$nextpartpreview/nextpart/noTex.hide()
 		if row == -1:
 			row = 0
-			$nextpart/noTex.show()
-			$nextpart.texture = null
-		$nextpart.region_rect.position = Vector2(0,448 * (row-1))
+			$nextpartpreview/nextpart/noTex.show()
+			$nextpartpreview/nextpart.texture = null
+		$nextpartpreview/nextpart.region_rect.position = Vector2(0,448 * (row-1))
+	
 	if partIndex[currentPart] == 0:
 		$arrowH/l.hide()
-		$prevpart.hide()
+		$prevpartpreview.hide()
 	else:
 		$arrowH/l.show()
-		$prevpart.show()
-		$prevpart.texture = load(gloader.loadedtribes[partIndex[currentPart] - 1].idle.idletex)
+		$prevpartpreview.show()
+		$prevpartpreview/prevpart.texture = load(gloader.loadedtribes[partIndex[currentPart] - 1].idle.idletex)
 		row = -1
 		for part in gloader.loadedtribes[partIndex[currentPart]-1].get(\"idle\").parts:
 			if part.partid == currentPartID:
 				row = part.row
-				$prevpart/noTex.hide()
+				$prevpartpreview/prevpart/noTex.hide()
 		if row == -1:
 			row = 0
-			$prevpart/noTex.show()
-			$prevpart.texture = null
-		$prevpart.region_rect.position = Vector2(0,448 * (row-1))
+			$prevpartpreview/prevpart/noTex.show()
+			$prevpartpreview/prevpart.texture = null
+		$prevpartpreview/prevpart.region_rect.position = Vector2(0,448 * (row-1))
 	
-	print(currentPartID + \" \" + String(partIndex[currentPart]) + \" \" + String(row))
-	designParent.get_node(currentPartID).texture = load(gloader.loadedtribes[partIndex[currentPart]].idle.idletex)
-	designParent.get_node(currentPartID).region_rect.position = Vector2(0,448 * (row))
+	row = -1
+	for part in gloader.loadedtribes[partIndex[currentPart]].get(\"idle\").parts:
+		if part.partid == currentPartID:
+			row = part.row
+	if row != -1:
+		designParent.get_node(currentPartID).texture = load(gloader.loadedtribes[partIndex[currentPart]].idle.idletex)
+		designParent.get_node(currentPartID).region_rect.position = Vector2(0,448 * (row-1))
+	else:
+		designParent.get_node(currentPartID).texture = null
 
 func switchPartNext():
 	partIndex[currentPart] += 1
@@ -813,48 +836,80 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="nextpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer"]
-modulate = Color( 1, 1, 1, 0.611765 )
+[node name="nextpartpreview" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+self_modulate = Color( 0.63, 0.54, 0.31, 1 )
 anchor_left = 0.632113
-anchor_top = 0.368036
-anchor_right = 0.910298
-anchor_bottom = 0.646682
-margin_left = 6.10352e-05
+anchor_top = 0.36849
+anchor_right = 0.910297
+anchor_bottom = 0.647135
+margin_left = 103.313
+margin_top = 257.024
+margin_right = 103.313
+margin_bottom = 257.024
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="nextpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer/nextpartpreview"]
+modulate = Color( 1, 1, 1, 0.611765 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 796, 448 )
 __meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="noTex" type="TextureRect" parent="CanvasLayer/toplayer/customizer/nextpartpreview/nextpart"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 19 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/nextpartpreview"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -47.0
+margin_top = 8.0
+margin_right = 47.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 10 )
+text = "Next Tribe"
+
+[node name="prevpartpreview" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+self_modulate = Color( 0.639216, 0.545098, 0.313726, 1 )
+anchor_left = 0.011713
+anchor_top = 0.703156
+anchor_right = 0.275256
+anchor_bottom = 0.981802
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": true
 }
 
-[node name="noTex" type="TextureRect" parent="CanvasLayer/toplayer/customizer/nextpart"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-texture = ExtResource( 19 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prevpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer"]
+[node name="prevpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer/prevpartpreview"]
 modulate = Color( 1, 1, 1, 0.611765 )
-anchor_left = 0.0761347
-anchor_top = 0.368036
-anchor_right = 0.354319
-anchor_bottom = 0.646682
-margin_left = 7.62939e-06
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 796, 448 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="noTex" type="TextureRect" parent="CanvasLayer/toplayer/customizer/prevpart"]
+[node name="noTex" type="TextureRect" parent="CanvasLayer/toplayer/customizer/prevpartpreview/prevpart"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -865,6 +920,19 @@ margin_right = 20.0
 margin_bottom = 20.0
 texture = ExtResource( 19 )
 expand = true
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/prevpartpreview"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -64.5
+margin_top = 8.0
+margin_right = 64.5
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 10 )
+text = "Previous Tribe"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/camInit = SubResource( 6 )

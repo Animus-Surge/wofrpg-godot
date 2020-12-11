@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://images/ui/buttons/checked_box.png" type="Texture" id=1]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
@@ -17,7 +17,22 @@
 [ext_resource path="res://godot-resources/grabber_bg.tres" type="StyleBox" id=15]
 [ext_resource path="res://godot-resources/grabber_bg_highlight.tres" type="StyleBox" id=16]
 
-[sub_resource type="StyleBoxTexture" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Panel
+
+func _ready():
+	$Content/fscheck.pressed = gloader.fs
+	$Content/wincheck.pressed = gloader.win
+
+#Function only applies to graphics and language related features. Audio systems will take effect
+#immediately
+func applySetSettings():
+	gloader.fs = $Content/fscheck.pressed
+	gloader.win = $Content/wincheck.pressed
+	gloader.saveSettings()
+"
+
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 11 )
 region_rect = Rect2( 0, 0, 40, 40 )
 margin_left = 11.9716
@@ -26,10 +41,10 @@ margin_top = 12.3221
 margin_bottom = 11.9716
 modulate_color = Color( 0.364706, 0.364706, 0.364706, 1 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.305882, 0.305882, 0.305882, 0.835294 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.4
 step = 0.001
 tracks/0/type = "value"
@@ -208,6 +223,7 @@ margin_top = -200.0
 margin_right = 0.000488281
 margin_bottom = 106.0
 custom_styles/panel = ExtResource( 8 )
+script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -261,8 +277,11 @@ margin_right = 404.0
 margin_bottom = 148.942
 custom_fonts/font = ExtResource( 13 )
 text = "1366x768 (16:9)"
-items = [ "1366x768 (16:9)", null, false, 0, null, "1920x1080 (16:9)", null, false, 1, null ]
+items = [ "1366x768 (16:9)", null, false, 0, null, "1920x1080 (16:9)", null, false, 1, null, "1280x720 (16:9)", null, false, 2, null ]
 selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label2" type="Label" parent="mainmenu/settingspanel/Content"]
 margin_left = 62.9289
@@ -318,7 +337,7 @@ custom_icons/grabber_highlight = ExtResource( 12 )
 custom_icons/grabber = ExtResource( 12 )
 custom_styles/slider = ExtResource( 15 )
 custom_styles/grabber_area_highlight = ExtResource( 16 )
-custom_styles/grabber_area = SubResource( 1 )
+custom_styles/grabber_area = SubResource( 2 )
 value = 100.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -334,7 +353,7 @@ custom_icons/grabber_highlight = ExtResource( 12 )
 custom_icons/grabber = ExtResource( 12 )
 custom_styles/slider = ExtResource( 15 )
 custom_styles/grabber_area_highlight = ExtResource( 16 )
-custom_styles/grabber_area = SubResource( 1 )
+custom_styles/grabber_area = SubResource( 2 )
 value = 100.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -350,11 +369,21 @@ custom_icons/grabber_highlight = ExtResource( 12 )
 custom_icons/grabber = ExtResource( 12 )
 custom_styles/slider = ExtResource( 15 )
 custom_styles/grabber_area_highlight = ExtResource( 16 )
-custom_styles/grabber_area = SubResource( 1 )
+custom_styles/grabber_area = SubResource( 2 )
 value = 100.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Button" type="Button" parent="mainmenu/settingspanel/Content"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = -74.0
+margin_right = 185.0
+margin_bottom = -20.0
+custom_fonts/font = ExtResource( 2 )
+text = "Apply"
 
 [node name="creditspanel" type="TextureRect" parent="mainmenu"]
 visible = false
@@ -372,7 +401,7 @@ margin_left = 0.541992
 margin_top = 0.343994
 margin_right = -0.542114
 margin_bottom = -0.344055
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -555,11 +584,12 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="mainmenu"]
-anims/settings = SubResource( 3 )
+anims/settings = SubResource( 4 )
 [connection signal="pressed" from="mainmenu/playbtn" to="mainmenu" method="onPlay"]
 [connection signal="pressed" from="mainmenu/settingsbtn" to="mainmenu" method="settings"]
 [connection signal="pressed" from="mainmenu/creditsbtn" to="mainmenu" method="onCredits"]
 [connection signal="pressed" from="mainmenu/exitbtn" to="mainmenu" method="onQuit"]
 [connection signal="pressed" from="mainmenu/settingspanel/Content/TextureButton" to="mainmenu" method="settingsHide"]
+[connection signal="pressed" from="mainmenu/settingspanel/Content/Button" to="mainmenu/settingspanel" method="applySetSettings"]
 [connection signal="pressed" from="mainmenu/creditspanel/TextureButton" to="mainmenu" method="creditsHide"]
 [connection signal="animation_finished" from="mainmenu/AnimationPlayer" to="mainmenu" method="animDone"]

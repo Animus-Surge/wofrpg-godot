@@ -1,0 +1,69 @@
+{
+	"traitid":"tr-align",
+	"expandable":false,
+	"traits":[
+		{
+			"name":"Chaotic Evil",
+			"id":"tr-align:chaoevil",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Neutral Evil",
+			"id":"tr-align:neuevil",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Lawful Evil",
+			"id":"tr-align:lawevil",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Chaotic Neutral",
+			"id":"tr-align:chaoneu",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"True Neutral",
+			"id":"tr-align:neuneu",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Lawful Neutral",
+			"id":"tr-align:lawneu",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Chaotic Good",
+			"id":"tr-align:chaogood",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Neutral Good",
+			"id":"tr-align:neugood",
+			"stats":{
+				"_note":"TODO"
+			}
+		},
+		{
+			"name":"Lawful Good",
+			"id":"tr-align:lawgood",
+			"stats":{
+				"_note":"TODO"
+			}
+		}
+	]
+}

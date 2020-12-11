@@ -19,18 +19,18 @@ var persistentLogin = false
 # SETTINGS VARIABLES #
 ######################
 
-var defaultTribe
-var customizerBackground
+var defaultTribe #TODO
+var customizerBackground #TODO
 
-var ratio
-var language
+var ratio = 1
+var language = 1
 
 var fs: bool
 var win: bool
 
-var masterVolume: float
-var sfxVolume: float
-var musicVolume: float
+var masterVolume: float = 1.0
+var sfxVolume: float = 1.0
+var musicVolume: float = 1.0
 
 func startLoad():
 	if !gvars.debug:
@@ -85,41 +85,46 @@ func loadSettings():
 		OS.window_fullscreen = true
 		if error == ERR_FILE_NOT_FOUND:
 			setfile.open("user://settings.json", File.WRITE)
-			setfile.store_line(to_json({"fullscreen":true,"resolution":1,"first-instance":true}))
+			setfile.store_line(to_json({"fs":true,"win":true,"lang":"en_us","resolution":1,"mvol":1.0,"muvol":1.0,"sfxvol":1.0}))
 			setfile.close()
 			return
 		return
 	var settings = JSON.parse(setfile.get_as_text()).result
-	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fullscreen) + " Resolution Index: " + String(settings.resolution), 0)
-	OS.window_fullscreen = settings.fullscreen
-	match settings.resolution:
-		0: #1920x1080
-			OS.window_size = Vector2(1920,1080)
-		1: #DEFAULT: 1366x768
-			OS.window_size = Vector2(1366,768)
-		2: #1440x900
-			OS.window_size = Vector2(1440,900)
-		3: #1536x864
-			OS.window_size = Vector2(1536,864)
-		4: #2560x1440
-			OS.window_size = Vector2(2560,1440)
-		5: #1680x1050
-			OS.window_size = Vector2(1680,1050)
-		6: #1280x720
-			OS.window_size = Vector2(1280,720)
-		7: #1280x800
-			OS.window_size = Vector2(1280,800)
-		8: #1600x900
-			OS.window_size = Vector2(1600,900)
-	if settings.get("first-instance"):
-		firstInstance = true
-	else:
-		firstInstance = false
+	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fs) + " Resolution Index: " + String(settings.resolution), 0)
+	fs = settings.fs
+	win = settings.win
+	ratio = settings.resolution
+	language = settings.lang
+	musicVolume = settings.muvol
+	masterVolume = settings.mvol
+	sfxVolume = settings.sfxvol
+	pass #TODO: Have Polezno show if A: user has no loaded characters and B: user has opted to use tutorials
 	setfile.close()
-	
+	applySettings()
 
 func saveSettings():
-	pass
+	applySettings()
+# warning-ignore:return_value_discarded
+	Directory.new().remove("user://settings.json")
+	var setfile = File.new()
+	setfile.open("user://settings.json", File.WRITE)
+	var data = {
+		"fs":fs,
+		"win":win,
+		"lang":"en_us",
+		"resolution":1,
+		"mvol":1.0,
+		"muvol":1.0,
+		"sfxvol":1.0
+	}
+	setfile.store_line(to_json(data))
+	setfile.close()
+
+func applySettings():
+	OS.window_size = Vector2(1366,768)
+	OS.window_fullscreen = fs
+	OS.window_borderless = win
+	OS.window_maximized = win
 
 #Addons stored in user://addons
 
@@ -145,7 +150,7 @@ func loadTribes():
 	tribesdir.list_dir_begin()
 	var tribe = tribesdir.get_next()
 	while tribe != "":
-		if tribe.begins_with("."):
+		if not tribe.ends_with(".json"):
 			tribe = tribesdir.get_next()
 			continue
 		var tfile = File.new()

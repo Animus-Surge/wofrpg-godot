@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -20,6 +20,8 @@
 [ext_resource path="res://images/ui/buttons/arrow-down.png" type="Texture" id=18]
 [ext_resource path="res://images/ui/buttons/tb-closebtn.png" type="Texture" id=19]
 [ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=20]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=21]
+[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=22]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -311,13 +313,6 @@ var currentPartID = \"head\"
 # locations - 0: parts 1: colors 2: traits 3: details
 # parts - 0: head 1: body 2: spine 3: wings 4: legs 5: tail 6: tail decoration
 
-func partChange(partID):
-	match partID:
-		\"head\":
-			player.play(\"camZoomHead\")
-		\"body\":
-			pass
-
 func initCustomizer():
 	partIndex = [0,0,0,0,0,0,0]
 	$arrowH/l.hide()
@@ -336,15 +331,26 @@ func checkLocation():
 	match location:
 		0:
 			camera.camMovePart(partIDs[currentPart])
+			$arrowH.show()
+			$colorPanel.hide()
+			checkPart()
+			$arrowV.show()
 		1:
 			camera.camMovePart(partIDs[currentPart])
+			$arrowH.hide()
+			$colorPanel.show()
+			$nextpartpreview.hide()
+			$prevpartpreview.hide()
+			$arrowV.show()
 		2:
 			camera.camMovePart(\"overview\")
+			$colorPanel.hide()
+			$arrowV.hide()
 		3:
 			camera.camMovePart(\"overview\")
 
 func onNext():
-	if $nsbtn.text == \"save\":
+	if $nsbtn.text == \"Save\":
 		pass #TODO
 		return
 	if location <= 3:
@@ -932,6 +938,67 @@ custom_fonts/font = ExtResource( 10 )
 text = "Previous Tribe"
 __meta__ = {
 "_edit_use_anchors_": false
+}
+
+[node name="colorPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+self_modulate = Color( 0.470588, 0.411765, 0.207843, 1 )
+margin_left = 980.858
+margin_top = 89.4848
+margin_right = 1345.86
+margin_bottom = 573.485
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker" type="ColorPicker" parent="CanvasLayer/toplayer/customizer/colorPanel"]
+anchor_left = 0.0507511
+anchor_top = 0.10382
+anchor_right = 0.894587
+anchor_bottom = 0.955059
+edit_alpha = false
+presets_enabled = false
+presets_visible = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/colorPanel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -35.0
+margin_top = 7.0
+margin_right = 35.0
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 21 )
+text = "Color"
+
+[node name="traitsPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+margin_left = 836.0
+margin_top = 80.0
+margin_right = 1333.0
+margin_bottom = 713.0
+custom_styles/panel = ExtResource( 22 )
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/traitsPanel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -39.0
+margin_top = 5.0
+margin_right = 39.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Traits"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/toplayer/customizer/traitsPanel"]
+anchor_left = 0.0945674
+anchor_top = 0.130746
+anchor_right = 0.905433
+anchor_bottom = 0.952231
+__meta__ = {
+"_edit_use_anchors_": true
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

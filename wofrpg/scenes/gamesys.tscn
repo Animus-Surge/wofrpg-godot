@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=20]
 [ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=21]
 [ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=22]
+[ext_resource path="res://images/ui/backgrounds/lineedit-bg.png" type="Texture" id=23]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -49,6 +50,7 @@ func _ready():
 	$design/head.texture = null
 	$design/wings.texture = null
 	$design/tdec.texture = null
+	$actionPanel.hide()
 
 func onSlotPress(index): #Callback from slot signal
 	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
@@ -77,7 +79,7 @@ func onSlotPress(index): #Callback from slot signal
 		pass #TODO
 	$design.rect_scale = Vector2(1*cdata.cscale, 1*cdata.cscale)
 	$design.rect_position = Vector2($design.rect_position.x + (rect_size.x * cdata.cscale) / 2, $design.rect_position.y + rect_size.y*(cdata.cscale) - (15 if cdata.cscale != 1 else 0))
-	print($design.rect_position.y + rect_size.y*(1-cdata.cscale))
+	$actionPanel.show()
 	
 
 func onAdd():
@@ -96,6 +98,7 @@ func onAdd():
 	$design/body.region_rect.position = Vector2.ZERO
 	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
 		$ScrollContainer/chartabs.get_child(x).unselect()
+	$actionPanel.hide()
 
 func customizerCancel():
 	get_parent().get_node(\"CanvasLayer/toplayer/mmbtn\").show()
@@ -285,10 +288,12 @@ const p27 = \"... or play with friends.\"
 const p28 = \"And thats about it for the customizer! I'll see you in the world, traveller.\"
 
 func _ready():
+	show()
 	$poleznocustomtut.hide()
 	$customizer.hide()
 
 func onCreate():
+	show()
 	$mmbtn.hide()
 	$customizer.initCustomizer()
 
@@ -476,7 +481,28 @@ script/source = "extends Panel
 
 "
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+modulate_color = Color( 0.313726, 0, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+modulate_color = Color( 0.831373, 0.647059, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+modulate_color = Color( 0.615686, 0.490196, 0, 1 )
+
+[sub_resource type="Animation" id=10]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ui/ScrollContainer:modulate")
@@ -491,7 +517,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:position")
 tracks/0/interp = 2
@@ -517,7 +543,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.4, 0.4 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=12]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -691,10 +717,10 @@ __meta__ = {
 anims/preview = SubResource( 2 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui"]
-anchor_top = 0.859
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 0.287964
+margin_top = -108.0
 scroll_vertical_enabled = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -706,6 +732,69 @@ margin_bottom = 108.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 5
+
+[node name="actionPanel" type="Panel" parent="ui"]
+self_modulate = Color( 0.462745, 0.215686, 0, 1 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -264.0
+margin_top = -451.0
+margin_right = -58.0
+margin_bottom = -126.0
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0872483
+anchor_top = 0.0523077
+anchor_right = 0.872483
+anchor_bottom = 0.196923
+custom_fonts/font = ExtResource( 21 )
+text = "Play"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Button2" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0872483
+anchor_top = 0.206154
+anchor_right = 0.872483
+anchor_bottom = 0.350769
+custom_fonts/font = ExtResource( 21 )
+text = "Export"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Button3" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0873786
+anchor_top = 0.353846
+anchor_right = 0.873786
+anchor_bottom = 0.498462
+custom_fonts/font = ExtResource( 21 )
+text = "Save"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Button4" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0872483
+anchor_top = 0.507692
+anchor_right = 0.872483
+anchor_bottom = 0.652308
+custom_fonts/font = ExtResource( 21 )
+text = "Delete"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
@@ -736,7 +825,6 @@ __meta__ = {
 }
 
 [node name="poleznocustomtut" type="Control" parent="CanvasLayer/toplayer"]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 mouse_filter = 2
@@ -857,6 +945,7 @@ __meta__ = {
 }
 
 [node name="nextpartpreview" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
 self_modulate = Color( 0.63, 0.54, 0.31, 1 )
 anchor_left = 0.632113
 anchor_top = 0.36849
@@ -908,6 +997,7 @@ custom_fonts/font = ExtResource( 10 )
 text = "Next Tribe"
 
 [node name="prevpartpreview" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
 self_modulate = Color( 0.639216, 0.545098, 0.313726, 1 )
 anchor_left = 0.011713
 anchor_top = 0.703156
@@ -955,6 +1045,7 @@ __meta__ = {
 }
 
 [node name="colorPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
 self_modulate = Color( 0.470588, 0.411765, 0.207843, 1 )
 margin_left = 981.0
 margin_top = 89.0
@@ -971,10 +1062,10 @@ anchor_left = 0.0348525
 anchor_top = 0.0929752
 anchor_right = 0.86059
 anchor_bottom = 0.944215
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 4.0
-margin_bottom = 4.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 8.0
+margin_bottom = 8.0
 edit_alpha = false
 presets_enabled = false
 presets_visible = false
@@ -1056,10 +1147,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/toplayer/customizer/detailsPanel"]
+margin_left = 113.0
+margin_top = 78.0
+margin_right = 400.0
+margin_bottom = 102.0
+custom_styles/read_only = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = ExtResource( 10 )
+align = 1
+placeholder_text = "Character Name"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/camInit = SubResource( 7 )
-anims/camZoomBody = SubResource( 8 )
-anims/camZoomHead = SubResource( 9 )
+anims/camInit = SubResource( 10 )
+anims/camZoomBody = SubResource( 11 )
+anims/camZoomHead = SubResource( 12 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/r" to="CanvasLayer/toplayer/customizer" method="switchPartNext"]

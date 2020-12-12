@@ -87,9 +87,17 @@ func loadSettings():
 			setfile.open("user://settings.json", File.WRITE)
 			setfile.store_line(to_json({"fs":true,"win":true,"lang":"en_us","resolution":1,"mvol":1.0,"muvol":1.0,"sfxvol":1.0}))
 			setfile.close()
-			return
-		return
 	var settings = JSON.parse(setfile.get_as_text()).result
+	if settings.has("fullscreen") or settings.empty():
+		setfile.close()
+		settings = {}
+		#warning-ignore: return_value_discarded
+		Directory.new().remove("user://settings.json")
+		setfile.open("user://settings.json", File.WRITE)
+		setfile.store_line(to_json({"fs":true,"win":true,"lang":"en_us","resolution":1,"mvol":1.0,"muvol":1.0,"sfxvol":1.0}))
+		setfile.close()
+		setfile.open("user://settings.json", File.READ)
+		settings = JSON.parse(setfile.get_as_text()).result
 	logcat.stdout("Settings loaded. Fullscreen: " + String(settings.fs) + " Resolution Index: " + String(settings.resolution), 0)
 	fs = settings.fs
 	win = settings.win

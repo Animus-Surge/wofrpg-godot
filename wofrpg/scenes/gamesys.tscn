@@ -36,22 +36,14 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
+const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\"]
+
 var sslot = preload(\"res://objects/ui/saveslot.tscn\")
 
 func _ready():
 	get_parent().get_node(\"Camera2D\").zoom = Vector2(1,1)
 	get_parent().get_node(\"Camera2D\").position = Vector2(683,384)
-	var index = 0
-	for character in gloader.characters:
-		var slot = sslot.instance()
-		slot.initialize(character.cname, index, character.clevel)
-		slot.connect(\"clicked\", self, \"onSlotPress\")
-		$ScrollContainer/chartabs.add_child(slot)
-	var addSlot = sslot.instance()
-	addSlot.initializeAdd()
-	addSlot.connect(\"add\", self, \"onAdd\")
-	$ScrollContainer/chartabs.add_child(addSlot)
-	
+	refreshCharacters()
 	$design/spine.texture = null
 	$design/body.texture = null
 	$design/legs.texture = null
@@ -61,7 +53,25 @@ func _ready():
 	$design/tdec.texture = null
 	$actionPanel.hide()
 
+func refreshCharacters():
+	if $ScrollContainer/chartabs.get_child_count() != 0:
+		for child in $ScrollContainer/chartabs.get_children():
+			child.queue_free()
+	var index = 0
+	for character in gloader.characters:
+		var slot = sslot.instance()
+		slot.initialize(character.cname, index, character.clevel)
+		slot.connect(\"clicked\", self, \"onSlotPress\")
+		$ScrollContainer/chartabs.add_child(slot)
+		index += 1
+	var addSlot = sslot.instance()
+	addSlot.initializeAdd()
+	addSlot.connect(\"add\", self, \"onAdd\")
+	$ScrollContainer/chartabs.add_child(addSlot)
+
 func onSlotPress(index): #Callback from slot signal
+	$design.rect_scale = Vector2(1,1)
+	$design.rect_position = Vector2(123.519, 235.451)
 	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
 		if x == index:
 			continue
@@ -80,15 +90,46 @@ func onSlotPress(index): #Callback from slot signal
 		$design/body.region_rect.position = Vector2(0, frameSize.y * (idlerow - 1))
 		$design/body.material.set_shader_param(\"mask\", null)
 		$design/spine.texture = null
+		$design/spine.material.set_shader_param(\"mask\", null)
 		$design/legs.texture = null
+		$design/legs.material.set_shader_param(\"mask\", null)
 		$design/tail.texture = null
+		$design/tail.material.set_shader_param(\"mask\", null)
 		$design/head.texture = null
+		$design/head.material.set_shader_param(\"mask\", null)
 		$design/wings.texture = null
+		$design/wings.material.set_shader_param(\"mask\", null)
 		$design/tdec.texture = null
+		$design/tdec.material.set_shader_param(\"mask\", null)
 	else:
-		pass #TODO
+		var playerPalette = ImageTexture.new()
+		playerPalette.load(cdata.cpal)
+		var partIndex = 0
+		for part in cdata.cappearance:
+			var partTex
+			var partRow = -1
+			var partMask
+			for tribe in gloader.loadedtribes:
+				if tribe.tribeid == part:
+					partTex = load(tribe.idle.idletex)
+					for p in tribe.idle.parts:
+						if p.partid == partIDs[partIndex]:
+							partRow = p.row - 1
+							break
+					partMask = load(tribe.idle.mask)
+					break
+			if partRow != -1:
+				$design.get_node(partIDs[partIndex]).texture = partTex
+				$design.get_node(partIDs[partIndex]).region_rect.position = Vector2(0,448*partRow)
+				$design.get_node(partIDs[partIndex]).material.set_shader_param(\"mask\", partMask)
+			else:
+				$design.get_node(partIDs[partIndex]).texture = null
+				$design.get_node(partIDs[partIndex]).material.set_shader_param(\"mask\", null)
+			partIndex += 1
+		for child in range($design.get_child_count()-1):
+			$design.get_child(child).material.set_shader_param(\"palette\", playerPalette)
 	$design.rect_scale = Vector2(1*cdata.cscale, 1*cdata.cscale)
-	$design.rect_position = Vector2($design.rect_position.x + (rect_size.x * cdata.cscale) / 2, $design.rect_position.y + rect_size.y*(cdata.cscale) - (15 if cdata.cscale != 1 else 0))
+#	$design.rect_position = Vector2($design.rect_position.x + (rect_size.x * cdata.cscale) / 2, $design.rect_position.y + rect_size.y*(cdata.cscale) - (15 if cdata.cscale != 1 else 0))
 	$actionPanel.show()
 
 func onActionPlay():
@@ -106,13 +147,13 @@ func onActionDelete():
 func onAdd():
 	$design.rect_scale = Vector2(1,1)
 	$design.rect_position = Vector2(123.519, 235.451)
-	$design/spine.texture = load(\"res://images/character/nigw/idle/nw-spine.png\")
-	$design/body.texture = load(\"res://images/character/nigw/idle/nw-body.png\")
-	$design/legs.texture = load(\"res://images/character/nigw/idle/nw-legs.png\")
-	$design/tail.texture = load(\"res://images/character/nigw/idle/nw-tail.png\")
-	$design/head.texture = load(\"res://images/character/nigw/idle/nw-head.png\")
-	$design/wings.texture = load(\"res://images/character/nigw/idle/nw-wings.png\")
-	$design/tdec.texture = null
+#	$design/spine.texture = load(\"res://images/character/nigw/idle/nw-spine.png\")
+#	$design/body.texture = load(\"res://images/character/nigw/idle/nw-body.png\")
+#	$design/legs.texture = load(\"res://images/character/nigw/idle/nw-legs.png\")
+#	$design/tail.texture = load(\"res://images/character/nigw/idle/nw-tail.png\")
+#	$design/head.texture = load(\"res://images/character/nigw/idle/nw-head.png\")
+#	$design/wings.texture = load(\"res://images/character/nigw/idle/nw-wings.png\")
+#	$design/tdec.texture = null
 	get_node(\"../AnimationPlayer\").play(\"camInit\")
 	get_node(\"../Camera2D\").camMovePart(\"head\")
 	get_node(\"../CanvasLayer/toplayer\").onCreate()
@@ -142,44 +183,47 @@ func customizerCancel():
 
 func mmreturn():
 	gvars.load_scene(\"res://scenes/menus.tscn\")
+
+func _on_customizer_saved():
+	pass
+	refreshCharacters()
 "
 
-[sub_resource type="ShaderMaterial" id=14]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 24 )
 shader_param/mask = ExtResource( 27 )
 
-[sub_resource type="ShaderMaterial" id=15]
+[sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 24 )
 shader_param/mask = ExtResource( 29 )
 
-[sub_resource type="ShaderMaterial" id=16]
+[sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 24 )
 shader_param/mask = ExtResource( 30 )
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 24 )
 shader_param/mask = ExtResource( 31 )
 
-[sub_resource type="ShaderMaterial" id=13]
+[sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 24 )
 shader_param/mask = ExtResource( 26 )
 
-[sub_resource type="ShaderMaterial" id=18]
+[sub_resource type="ShaderMaterial" id=7]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 28 )
 
-[sub_resource type="ShaderMaterial" id=19]
+[sub_resource type="ShaderMaterial" id=8]
 shader = ExtResource( 25 )
 shader_param/palette = ExtResource( 24 )
 shader_param/mask = ExtResource( 32 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "preview"
+[sub_resource type="Animation" id=9]
 length = 1.2
 loop = true
 step = 0.2
@@ -268,7 +312,7 @@ tracks/6/keys = {
 "values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
 }
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Camera2D
 
 const parts = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\", \"overview\"]
@@ -341,7 +385,7 @@ func _process(_delta):
 	zoom = zoom.move_toward(cameraZoom, camzoomspeed)
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Control
 
 const p1 = \"Hi there! My name's Polezno, and I'm here to help you out!\"
@@ -385,18 +429,19 @@ func onCreate():
 
 "
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Control
 
 signal cancel()
+signal saved()
 
 const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\"]
 const partIDsColor = [\"eye\", \"horns\", \"scales\", \"tdec\", \"spine\", \"wings\"]
 
 var partIndex = [0,0,0,0,0,0,0]
-var colorIndex = [Color(), Color(), Color(), Color(), Color(), Color()]
+var colorIndex = [Color.white, Color.white, Color.white, Color.white, Color.white, Color.white]
 
-#var defaultTribe = gloader.defaultTribe #TODO: implement this feature
+var defaultTribe = \"nigw\"#gloader.defaultTribe #TODO: implement this feature
 
 onready var blankPal = load(\"res://images/character/palettes/palette-main.tex\")
 onready var player = get_parent().get_parent().get_parent().get_node(\"AnimationPlayer\")
@@ -427,13 +472,71 @@ func initCustomizer():
 	
 	#Reset customizer designs
 	designParent.get_node(\"head\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"body\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"legs\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"tail\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"tdec\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"wings\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"spine\").material.set_shader_param(\"palette\", blankPal)
+	
+	var tribedata = {}
+	for tribe in gloader.loadedtribes:
+		if tribe.tribeid == defaultTribe:
+			tribedata = tribe
+	if tribedata.empty():
+		logcat.stdout(\"Error loading default tribe. Reverting to default\", logcat.ERROR)
+		tribedata = gloader.loadedtribes[0]
+	
+	var hasSpine = false
+	var hasTdec = false
+	
+	# head reset
+	for part in tribedata.idle.parts:
+		match part.partid:
+			\"body\":
+				designParent.get_node(\"body\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"body\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"body\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"head\":
+				designParent.get_node(\"head\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"head\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"head\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"legs\":
+				designParent.get_node(\"legs\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"legs\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"legs\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"tail\":
+				designParent.get_node(\"tail\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"tail\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"tail\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"spine\":
+				hasSpine = true
+				designParent.get_node(\"spine\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"spine\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"spine\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"tdec\":
+				hasTdec = true
+				designParent.get_node(\"tdec\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"tdec\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"tdec\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"wings\":
+				designParent.get_node(\"wings\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"wings\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"wings\").region_rect.position = Vector2(0, 448*(part.row - 1))
+	
+	if !hasSpine:
+		designParent.get_node(\"spine\").texture = null
+		designParent.get_node(\"spine\").material.set_shader_param(\"mask\", null)
+	if !hasTdec:
+		designParent.get_node(\"tdec\").texture = null
+		designParent.get_node(\"tdec\").material.set_shader_param(\"mask\", null)
 	
 	#Hide the other UI
 	player.play(\"camInit\")
 	
 	#reset variables
 	partIndex = [0,0,0,0,0,0,0]
-	colorIndex = [Color(), Color(), Color(), Color(), Color(), Color()]
+	colorIndex = [Color.white, Color.white, Color.white, Color.white, Color.white, Color.white]
 	location = 0
 	currentPart = 0
 	currentPartColor = 0
@@ -449,6 +552,7 @@ func checkLocation():
 			camera.camMovePart(partIDs[currentPart])
 			$arrowH.show()
 			$colorPanel.hide()
+			checkPartArrows()
 			checkPart()
 			$arrowV.show()
 		1:
@@ -459,6 +563,7 @@ func checkLocation():
 			$prevpartpreview.hide()
 			$arrowV.show()
 			$traitsPanel.hide()
+			checkColorArrows()
 		2:
 			camera.camMovePart(\"overview\")
 			$traitsPanel.show()
@@ -472,7 +577,7 @@ func checkLocation():
 
 func onNext():
 	if $nsbtn.text == \"Save\":
-		pass #TODO
+		onSave()
 		return
 	if location <= 3:
 		location += 1
@@ -491,20 +596,33 @@ func onPrevious():
 		$nsbtn.text = \"Next\"
 	checkLocation()
 
+func checkColorArrows():
+	if currentPartColor == 5:
+		$arrowV/d.hide()
+	else:
+		$arrowV/d.show()
+	if currentPartColor == 0:
+		$arrowV/u.hide()
+	else:
+		$arrowV/u.show()
+
+func checkPartArrows():
+	if currentPart == 6:
+		$arrowV/d.hide()
+	else:
+		$arrowV/d.show()
+	if currentPart == 0:
+		$arrowV/u.hide()
+	else:
+		$arrowV/u.show()
+
 func nextPart():
 	if location == 0:
 		if currentPart < 6:
 			currentPart += 1
 			currentPartID = partIDs[currentPart]
 			camera.camMovePart(partIDs[currentPart])
-			if currentPart == 6:
-				$arrowV/d.hide()
-			else:
-				$arrowV/d.show()
-			if currentPart == 0:
-				$arrowV/u.hide()
-			else:
-				$arrowV/u.show()
+			checkPartArrows()
 			checkPart()
 	elif location == 1:
 		if currentPartColor < 5:
@@ -512,14 +630,7 @@ func nextPart():
 			currentPartColorID = partIDsColor[currentPartColor]
 			$colorPanel/ColorPicker.color = colorIndex[currentPartColor]
 			camera.camMovePart(partIDsColor[currentPartColor])
-			if currentPartColor == 5:
-				$arrowV/d.hide()
-			else:
-				$arrowV/d.show()
-			if currentPartColor == 0:
-				$arrowV/u.hide()
-			else:
-				$arrowV/u.show()
+			checkColorArrows()
 
 func previousPart():
 	if location == 0:
@@ -527,14 +638,7 @@ func previousPart():
 			currentPart -= 1
 			currentPartID = partIDs[currentPart]
 			camera.camMovePart(partIDs[currentPart])
-			if currentPart == 0:
-				$arrowV/u.hide()
-			else:
-				$arrowV/u.show()
-			if currentPart == 6:
-				$arrowV/d.hide()
-			else:
-				$arrowV/d.show()
+			checkPartArrows()
 			checkPart()
 	elif location == 1:
 		if currentPartColor > 0:
@@ -542,14 +646,8 @@ func previousPart():
 			currentPartColorID = partIDsColor[currentPartColor]
 			$colorPanel/ColorPicker.color = colorIndex[currentPartColor]
 			camera.camMovePart(partIDsColor[currentPartColor])
-			if currentPartColor == 5:
-				$arrowV/d.hide()
-			else:
-				$arrowV/d.show()
-			if currentPartColor == 0:
-				$arrowV/u.hide()
-			else:
-				$arrowV/u.show()
+			checkColorArrows()
+			
 
 const darknessVal = 0.1
 
@@ -591,7 +689,6 @@ func setPalette():
 func cancel():
 	emit_signal(\"cancel\")
 	hide()
-	#reset traits and details panel
 
 var row
 
@@ -657,36 +754,42 @@ func colorPicker_colorchange(color):
 	switchColor(color)
 
 func onSave():
-	pass #TODO
+	$detailsPanel/LineEdit.modulate = Color.white
+	if $detailsPanel/LineEdit.text.strip_edges() == \"\":
+		$detailsPanel/LineEdit.modulate = Color.red
+		return
+	if gloader.saveChar(partIndex, playerpal, $detailsPanel/LineEdit.text):
+		emit_signal(\"saved\")
+		hide()
 "
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Panel
 
 "
 
-[sub_resource type="StyleBoxTexture" id=7]
+[sub_resource type="StyleBoxTexture" id=14]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 128, 128 )
 margin_left = 28.2819
 margin_right = 27.8945
 modulate_color = Color( 0.313726, 0, 0, 1 )
 
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=15]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 128, 128 )
 margin_left = 28.2819
 margin_right = 27.8945
 modulate_color = Color( 0.831373, 0.647059, 0, 1 )
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=16]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 128, 128 )
 margin_left = 28.2819
 margin_right = 27.8945
 modulate_color = Color( 0.615686, 0.490196, 0, 1 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=17]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ui/ScrollContainer:modulate")
@@ -701,7 +804,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=18]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:position")
 tracks/0/interp = 2
@@ -727,7 +830,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.4, 0.4 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=19]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -828,7 +931,7 @@ __meta__ = {
 }
 
 [node name="spine" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 14 )
+material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
@@ -839,7 +942,7 @@ __meta__ = {
 }
 
 [node name="body" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 15 )
+material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 2 )
@@ -850,7 +953,7 @@ __meta__ = {
 }
 
 [node name="legs" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 16 )
+material = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
@@ -861,7 +964,7 @@ __meta__ = {
 }
 
 [node name="tail" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 17 )
+material = SubResource( 5 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 7 )
@@ -872,7 +975,7 @@ __meta__ = {
 }
 
 [node name="head" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 13 )
+material = SubResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 8 )
@@ -883,7 +986,7 @@ __meta__ = {
 }
 
 [node name="wings" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 18 )
+material = SubResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 6 )
@@ -894,7 +997,7 @@ __meta__ = {
 }
 
 [node name="tdec" type="NinePatchRect" parent="ui/design"]
-material = SubResource( 19 )
+material = SubResource( 8 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
@@ -905,7 +1008,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ui/design"]
-anims/preview = SubResource( 2 )
+anims/preview = SubResource( 9 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui"]
 anchor_top = 1.0
@@ -991,16 +1094,15 @@ __meta__ = {
 position = Vector2( 683, 384 )
 current = true
 smoothing_enabled = true
-script = SubResource( 3 )
+script = SubResource( 10 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="toplayer" type="Control" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 4 )
+script = SubResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1025,7 +1127,7 @@ mouse_filter = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 5 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1254,10 +1356,10 @@ anchor_left = 0.0348525
 anchor_top = 0.0929752
 anchor_right = 0.86059
 anchor_bottom = 0.944215
-margin_left = 12.0
-margin_top = 12.0
-margin_right = 12.0
-margin_bottom = 12.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 16.0
+margin_bottom = 16.0
 edit_alpha = false
 presets_enabled = false
 presets_visible = false
@@ -1282,7 +1384,7 @@ margin_top = 80.0
 margin_right = 1333.0
 margin_bottom = 713.0
 custom_styles/panel = ExtResource( 22 )
-script = SubResource( 6 )
+script = SubResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1315,7 +1417,6 @@ margin_right = 421.0
 size_flags_horizontal = 3
 
 [node name="detailsPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
-visible = false
 margin_left = 836.0
 margin_top = 80.0
 margin_right = 1333.0
@@ -1344,19 +1445,27 @@ margin_left = 113.0
 margin_top = 78.0
 margin_right = 400.0
 margin_bottom = 102.0
-custom_styles/read_only = SubResource( 7 )
-custom_styles/focus = SubResource( 8 )
-custom_styles/normal = SubResource( 9 )
+custom_styles/read_only = SubResource( 14 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/normal = SubResource( 16 )
 custom_fonts/font = ExtResource( 10 )
+custom_colors/selection_color = Color( 0.886275, 0.811765, 0, 1 )
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.356863, 0.25098, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 placeholder_text = "Character Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/camInit = SubResource( 10 )
-anims/camZoomBody = SubResource( 11 )
-anims/camZoomHead = SubResource( 12 )
+anims/camInit = SubResource( 17 )
+anims/camZoomBody = SubResource( 18 )
+anims/camZoomHead = SubResource( 19 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
+[connection signal="saved" from="CanvasLayer/toplayer/customizer" to="ui" method="_on_customizer_saved"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/r" to="CanvasLayer/toplayer/customizer" method="switchPartNext"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/l" to="CanvasLayer/toplayer/customizer" method="switchPartPrev"]
 [connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/u" to="CanvasLayer/toplayer/customizer" method="previousPart"]

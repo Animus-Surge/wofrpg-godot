@@ -75,6 +75,9 @@ func checkDirs():
 	var dir = Directory.new()
 	if !dir.dir_exists("user://addons/characters"):
 		dir.make_dir_recursive("user://addons/characters")
+	if !dir.dir_exists("user://characters"):
+		dir.make_dir_recursive("user://characters/custom")
+		dir.make_dir_recursive("user://characters/palettes")
 
 func loadSettings():
 	var setfile = File.new()
@@ -296,3 +299,40 @@ func loadCharacters():
 		cdir.make_dir_recursive("user://characters/palettes")
 		cdir.make_dir_recursive("user://characters/custom")
 		logcat.stdout("Created characters directory.", logcat.DEBUG)
+
+func saveChar(partChoice:Array,colors:Texture,name:String) -> bool:
+	if Directory.new().file_exists("user://characters/" + name + ".json"):
+		return false
+	var tribes = []
+	var appearance = []
+	
+	for part in partChoice:
+		appearance.append(loadedtribes[part].tribeid)
+		if tribes.has(loadedtribes[part].tribeid):
+			continue
+		tribes.append(loadedtribes[part].tribeid)
+	
+	var pngPath = "user://characters/palettes/pal-" + name.to_lower() + ".png"
+# warning-ignore:return_value_discarded
+	colors.get_data().save_png(pngPath)
+	
+	var cdata = {
+		"cname":name,
+		"ctribes":tribes,
+		"cgender":"unimplemented",
+		"crole":"unimplemented",
+		"clevel":0,
+		"cscale":1,
+		"ctraits":"unimplemented",
+		"cinventory":"unimplemented",
+		"cskills":"unimplemented",
+		"cquick":"unimplemented",
+		"cusecustom":false,
+		"cpal":pngPath,
+		"cappearance":appearance #TODO: have this decoded beforehand
+	}
+	var charfile = File.new()
+	charfile.open("user://characters/" + name.to_lower() + ".json", File.WRITE)
+	charfile.store_line(to_json(cdata))
+	charfile.close()
+	return true

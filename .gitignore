@@ -10,6 +10,7 @@
 *.png~
 *.kra
 *.app
+*.ini
 
 *.zip
 *.pck

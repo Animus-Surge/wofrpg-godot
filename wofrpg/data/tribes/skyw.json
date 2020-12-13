@@ -4,6 +4,7 @@
 	"tribename":"SkyWing",
 	"idle":{
 		"idletex":"res://images/character/skyw/idle/skyw-idle-parts.png",
+		"mask":"res://images/character/skyw/idle/skyw-idle-mask.png",
 		"rows":5,
 		"frames":6,
 		"fps":6,

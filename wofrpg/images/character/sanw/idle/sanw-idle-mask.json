@@ -1,0 +1,183 @@
+{
+  "frames": {
+    "saw-body-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "saw-head-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 448,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "saw-legs-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 896,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "saw-spine-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 1344,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "saw-tail-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 1792,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "saw-tdec-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 2240,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "saw-wings-mask.png": {
+      "frame": {
+        "x": 0,
+        "y": 2688,
+        "w": 4776,
+        "h": 448
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 4776,
+        "h": 448
+      },
+      "sourceSize": {
+        "w": 4776,
+        "h": 448
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.6",
+    "image": "sanw-idle-mask.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 4776,
+      "h": 3136
+    },
+    "scale": 1
+  }
+}

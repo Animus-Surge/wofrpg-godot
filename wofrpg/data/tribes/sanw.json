@@ -4,6 +4,7 @@
 	"tribeid":"sanw",
 	"idle":{
 		"idletex":"res://images/character/sanw/idle/sanw-idle-atlas.png",
+		"mask":"res://images/character/sanw/idle/sanw-idle-mask.png",
 		"rows":7,
 		"frames":6,
 		"fps":6,

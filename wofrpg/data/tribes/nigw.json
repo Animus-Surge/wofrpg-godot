@@ -4,6 +4,7 @@
 	"tribename":"NightWing",
 	"idle":{
 		"idletex":"res://images/character/nigw/idle/nigw-parts-idle.png",
+		"mask":"res://images/character/nigw/idle/nigw-idle-mask.png",
 		"rows":7,
 		"frames":6,
 		"fps":6,

@@ -39,7 +39,7 @@ func startLoad():
 	loadAddons()
 	loadTribes()
 	checkDirs()
-	loadCharacters()
+#	loadCharacters()
 	logcat.stdout("All stuff loaded.", 0)
 
 func login():
@@ -282,6 +282,7 @@ blank means a blank dictionary: {} or a blank string: ""
 """
 
 func loadCharacters():
+	characters.clear()
 	var cdir = Directory.new()
 	if cdir.dir_exists("user://characters"):
 		cdir.open("user://characters")
@@ -327,7 +328,7 @@ func saveChar(partChoice:Array,colors:Texture,name:String) -> bool:
 		"cinventory":"unimplemented",
 		"cskills":"unimplemented",
 		"cquick":"unimplemented",
-		"cusecustom":false,
+		"cuseCustom":false,
 		"cpal":pngPath,
 		"cappearance":appearance #TODO: have this decoded beforehand
 	}

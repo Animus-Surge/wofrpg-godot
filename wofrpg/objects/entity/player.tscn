@@ -301,8 +301,6 @@ scale = Vector2( 0.50278, 0.50278 )
 texture = SubResource( 8 )
 hframes = 6
 
-[node name="customlooks" type="AnimatedSprite" parent="graphics"]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="graphics"]
 anims/test-idle = SubResource( 9 )
 anims/test-run = SubResource( 10 )
@@ -356,3 +354,6 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Timer" type="Timer" parent="."]
+[connection signal="timeout" from="Timer" to="." method="nextFrame"]

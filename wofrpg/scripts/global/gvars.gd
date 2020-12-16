@@ -6,12 +6,12 @@ signal doneLoading()
 
 var plrpalette = null setget setPalette
 var plrdata:Dictionary setget setPlayerData
-var plrframes: SpriteFrames = null setget setFrames
+var plrframes = null setget setFrames
 
 func setPalette(palette: ImageTexture):
 	plrpalette = palette
 
-func setFrames(frames: SpriteFrames):
+func setFrames(frames):
 	plrframes = frames
 
 func setPlayerData(data:Dictionary):
@@ -19,16 +19,17 @@ func setPlayerData(data:Dictionary):
 
 var sppaused = false
 var uiShowing = false
-
 var useCustom = false
-var debug = false
 var loggedIn = false
 var username = ""
 var splr = false
-
 var userattributes
-
 var paused = false
+
+##############
+# DEBUG MODE #
+##############
+var debug = false
 
 var current = "loadscreen"
 
@@ -42,7 +43,9 @@ class Sorter:
 			return true
 		return false 
 
-#====GLOBAL====
+##########
+# GLOBAL #
+##########
 
 func _ready():
 	gloader.startLoad()
@@ -50,6 +53,17 @@ func _ready():
 		print("==============> GAME START <==============")
 	else:
 		print("==============> DEBUG MODE <==============")
+		var debugplayer = File.new()
+		var err = debugplayer.open("user://characters/debug king.json", File.READ)
+		if err != OK:
+			print(err)
+			return
+		setPlayerData(JSON.parse(debugplayer.get_as_text()).result)
+		var pal = ImageTexture.new()
+		err = pal.load("user://characters/palettes/pal-debug king.png")
+		if err != OK:
+			pal = load("res://images/character/palettes/palette-main.tex")
+		setPalette(pal)
 
 func setCurrentScene(scene):
 	current = scene
@@ -66,13 +80,9 @@ var tmax = 100
 
 func load_world(_world_name: String, _expansion = "base"):
 	var _worldDataFile=File.new()
-	
 
 func load_scene(scene: String):
-	#print("Bop")
-	#print(current)
 	if current != "loadscreen":
-		#print("Current is not loadscreen")
 		get_node("/root/" + current).queue_free()
 		get_node("/root/loadscreen/loadscreen").show()
 	scn = ResourceLoader.load_interactive(scene)
@@ -100,7 +110,6 @@ func _process(_delta):
 			emit_signal("doneLoading")
 			break
 		elif err == OK:
-			#print("Beep boop")
 			continue
 		else:
 			scn = null

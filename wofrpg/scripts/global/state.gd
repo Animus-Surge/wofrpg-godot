@@ -52,12 +52,11 @@ func getPlayers() -> Dictionary:
 	return players
 
 func prestart():
+	var frames
 	var palette = null
-	var frames = null
 	if not gvars.useCustom:
 		palette = Marshalls.raw_to_base64(gvars.plrpalette.get_data().get_data())
-	else:
-		frames = Marshalls.variant_to_base64(gvars.plrframes, true)
+	
 	rpc_id(1, "register", [0, gvars.plrdata, gvars.username], palette, frames)
 	rpc_id(1, "populate")
 

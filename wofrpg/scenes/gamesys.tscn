@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
 [ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
@@ -32,6 +32,7 @@
 [ext_resource path="res://images/character/sanw/idle/saw-legs-mask.png" type="Texture" id=30]
 [ext_resource path="res://images/character/sanw/idle/saw-tail-mask.png" type="Texture" id=31]
 [ext_resource path="res://images/character/sanw/idle/saw-tdec-mask.png" type="Texture" id=32]
+[ext_resource path="res://images/effects/ui-postprocess.png" type="Texture" id=33]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
@@ -315,6 +316,22 @@ tracks/6/keys = {
 }
 
 [sub_resource type="GDScript" id=10]
+script/source = "extends Panel
+
+func singleplayer():
+	$\"1\".hide()
+	$\"2\".show()
+
+func multiplayer():
+	$\"1\".hide()
+	$\"3\".hide()
+
+func back():
+	$\"1\".show()
+	$\"2\".hide()
+	$\"3\".hide()"
+
+[sub_resource type="GDScript" id=11]
 script/source = "extends Camera2D
 
 const parts = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\", \"overview\"]
@@ -387,7 +404,7 @@ func _process(_delta):
 	zoom = zoom.move_toward(cameraZoom, camzoomspeed)
 "
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=12]
 script/source = "extends Control
 
 const p1 = \"Hi there! My name's Polezno, and I'm here to help you out!\"
@@ -431,7 +448,7 @@ func onCreate():
 
 "
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=13]
 script/source = "extends Control
 
 signal cancel()
@@ -765,33 +782,33 @@ func onSave():
 		hide()
 "
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=14]
 script/source = "extends Panel
 
 "
-
-[sub_resource type="StyleBoxTexture" id=14]
-texture = ExtResource( 23 )
-region_rect = Rect2( 0, 0, 128, 128 )
-margin_left = 28.2819
-margin_right = 27.8945
-modulate_color = Color( 0.313726, 0, 0, 1 )
 
 [sub_resource type="StyleBoxTexture" id=15]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 128, 128 )
 margin_left = 28.2819
 margin_right = 27.8945
-modulate_color = Color( 0.831373, 0.647059, 0, 1 )
+modulate_color = Color( 0.313726, 0, 0, 1 )
 
 [sub_resource type="StyleBoxTexture" id=16]
 texture = ExtResource( 23 )
 region_rect = Rect2( 0, 0, 128, 128 )
 margin_left = 28.2819
 margin_right = 27.8945
+modulate_color = Color( 0.831373, 0.647059, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
 modulate_color = Color( 0.615686, 0.490196, 0, 1 )
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=18]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("ui/ScrollContainer:modulate")
@@ -806,7 +823,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=19]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera2D:position")
 tracks/0/interp = 2
@@ -832,7 +849,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.4, 0.4 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=20]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -1092,19 +1109,59 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="playdialogue" type="TextureRect" parent="ui"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 33 )
+
+[node name="bg" type="Panel" parent="ui/playdialogue"]
+self_modulate = Color( 0.670588, 0.615686, 0.423529, 1 )
+anchor_left = 0.260615
+anchor_top = 0.322917
+anchor_right = 0.739385
+anchor_bottom = 0.677083
+custom_styles/panel = ExtResource( 20 )
+script = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="1" type="Control" parent="ui/playdialogue/bg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="Control" parent="ui/playdialogue/bg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="Control" parent="ui/playdialogue/bg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
 current = true
 smoothing_enabled = true
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="toplayer" type="Control" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 11 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1129,7 +1186,7 @@ mouse_filter = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = SubResource( 12 )
+script = SubResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1358,10 +1415,10 @@ anchor_left = 0.0348525
 anchor_top = 0.0929752
 anchor_right = 0.86059
 anchor_bottom = 0.944215
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 20.0
-margin_bottom = 20.0
+margin_left = 28.0
+margin_top = 28.0
+margin_right = 28.0
+margin_bottom = 28.0
 edit_alpha = false
 presets_enabled = false
 presets_visible = false
@@ -1386,7 +1443,7 @@ margin_top = 80.0
 margin_right = 1333.0
 margin_bottom = 713.0
 custom_styles/panel = ExtResource( 22 )
-script = SubResource( 13 )
+script = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1447,9 +1504,9 @@ margin_left = 113.0
 margin_top = 78.0
 margin_right = 400.0
 margin_bottom = 102.0
-custom_styles/read_only = SubResource( 14 )
-custom_styles/focus = SubResource( 15 )
-custom_styles/normal = SubResource( 16 )
+custom_styles/read_only = SubResource( 15 )
+custom_styles/focus = SubResource( 16 )
+custom_styles/normal = SubResource( 17 )
 custom_fonts/font = ExtResource( 10 )
 custom_colors/selection_color = Color( 0.886275, 0.811765, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
@@ -1462,9 +1519,9 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/camInit = SubResource( 17 )
-anims/camZoomBody = SubResource( 18 )
-anims/camZoomHead = SubResource( 19 )
+anims/camInit = SubResource( 18 )
+anims/camZoomBody = SubResource( 19 )
+anims/camZoomHead = SubResource( 20 )
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
 [connection signal="saved" from="CanvasLayer/toplayer/customizer" to="ui" method="_on_customizer_saved"]

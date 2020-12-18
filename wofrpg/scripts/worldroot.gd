@@ -5,7 +5,7 @@ export (String) var scene_name = "scene-name"
 
 func _ready():
 	gvars.setCurrentScene(scene_name)
-	if !gvars.loggedIn or gvars.splr:
+	if !gvars.loggedIn or gvars.splr or gvars.debug:
 		var player = plr.instance()
 		player.position = get_node("world/spawn").position
 		$entities.add_child(player)

@@ -8,41 +8,45 @@ onready var font = preload("res://fonts/pixel.tres")
 func _ready():
 # warning-ignore:return_value_discarded
 	State.connect("chatMessage", self, "showChatMessage")
+	if !get_tree().has_network_peer():
+		$chatpanel.hide()
 	$interaction.hide()
 	$quest_taskpanel.hide()
 	$inventory.hide()
 	initInventory()
 
 func quit():
-	if get_tree().has_network_peer():
-		get_tree().set_network_peer(null) #AKA: disconnect the player
-	gvars.load_scene("res://scenes/menus.tscn")
-	gvars.paused = false
-	uishowing = false
+	if !gvars.debug:
+		if get_tree().has_network_peer():
+			get_tree().set_network_peer(null) #AKA: disconnect the player
+		gvars.load_scene("res://scenes/menus.tscn")
+		gvars.paused = false
+		uishowing = false
+	else:
+		get_tree().quit(0)
 
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_ESCAPE:
-			if uishowing:
-				uishowing = false
-				$interaction.hide()
-				$chatpanel/LineEdit.release_focus()
-				$chatpanel/LineEdit.text = ""
-				return
-			else:
-				$pausemenu.visible = !$pausemenu.visible
-				gvars.paused = !gvars.paused
-		if event.scancode == KEY_E:
-			if !uishowing:
-				$inventory.visible = !$inventory.visible
-		if event.scancode == KEY_ENTER:
-			if chatfocus and $chatpanel/LineEdit.text.strip_edges() != "":
-				State.sendChatMessage($chatpanel/LineEdit.text.strip_edges())
-				$chatpanel/LineEdit.release_focus()
-				$chatpanel/LineEdit.text = ""
-		if event.scancode == KEY_TAB:
-			if !chatfocus:
-				$chatpanel/LineEdit.grab_focus()
+func _input(_event):
+	if Input.is_action_just_pressed("pause"):
+		if uishowing:
+			uishowing = false
+			$interaction.hide()
+			$chatpanel/LineEdit.release_focus()
+			$chatpanel/LineEdit.text = ""
+			return
+		else:
+			$pausemenu.visible = !$pausemenu.visible
+			gvars.paused = !gvars.paused
+	if Input.is_action_just_pressed("inventory"):
+		if !uishowing:
+			$inventory.visible = !$inventory.visible
+	if Input.is_action_just_pressed("ui_accept"):
+		if chatfocus and $chatpanel/LineEdit.text.strip_edges() != "":
+			State.sendChatMessage($chatpanel/LineEdit.text.strip_edges())
+			$chatpanel/LineEdit.release_focus()
+			$chatpanel/LineEdit.text = ""
+	if Input.is_action_just_pressed("chat"):
+		if !chatfocus and get_tree().has_network_peer():
+			$chatpanel/LineEdit.grab_focus()
 
 func _process(_delta):
 	gvars.uiShowing = uishowing

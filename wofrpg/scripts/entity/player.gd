@@ -66,7 +66,11 @@ func setplrdetails(data: Dictionary, palette = null):
 					break
 			if !tribedata.empty():
 				$graphics/flip.get_node(partIDs[index]).texture = load(tribedata.idle.idletex)
-				#var partmask = tribedata.idle.mask
+				$graphics/nonflip.get_node(partIDs[index]).texture = load(tribedata.idle.idletex)
+				
+				$graphics/flip.get_node(partIDs[index]).material.set_shader_param("mask", load(tribedata.idle.mask))
+				$graphics/nonflip.get_node(partIDs[index]).material.set_shader_param("mask", load(tribedata.idle.mask))
+				
 				var row = -1
 				#var partOpt = false
 				for part in tribedata.idle.parts:
@@ -77,16 +81,23 @@ func setplrdetails(data: Dictionary, palette = null):
 						break
 				if row != -1:
 					$graphics/flip.get_node(partIDs[index]).show()
+					$graphics/nonflip.get_node(partIDs[index]).show()
 					$graphics/flip.get_node(partIDs[index]).region_rect.position = Vector2(
 						$graphics/flip.get_node(partIDs[index]).region_rect.position.x,
 						448 * (row - 1)
 					)
-					#print(row)
-					#print(index)
+					$graphics/nonflip.get_node(partIDs[index]).region_rect.position = Vector2(
+						$graphics/nonflip.get_node(partIDs[index]).region_rect.position.x,
+						448 * (row - 1)
+					)
 				else:
 					$graphics/flip.get_node(partIDs[index]).hide()
-					#print("Hiding something")
+					$graphics/nonflip.get_node(partIDs[index]).hide()
 			index += 1
+		for child in $graphics/flip.get_children():
+			child.material.set_shader_param("palette", palette)
+		for child in $graphics/nonflip.get_children():
+			child.material.set_shader_param("palette", palette)
 
 func _physics_process(_delta):
 	if gvars.debug or !get_tree().has_network_peer():

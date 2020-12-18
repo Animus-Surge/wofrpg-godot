@@ -9,6 +9,7 @@ func _ready():
 		var player = plr.instance()
 		player.position = get_node("world/spawn").position
 		$entities.add_child(player)
+		gvars.allReady()
 		return
 	timer.wait_time = 0.5
 	timer.start()

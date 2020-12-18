@@ -63,6 +63,7 @@ func _ready():
 		err = pal.load("user://characters/palettes/pal-debug king.png")
 		if err != OK:
 			pal = load("res://images/character/palettes/palette-main.tex")
+		pal.flags = 0
 		setPalette(pal)
 
 func setCurrentScene(scene):

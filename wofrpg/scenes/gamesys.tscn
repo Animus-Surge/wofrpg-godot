@@ -324,12 +324,15 @@ func singleplayer():
 
 func multiplayer():
 	$\"1\".hide()
-	$\"3\".hide()
+	$\"2\".hide()
 
 func back():
 	$\"1\".show()
 	$\"2\".hide()
-	$\"3\".hide()"
+
+func cancel():
+	get_parent().hide()
+"
 
 [sub_resource type="GDScript" id=11]
 script/source = "extends Camera2D
@@ -1110,7 +1113,6 @@ __meta__ = {
 }
 
 [node name="playdialogue" type="TextureRect" parent="ui"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 33 )
@@ -1128,8 +1130,54 @@ __meta__ = {
 }
 
 [node name="1" type="Control" parent="ui/playdialogue/bg"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="ui/playdialogue/bg/1"]
+margin_left = 75.0
+margin_top = 103.0
+margin_right = 323.0
+margin_bottom = 155.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color_disabled = Color( 0.494118, 0.184314, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.8, 0.392157, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.294118, 0, 1 )
+text = "Singleplayer "
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="ui/playdialogue/bg/1"]
+margin_left = 330.0
+margin_top = 103.0
+margin_right = 577.0
+margin_bottom = 155.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color_disabled = Color( 0.494118, 0.184314, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.8, 0.392157, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.294118, 0, 1 )
+text = "Multiplayer"
+flat = true
+
+[node name="Button3" type="Button" parent="ui/playdialogue/bg/1"]
+margin_left = 258.0
+margin_top = 222.0
+margin_right = 391.0
+margin_bottom = 255.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color_disabled = Color( 0.494118, 0.184314, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.8, 0.392157, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.294118, 0, 1 )
+text = "Back"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1141,12 +1189,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="3" type="Control" parent="ui/playdialogue/bg"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="LineEdit" type="LineEdit" parent="ui/playdialogue/bg/2"]
+margin_left = 168.695
+margin_top = 50.9498
+margin_right = 490.695
+margin_bottom = 92.9498
+custom_fonts/font = ExtResource( 21 )
+align = 1
+placeholder_text = "IP ADDRESS"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 683, 384 )
@@ -1415,10 +1465,10 @@ anchor_left = 0.0348525
 anchor_top = 0.0929752
 anchor_right = 0.86059
 anchor_bottom = 0.944215
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 32.0
-margin_bottom = 32.0
+margin_left = 44.0
+margin_top = 44.0
+margin_right = 44.0
+margin_bottom = 44.0
 edit_alpha = false
 presets_enabled = false
 presets_visible = false
@@ -1522,6 +1572,9 @@ __meta__ = {
 anims/camInit = SubResource( 18 )
 anims/camZoomBody = SubResource( 19 )
 anims/camZoomHead = SubResource( 20 )
+[connection signal="pressed" from="ui/playdialogue/bg/1/Button" to="ui/playdialogue/bg" method="singleplayer"]
+[connection signal="pressed" from="ui/playdialogue/bg/1/Button2" to="ui/playdialogue/bg" method="multiplayer"]
+[connection signal="pressed" from="ui/playdialogue/bg/1/Button3" to="ui/playdialogue/bg" method="cancel"]
 [connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
 [connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
 [connection signal="saved" from="CanvasLayer/toplayer/customizer" to="ui" method="_on_customizer_saved"]

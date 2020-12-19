@@ -7,6 +7,7 @@ puppet var vel = Vector2.ZERO
 puppet var pos = Vector2()
 
 func _ready():
+	$graphics/flip.hide()
 	if gvars.DEBUG or !get_tree().has_network_peer() or is_network_master():
 		$Camera2D.current = true
 

@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="WoF RPG"
-run/main_scene="res://testmap.tscn"
+run/main_scene="res://scenes/testplane.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="WoFRPG"
 
@@ -110,9 +110,15 @@ ui_end={
 "deadzone": 0.5,
 "events": [  ]
 }
+jump={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
 inventory={
 "deadzone": 0.5,
-"events": [  ]
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
 }
 pause={
 "deadzone": 0.5,
@@ -121,6 +127,16 @@ pause={
 interact={
 "deadzone": 0.5,
 "events": [  ]
+}
+attack_primary={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+misc_camerafptp={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777248,"unicode":0,"echo":false,"script":null)
+ ]
 }
 
 [rendering]

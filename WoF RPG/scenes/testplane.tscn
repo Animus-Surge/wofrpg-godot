@@ -1,8 +1,15 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/entity/player.gd" type="Script" id=1]
-[ext_resource path="res://scripts/entity/damageable.gd" type="Script" id=2]
-[ext_resource path="res://regular_material.material" type="Material" id=3]
+[ext_resource path="res://entities/prefabs/dummy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/models/model-test.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/crosshair.png" type="Texture" id=5]
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends StaticBody
+
+const TYPE = \"ground\"
+"
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.321569, 0.321569, 0.321569, 1 )
@@ -14,20 +21,13 @@ size = Vector2( 150, 150 )
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 75, 0.001, 75 )
 
-[sub_resource type="CapsuleMesh" id=4]
-material = ExtResource( 3 )
-radius = 0.5
-
-[sub_resource type="CapsuleShape" id=5]
-radius = 0.5
-
-[sub_resource type="CapsuleMesh" id=6]
-material = ExtResource( 3 )
-radius = 0.5
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 0.553828, 1.00911, 1.42996 )
 
 [node name="Spatial" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
+script = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 mesh = SubResource( 2 )
@@ -37,29 +37,31 @@ material/0 = null
 shape = SubResource( 3 )
 
 [node name="player" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0334833, 0 )
 script = ExtResource( 1 )
 
-[node name="model" type="MeshInstance" parent="player"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
-mesh = SubResource( 4 )
-material/0 = null
-
 [node name="CollisionShape" type="CollisionShape" parent="player"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
-shape = SubResource( 5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0365, 0.0546869 )
+shape = SubResource( 10 )
+
+[node name="Sandy_walk_For_Surge" parent="player" instance=ExtResource( 4 )]
 
 [node name="camerarig" type="Spatial" parent="player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1214, 2.10058 )
 
 [node name="thirdperson" type="Camera" parent="player/camerarig"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 1.2, -5 )
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.2, -5 )
 current = true
 
 [node name="firstperson" type="Camera" parent="player/camerarig"]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 1, 0 )
+transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, 0, 0, 0 )
+near = 0.34
+
+[node name="Position3D" type="Position3D" parent="player/camerarig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.86795 )
 
 [node name="RayCast" type="RayCast" parent="player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.95614 )
 enabled = true
 cast_to = Vector3( 0, 0, 1 )
 collide_with_areas = true
@@ -72,20 +74,81 @@ shadow_bias = 0.5
 directional_shadow_mode = 1
 directional_shadow_bias_split_scale = 0.14
 
-[node name="dummy" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
-script = ExtResource( 2 )
+[node name="dummy" parent="." instance=ExtResource( 2 )]
 
-[node name="model2" type="MeshInstance" parent="dummy"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
-mesh = SubResource( 6 )
-material/0 = null
+[node name="dummy2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.6569, 0, 7.96451 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="dummy"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
-shape = SubResource( 5 )
+[node name="dummy3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.42561, 0, -12.483 )
 
-[node name="Timer" type="Timer" parent="dummy"]
-wait_time = 0.4
-one_shot = true
-[connection signal="timeout" from="dummy/Timer" to="dummy" method="timeout"]
+[node name="dummy4" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4661, 0, 25.6755 )
+
+[node name="dummy5" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.2955, 0, 21.7229 )
+
+[node name="dummy6" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6013, 0, 12.2972 )
+
+[node name="dummy7" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.7853, 0, -10.6587 )
+
+[node name="dummy8" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34.4339, 0, -16.8917 )
+
+[node name="dummy9" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9379, 0, -16.8917 )
+
+[node name="dummy10" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5051, 0, -30.3984 )
+
+[node name="dummy11" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4976, 0, -31.9461 )
+
+[node name="dummy12" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50238, 0, -38.9461 )
+
+[node name="dummy13" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -34.4976, 0, -38.9461 )
+
+[node name="dummy14" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4976, 0, 37.0539 )
+
+[node name="dummy15" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.50238, 0, 39.0539 )
+
+[node name="dummy16" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5024, 0, 23.0539 )
+
+[node name="dummy17" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34.5024, 0, 36.0539 )
+
+[node name="dummy18" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5024, 0, 5.05394 )
+
+[node name="dummy19" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2385, 0, 32.208 )
+
+[node name="projectiles" type="Spatial" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 5 )

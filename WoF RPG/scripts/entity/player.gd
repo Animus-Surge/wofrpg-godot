@@ -2,8 +2,10 @@ extends KinematicBody
 
 const TYPE = "player"
 
+onready var fireball = preload("res://entities/prefabs/fireball.tscn")
+
 var lookSensitivity: float = 5.0
-var minlook = -20
+var minlook = -75
 var maxlook = 75
 var mm = Vector3()
 
@@ -19,6 +21,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$camerarig/firstperson.current = firstperson
 	$camerarig/thirdperson.current = !firstperson
+	rotation_degrees = Vector3.ZERO
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -52,8 +55,14 @@ func _process(delta):
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("attack_primary") and captured:
-		if $RayCast.is_colliding() and $RayCast.TYPE == "damageable":
+		if $RayCast.is_colliding() and $RayCast.get_collider().TYPE == "damageable":
 			$RayCast.get_collider().recieve_damage(10.0)
+	elif Input.is_action_just_pressed("attack_secondary") and captured:
+		var fb = fireball.instance()
+		fb.transform = $camerarig/Position3D.global_transform
+		fb.velocity = fb.transform.basis.z * fb.SPEED
+		get_parent().get_node("projectiles").add_child(fb)
+		
 	
 	vel.x = 0
 	vel.z = 0

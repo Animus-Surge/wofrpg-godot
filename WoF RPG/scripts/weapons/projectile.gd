@@ -1,6 +1,6 @@
 extends Area
 
-const SPEED = 10.0
+const SPEED = 20.0
 const TYPE = "projectile"
 
 var velocity = Vector3()
@@ -17,6 +17,7 @@ func despawn():
 	queue_free()
 
 func _body_entered(body):
+	if body.name == "HTerrain": return
 	if body.TYPE == "damageable":
 		body.recieve_damage(25.0)
 	despawn()

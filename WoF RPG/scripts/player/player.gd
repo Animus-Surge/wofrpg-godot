@@ -17,6 +17,10 @@ var jump = 10
 var grav = 15
 var vel = Vector3()
 
+#cooldowns
+var mcool = 0.5
+var rangecool = 2
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$camerarig/firstperson.current = firstperson
@@ -53,41 +57,50 @@ func _process(delta):
 		
 		mm = Vector3() #todo: pvp
 
+var colliding = false
+
 func _physics_process(delta):
-	if Input.is_action_just_pressed("attack_primary") and captured:
-		if $RayCast.is_colliding() and $RayCast.get_collider().TYPE == "damageable":
-			$RayCast.get_collider().recieve_damage(10.0)
-	elif Input.is_action_just_pressed("attack_secondary") and captured:
-		var fb = fireball.instance()
-		fb.transform = $camerarig/Position3D.global_transform
-		fb.velocity = fb.transform.basis.z * fb.SPEED
-		get_parent().get_node("projectiles").add_child(fb)
+	if captured:
+		var ctype = ""
+		colliding = $camerarig/RayCast.is_colliding()
+		if colliding:
+			ctype = $camerarig/RayCast.get_collider().TYPE
+		if Input.is_action_just_pressed("attack_primary") and colliding:
+			if ctype == "damageable":
+				$camerarig/RayCast.get_collider().recieve_damage(10.0)
+		elif Input.is_action_just_pressed("attack_secondary"):
+			var fb = fireball.instance()
+			fb.transform = $camerarig/Position3D.global_transform
+			fb.velocity = fb.transform.basis.z * fb.SPEED
+			get_parent().get_node("projectiles").add_child(fb)
+		elif Input.is_action_just_pressed("interact") and colliding:
+			if ctype == "interactable":
+				$camerarig/RayCast.get_collider()._interacted()
 		
-	
-	vel.x = 0
-	vel.z = 0
-	
-	var movement = Vector3()
-	
-	if Input.is_action_pressed("ui_up"):
-		movement.z += 1
-	if Input.is_action_pressed("ui_down"):
-		movement.z -= 1
-	if Input.is_action_pressed("ui_left"):
-		movement.x += 1
-	if Input.is_action_pressed("ui_right"):
-		movement.x -= 1
-	
-	movement = movement.normalized()
-	
-	var direction = (transform.basis.z * movement.z + transform.basis.x * movement.x)
-	
-	vel.x = direction.x * speed
-	vel.z = direction.z * speed
-	
-	vel.y -= grav * delta
-	
-	if Input.is_action_pressed("jump") and is_on_floor():
-		vel.y = jump
-	
-	vel = move_and_slide(vel, Vector3.UP)
+		vel.x = 0
+		vel.z = 0
+		
+		var movement = Vector3()
+		
+		if Input.is_action_pressed("ui_up"):
+			movement.z += 1
+		if Input.is_action_pressed("ui_down"):
+			movement.z -= 1
+		if Input.is_action_pressed("ui_left"):
+			movement.x += 1
+		if Input.is_action_pressed("ui_right"):
+			movement.x -= 1
+		
+		movement = movement.normalized()
+		
+		var direction = (transform.basis.z * movement.z + transform.basis.x * movement.x)
+		
+		vel.x = direction.x * speed
+		vel.z = direction.z * speed
+		
+		vel.y -= grav * delta
+		
+		if Input.is_action_pressed("jump") and is_on_floor():
+			vel.y = jump
+		
+		vel = move_and_slide(vel, Vector3.UP)

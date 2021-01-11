@@ -1,8 +1,6 @@
 extends Spatial
 
-const TYPE = "interactable"
-
-var itype = 0 #basic interactable
+var TYPE = "interactable"
 
 func _interacted():
-	print("Hewwo!")
+	print("I don't know... something was interacted with")

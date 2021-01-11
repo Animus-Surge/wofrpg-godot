@@ -1,0 +1,273 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://fonts/dpcomic.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://godot-resources/bgs/container.tres" type="StyleBox" id=2]
+[ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=3]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=4]
+[ext_resource path="res://scripts/plrui.gd" type="Script" id=5]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/iw-siw-wlf_surge-confused.tres" type="Animation" id=6]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/scared/frame_1_delay-0.3s.png" type="Texture" id=7]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/interaction-bar.png" type="Texture" id=8]
+[ext_resource path="res://images/ui/interactions/iw-siw-wlf_surge/animated/scared/frame_0_delay-0.3s.png" type="Texture" id=9]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=10]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.882353 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "iw-siw-wlf_surge-scared"
+length = 0.6
+loop = true
+step = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 7 ) ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 0.588235 )
+
+[node name="UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hotbar" type="Panel" parent="."]
+visible = false
+anchor_top = 0.948
+anchor_right = 0.801
+anchor_bottom = 1.0
+margin_top = -0.0640869
+margin_right = -0.166138
+custom_styles/panel = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chatpanel" type="Panel" parent="."]
+anchor_left = 0.801
+anchor_top = 0.581
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.166138
+margin_top = -0.208008
+
+[node name="RichTextLabel" type="RichTextLabel" parent="chatpanel"]
+anchor_left = 0.015
+anchor_top = 0.019
+anchor_right = 0.985
+anchor_bottom = 0.885
+margin_left = -0.0799408
+margin_top = -0.117986
+margin_right = 0.0799255
+margin_bottom = 0.0299683
+custom_fonts/normal_font = ExtResource( 10 )
+bbcode_enabled = true
+scroll_following = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="chatpanel"]
+anchor_left = 0.015
+anchor_top = 0.891
+anchor_right = 0.985
+anchor_bottom = 0.991
+margin_left = -0.0800018
+margin_top = 0.0979614
+margin_right = 0.0798645
+margin_bottom = -0.102051
+focus_mode = 1
+custom_fonts/font = ExtResource( 10 )
+
+[node name="quest_taskpanel" type="Panel" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -319.0
+margin_bottom = 133.0
+
+[node name="Label" type="Label" parent="quest_taskpanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 4 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inventory" type="Panel" parent="."]
+self_modulate = Color( 0.866667, 0.772549, 0.403922, 1 )
+anchor_left = 0.014
+anchor_top = 0.042
+anchor_right = 0.423
+anchor_bottom = 0.478
+margin_left = -0.124001
+margin_top = -0.256004
+margin_right = 0.182007
+margin_bottom = -0.104004
+custom_styles/panel = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll" type="ScrollContainer" parent="inventory"]
+anchor_left = 0.045
+anchor_top = 0.119
+anchor_right = 0.463
+anchor_bottom = 0.965
+margin_left = -0.155001
+margin_top = -0.170002
+margin_right = 0.182983
+margin_bottom = 0.0499878
+
+[node name="GridContainer" type="GridContainer" parent="inventory/scroll"]
+margin_right = 234.0
+margin_bottom = 283.63
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="Label" type="Label" parent="inventory"]
+anchor_left = 0.122
+anchor_top = 0.03
+anchor_right = 0.122
+anchor_bottom = 0.03
+margin_left = -0.198006
+margin_top = -0.0500002
+margin_right = 143.802
+margin_bottom = 31.95
+custom_fonts/font = ExtResource( 4 )
+text = "INVENTORY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="interaction" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="face" type="TextureRect" parent="interaction"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="interaction/face"]
+anims/iw-siw-wlf_surge-confused = ExtResource( 6 )
+anims/iw-siw-wlf_surge-scared = SubResource( 2 )
+
+[node name="ibar" type="TextureRect" parent="interaction"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="npcname" type="Label" parent="interaction/ibar"]
+anchor_left = 0.018
+anchor_top = 0.655
+anchor_right = 0.436
+anchor_bottom = 0.696
+margin_left = 0.375999
+margin_top = -0.350037
+margin_right = -0.447998
+margin_bottom = 0.0799561
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "%NPCNAME%"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="interaction/ibar"]
+margin_left = 25.0
+margin_top = 551.0
+margin_right = 663.0
+margin_bottom = 751.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="npcdialogue" type="Label" parent="interaction/ibar/ScrollContainer"]
+margin_right = 638.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+text = "Hewwo!"
+align = 1
+autowrap = true
+
+[node name="opts" type="ScrollContainer" parent="interaction/ibar"]
+margin_left = 858.0
+margin_top = 504.0
+margin_right = 1340.0
+margin_bottom = 755.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="interaction/ibar/opts"]
+margin_right = 482.0
+margin_bottom = 251.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="pausemenu" type="Panel" parent="."]
+visible = false
+anchor_right = 0.348
+anchor_bottom = 1.0
+margin_right = -0.368042
+custom_styles/panel = SubResource( 4 )
+
+[node name="Button" type="Button" parent="pausemenu"]
+anchor_left = 0.053
+anchor_top = 0.037
+anchor_right = 0.467
+anchor_bottom = 0.092
+margin_left = 0.155359
+margin_top = -0.14061
+margin_right = 0.217224
+margin_bottom = -0.380615
+custom_fonts/font = ExtResource( 4 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="focus_entered" from="chatpanel/LineEdit" to="." method="chatFocus"]
+[connection signal="focus_exited" from="chatpanel/LineEdit" to="." method="chatFocusLost"]
+[connection signal="visibility_changed" from="interaction" to="." method="_on_interaction_visibility_changed"]
+[connection signal="pressed" from="pausemenu/Button" to="." method="quit"]

@@ -1,0 +1,34 @@
+{
+	"modid":"base",
+	"tribeid":"skyw",
+	"tribename":"SkyWing",
+	"idle":{
+		"idletex":"res://images/character/skyw/idle/skyw-idle-parts.png",
+		"mask":"res://images/character/skyw/idle/skyw-idle-mask.png",
+		"rows":5,
+		"frames":6,
+		"fps":6,
+		"parts":[
+			{
+				"partid":"body",
+				"row":1
+			},
+			{
+				"partid":"head",
+				"row":2
+			},
+			{
+				"partid":"legs",
+				"row":3
+			},
+			{
+				"partid":"tail",
+				"row":4
+			},
+			{
+				"partid":"wings",
+				"row":5
+			}
+		]
+	}
+}

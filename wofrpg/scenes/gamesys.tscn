@@ -1,0 +1,1588 @@
+[gd_scene load_steps=54 format=2]
+
+[ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=1]
+[ext_resource path="res://images/character/sanw/idle/saw-body.png" type="Texture" id=2]
+[ext_resource path="res://images/character/sanw/idle/saw-tdec.png" type="Texture" id=3]
+[ext_resource path="res://images/character/sanw/idle/saw-spine.png" type="Texture" id=4]
+[ext_resource path="res://images/character/sanw/idle/saw-legs.png" type="Texture" id=5]
+[ext_resource path="res://images/character/sanw/idle/saw-wings.png" type="Texture" id=6]
+[ext_resource path="res://images/character/sanw/idle/saw-tail.png" type="Texture" id=7]
+[ext_resource path="res://images/character/sanw/idle/saw-head.png" type="Texture" id=8]
+[ext_resource path="res://images/ui/backgrounds/sw-customizationscreen.png" type="Texture" id=9]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=10]
+[ext_resource path="res://images/ui/buttons/arrow-left-hover.png" type="Texture" id=11]
+[ext_resource path="res://images/ui/buttons/arrow-right-hover.png" type="Texture" id=12]
+[ext_resource path="res://images/ui/buttons/arrow-right.png" type="Texture" id=13]
+[ext_resource path="res://images/ui/buttons/arrow-up-hover.png" type="Texture" id=14]
+[ext_resource path="res://images/ui/buttons/arrow-up.png" type="Texture" id=15]
+[ext_resource path="res://images/ui/buttons/arrow-left.png" type="Texture" id=16]
+[ext_resource path="res://images/ui/buttons/arrow-down-hover.png" type="Texture" id=17]
+[ext_resource path="res://images/ui/buttons/arrow-down.png" type="Texture" id=18]
+[ext_resource path="res://images/ui/buttons/tb-closebtn.png" type="Texture" id=19]
+[ext_resource path="res://godot-resources/bgs/scroll_ui2.stylebox" type="StyleBox" id=20]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=21]
+[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=22]
+[ext_resource path="res://images/ui/backgrounds/lineedit-bg.png" type="Texture" id=23]
+[ext_resource path="res://images/character/palettes/palette-main.tex" type="Texture" id=24]
+[ext_resource path="res://godot-resources/shaders/characterParts.shader" type="Shader" id=25]
+[ext_resource path="res://images/character/sanw/idle/saw-head-mask.png" type="Texture" id=26]
+[ext_resource path="res://images/character/sanw/idle/saw-spine-mask.png" type="Texture" id=27]
+[ext_resource path="res://images/character/sanw/idle/saw-wings-mask.png" type="Texture" id=28]
+[ext_resource path="res://images/character/sanw/idle/saw-body-mask.png" type="Texture" id=29]
+[ext_resource path="res://images/character/sanw/idle/saw-legs-mask.png" type="Texture" id=30]
+[ext_resource path="res://images/character/sanw/idle/saw-tail-mask.png" type="Texture" id=31]
+[ext_resource path="res://images/character/sanw/idle/saw-tdec-mask.png" type="Texture" id=32]
+[ext_resource path="res://images/effects/ui-postprocess.png" type="Texture" id=33]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\"]
+
+var sslot = preload(\"res://objects/ui/saveslot.tscn\")
+
+func _ready():
+	get_parent().get_node(\"Camera2D\").zoom = Vector2(1,1)
+	get_parent().get_node(\"Camera2D\").position = Vector2(683,384)
+	refreshCharacters()
+	$design/spine.texture = null
+	$design/body.texture = null
+	$design/legs.texture = null
+	$design/tail.texture = null
+	$design/head.texture = null
+	$design/wings.texture = null
+	$design/tdec.texture = null
+	$actionPanel.hide()
+
+func refreshCharacters():
+	gloader.loadCharacters()
+	if $ScrollContainer/chartabs.get_child_count() != 0:
+		for child in $ScrollContainer/chartabs.get_children():
+			child.queue_free()
+	var index = 0
+	for character in gloader.characters:
+		var slot = sslot.instance()
+		slot.initialize(character.cname, index, character.clevel)
+		slot.connect(\"clicked\", self, \"onSlotPress\")
+		$ScrollContainer/chartabs.add_child(slot)
+		index += 1
+	var addSlot = sslot.instance()
+	addSlot.initializeAdd()
+	addSlot.connect(\"add\", self, \"onAdd\")
+	$ScrollContainer/chartabs.add_child(addSlot)
+
+func onSlotPress(index): #Callback from slot signal
+	$design.rect_scale = Vector2(1,1)
+	$design.rect_position = Vector2(123.519, 235.451)
+	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
+		if x == index:
+			continue
+		$ScrollContainer/chartabs.get_child(x).unselect()
+	var cdata = gloader.characters[index]
+	if cdata.cuseCustom:
+		var image = gloader.loadCImage(cdata.ccustomPath)
+		var sss = Vector2(cdata.ccustomSize[0], cdata.ccustomSize[1])
+		var frameSize = Vector2(image.get_data().get_width()/sss.x, image.get_data().get_height()/sss.y)
+		$design/body.texture = image
+		$design/body.region_rect.size = frameSize
+		var idlerow = 0
+		for anim in cdata.ccustomAnims:
+			if anim.name == \"idle\":
+				idlerow = anim.row
+		$design/body.region_rect.position = Vector2(0, frameSize.y * (idlerow - 1))
+		$design/body.material.set_shader_param(\"mask\", null)
+		$design/spine.texture = null
+		$design/spine.material.set_shader_param(\"mask\", null)
+		$design/legs.texture = null
+		$design/legs.material.set_shader_param(\"mask\", null)
+		$design/tail.texture = null
+		$design/tail.material.set_shader_param(\"mask\", null)
+		$design/head.texture = null
+		$design/head.material.set_shader_param(\"mask\", null)
+		$design/wings.texture = null
+		$design/wings.material.set_shader_param(\"mask\", null)
+		$design/tdec.texture = null
+		$design/tdec.material.set_shader_param(\"mask\", null)
+	else:
+		var playerPalette = ImageTexture.new()
+		playerPalette.load(cdata.cpal)
+		playerPalette.flags = 0
+		var partIndex = 0
+		for part in cdata.cappearance:
+			var partTex
+			var partRow = -1
+			var partMask
+			for tribe in gloader.loadedtribes:
+				if tribe.tribeid == part:
+					partTex = load(tribe.idle.idletex)
+					for p in tribe.idle.parts:
+						if p.partid == partIDs[partIndex]:
+							partRow = p.row - 1
+							break
+					partMask = load(tribe.idle.mask)
+					break
+			if partRow != -1:
+				$design.get_node(partIDs[partIndex]).texture = partTex
+				$design.get_node(partIDs[partIndex]).region_rect.position = Vector2(0,448*partRow)
+				$design.get_node(partIDs[partIndex]).material.set_shader_param(\"mask\", partMask)
+			else:
+				$design.get_node(partIDs[partIndex]).texture = null
+				$design.get_node(partIDs[partIndex]).material.set_shader_param(\"mask\", null)
+			partIndex += 1
+		for child in range($design.get_child_count()-1):
+			$design.get_child(child).material.set_shader_param(\"palette\", playerPalette)
+	$design.rect_scale = Vector2(1*cdata.cscale, 1*cdata.cscale)
+#	$design.rect_position = Vector2($design.rect_position.x + (rect_size.x * cdata.cscale) / 2, $design.rect_position.y + rect_size.y*(cdata.cscale) - (15 if cdata.cscale != 1 else 0))
+	$actionPanel.show()
+
+func onActionPlay():
+	pass
+
+func onActionExport():
+	pass #todo
+
+func onActionCloudsave():
+	pass
+
+func onActionDelete():
+	pass
+
+func onAdd():
+	$design.rect_scale = Vector2(1,1)
+	$design.rect_position = Vector2(123.519, 235.451)
+#	$design/spine.texture = load(\"res://images/character/nigw/idle/nw-spine.png\")
+#	$design/body.texture = load(\"res://images/character/nigw/idle/nw-body.png\")
+#	$design/legs.texture = load(\"res://images/character/nigw/idle/nw-legs.png\")
+#	$design/tail.texture = load(\"res://images/character/nigw/idle/nw-tail.png\")
+#	$design/head.texture = load(\"res://images/character/nigw/idle/nw-head.png\")
+#	$design/wings.texture = load(\"res://images/character/nigw/idle/nw-wings.png\")
+#	$design/tdec.texture = null
+	get_node(\"../AnimationPlayer\").play(\"camInit\")
+	get_node(\"../Camera2D\").camMovePart(\"head\")
+	get_node(\"../CanvasLayer/toplayer\").onCreate()
+	$design/body.region_rect.position = Vector2.ZERO
+	for x in range($ScrollContainer/chartabs.get_child_count() - 1):
+		$ScrollContainer/chartabs.get_child(x).unselect()
+	$actionPanel.hide()
+
+func customizerCancel():
+	get_parent().get_node(\"CanvasLayer/toplayer/mmbtn\").show()
+	$design/spine.texture = null
+	$design/spine.material.set_shader_param(\"mask\", null)
+	$design/legs.texture = null
+	$design/legs.material.set_shader_param(\"mask\", null)
+	$design/tail.texture = null
+	$design/tail.material.set_shader_param(\"mask\", null)
+	$design/head.texture = null
+	$design/head.material.set_shader_param(\"mask\", null)
+	$design/wings.texture = null
+	$design/wings.material.set_shader_param(\"mask\", null)
+	$design/tdec.texture = null
+	$design/tdec.material.set_shader_param(\"mask\", null)
+	$design/body.texture = null
+	$design/body.material.set_shader_param(\"mask\", null)
+	get_parent().get_node(\"Camera2D\").camMovePart(\"overview\")
+	get_parent().get_node(\"AnimationPlayer\").play_backwards(\"camInit\")
+
+func mmreturn():
+	gvars.load_scene(\"res://scenes/menus.tscn\")
+
+func _on_customizer_saved():
+	customizerCancel()
+	refreshCharacters()
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 24 )
+shader_param/mask = ExtResource( 27 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 24 )
+shader_param/mask = ExtResource( 29 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 24 )
+shader_param/mask = ExtResource( 30 )
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 24 )
+shader_param/mask = ExtResource( 31 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 24 )
+shader_param/mask = ExtResource( 26 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 28 )
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 25 )
+shader_param/palette = ExtResource( 24 )
+shader_param/mask = ExtResource( 32 )
+
+[sub_resource type="Animation" id=9]
+length = 1.2
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("spine:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("body:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("legs:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 3980, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("tail:region_rect")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("head:region_rect")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("wings:region_rect")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("tdec:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 796, 448 ), Rect2( 796, 0, 796, 448 ), Rect2( 1592, 0, 796, 448 ), Rect2( 2388, 0, 796, 448 ), Rect2( 3184, 0, 796, 448 ), Rect2( 3980, 0, 796, 448 ), Rect2( 0, 0, 796, 448 ) ]
+}
+
+[sub_resource type="GDScript" id=10]
+script/source = "extends Panel
+
+func singleplayer():
+	$\"1\".hide()
+	$\"2\".show()
+
+func multiplayer():
+	$\"1\".hide()
+	$\"2\".hide()
+
+func back():
+	$\"1\".show()
+	$\"2\".hide()
+
+func cancel():
+	get_parent().hide()
+"
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends Camera2D
+
+const parts = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\", \"overview\"]
+const colorparts = [\"eye\", \"horns\", \"scales\", \"tdec\", \"spine\", \"wings\"]
+const camspeed = 10
+const camzoomspeed = 0.02
+
+var cameraGoTo: Vector2
+var cameraZoom: Vector2
+
+func _ready():
+	cameraGoTo = position
+	cameraZoom = Vector2(1,1)
+
+func camMovePart(part:String):
+	if part in parts:
+		match parts.find(part):
+			0: #head
+				cameraGoTo = Vector2(713,354)
+				cameraZoom = Vector2(0.4,0.4)
+			1:
+				cameraGoTo = Vector2(625,450)
+				cameraZoom = Vector2(0.4,0.4)
+			2:
+				cameraGoTo = Vector2(513,434)
+				cameraZoom = Vector2(0.6,0.6)
+			3:
+				cameraGoTo = Vector2(600,470)
+				cameraZoom = Vector2(0.4,0.4)
+			4:
+				cameraGoTo = Vector2(593,562)
+				cameraZoom = Vector2(0.4,0.4)
+			5:
+				cameraGoTo = Vector2(352,462)
+				cameraZoom = Vector2(0.4,0.4)
+			6:
+				cameraGoTo = Vector2(210,494)
+				cameraZoom = Vector2(0.3,0.3)
+			7:
+				cameraGoTo = Vector2(1366/2,768/2)
+				cameraZoom = Vector2(1,1)
+			_:
+				logcat.stdout(\"Unknown part at index: \" + String(parts.find(part)), logcat.ERROR)
+	elif part in colorparts:
+		match colorparts.find(part):
+			0: 
+				cameraGoTo = Vector2(750,354)
+				cameraZoom = Vector2(0.3,0.3)
+			1:
+				cameraGoTo = Vector2(722,322)
+				cameraZoom = Vector2(0.3,0.3)
+			2:
+				cameraGoTo = Vector2(675,457)
+				cameraZoom = Vector2(0.6,0.6)
+			3:
+				cameraGoTo = Vector2(271,501)
+				cameraZoom = Vector2(0.3,0.3)
+			4:
+				cameraGoTo = Vector2(721,401)
+				cameraZoom = Vector2(0.3,0.3)
+			5:
+				cameraGoTo = Vector2(681,457)
+				cameraZoom = Vector2(0.4,0.4)
+			
+			_:
+				logcat.stdout(\"Unknown part color option at index: \" + String(parts.find(part)), logcat.ERROR)
+
+func _process(_delta):
+	position = position.move_toward(cameraGoTo, camspeed)
+	zoom = zoom.move_toward(cameraZoom, camzoomspeed)
+"
+
+[sub_resource type="GDScript" id=12]
+script/source = "extends Control
+
+const p1 = \"Hi there! My name's Polezno, and I'm here to help you out!\"
+const p2 = \"First off, let's create a character. Click the \\\"+ Create\\\" button to do so.\"
+const p3 = \"In this screen, you'll give the character some appearance!\"
+const p4 = \"These two arrows select different parts of your character.\"
+const p5 = \"And these arrows select the different variants of that part.\"
+const p6 = \"You can also click this button to provide a custom look for your character!\"
+const p7 = \"Some parts are required, while others aren't. The required ones are set by default to the NightWing base, though you can change that in the settings.\"
+const p8 = \"Try it now! Give your character some looks. Click next once you are ready to continue.\"
+const p9 = \"In this screen, you'll give your character some color.\"
+const p10 = \"These arrows select different parts of the character, leaving out the hidden ones.\"
+const p11 = \"This button opens a color picker, which you can use to set the color of the selected part.\"
+const p12 = \"Go ahead and give your character some color! Click next to proceed.\"
+const p13 = \"This screen defines your character's traits.\"
+const p14 = \"Traits can be selected entirely by you, or you can click the randomize button to completely randomize it.\"
+const p15 = \"Try it! Click next to continue on to the last screen.\"
+const p16 = \"In this screen, you'll define your character's name, gender, and their pronouns.\"
+const p17 = \"You can also select how big your character will appear.\"
+const p18 = \"Now give your character some details! Click save once you are done.\"
+const p19 = \"As you can see, now your character appears as a tab on the bottom of your screen.\"
+const p20 = \"After saving, the character automatically gets selected.\"
+const p21 = \"On the right side of the screen, there are several options.\"
+const p22 = \"You can export your character...\"
+const p23 = \"... store your character to the cloud, so it can be accessed from anywhere...\"
+const p24 = \"... or delete your character. That cannot be undone, so be careful!\"
+const p25 = \"Lastly, below the design of your character, a play button appears. Go ahead and click that.\"
+const p26 = \"In this screen, you can select to either play solo...\"
+const p27 = \"... or play with friends.\"
+const p28 = \"And thats about it for the customizer! I'll see you in the world, traveller.\"
+
+func _ready():
+	show()
+	$poleznocustomtut.hide()
+	$customizer.hide()
+
+func onCreate():
+	show()
+	$mmbtn.hide()
+	$customizer.initCustomizer()
+
+"
+
+[sub_resource type="GDScript" id=13]
+script/source = "extends Control
+
+signal cancel()
+signal saved()
+
+const partIDs = [\"head\",\"body\",\"spine\",\"wings\",\"legs\",\"tail\",\"tdec\"]
+const partIDsColor = [\"eye\", \"horns\", \"scales\", \"tdec\", \"spine\", \"wings\"]
+
+var partIndex = [0,0,0,0,0,0,0]
+var colorIndex = [Color.white, Color.white, Color.white, Color.white, Color.white, Color.white]
+
+var defaultTribe = \"nigw\"#gloader.defaultTribe #TODO: implement this feature
+
+onready var blankPal = load(\"res://images/character/palettes/palette-main.tex\")
+onready var player = get_parent().get_parent().get_parent().get_node(\"AnimationPlayer\")
+onready var camera = get_parent().get_parent().get_parent().get_node(\"Camera2D\")
+onready var designParent = get_parent().get_parent().get_parent().get_node(\"ui/design\")
+
+var location = 0
+var currentPart = 0
+var currentPartColor = 0
+var currentPartColorID = \"eye\"
+var currentPartID = \"head\"
+
+var playerpal
+
+# locations - 0: parts 1: colors 2: traits 3: details
+# parts - 0: head 1: body 2: spine 3: wings 4: legs 5: tail 6: tail decoration
+
+func initCustomizer():
+	#Hide all unneccessary panels
+	$arrowH/l.hide()
+	$arrowV/u.hide()
+	$prevpartpreview.hide()
+	$prevpartpreview/prevpart/noTex.hide()
+	$nextpartpreview/nextpart/noTex.hide()
+	$traitsPanel.hide()
+	$colorPanel.hide()
+	$detailsPanel.hide()
+	
+	#Reset customizer designs
+	designParent.get_node(\"head\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"body\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"legs\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"tail\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"tdec\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"wings\").material.set_shader_param(\"palette\", blankPal)
+	designParent.get_node(\"spine\").material.set_shader_param(\"palette\", blankPal)
+	
+	var tribedata = {}
+	for tribe in gloader.loadedtribes:
+		if tribe.tribeid == defaultTribe:
+			tribedata = tribe
+	if tribedata.empty():
+		logcat.stdout(\"Error loading default tribe. Reverting to default\", logcat.ERROR)
+		tribedata = gloader.loadedtribes[0]
+	
+	var hasSpine = false
+	var hasTdec = false
+	
+	# head reset
+	for part in tribedata.idle.parts:
+		match part.partid:
+			\"body\":
+				designParent.get_node(\"body\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"body\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"body\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"head\":
+				designParent.get_node(\"head\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"head\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"head\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"legs\":
+				designParent.get_node(\"legs\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"legs\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"legs\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"tail\":
+				designParent.get_node(\"tail\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"tail\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"tail\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"spine\":
+				hasSpine = true
+				designParent.get_node(\"spine\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"spine\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"spine\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"tdec\":
+				hasTdec = true
+				designParent.get_node(\"tdec\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"tdec\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"tdec\").region_rect.position = Vector2(0, 448*(part.row - 1))
+			\"wings\":
+				designParent.get_node(\"wings\").texture = load(tribedata.idle.idletex)
+				designParent.get_node(\"wings\").material.set_shader_param(\"mask\", load(tribedata.idle.mask))
+				designParent.get_node(\"wings\").region_rect.position = Vector2(0, 448*(part.row - 1))
+	
+	if !hasSpine:
+		designParent.get_node(\"spine\").texture = null
+		designParent.get_node(\"spine\").material.set_shader_param(\"mask\", null)
+	if !hasTdec:
+		designParent.get_node(\"tdec\").texture = null
+		designParent.get_node(\"tdec\").material.set_shader_param(\"mask\", null)
+	
+	#Hide the other UI
+	player.play(\"camInit\")
+	
+	#reset variables
+	partIndex = [0,0,0,0,0,0,0]
+	colorIndex = [Color.white, Color.white, Color.white, Color.white, Color.white, Color.white]
+	location = 0
+	currentPart = 0
+	currentPartColor = 0
+	currentPartID = \"head\"
+	currentPartColorID = \"eye\"
+	playerpal = blankPal
+	checkPart()
+	show()
+
+func checkLocation():
+	match location:
+		0:
+			camera.camMovePart(partIDs[currentPart])
+			$arrowH.show()
+			$colorPanel.hide()
+			checkPartArrows()
+			checkPart()
+			$arrowV.show()
+		1:
+			camera.camMovePart(partIDsColor[currentPartColor])
+			$arrowH.hide()
+			$colorPanel.show()
+			$nextpartpreview.hide()
+			$prevpartpreview.hide()
+			$arrowV.show()
+			$traitsPanel.hide()
+			checkColorArrows()
+		2:
+			camera.camMovePart(\"overview\")
+			$traitsPanel.show()
+			$colorPanel.hide()
+			$detailsPanel.hide()
+			$arrowV.hide()
+		3:
+			camera.camMovePart(\"overview\")
+			$traitsPanel.hide()
+			$detailsPanel.show()
+
+func onNext():
+	if $nsbtn.text == \"Save\":
+		onSave()
+		return
+	if location <= 3:
+		location += 1
+		currentPart = 0
+		if location == 3:
+			$nsbtn.text = \"Save\"
+		$pbtn.disabled = false
+	checkLocation()
+
+func onPrevious():
+	if location >= 0:
+		location -= 1
+		currentPart = 0
+		if location == 0:
+			$pbtn.disabled = true
+		$nsbtn.text = \"Next\"
+	checkLocation()
+
+func checkColorArrows():
+	if currentPartColor == 5:
+		$arrowV/d.hide()
+	else:
+		$arrowV/d.show()
+	if currentPartColor == 0:
+		$arrowV/u.hide()
+	else:
+		$arrowV/u.show()
+
+func checkPartArrows():
+	if currentPart == 6:
+		$arrowV/d.hide()
+	else:
+		$arrowV/d.show()
+	if currentPart == 0:
+		$arrowV/u.hide()
+	else:
+		$arrowV/u.show()
+
+func nextPart():
+	if location == 0:
+		if currentPart < 6:
+			currentPart += 1
+			currentPartID = partIDs[currentPart]
+			camera.camMovePart(partIDs[currentPart])
+			checkPartArrows()
+			checkPart()
+	elif location == 1:
+		if currentPartColor < 5:
+			currentPartColor += 1
+			currentPartColorID = partIDsColor[currentPartColor]
+			$colorPanel/ColorPicker.color = colorIndex[currentPartColor]
+			camera.camMovePart(partIDsColor[currentPartColor])
+			checkColorArrows()
+
+func previousPart():
+	if location == 0:
+		if currentPart > 0:
+			currentPart -= 1
+			currentPartID = partIDs[currentPart]
+			camera.camMovePart(partIDs[currentPart])
+			checkPartArrows()
+			checkPart()
+	elif location == 1:
+		if currentPartColor > 0:
+			currentPartColor -= 1
+			currentPartColorID = partIDsColor[currentPartColor]
+			$colorPanel/ColorPicker.color = colorIndex[currentPartColor]
+			camera.camMovePart(partIDsColor[currentPartColor])
+			checkColorArrows()
+			
+
+const darknessVal = 0.1
+
+func switchColor(_color):
+	var palette = playerpal.get_data()
+	var darker = Color(_color.r - darknessVal, _color.g - darknessVal, _color.b - darknessVal)
+	palette.lock()
+	match currentPartColorID:
+		\"eye\":
+			palette.set_pixel(3,0,_color)
+		\"horns\":
+			palette.set_pixel(2,0,_color)
+		\"scales\":
+			palette.set_pixel(0,0,_color)
+			palette.set_pixel(1,0,darker)
+		\"tdec\":
+			palette.set_pixel(9,0,darker)
+			palette.set_pixel(8,0,_color)
+		\"spine\":
+			palette.set_pixel(4,0,_color)
+			palette.set_pixel(5,0,darker)
+		\"wings\":
+			palette.set_pixel(6,0,_color)
+			palette.set_pixel(7,0,darker)
+	palette.unlock()
+	playerpal.create_from_image(palette,0)
+	playerpal.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
+	setPalette()
+
+func setPalette():
+	designParent.get_node(\"head\").material.set_shader_param(\"palette\", playerpal)
+	designParent.get_node(\"body\").material.set_shader_param(\"palette\", playerpal)
+	designParent.get_node(\"spine\").material.set_shader_param(\"palette\", playerpal)
+	designParent.get_node(\"legs\").material.set_shader_param(\"palette\", playerpal)
+	designParent.get_node(\"tail\").material.set_shader_param(\"palette\", playerpal)
+	designParent.get_node(\"wings\").material.set_shader_param(\"palette\", playerpal)
+	designParent.get_node(\"tdec\").material.set_shader_param(\"palette\", playerpal)
+
+func cancel():
+	emit_signal(\"cancel\")
+	hide()
+
+var row
+
+func checkPart():
+	if partIndex[currentPart] == gloader.loadedtribes.size() - 1:
+		$arrowH/r.hide()
+		$nextpartpreview.hide()
+	else:
+		$arrowH/r.show()
+		$nextpartpreview.show()
+		$nextpartpreview/nextpart.texture = load(gloader.loadedtribes[partIndex[currentPart] + 1].idle.idletex)
+		row = -1
+		for part in gloader.loadedtribes[partIndex[currentPart]+1].get(\"idle\").parts:
+			if part.partid == currentPartID:
+				row = part.row
+				$nextpartpreview/nextpart/noTex.hide()
+		if row == -1:
+			row = 0
+			$nextpartpreview/nextpart/noTex.show()
+			$nextpartpreview/nextpart.texture = null
+		$nextpartpreview/nextpart.region_rect.position = Vector2(0,448 * (row-1))
+	
+	if partIndex[currentPart] == 0:
+		$arrowH/l.hide()
+		$prevpartpreview.hide()
+	else:
+		$arrowH/l.show()
+		$prevpartpreview.show()
+		$prevpartpreview/prevpart.texture = load(gloader.loadedtribes[partIndex[currentPart] - 1].idle.idletex)
+		row = -1
+		for part in gloader.loadedtribes[partIndex[currentPart]-1].get(\"idle\").parts:
+			if part.partid == currentPartID:
+				row = part.row
+				$prevpartpreview/prevpart/noTex.hide()
+		if row == -1:
+			row = 0
+			$prevpartpreview/prevpart/noTex.show()
+			$prevpartpreview/prevpart.texture = null
+		$prevpartpreview/prevpart.region_rect.position = Vector2(0,448 * (row-1))
+	
+	row = -1
+	var dpart = designParent.get_node(currentPartID)
+	for part in gloader.loadedtribes[partIndex[currentPart]].get(\"idle\").parts:
+		if part.partid == currentPartID:
+			row = part.row
+	if row != -1:
+		dpart.texture = load(gloader.loadedtribes[partIndex[currentPart]].idle.idletex)
+		dpart.material.set_shader_param(\"mask\", load(gloader.loadedtribes[partIndex[currentPart]].idle.mask))
+		dpart.region_rect.position = Vector2(0,448 * (row-1))
+	else:
+		dpart.texture = null #Will mark as \"blank\" in the data file
+		dpart.material.set_shader_param(\"mask\", null)
+
+func switchPartNext():
+	partIndex[currentPart] += 1
+	checkPart()
+
+func switchPartPrev():
+	partIndex[currentPart] -= 1
+	checkPart()
+
+func colorPicker_colorchange(color):
+	switchColor(color)
+
+func onSave():
+	$detailsPanel/LineEdit.modulate = Color.white
+	if $detailsPanel/LineEdit.text.strip_edges() == \"\":
+		$detailsPanel/LineEdit.modulate = Color.red
+		return
+	if gloader.saveChar(partIndex, playerpal, $detailsPanel/LineEdit.text):
+		emit_signal(\"saved\")
+		hide()
+"
+
+[sub_resource type="GDScript" id=14]
+script/source = "extends Panel
+
+"
+
+[sub_resource type="StyleBoxTexture" id=15]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+modulate_color = Color( 0.313726, 0, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+modulate_color = Color( 0.831373, 0.647059, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 23 )
+region_rect = Rect2( 0, 0, 128, 128 )
+margin_left = 28.2819
+margin_right = 27.8945
+modulate_color = Color( 0.615686, 0.490196, 0, 1 )
+
+[sub_resource type="Animation" id=18]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/ScrollContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"update": 3,
+"values": [ Vector2( 611.648, 483.893 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera2D:zoom")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"update": 3,
+"values": [ Vector2( 0.4, 0.4 ) ]
+}
+
+[sub_resource type="Animation" id=20]
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ui/ScrollContainer:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Camera2D:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 683, -0.25, 0, 0.25, 0, 713, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Camera2D:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 384, -0.25, 0, 0.25, 0, 354, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Camera2D:zoom:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.4, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Camera2D:zoom:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.4, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0.2, 0.75 )
+}
+
+[node name="gamesys" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [  ]
+}
+sceneName = "gamesys"
+
+[node name="ui" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="TextureRect" parent="ui"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 9 )
+expand = true
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="design" type="Control" parent="ui"]
+anchor_left = 0.09
+anchor_top = 0.307
+anchor_right = 0.673
+anchor_bottom = 0.89
+margin_left = 0.578636
+margin_top = -0.324997
+margin_right = 0.200623
+margin_bottom = -0.0689697
+grow_horizontal = 2
+grow_vertical = 2
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="spine" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="body" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="legs" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 3980, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="tail" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 5 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="head" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="wings" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 7 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="tdec" type="NinePatchRect" parent="ui/design"]
+material = SubResource( 8 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Also will serve for the character stuff"
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ui/design"]
+anims/preview = SubResource( 9 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ui"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -108.0
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="chartabs" type="HBoxContainer" parent="ui/ScrollContainer"]
+margin_right = 1366.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+
+[node name="actionPanel" type="Panel" parent="ui"]
+self_modulate = Color( 0.462745, 0.215686, 0, 1 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -264.0
+margin_top = -451.0
+margin_right = -58.0
+margin_bottom = -126.0
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="play" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0872483
+anchor_top = 0.0523077
+anchor_right = 0.872483
+anchor_bottom = 0.196923
+custom_fonts/font = ExtResource( 21 )
+text = "Play"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="export" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0872483
+anchor_top = 0.206154
+anchor_right = 0.872483
+anchor_bottom = 0.350769
+custom_fonts/font = ExtResource( 21 )
+text = "Export"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="cloudsave" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0873786
+anchor_top = 0.353846
+anchor_right = 0.873786
+anchor_bottom = 0.498462
+custom_fonts/font = ExtResource( 21 )
+text = "Save"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="delete" type="Button" parent="ui/actionPanel"]
+anchor_left = 0.0872483
+anchor_top = 0.507692
+anchor_right = 0.872483
+anchor_bottom = 0.652308
+custom_fonts/font = ExtResource( 21 )
+text = "Delete"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="playdialogue" type="TextureRect" parent="ui"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 33 )
+
+[node name="bg" type="Panel" parent="ui/playdialogue"]
+self_modulate = Color( 0.670588, 0.615686, 0.423529, 1 )
+anchor_left = 0.260615
+anchor_top = 0.322917
+anchor_right = 0.739385
+anchor_bottom = 0.677083
+custom_styles/panel = ExtResource( 20 )
+script = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="1" type="Control" parent="ui/playdialogue/bg"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="ui/playdialogue/bg/1"]
+margin_left = 75.0
+margin_top = 103.0
+margin_right = 323.0
+margin_bottom = 155.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color_disabled = Color( 0.494118, 0.184314, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.8, 0.392157, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.294118, 0, 1 )
+text = "Singleplayer "
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="ui/playdialogue/bg/1"]
+margin_left = 330.0
+margin_top = 103.0
+margin_right = 577.0
+margin_bottom = 155.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color_disabled = Color( 0.494118, 0.184314, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.8, 0.392157, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.294118, 0, 1 )
+text = "Multiplayer"
+flat = true
+
+[node name="Button3" type="Button" parent="ui/playdialogue/bg/1"]
+margin_left = 258.0
+margin_top = 222.0
+margin_right = 391.0
+margin_bottom = 255.0
+custom_fonts/font = ExtResource( 10 )
+custom_colors/font_color_disabled = Color( 0.494118, 0.184314, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.8, 0.392157, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.294118, 0, 1 )
+text = "Back"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="Control" parent="ui/playdialogue/bg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="ui/playdialogue/bg/2"]
+margin_left = 168.695
+margin_top = 50.9498
+margin_right = 490.695
+margin_bottom = 92.9498
+custom_fonts/font = ExtResource( 21 )
+align = 1
+placeholder_text = "IP ADDRESS"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 683, 384 )
+current = true
+smoothing_enabled = true
+script = SubResource( 11 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="toplayer" type="Control" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mmbtn" type="Button" parent="CanvasLayer/toplayer"]
+margin_left = 40.0
+margin_top = 32.0
+margin_right = 115.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+text = "Quit to Main Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="poleznocustomtut" type="Control" parent="CanvasLayer/toplayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+
+[node name="customizer" type="Control" parent="CanvasLayer/toplayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="arrowH" type="Control" parent="CanvasLayer/toplayer/customizer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="r" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowH"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -120.0
+margin_top = -44.0
+margin_right = -32.0
+margin_bottom = 44.0
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 16 )
+texture_hover = ExtResource( 11 )
+expand = true
+
+[node name="l" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowH"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 16.0
+margin_top = -44.0
+margin_right = 104.0
+margin_bottom = 44.0
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 12 )
+expand = true
+
+[node name="arrowV" type="Control" parent="CanvasLayer/toplayer/customizer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="u" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowV"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -44.0
+margin_top = 16.0
+margin_right = 44.0
+margin_bottom = 104.0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 14 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="d" type="TextureButton" parent="CanvasLayer/toplayer/customizer/arrowV"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -44.0
+margin_top = -104.0
+margin_right = 44.0
+margin_bottom = -16.0
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 18 )
+texture_hover = ExtResource( 17 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nsbtn" type="Button" parent="CanvasLayer/toplayer/customizer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -82.0
+margin_top = 32.0
+margin_right = -30.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+text = "Next"
+
+[node name="pbtn" type="Button" parent="CanvasLayer/toplayer/customizer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -186.0
+margin_top = 32.0
+margin_right = -99.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+disabled = true
+text = "Previous"
+
+[node name="cbtn" type="Button" parent="CanvasLayer/toplayer/customizer"]
+margin_left = 40.0
+margin_top = 32.0
+margin_right = 115.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nextpartpreview" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
+self_modulate = Color( 0.63, 0.54, 0.31, 1 )
+anchor_left = 0.632113
+anchor_top = 0.36849
+anchor_right = 0.910297
+anchor_bottom = 0.647135
+margin_left = 103.313
+margin_top = 257.024
+margin_right = 103.313
+margin_bottom = 257.024
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="nextpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer/nextpartpreview"]
+modulate = Color( 1, 1, 1, 0.611765 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="noTex" type="TextureRect" parent="CanvasLayer/toplayer/customizer/nextpartpreview/nextpart"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 19 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/nextpartpreview"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -47.0
+margin_top = 8.0
+margin_right = 47.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 10 )
+text = "Next Tribe"
+
+[node name="prevpartpreview" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
+self_modulate = Color( 0.639216, 0.545098, 0.313726, 1 )
+anchor_left = 0.011713
+anchor_top = 0.703156
+anchor_right = 0.275256
+anchor_bottom = 0.981802
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="prevpart" type="NinePatchRect" parent="CanvasLayer/toplayer/customizer/prevpartpreview"]
+modulate = Color( 1, 1, 1, 0.611765 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 796, 448 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="noTex" type="TextureRect" parent="CanvasLayer/toplayer/customizer/prevpartpreview/prevpart"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 19 )
+expand = true
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/prevpartpreview"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -64.5
+margin_top = 8.0
+margin_right = 64.5
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 10 )
+text = "Previous Tribe"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="colorPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
+self_modulate = Color( 0.470588, 0.411765, 0.207843, 1 )
+margin_left = 981.0
+margin_top = 89.0
+margin_right = 1345.0
+margin_bottom = 573.0
+custom_styles/panel = ExtResource( 20 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker" type="ColorPicker" parent="CanvasLayer/toplayer/customizer/colorPanel"]
+anchor_left = 0.0348525
+anchor_top = 0.0929752
+anchor_right = 0.86059
+anchor_bottom = 0.944215
+margin_left = 44.0
+margin_top = 44.0
+margin_right = 44.0
+margin_bottom = 44.0
+edit_alpha = false
+presets_enabled = false
+presets_visible = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/colorPanel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -35.0
+margin_top = 7.0
+margin_right = 35.0
+margin_bottom = 39.0
+custom_fonts/font = ExtResource( 21 )
+text = "Color"
+
+[node name="traitsPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+visible = false
+margin_left = 836.0
+margin_top = 80.0
+margin_right = 1333.0
+margin_bottom = 713.0
+custom_styles/panel = ExtResource( 22 )
+script = SubResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/traitsPanel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -39.0
+margin_top = 13.0
+margin_right = 39.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Traits"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/toplayer/customizer/traitsPanel"]
+anchor_left = 0.0623742
+anchor_top = 0.545024
+anchor_right = 0.909457
+anchor_bottom = 0.976303
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/toplayer/customizer/traitsPanel/ScrollContainer"]
+margin_right = 421.0
+size_flags_horizontal = 3
+
+[node name="detailsPanel" type="Panel" parent="CanvasLayer/toplayer/customizer"]
+margin_left = 836.0
+margin_top = 80.0
+margin_right = 1333.0
+margin_bottom = 713.0
+custom_styles/panel = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/toplayer/customizer/detailsPanel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -116.5
+margin_top = 13.0
+margin_right = 116.5
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 21 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Character Details"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/toplayer/customizer/detailsPanel"]
+margin_left = 113.0
+margin_top = 78.0
+margin_right = 400.0
+margin_bottom = 102.0
+custom_styles/read_only = SubResource( 15 )
+custom_styles/focus = SubResource( 16 )
+custom_styles/normal = SubResource( 17 )
+custom_fonts/font = ExtResource( 10 )
+custom_colors/selection_color = Color( 0.886275, 0.811765, 0, 1 )
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.356863, 0.25098, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+placeholder_text = "Character Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/camInit = SubResource( 18 )
+anims/camZoomBody = SubResource( 19 )
+anims/camZoomHead = SubResource( 20 )
+[connection signal="pressed" from="ui/playdialogue/bg/1/Button" to="ui/playdialogue/bg" method="singleplayer"]
+[connection signal="pressed" from="ui/playdialogue/bg/1/Button2" to="ui/playdialogue/bg" method="multiplayer"]
+[connection signal="pressed" from="ui/playdialogue/bg/1/Button3" to="ui/playdialogue/bg" method="cancel"]
+[connection signal="pressed" from="CanvasLayer/toplayer/mmbtn" to="ui" method="mmreturn"]
+[connection signal="cancel" from="CanvasLayer/toplayer/customizer" to="ui" method="customizerCancel"]
+[connection signal="saved" from="CanvasLayer/toplayer/customizer" to="ui" method="_on_customizer_saved"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/r" to="CanvasLayer/toplayer/customizer" method="switchPartNext"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowH/l" to="CanvasLayer/toplayer/customizer" method="switchPartPrev"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/u" to="CanvasLayer/toplayer/customizer" method="previousPart"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/arrowV/d" to="CanvasLayer/toplayer/customizer" method="nextPart"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/nsbtn" to="CanvasLayer/toplayer/customizer" method="onNext"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/pbtn" to="CanvasLayer/toplayer/customizer" method="onPrevious"]
+[connection signal="pressed" from="CanvasLayer/toplayer/customizer/cbtn" to="CanvasLayer/toplayer/customizer" method="cancel"]
+[connection signal="color_changed" from="CanvasLayer/toplayer/customizer/colorPanel/ColorPicker" to="CanvasLayer/toplayer/customizer" method="colorPicker_colorchange"]

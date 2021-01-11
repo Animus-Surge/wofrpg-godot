@@ -1,0 +1,11 @@
+- Redo customization system
+- MAYBE make it all into one sprite
+
+0.1.5
+- Surge (NPC)
+- Possibility???
+- Asteri (NPC)
+- Cacti (NPC)
+- Aurora (shop)
+- Player inventory
+- Shops

@@ -1,0 +1,595 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://images/ui/buttons/checked_box.png" type="Texture" id=1]
+[ext_resource path="res://fonts/pixel.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scripts/mainmenu.gd" type="Script" id=3]
+[ext_resource path="res://godot-resources/bg1.tres" type="StyleBox" id=4]
+[ext_resource path="res://images/ui/buttons/back-btn-hover.png" type="Texture" id=5]
+[ext_resource path="res://images/ui/buttons/back-btn.png" type="Texture" id=6]
+[ext_resource path="res://images/ui/buttons/back-btn-pressed.png" type="Texture" id=7]
+[ext_resource path="res://godot-resources/bgs/scroll_ui.stylebox" type="StyleBox" id=8]
+[ext_resource path="res://images/ui/icons/mm-icon.png" type="Texture" id=9]
+[ext_resource path="res://images/ui/backgrounds/mmbkg.png" type="Texture" id=10]
+[ext_resource path="res://images/ui/bars/bar.png" type="Texture" id=11]
+[ext_resource path="res://images/ui/ink.png" type="Texture" id=12]
+[ext_resource path="res://fonts/pixel-s.tres" type="DynamicFont" id=13]
+[ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=14]
+[ext_resource path="res://godot-resources/grabber_bg.tres" type="StyleBox" id=15]
+[ext_resource path="res://godot-resources/grabber_bg_highlight.tres" type="StyleBox" id=16]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Panel
+
+func _ready():
+	$Content/fscheck.pressed = gloader.fs
+	$Content/wincheck.pressed = gloader.win
+
+#Function only applies to graphics and language related features. Audio systems will take effect
+#immediately
+func applySetSettings():
+	gloader.fs = $Content/fscheck.pressed
+	gloader.win = $Content/wincheck.pressed
+	gloader.saveSettings()
+"
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 40, 40 )
+margin_left = 11.9716
+margin_right = 11.9716
+margin_top = 12.3221
+margin_bottom = 11.9716
+modulate_color = Color( 0.364706, 0.364706, 0.364706, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.305882, 0.305882, 0.305882, 0.835294 )
+
+[sub_resource type="Animation" id=4]
+length = 0.4
+step = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("settingspanel:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("settingspanel:rect_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1066, 258 ), Vector2( 1066, 564 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("settingspanel:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 150, 286 ), Vector2( 150, 86 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("settingspanel/Content:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("settingspanel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009, 0.01 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, false, false, false, false, false, false, false, false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("settingspanel/Content:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.294, 0.295, 0.296, 0.297, 0.298, 0.299, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, false, false, false, false, true ]
+}
+
+[node name="menus" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+sceneName = "menus"
+readiness_check = false
+
+[node name="mainmenu" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 4 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="mainmenu"]
+anchor_left = 0.341
+anchor_top = 0.982
+anchor_right = 0.687
+anchor_bottom = 1.0
+margin_left = 0.19397
+margin_top = -0.176025
+margin_right = -0.442078
+text = "v0.2.24-alpha"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="playbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.429356
+anchor_top = 0.533203
+anchor_right = 0.570644
+anchor_bottom = 0.633464
+custom_fonts/font = ExtResource( 2 )
+text = "Play"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="settingsbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.429722
+anchor_top = 0.78776
+anchor_right = 0.57101
+anchor_bottom = 0.852865
+custom_fonts/font = ExtResource( 13 )
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="creditsbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.136896
+anchor_top = 0.683594
+anchor_right = 0.278184
+anchor_bottom = 0.748698
+custom_fonts/font = ExtResource( 13 )
+text = "Credits"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="exitbtn" type="Button" parent="mainmenu"]
+anchor_left = 0.722548
+anchor_top = 0.683594
+anchor_right = 0.863836
+anchor_bottom = 0.748698
+custom_fonts/font = ExtResource( 13 )
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="icon" type="TextureRect" parent="mainmenu"]
+anchor_left = 0.392753
+anchor_top = 0.0488281
+anchor_right = 0.607247
+anchor_bottom = 0.430339
+margin_right = 6.10352e-05
+texture = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="settingspanel" type="Panel" parent="mainmenu"]
+anchor_left = 0.10981
+anchor_top = 0.372396
+anchor_right = 0.89019
+anchor_bottom = 0.708333
+margin_left = -0.000457764
+margin_top = -200.0
+margin_right = 0.000488281
+margin_bottom = 106.0
+custom_styles/panel = ExtResource( 8 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Content" type="Control" parent="mainmenu/settingspanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="mainmenu/settingspanel/Content"]
+anchor_left = 0.0208935
+anchor_top = 0.0078149
+anchor_right = 0.0715502
+anchor_bottom = 0.0939393
+margin_top = -4.76837e-07
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="mainmenu/settingspanel/Content"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -52.5
+margin_top = 14.0
+margin_right = 52.5
+margin_bottom = 46.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Settings"
+
+[node name="lang" type="OptionButton" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 70.0
+margin_right = 404.0
+margin_bottom = 98.0
+custom_fonts/font = ExtResource( 13 )
+text = "English (US)"
+items = [ "English (US)", null, false, 0, null, "English (UK)", null, false, 1, null, "Spanish", null, false, 2, null, "French", null, false, 3, null, "Italian", null, false, 4, null, "Russian", null, false, 5, null, "German", null, false, 6, null, "Japanese", null, false, 7, null, "Sindarin (Elvish)", null, false, 8, null, "Pirate Talk", null, false, 9, null ]
+selected = 0
+
+[node name="aspect" type="OptionButton" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 120.942
+margin_right = 404.0
+margin_bottom = 148.942
+custom_fonts/font = ExtResource( 13 )
+text = "1366x768 (16:9)"
+items = [ "1366x768 (16:9)", null, false, 0, null, "1920x1080 (16:9)", null, false, 1, null, "1280x720 (16:9)", null, false, 2, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="mainmenu/settingspanel/Content"]
+margin_left = 62.9289
+margin_top = 72.6679
+margin_right = 195.929
+margin_bottom = 394.668
+custom_fonts/font = ExtResource( 13 )
+text = "Language
+
+Aspect Ratio
+
+Fullscreen
+
+Windowed
+
+Master Volume
+
+Music Volume
+
+SFX Volume"
+
+[node name="wincheck" type="CheckBox" parent="mainmenu/settingspanel/Content"]
+margin_left = 195.929
+margin_top = 207.501
+margin_right = 243.929
+margin_bottom = 255.501
+custom_icons/checked = ExtResource( 1 )
+custom_icons/unchecked = ExtResource( 11 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fscheck" type="CheckBox" parent="mainmenu/settingspanel/Content"]
+margin_left = 195.929
+margin_top = 161.07
+margin_right = 243.929
+margin_bottom = 209.07
+custom_icons/checked = ExtResource( 1 )
+custom_icons/unchecked = ExtResource( 11 )
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 266.0
+margin_right = 404.0
+margin_bottom = 306.0
+focus_mode = 0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 15 )
+custom_styles/grabber_area_highlight = ExtResource( 16 )
+custom_styles/grabber_area = SubResource( 2 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="muvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 314.772
+margin_right = 404.0
+margin_bottom = 354.772
+focus_mode = 0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 15 )
+custom_styles/grabber_area_highlight = ExtResource( 16 )
+custom_styles/grabber_area = SubResource( 2 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sfxvolslider" type="HSlider" parent="mainmenu/settingspanel/Content"]
+margin_left = 201.0
+margin_top = 364.385
+margin_right = 404.0
+margin_bottom = 404.385
+focus_mode = 0
+custom_icons/grabber_highlight = ExtResource( 12 )
+custom_icons/grabber = ExtResource( 12 )
+custom_styles/slider = ExtResource( 15 )
+custom_styles/grabber_area_highlight = ExtResource( 16 )
+custom_styles/grabber_area = SubResource( 2 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="mainmenu/settingspanel/Content"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = -74.0
+margin_right = 185.0
+margin_bottom = -20.0
+custom_fonts/font = ExtResource( 2 )
+text = "Apply"
+
+[node name="creditspanel" type="TextureRect" parent="mainmenu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 10 )
+expand = true
+
+[node name="Panel" type="Panel" parent="mainmenu/creditspanel"]
+anchor_left = 0.213
+anchor_top = 0.092
+anchor_right = 0.787
+anchor_bottom = 0.908
+margin_left = 0.541992
+margin_top = 0.343994
+margin_right = -0.542114
+margin_bottom = -0.344055
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="mainmenu/creditspanel/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/normal_font = ExtResource( 13 )
+bbcode_enabled = true
+bbcode_text = "[center]
+[color=#fcff88]Development Team[/color]
+
+[color=#ff0]Programmers[/color]
+
+[color=#0ff]Surge - Lead[/color]
+
+[color=#ff0]Art Team[/color]
+
+[color=#0f0]Animators[/color]
+
+Auryn  [color=#41FEC6]AsteriTheVeloci[/color]  [color=#fff]Lake[/color]  [color=#f700ff]Jellyfoosh[/color]  [color=#82eefd]PaintbrushWonder[/color]
+Swamp  LemonFox
+
+[color=#0f0]Concept Artists[/color]
+
+[color=#b3d9ff]FrenchToast[/color]  Ambivalent  Cal  flur  Seaweed  [color=#800000]Lord Crow[/color]
+
+[color=#0f0]Item Designers[/color]
+
+[color=#7ff]Glaze[/color]
+
+[color=#FF0]Audio Designers[/color]
+
+kayak  [color=#f70]Magma Studios[/color]
+
+[color=#ff0]Voice Actors[/color]
+
+Cacti
+
+[color=#ff0]Thanks to the marvelous people who helped translate![/color]
+
+Sundra
+
+[color=#f70]Special thanks to our patrons![/color]
+
+aarise
+
+[color=#478CBF]Godot Engine[/color]
+
+This game uses Godot Engine, available under the following license:
+
+Copyright (c) 2007-2020 Juan Linietsky, Ariel Manzur. Copyright (c) 2014-2020 Godot Engine contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[color=#ff0]Third Party Licenses[/color]
+
+[color=#0f0]MbedTLS[/color]
+
+MBedTLS is Copyright (C) 2013-2019 ARM
+
+Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+[color=#0f0]ENet[/color]
+
+Copyright (c) 2002-2016 Lee Salzman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+[color=#0f0]FreeType[/color]
+
+Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved.
+
+Wings of Fire, copyright (c) 2012 - 2020 Tui T. Sutherland"
+text = "
+Development Team
+
+Programmers
+
+Surge - Lead
+
+Art Team
+
+Animators
+
+Auryn  AsteriTheVeloci  Lake  Jellyfoosh  PaintbrushWonder
+Swamp  LemonFox
+
+Concept Artists
+
+FrenchToast  Ambivalent  Cal  flur  Seaweed  Lord Crow
+
+Item Designers
+
+Glaze
+
+Audio Designers
+
+kayak  Magma Studios
+
+Voice Actors
+
+Cacti
+
+Thanks to the marvelous people who helped translate!
+
+Sundra
+
+Special thanks to our patrons!
+
+aarise
+
+Godot Engine
+
+This game uses Godot Engine, available under the following license:
+
+Copyright (c) 2007-2020 Juan Linietsky, Ariel Manzur. Copyright (c) 2014-2020 Godot Engine contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Third Party Licenses
+
+MbedTLS
+
+MBedTLS is Copyright (C) 2013-2019 ARM
+
+Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+ENet
+
+Copyright (c) 2002-2016 Lee Salzman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+FreeType
+
+Portions of this software are copyright (c) 2020 The FreeType Project (www.freetype.org). All rights reserved.
+
+Wings of Fire, copyright (c) 2012 - 2020 Tui T. Sutherland"
+
+[node name="TextureButton" type="TextureButton" parent="mainmenu/creditspanel"]
+anchor_left = 0.017
+anchor_top = 0.038
+anchor_right = 0.075
+anchor_bottom = 0.141
+margin_left = 0.37483
+margin_top = 0.0760994
+margin_right = 0.146828
+margin_bottom = -0.0279007
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="mainmenu"]
+anims/settings = SubResource( 4 )
+[connection signal="pressed" from="mainmenu/playbtn" to="mainmenu" method="onPlay"]
+[connection signal="pressed" from="mainmenu/settingsbtn" to="mainmenu" method="settings"]
+[connection signal="pressed" from="mainmenu/creditsbtn" to="mainmenu" method="onCredits"]
+[connection signal="pressed" from="mainmenu/exitbtn" to="mainmenu" method="onQuit"]
+[connection signal="pressed" from="mainmenu/settingspanel/Content/TextureButton" to="mainmenu" method="settingsHide"]
+[connection signal="pressed" from="mainmenu/settingspanel/Content/Button" to="mainmenu/settingspanel" method="applySetSettings"]
+[connection signal="pressed" from="mainmenu/creditspanel/TextureButton" to="mainmenu" method="creditsHide"]
+[connection signal="animation_finished" from="mainmenu/AnimationPlayer" to="mainmenu" method="animDone"]

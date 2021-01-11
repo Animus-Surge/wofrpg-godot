@@ -1,0 +1,24 @@
+[
+	{
+		"id":"ingot_gold",
+		"name":"Gold Ingot",
+		"type":"material",
+		"on_use":{},
+		"model":"res://models/item/ingot.mesh",
+		"preview":"res://images/items/gold_ingot.png",
+		"material":"res://materials/gold.material",
+		"offset":{"x":0,"y":0,"z":0},
+		"size_offset":{"x":0.5,"y":0.5,"z":0.7}
+	},
+	{
+		"id":"gem_sapphire",
+		"name":"Sapphire",
+		"type":"material",
+		"on_use":{},
+		"model":"res://models/item/item_blank.res",
+		"preview":"res://images/items/gem-sapphire.png",
+		"material":"res://materials/sapphire.material",
+		"offset":{"x":0,"y":0.15,"z":0},
+		"size_offset":{"x":1,"y":1,"z":1}
+	}
+]

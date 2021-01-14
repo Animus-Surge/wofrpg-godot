@@ -1016,12 +1016,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.86795 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.339501 )
 enabled = true
 cast_to = Vector3( 0, 0, 4 )
+collision_mask = 524289
 collide_with_areas = true
 
 [node name="hoverOver" type="RayCast" parent="camerarig"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.339501 )
 enabled = true
 cast_to = Vector3( 0, 0, 8 )
+collision_mask = 524288
 collide_with_areas = true
 
 [node name="mcool" type="Timer" parent="."]
@@ -1035,3 +1037,11 @@ collide_with_areas = true
 [node name="3cool" type="Timer" parent="."]
 
 [node name="4cool" type="Timer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "USERNAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}

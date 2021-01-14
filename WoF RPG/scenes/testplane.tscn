@@ -1,16 +1,12 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/player/ui.gd" type="Script" id=1]
-[ext_resource path="res://entities/prefabs/dummy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=3]
 [ext_resource path="res://entities/prefabs/player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://images/gui/crosshair.png" type="Texture" id=5]
 [ext_resource path="res://scripts/entity/npc.gd" type="Script" id=6]
 [ext_resource path="res://scripts/entity/interactable.gd" type="Script" id=7]
 [ext_resource path="res://scripts/player/inventory.gd" type="Script" id=8]
-[ext_resource path="res://scripts/entity/item.gd" type="Script" id=9]
-[ext_resource path="res://models/item/ingot.mesh" type="ArrayMesh" id=10]
-[ext_resource path="res://models/item/item_blank.res" type="CubeMesh" id=11]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends StaticBody
@@ -19,8 +15,10 @@ const TYPE = \"ground\"
 "
 
 [sub_resource type="SpatialMaterial" id=2]
-flags_transparent = true
-albedo_color = Color( 0.623529, 0.623529, 0.623529, 0.929412 )
+params_diffuse_mode = 3
+params_specular_mode = 1
+albedo_color = Color( 0.0313726, 0.25098, 0, 1 )
+metallic = 0.09
 
 [sub_resource type="PlaneMesh" id=3]
 material = SubResource( 2 )
@@ -29,54 +27,41 @@ size = Vector2( 512, 512 )
 [sub_resource type="ConvexPolygonShape" id=4]
 points = PoolVector3Array( 256, 0, 256, -256, 0, 256, 256, 0, -256, -256, 0, -256 )
 
-[sub_resource type="SpatialMaterial" id=5]
-render_priority = 1
-params_blend_mode = 3
-albedo_color = Color( 0.423529, 0, 0, 1 )
-metallic = 1.0
-roughness = 0.15
-emission_enabled = true
-emission = Color( 0.286275, 0.172549, 0, 1 )
-emission_energy = 1.52
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="CylinderMesh" id=6]
-material = SubResource( 5 )
+[sub_resource type="CylinderMesh" id=5]
 height = 5.0
 radial_segments = 5
 rings = 3
 
-[sub_resource type="CylinderShape" id=7]
+[sub_resource type="CylinderShape" id=6]
 height = 5.0
 
-[sub_resource type="SpatialMaterial" id=8]
-render_priority = 1
-params_blend_mode = 3
-albedo_color = Color( 0.223529, 0.921569, 0, 1 )
-metallic = 1.0
-roughness = 0.15
-emission_enabled = true
-emission = Color( 0.141176, 0, 0.494118, 1 )
-emission_energy = 1.52
-emission_operator = 0
-emission_on_uv2 = false
+[sub_resource type="SpatialMaterial" id=7]
+params_diffuse_mode = 3
+albedo_color = Color( 0.454902, 0, 0, 1 )
 
-[sub_resource type="CylinderMesh" id=9]
-material = SubResource( 8 )
+[sub_resource type="CylinderMesh" id=8]
+material = SubResource( 7 )
 height = 5.0
 radial_segments = 10
 rings = 3
 
-[sub_resource type="SphereShape" id=10]
-radius = 0.486448
-
 [node name="testplane" type="Spatial"]
 script = ExtResource( 3 )
-sceneID = "tpl"
+sceneID = "testplane"
+
+[node name="objects" type="Spatial" parent="."]
+
+[node name="player" parent="objects" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 127.922, -1.90735e-06, 81.1387 )
+collision_layer = 524289
+collision_mask = 524289
 
 [node name="world" type="StaticBody" parent="."]
 script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="plane" type="MeshInstance" parent="world"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 256, 0, 256 )
@@ -87,29 +72,14 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 256, 0, 256 )
 shape = SubResource( 4 )
 
-[node name="player" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 127.922, -1.90735e-06, 81.1387 )
-
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.189262, 0.949024, -0.252058, 0.624843, 0.0816172, 0.776473, 0.757464, -0.304453, -0.577544, 0, 6.59438, 0 )
+transform = Transform( 0.642716, 0.503188, 0.577683, 0.114736, -0.808771, 0.576824, 0.757464, -0.304453, -0.577544, 0, 6.59438, 0 )
 shadow_enabled = true
 shadow_bias = 0.5
 directional_shadow_mode = 1
 directional_shadow_bias_split_scale = 0.14
 
 [node name="projectiles" type="Spatial" parent="."]
-
-[node name="dummy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5839, 1.23905, 130.49 )
-
-[node name="dummy2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 209.02, 1.23905, 234.04 )
-
-[node name="dummy3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32.1765, 1.23905, 283.102 )
-
-[node name="dummy4" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 142.863, 1.23905, 145.659 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
@@ -135,7 +105,19 @@ texture = ExtResource( 5 )
 expand = true
 stretch_mode = 6
 
+[node name="Label" type="Label" parent="CanvasLayer/Control/crosshair"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -139.0
+margin_top = -14.0
+margin_right = 139.0
+text = "PRESS F TO %ACTION% %OBJECT%"
+align = 1
+
 [node name="entityDetails" type="Panel" parent="CanvasLayer/Control"]
+visible = false
 margin_right = 257.0
 margin_bottom = 124.0
 __meta__ = {
@@ -254,7 +236,20 @@ __meta__ = {
 "_editor_description_": "currently unused"
 }
 
+[node name="chatpanel" type="Panel" parent="CanvasLayer/Control"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -169.0
+margin_top = -222.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="inventory" type="Panel" parent="CanvasLayer/Control"]
+visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -414.0
@@ -287,65 +282,42 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 5
 
+[node name="quickbar" type="Panel" parent="CanvasLayer/Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = -63.0
+margin_right = 521.0
+
 [node name="testInteractable" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 135.417, 1.2198, 82.4225 )
+collision_layer = 524289
+collision_mask = 524289
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="testInteractable"]
-mesh = SubResource( 6 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="testInteractable"]
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="testInteractable2" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 128.627, 1.91551, 91.1222 )
+collision_layer = 524289
+collision_mask = 524289
 script = ExtResource( 6 )
 npcid = "surge"
 maxHP = 100
 
 [node name="MeshInstance" type="MeshInstance" parent="testInteractable2"]
-mesh = SubResource( 9 )
+mesh = SubResource( 8 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="testInteractable2"]
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
-[node name="item" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 117.276, 0, 86.7355 )
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_group_": true
-}
-itemid = "gem_sapphire"
-
-[node name="CollisionShape" type="CollisionShape" parent="item"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0 )
-shape = SubResource( 10 )
-
-[node name="MeshInstance" type="MeshInstance" parent="item"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
-mesh = ExtResource( 11 )
-material/0 = null
-
-[node name="item2" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 121.063, 0, 89.5346 )
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_group_": true
-}
-itemid = "ingot_gold"
-
-[node name="CollisionShape" type="CollisionShape" parent="item2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0 )
-shape = SubResource( 10 )
-
-[node name="MeshInstance" type="MeshInstance" parent="item2"]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.7, 0, 0, 0 )
-mesh = ExtResource( 10 )
-material/0 = null
-[connection signal="body_entered" from="item" to="item" method="_body_entered"]
-[connection signal="body_entered" from="item2" to="item2" method="_body_entered"]
+[node name="loot" type="Spatial" parent="."]

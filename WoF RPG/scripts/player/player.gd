@@ -4,7 +4,7 @@ const TYPE = "player"
 
 onready var fireball = preload("res://entities/prefabs/fireball.tscn")
 
-var lookSensitivity: float = 5.0
+var lookSensitivity: float = 4.0
 var minlook = -75
 var maxlook = 75
 var mm = Vector3()
@@ -20,6 +20,22 @@ var vel = Vector3()
 var mcool = 0.5
 var rangecool = 2
 
+#stats and effects
+var hp
+var maxhp
+var regenrate = 2
+
+var stamina
+var sregenrate = 0.8
+var sdimrate = 0.4
+
+var hunger
+var diminishrate = 20 #will be modified depending on the action
+ 
+var statuseffects = []
+
+var skills = [] #array of dictionaries containing all unlocked skills and their levels
+
 func _ready():
 	gvars.mouseCaptured = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -30,7 +46,7 @@ func _ready():
 func _input(event):
 	#Make sure that player input events only happen when UI isn't taking the
 	#input space
-	if get_parent().get_node("CanvasLayer/Control").interactionShowing: return
+	if get_parent().get_parent().get_node("CanvasLayer/Control").interactionShowing: return
 	if event is InputEventMouseMotion:
 		mm = event.relative
 
@@ -58,31 +74,59 @@ func checkHover():
 	var entityOver = $camerarig/hoverOver.is_colliding()
 	if entityOver and $camerarig/hoverOver.get_collider().TYPE == "damageable":
 		var node = $camerarig/hoverOver.get_collider()
-		get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxhp, "entityname": node.ename})
+		get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxhp, "entityname": node.ename})
 	elif entityOver and $camerarig/hoverOver.get_collider().TYPE == "npc":
 		var node = $camerarig/hoverOver.get_collider()
-		get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxHP, "entityname": node.npcid})
+		get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxHP, "entityname": node.npcid})
 	else:
-		get_parent().get_node("CanvasLayer/Control").showEntityInfo(null, {})
+		get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(null, {})
+	
+	#crosshair dialogue
+	if colliding:
+		var type = $camerarig/RayCast.get_collider()
+		if type.TYPE != "ground" and type.TYPE != "damageable" and type.TYPE != "projectile":
+			get_parent().get_parent().get_node("CanvasLayer/Control").interact(type.TYPE, type.display)
+		else:
+			get_parent().get_parent().get_node("CanvasLayer/Control").interact(null, null)
+	else:
+		get_parent().get_parent().get_node("CanvasLayer/Control").interact(null, null)
+	
+	#interact type
+	var ctype = ""
+	if colliding:
+		ctype = $camerarig/RayCast.get_collider().TYPE
+	if Input.is_action_just_pressed("interact") and colliding:
+		if ctype == "interactable" || ctype == "npc" || ctype == "item":
+			$camerarig/RayCast.get_collider()._interacted()
+
+# Checks if any of the ability/attack buttons are pressed
+func checkAttack():
+	var ctype = ""
+	if colliding:
+		ctype = $camerarig/RayCast.get_collider().TYPE
+	if Input.is_action_just_pressed("attack_primary") and colliding:
+		if ctype == "damageable":
+			$camerarig/RayCast.get_collider().recieve_damage(10.0)
+	elif Input.is_action_just_pressed("attack_secondary"):
+		var fb = fireball.instance()
+		fb.transform = $camerarig/Position3D.global_transform
+		fb.velocity = fb.transform.basis.z * fb.SPEED
+		get_parent().get_parent().get_node("projectiles").add_child(fb)
+	elif Input.is_action_just_pressed("ability_1"):
+		pass #TODO
+	elif Input.is_action_just_pressed("ability_2"):
+		pass #TODO
+	elif Input.is_action_just_pressed("ability_3"):
+		pass #TODO
+	elif Input.is_action_just_pressed("ability_4"):
+		pass #TODO
 
 func _physics_process(delta):
 	if gvars.mouseCaptured:
-		var ctype = ""
+		
 		colliding = $camerarig/RayCast.is_colliding()
 		checkHover()
-		if colliding:
-			ctype = $camerarig/RayCast.get_collider().TYPE
-		if Input.is_action_just_pressed("attack_primary") and colliding:
-			if ctype == "damageable":
-				$camerarig/RayCast.get_collider().recieve_damage(10.0)
-		elif Input.is_action_just_pressed("attack_secondary"):
-			var fb = fireball.instance()
-			fb.transform = $camerarig/Position3D.global_transform
-			fb.velocity = fb.transform.basis.z * fb.SPEED
-			get_parent().get_node("projectiles").add_child(fb)
-		elif Input.is_action_just_pressed("interact") and colliding:
-			if ctype == "interactable" || ctype == "npc":
-				$camerarig/RayCast.get_collider()._interacted()
+		checkAttack()
 		
 		vel.x = 0
 		vel.z = 0
@@ -102,8 +146,12 @@ func _physics_process(delta):
 		
 		var direction = (transform.basis.z * movement.z + transform.basis.x * movement.x)
 		
-		vel.x = direction.x * speed
-		vel.z = direction.z * speed
+		var sprinting = false
+		if Input.is_action_pressed("movement_sprint"):
+			pass
+		
+		vel.x = direction.x * speed * (1.5 if sprinting else 1.0)
+		vel.z = direction.z * speed * (1.5 if sprinting else 1.0)
 		
 		vel.y -= grav * delta
 		
@@ -111,3 +159,6 @@ func _physics_process(delta):
 			vel.y = jump
 		
 		vel = move_and_slide(vel, Vector3.UP)
+
+func recieve_damage(damage):
+	hp -= damage

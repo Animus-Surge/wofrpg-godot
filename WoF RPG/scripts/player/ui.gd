@@ -8,6 +8,19 @@ func _ready():
 	$inventory.hide()
 	$skillTree.hide()
 
+# Crosshair hover over object interaction dialogue
+
+#Object will either be an NPC name, an item name, or nothing.
+#Type will be either NPC or Item (for now)
+func interact(type, object):
+	match type:
+		"npc":
+			$crosshair/Label.text = "PRESS F TO INTERACT WITH " + object
+		"item":
+			$crosshair/Label.text = "PRESS F TO PICK UP " + object
+		_:
+			$crosshair/Label.text = ""
+
 ############################
 # ENTITY INFORMATION PANEL #
 ############################

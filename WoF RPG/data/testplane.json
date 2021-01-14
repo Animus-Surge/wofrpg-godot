@@ -1,0 +1,38 @@
+{
+	"worldName":"testplane",
+	"spawnpoint":{"x":127.9,"y":0,"z":81.1},
+	"objects":[
+		{
+			"type":"damageable",
+			"instance":"res://entities/prefabs/dummy.tscn",
+			"position":{"x":17.5,"y":1.23,"z":130},
+			"data":{}
+		},
+		{
+			"type":"damageable",
+			"instance":"res://entities/prefabs/dummy.tscn",
+			"position":{"x":209,"y":1.23,"z":234},
+			"data":{}
+		},
+		{
+			"type":"damageable",
+			"instance":"res://entities/prefabs/dummy.tscn",
+			"position":{"x":32.1,"y":1.23,"z":283},
+			"data":{}
+		},
+		{
+			"type":"damageable",
+			"instance":"res://entities/prefabs/dummy.tscn",
+			"position":{"x":142,"y":1.23,"z":145},
+			"data":{}
+		}
+	],
+	"loot":[
+		{
+			"type":"item",
+			"slots":1,
+			"stored_items":["gem_sapphire"],
+			"position":{"x":117, "y":0, "z":86.7}
+		}
+	]
+}

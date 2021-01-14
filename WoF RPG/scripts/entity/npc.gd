@@ -7,6 +7,7 @@ var hp := 0.0
 
 func _ready():
 	TYPE = "npc"
+	display = "NPC"
 	hp = float(maxHP)
 
 func _interacted():

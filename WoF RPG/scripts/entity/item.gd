@@ -15,11 +15,8 @@ func _ready():
 	if storedItem.has("size_offset"):
 		$MeshInstance.scale = Vector3(storedItem.size_offset.x, storedItem.size_offset.y, storedItem.size_offset.z)
 	TYPE = "item"
-
-func _body_entered(body):
-	if body.TYPE == "player":
-		_interacted()
+	display = storedItem.name
 
 func _interacted():
-	if get_parent().get_node("CanvasLayer/Control/inventory").addItem(storedItem):
+	if get_parent().get_parent().get_node("CanvasLayer/Control/inventory").addItem(storedItem):
 		queue_free()

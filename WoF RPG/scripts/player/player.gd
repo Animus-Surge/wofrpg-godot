@@ -72,12 +72,15 @@ var colliding = false
 
 func checkHover():
 	var entityOver = $camerarig/hoverOver.is_colliding()
-	if entityOver and $camerarig/hoverOver.get_collider().TYPE == "damageable":
-		var node = $camerarig/hoverOver.get_collider()
-		get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxhp, "entityname": node.ename})
-	elif entityOver and $camerarig/hoverOver.get_collider().TYPE == "npc":
-		var node = $camerarig/hoverOver.get_collider()
-		get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxHP, "entityname": node.npcid})
+	if entityOver:
+		if $camerarig/hoverOver.get_collider().TYPE == "damageable":
+			var node = $camerarig/hoverOver.get_collider()
+			get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxhp, "entityname": node.ename})
+		elif $camerarig/hoverOver.get_collider().TYPE == "npc":
+			var node = $camerarig/hoverOver.get_collider()
+			get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(node, {"hitpoints": node.hp, "maxhitpoints": node.maxHP, "entityname": node.npcid})
+		else:
+			get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(null, {})
 	else:
 		get_parent().get_parent().get_node("CanvasLayer/Control").showEntityInfo(null, {})
 	

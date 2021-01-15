@@ -11,6 +11,7 @@ func _ready():
 	hp = float(maxHP)
 
 func _interacted():
+	$AudioStreamPlayer3D.play()
 	print("NPC was interacted with... yay")
 
 func recieve_damage(amount: float):

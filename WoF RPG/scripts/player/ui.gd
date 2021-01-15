@@ -85,10 +85,15 @@ func skillTree():
 	pass
 
 #############
-# INVENTORY #
+# CHAT #
 #############
 
-# Moved to inventory.gd
+onready var chatmessage = preload("res://ui/chatcomponent.tscn")
+var isChatting
+
+func sendMessage():
+	if isChatting:
+		pass #TODO
 
 #######################
 # GLOBAL INPUT EVENTS #
@@ -96,10 +101,14 @@ func skillTree():
 
 func _input(_event):
 	if Input.is_action_just_pressed("pause"):
-		if interactionShowing or panelShowing:
+		if interactionShowing or panelShowing or isChatting:
 			gvars.mouseCaptured = true
 			interactionShowing = false
 			panelShowing = false
+			isChatting = false
+			$chatpanel/chatline.text = ""
+			$chatpanel/chatline.set_focus_mode(Control.FOCUS_NONE)
+			$chatpanel/chatline.release_focus()
 			$inventory.hide()
 			$interactionPanel.hide()
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -108,7 +117,7 @@ func _input(_event):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if !gvars.paused else Input.MOUSE_MODE_VISIBLE)
 			gvars.mouseCaptured = !gvars.paused
 	elif Input.is_action_just_pressed("inventory"):
-		if !interactionShowing and !panelShowing and !gvars.paused:
+		if !interactionShowing and !panelShowing and !gvars.paused and !isChatting:
 			panelShowing = true
 			gvars.mouseCaptured = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -119,3 +128,31 @@ func _input(_event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 				panelShowing = false
 				gvars.mouseCaptured = true
+#	elif Input.is_action_just_pressed("ui_chat"):
+#		if isChatting: #Ignore it if the player is already using the chat
+#			return
+#		else:
+#			isChatting = true
+#			gvars.mouseCaptured = false
+#			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+#			$chatpanel/chatline.set_focus_mode(Control.FOCUS_ALL)
+#			$chatpanel/chatline.grab_focus()
+#			$chatpanel/chatline.text = ""
+#	elif Input.is_action_just_pressed("ui_accept"):
+#		if isChatting:
+#			isChatting = false
+#			$chatpanel/chatline.release_focus()
+#			gvars.mouseCaptured = true
+#			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#			$chatpanel/chatline.set_focus_mode(Control.FOCUS_NONE)
+#			var message = chatmessage.instance()
+#			message.get_node("message").text = $chatpanel/chatline.text
+#			message.get_node("uname").text = "Kevin"
+#			$chatpanel/chatscroll/chatcontainer.add_child(message)
+#			$chatpanel/chatline.text = ""
+
+func _process(_delta):
+	if gvars.paused:
+		$chatpanel/chatline.editable = false
+	else:
+		$chatpanel/chatline.editable = true

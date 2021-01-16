@@ -6,6 +6,7 @@ const DEBUG = false
 #global variables
 var mouseCaptured = false
 var paused = false
+var dead = false
 
 var itemdict
 

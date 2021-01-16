@@ -10,6 +10,7 @@ var maxlook = 75
 var mm = Vector3()
 
 var firstperson = true
+var dead = false
 
 var speed = 5
 var jump = 10
@@ -19,10 +20,21 @@ var vel = Vector3()
 #cooldowns
 var mcool = 0.5
 var rangecool = 2
+var cool1
+var cool2
+var cool3
+var cool4 #TODO: abilities
+
+var canmelee = true
+var canrange = true
+var can1
+var can2
+var can3
+var can4
 
 #stats and effects
 var hp
-var maxhp
+var maxhp = 300
 var regenrate = 2
 
 var stamina
@@ -30,7 +42,10 @@ var sregenrate = 0.8
 var sdimrate = 0.4
 
 var hunger
-var diminishrate = 20 #will be modified depending on the action
+var diminishrate = 20 #will be modified depending on the action and status effects
+
+var mana
+var maxmana = 100
  
 var statuseffects = []
 
@@ -42,6 +57,12 @@ func _ready():
 	$camerarig/firstperson.current = firstperson
 	$camerarig/thirdperson.current = !firstperson
 	rotation_degrees = Vector3.ZERO
+	
+	#stat handling - TODO: implement saving and loading of stat values, including maxhp and maxmana
+	hp = maxhp
+	mana = maxmana
+	hunger = 100
+	stamina = 100
 
 func _input(event):
 	#Make sure that player input events only happen when UI isn't taking the
@@ -51,6 +72,11 @@ func _input(event):
 		mm = event.relative
 
 func _process(delta):
+	if hp <= 0:
+		gvars.mouseCaptured = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		#death animation
+		#respawn after some time
 	#Input events
 	if Input.is_action_just_pressed("misc_camerafptp") and gvars.mouseCaptured:
 		print("Switching camera")
@@ -67,6 +93,10 @@ func _process(delta):
 		$camerarig/thirdperson.current = !firstperson
 		
 		mm = Vector3() #todo: pvp
+	
+	#info handling
+	var plrinfo = {"hp":hp, "maxhp":maxhp, "mana":mana,"maxmana":maxmana,"stamina":stamina,"hunger":hunger}
+	get_parent().get_parent().get_node("CanvasLayer/Control").updatePlayerDetails(plrinfo)
 
 var colliding = false
 
@@ -87,7 +117,7 @@ func checkHover():
 	#crosshair dialogue
 	if colliding:
 		var type = $camerarig/RayCast.get_collider()
-		if type.TYPE != "ground" and type.TYPE != "damageable" and type.TYPE != "projectile":
+		if type.TYPE != "ground" and type.TYPE != "damageable" and type.TYPE != "projectile" and type.TYPE:
 			get_parent().get_parent().get_node("CanvasLayer/Control").interact(type.TYPE, type.display)
 		else:
 			get_parent().get_parent().get_node("CanvasLayer/Control").interact(null, null)
@@ -107,14 +137,18 @@ func checkAttack():
 	var ctype = ""
 	if colliding:
 		ctype = $camerarig/RayCast.get_collider().TYPE
-	if Input.is_action_just_pressed("attack_primary") and colliding:
+	if Input.is_action_just_pressed("attack_primary") and colliding and canmelee:
 		if ctype == "damageable":
 			$camerarig/RayCast.get_collider().recieve_damage(10.0)
-	elif Input.is_action_just_pressed("attack_secondary"):
+		canmelee = false
+		$mcool.start()
+	elif Input.is_action_just_pressed("attack_secondary") and canrange:
 		var fb = fireball.instance()
 		fb.transform = $camerarig/Position3D.global_transform
 		fb.velocity = fb.transform.basis.z * fb.SPEED
 		get_parent().get_parent().get_node("projectiles").add_child(fb)
+		canrange = false
+		$rcool.start()
 	elif Input.is_action_just_pressed("ability_1"):
 		pass #TODO
 	elif Input.is_action_just_pressed("ability_2"):
@@ -165,3 +199,23 @@ func _physics_process(delta):
 
 func recieve_damage(damage):
 	hp -= damage
+
+#Cooldown timer callbacks
+
+func _on_rcool_timeout():
+	canrange = true
+
+func _on_mcool_timeout():
+	canmelee = false
+
+func _on_1cool_timeout():
+	pass # Replace with function body.
+
+func _on_2cool_timeout():
+	pass # Replace with function body.
+
+func _on_3cool_timeout():
+	pass # Replace with function body.
+
+func _on_4cool_timeout():
+	pass # Replace with function body.

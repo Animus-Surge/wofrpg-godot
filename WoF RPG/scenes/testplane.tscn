@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/player/ui.gd" type="Script" id=1]
 [ext_resource path="res://entities/prefabs/npc.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/global/sceneroot.gd" type="Script" id=3]
 [ext_resource path="res://entities/prefabs/player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://images/gui/crosshair.png" type="Texture" id=5]
+[ext_resource path="res://images/gui/slotbg-TEMP-hov.png" type="Texture" id=6]
 [ext_resource path="res://scripts/entity/interactable.gd" type="Script" id=7]
 [ext_resource path="res://scripts/player/inventory.gd" type="Script" id=8]
 
@@ -27,13 +28,64 @@ size = Vector2( 512, 512 )
 [sub_resource type="ConvexPolygonShape" id=4]
 points = PoolVector3Array( 256, 0, 256, -256, 0, 256, 256, 0, -256, -256, 0, -256 )
 
-[sub_resource type="CylinderMesh" id=5]
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.807843, 0.360784, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.321569, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.92549, 0.560784, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.423529, 0.239216, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0.415686, 0.898039, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0, 0.0470588, 0.270588, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.0588235, 0.745098, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.0196078, 0.254902, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.92549, 0.443137, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.239216, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.772549, 0.615686, 0.0745098, 1 )
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
+
+[sub_resource type="CylinderMesh" id=18]
 height = 5.0
 radial_segments = 5
 rings = 3
 
-[sub_resource type="CylinderShape" id=6]
+[sub_resource type="CylinderShape" id=19]
 height = 5.0
+
+[sub_resource type="GDScript" id=20]
+script/source = "extends Area
+
+var TYPE
+
+func _body_entered(body):
+	if body.TYPE == \"player\":
+		body.recieve_damage(20)
+"
+
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 0.45504, 1, 0.481516 )
 
 [node name="testplane" type="Spatial"]
 script = ExtResource( 3 )
@@ -106,8 +158,76 @@ margin_right = 139.0
 text = "PRESS F TO %ACTION% %OBJECT%"
 align = 1
 
+[node name="playerinfo" type="Panel" parent="CanvasLayer/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -297.0
+margin_bottom = 118.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="username" type="Label" parent="CanvasLayer/Control/playerinfo"]
+anchor_right = 1.0
+margin_bottom = 25.0
+text = "%USERNAME%"
+align = 1
+valign = 1
+autowrap = true
+max_lines_visible = 1
+
+[node name="playericon" type="TextureRect" parent="CanvasLayer/Control/playerinfo"]
+margin_top = 25.0
+margin_right = 93.0
+margin_bottom = 118.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="health" type="ProgressBar" parent="CanvasLayer/Control/playerinfo"]
+margin_left = 99.0
+margin_top = 29.0
+margin_right = 287.0
+margin_bottom = 46.0
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
+value = 50.0
+percent_visible = false
+
+[node name="hunger" type="ProgressBar" parent="CanvasLayer/Control/playerinfo"]
+margin_left = 99.0
+margin_top = 51.0
+margin_right = 287.0
+margin_bottom = 68.0
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+value = 50.0
+percent_visible = false
+
+[node name="mana" type="ProgressBar" parent="CanvasLayer/Control/playerinfo"]
+margin_left = 99.0
+margin_top = 73.0
+margin_right = 287.0
+margin_bottom = 90.0
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+value = 50.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stamina" type="ProgressBar" parent="CanvasLayer/Control/playerinfo"]
+margin_left = 99.0
+margin_top = 95.0
+margin_right = 287.0
+margin_bottom = 112.0
+custom_styles/fg = SubResource( 11 )
+custom_styles/bg = SubResource( 12 )
+value = 50.0
+percent_visible = false
+
 [node name="entityDetails" type="Panel" parent="CanvasLayer/Control"]
-visible = false
 margin_right = 257.0
 margin_bottom = 124.0
 __meta__ = {
@@ -139,6 +259,8 @@ margin_left = -117.0
 margin_top = -41.0
 margin_right = 117.0
 margin_bottom = -8.0
+custom_styles/fg = SubResource( 13 )
+custom_styles/bg = SubResource( 14 )
 percent_visible = false
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/entityDetails/ProgressBar"]
@@ -317,7 +439,62 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 15.0
 margin_top = -63.0
-margin_right = 521.0
+margin_right = 665.0
+
+[node name="action_lclick" type="Panel" parent="CanvasLayer/Control/quickbar"]
+margin_left = 20.0
+margin_top = 3.0
+margin_right = 77.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="action_rclick" type="Panel" parent="CanvasLayer/Control/quickbar"]
+margin_left = 84.0
+margin_top = 3.0
+margin_right = 141.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="action_1" type="Panel" parent="CanvasLayer/Control/quickbar"]
+margin_left = 188.0
+margin_top = 3.0
+margin_right = 245.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="action_2" type="Panel" parent="CanvasLayer/Control/quickbar"]
+margin_left = 252.0
+margin_top = 3.0
+margin_right = 309.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="action_3" type="Panel" parent="CanvasLayer/Control/quickbar"]
+margin_left = 316.0
+margin_top = 3.0
+margin_right = 373.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="action_4" type="Panel" parent="CanvasLayer/Control/quickbar"]
+margin_left = 380.0
+margin_top = 3.0
+margin_right = 437.0
+margin_bottom = 60.0
+custom_styles/panel = SubResource( 15 )
+
+[node name="exp" type="ProgressBar" parent="CanvasLayer/Control/quickbar"]
+margin_left = 445.0
+margin_top = 3.0
+margin_right = 645.0
+margin_bottom = 17.0
+custom_styles/fg = SubResource( 16 )
+custom_styles/bg = SubResource( 17 )
+value = 50.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="testInteractable" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 135.417, 1.2198, 82.4225 )
@@ -329,11 +506,11 @@ __meta__ = {
 }
 
 [node name="MeshInstance" type="MeshInstance" parent="testInteractable"]
-mesh = SubResource( 5 )
+mesh = SubResource( 18 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="testInteractable"]
-shape = SubResource( 6 )
+shape = SubResource( 19 )
 
 [node name="testInteractable2" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 127.412, 0, 95.3765 )
@@ -341,3 +518,12 @@ npcid = "Surge"
 maxHP = 500
 
 [node name="loot" type="Spatial" parent="."]
+
+[node name="Area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 123.89, 0, 89.2932 )
+script = SubResource( 20 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shape = SubResource( 21 )
+[connection signal="body_entered" from="Area" to="Area" method="_body_entered"]

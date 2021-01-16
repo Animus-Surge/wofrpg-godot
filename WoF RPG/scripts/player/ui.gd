@@ -84,9 +84,9 @@ var loadedSkilltree #Won't be set unless loading a save and on initial skill tre
 func skillTree():
 	pass
 
-#############
+########
 # CHAT #
-#############
+########
 
 onready var chatmessage = preload("res://ui/chatcomponent.tscn")
 var isChatting
@@ -94,6 +94,21 @@ var isChatting
 func sendMessage():
 	if isChatting:
 		pass #TODO
+
+##################
+# PLAYER DETAILS #
+##################
+
+#info: {"hp":int, "maxhp":int, "stam":int, "mana":int, "maxmana":int, "hunger":int}
+
+func updatePlayerDetails(info):
+	$playerinfo/username.text = "Surge" #TODO: replace this with username handling
+	$playerinfo/health.value = info.hp
+	$playerinfo/health.max_value = info.maxhp
+	$playerinfo/mana.value = info.mana
+	$playerinfo/mana.max_value = info.maxmana
+	$playerinfo/hunger.value = info.hunger
+	$playerinfo/stamina.value = info.stamina
 
 #######################
 # GLOBAL INPUT EVENTS #

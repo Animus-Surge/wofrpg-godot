@@ -1043,6 +1043,9 @@ one_shot = true
 
 [node name="4cool" type="Timer" parent="."]
 one_shot = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 [connection signal="timeout" from="mcool" to="." method="_on_mcool_timeout"]
 [connection signal="timeout" from="rcool" to="." method="_on_rcool_timeout"]
 [connection signal="timeout" from="1cool" to="." method="_on_1cool_timeout"]

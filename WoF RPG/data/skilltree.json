@@ -1,0 +1,8 @@
+{
+	"skills":[
+		{
+			"skill_path":"res://data/skills/melee-test.json",
+			"children":[]
+		}
+	]
+}

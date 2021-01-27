@@ -1,0 +1,115 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scripts/ui/mainmenu.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "fader"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("fader:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[node name="mainmenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="playbtn" type="Button" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -101.5
+margin_top = -34.5
+margin_right = 101.5
+margin_bottom = 34.5
+text = "PLAY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settingsbtn" type="Button" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -101.5
+margin_top = 155.047
+margin_right = 101.5
+margin_bottom = 224.047
+text = "Settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="quitbtn" type="Button" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -480.0
+margin_top = 155.047
+margin_right = -277.0
+margin_bottom = 224.047
+text = "Quit"
+
+[node name="newspanel" type="Panel" parent="."]
+margin_left = 32.0
+margin_top = 41.0
+margin_right = 246.0
+margin_bottom = 406.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="creditspanel" type="Panel" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -265.0
+margin_top = -340.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="fader" type="Panel" parent="."]
+modulate = Color( 0, 0, 0, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fader = SubResource( 4 )
+[connection signal="tree_entered" from="." to="." method="tree_entered"]
+[connection signal="pressed" from="bg/playbtn" to="." method="onPlay"]
+[connection signal="pressed" from="bg/settingsbtn" to="." method="onSettings"]
+[connection signal="pressed" from="bg/quitbtn" to="." method="onQuit"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="onFaderComplete"]

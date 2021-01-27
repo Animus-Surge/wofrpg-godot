@@ -1,7 +1,8 @@
 extends Node
 
-#global constants
+#global debug constants
 const DEBUG = false
+const TOUCHSCREEN = false
 
 #global variables
 var mouseCaptured = false

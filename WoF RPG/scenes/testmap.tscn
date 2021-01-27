@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="testmap" type="Node2D"]
+
+[node name="entities" type="Node2D" parent="."]
+
+[node name="player" type="KinematicBody2D" parent="entities"]
+
+[node name="Camera2D" type="Camera2D" parent="entities/player"]
+
+[node name="items" type="Node2D" parent="."]
+
+[node name="projectiles" type="Node2D" parent="."]
+
+[node name="uiLayer" type="CanvasLayer" parent="."]
+
+[node name="ui" type="Control" parent="uiLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

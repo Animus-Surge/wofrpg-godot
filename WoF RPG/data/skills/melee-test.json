@@ -1,0 +1,11 @@
+{
+	"name":"Slash",
+	"id":"melee_test",
+	"icon":null,
+	"type":"attack",
+	"data":{
+		"attack_type":"melee",
+		"slot":"primary",
+		"damage":25
+	}
+}

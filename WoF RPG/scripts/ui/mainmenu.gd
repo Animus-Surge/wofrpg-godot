@@ -5,29 +5,28 @@ var settings = false
 var quit = false
 
 func _ready():
-	pass
+	gvars.currentScene = "mainmenu"
+	gvars.onLoadedSceneReady()
+	$AnimationPlayer.play("fader")
 
 func onFaderComplete(_animation):
 	if play:
 		play = false
-		$AnimationPlayer.play_backwards("fader")
+# warning-ignore:return_value_discarded
+		get_tree().change_scene("res://scenes/testmap.tscn")
 	elif settings:
 		settings = false
-		$AnimationPlayer.play_backwards("fader")
 	elif quit:
 		get_tree().quit(0)
 
 func onPlay():
 	play = true
-	$AnimationPlayer.play("fader")
+	$AnimationPlayer.play_backwards("fader")
 
 func onSettings():
 	settings = true
-	$AnimationPlayer.play("fader")
+	$AnimationPlayer.play_backwards("fader")
 
 func onQuit():
 	quit = true
-	$AnimationPlayer.play("fader")
-
-func tree_entered():
-	$AnimationPlayer.play("fader")
+	$AnimationPlayer.play_backwards("fader")
